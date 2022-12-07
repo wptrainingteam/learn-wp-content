@@ -1,20 +1,22 @@
-# Tips to Converting your Shortcodes to Blocks
+# Developer Tips: Converting your Shortcodes to Blocks
 
 I can still vividly remember the first time I tried the block editor.
 
-It was just after watching the WordCamp EU Paris Livestream, the one where Om interviewed Matt. Matt announced that the Gutenberg plugin was available in the WordPress plugin repository, and of course, I had to install it immediately and try it out. I could see the potential for innovation almost instantly, and I was excited about the future of WordPress.
+It was just after watching the WordCamp EU Paris Livestream, the one where Om interviewed Matt. Given that Europe is in a simialar timezone to South Africa, I could watch the chat live, instead of needing to catch up 12 hours later, like I usually did for State of the Word. Matt announced that the Gutenberg plugin was available in the WordPress plugin repository, and of course, I had to install it immediately and try it out. I could see the potential for innovating the editor experience almost instantly, and I was excited about the future of WordPress.
 
-That was in 2017, yet it took me a full two years before I “learned JavaScript (more) deeply” and built my first blocks. My main hurdle was time. By 2017 I was a dad of two boys, running a business with my wife, freelancing through Codeable, and teaching jiu-jitsu, but I was dying to dive into block development. Fortunately, in 2020, I was given the opportunity to build the first set of blocks for the Seriously Simple Podcasting plugin, and I thoroughly enjoyed the experience. I’ve been a proponent of teaching other developers the power of blocks ever since.
+That was in 2017, yet it took me a full two years before I “learned JavaScript (more) deeply” and built my first blocks. My main hurdle was time. By 2017 I was a dad of two boys, running a business with my wife, freelancing through Codeable, and teaching jiu-jitsu, but I was dying to dive into block development. Rool forward a couple of years, and in 2020, I was given the opportunity to build the first set of blocks for the Seriously Simple Podcasting plugin, and I thoroughly enjoyed the experience. I’ve been a proponent of teaching other developers the power of blocks ever since.
+
+Given that Seriously Simple Podcasting had been round for a while, the first blocks we built were based on our existing shortcodes. For plugin developers, shortcodes are great, but they don't have the best experience for users. Many of our plugin users where also fans of blocks, and could see how some of our most popular shortcodes would make great blocks, so it just made sense.
 
 ## Authors note
 
-For the most of the code examples in this article from the Seriously Simple Podcasting plugin, I'm going to be focusing on the theory behind the implementation. The actual code implementation requires much more time and space than one article allows. There will be links to various pieces of documentation, both WordPress developer docs, as well as React and Mozilla MDN docs, which I recommend reading. 
+For the most of the code examples in this article from the Seriously Simple Podcasting plugin, I'm going to be focusing on the theory behind the implementation. The actual code implementation requires much more time and space than one article allows. There will be links to various pieces of documentation, both WordPress developer docs, and React and Mozilla MDN docs, which I recommend reading. 
 
 Additionally, because of the amount of code that made up some of the blocks I was building, I’m going to simplify the actual code used. However, you can browse the repo at this point in time [via this url](https://github.com/CastosHQ/Seriously-Simple-Podcasting/tree/7286c7571b3240c0ac270ee5b8d2f700888c8bcc). Where I talk about the implementation I will also link directly to the actual files I’m referencing in the article.
 
-That being said, I wrote this code over 4 years ago, while I was still learning to develop blocks myself, so there might be some things that could have been done better. I’m sure there are, but I can't go back and change them now.
+That being said, I wrote this code over 2 years ago, while I was still learning to develop blocks myself, so there might be some things that could have been done better. I’m sure there are, but I can't go back and change them now.
 
-Finally, this article will not guide you through the process of converting your existing shortcodes to blocks. It will, however, give you some tips and tricks that I wish I had known when I was first starting out.
+Finally, this article will not guide you through the entire process of converting your existing shortcodes to blocks. It will, however, give you some tips and tricks that I wish I had known when I was first starting out.
 
 ## Not every shortcode should be a block!
 
@@ -30,7 +32,7 @@ There are many cases where a shortcode still makes sense over a block. One of my
 
 If you’ve never seen it in use before, this seemingly simple shortcode facilitates the meetings of all of the WordPress contributor teams. When used correctly, it will render the time in the reader's local time zone. This is extremely valuable for a globally distributed team of WordPress contributors, as it makes sure they can plan and schedule their meetings correctly.
 
-While it would be possible to turn this into a block, it’s not something I would do, the functionality already works, and there’s no real benefit for the writer to add this as a block.
+While it would be possible to turn this into a block, it’s not something I would do, as there’s no real benefit for the writer to add this as a block.
 
 When considering if your shortcode should be turned into a block, I’d suggest asking yourself the following questions:
 
@@ -44,15 +46,15 @@ Finally, I would add that when I say “convert to ” I don’t mean “replace
 
 ## Learning React
 
-Before we dive into the article, if you want to build blocks, it's a really good idea to understand the basics of how React works. I'm not here to argue the pros and cons of choosing React for blocks, that ship has sailed. If you want to build on top of the framework, whether you use the React JSX route, or the plain JavaScript route, you will need to understand React fundamentals.
+Before we go any further, if you want to build blocks, it's a really good idea to understand the basics of how React works. I'm not here to argue the pros and cons of choosing React for blocks, that ship has sailed. If you want to build on top of the framework, whether you use the React JSX route, or the plain JavaScript route, you will need to understand React fundamentals.
 
-For my own purposes, I took the [React for Beginners course by Wes Bos](https://reactforbeginners.com/), and I can't recommend it enough. It's a great introduction to React, doesn't cost the earth, and supports purchasing parity, so it's cheaper depending on your geographic location. It also has an active Slack community, which is very helpful for asking questions about how React works.
+For my own purposes, I took the [React for Beginners course by Wes Bos](https://reactforbeginners.com/), and I can't recommend it enough. It's a great introduction to React, doesn't cost the earth, and supports purchasing parity, so it's cheaper depending on your geographic location. While the course itself is a little dated, the fundamentals of React haven't changed, so it's still a great place to start. It also has an active Slack community, which is very helpful for asking questions about how React works, or any of the new features.
 
 ## Intro to Create Block
 
 I love developer tools that make complicated things easier. I’m on record as being a big fan of things like WP-CLI and Laravel’s Artisan. So when I started looking into block development, I was pleased to discover [the Create Block tool](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/).
 
-Developed primarily by the same team of developers working on the block editor, Create Block allows you to quickly scaffold a new block from your terminal.
+Developed primarily by the same team of developers working on the block editor, Create Block allows you to quickly scaffold a new block from your terminal. The actual block code is fairly limited, it's just rendering a paragraph element, but it gives you a good base to start with.
 
 Create Block was key to my early journeys into block development, as I could scaffold a new block and inspect the code, to see how it all fits together.
 
@@ -68,7 +70,9 @@ npx @wordpress/create-block plugin-slug
 
 This will create a plugin called `plugin-slug` in your `plugins` directory, with all the base files you need for block development.
 
-There are a bunch of other options available to the command, which I highly recommend reading about [in the documentation](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/#usage) but one of my favorite recent additions is the `--no-plugin option`. Essentially what `--no-plugin` does is only scaffold the block code, which means you can use it to add block support to an existing plugin, or even a theme. I don’t recommend trying this out until you fully understand how to block code is registered for WordPress, but once you do, this is a very handy feature.
+There are a bunch of other options available to the command, which I highly recommend reading about [in the documentation](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/#usage) but one of my favorite recent additions is the `--no-plugin option`. 
+
+Essentially what `--no-plugin` does is only scaffold the block code, which means you can use it to add block support to an existing plugin, or even a theme. I don’t recommend trying this out until you fully understand how to block code is registered for WordPress, but once you do, this is a very handy feature.
 
 ## Converting simple shortcodes that use default block edit/save functionality
 
@@ -78,6 +82,8 @@ I enjoy using Create Block so much, I recorded a 47-minute tutorial on it back i
 - https://learn.wordpress.org/tutorial/converting-a-shortcode-into-a-block/
 - https://learn.wordpress.org/tutorial/styling-your-wordpress-block/
 - https://learn.wordpress.org/tutorial/using-block-attributes-to-enable-user-editing/
+
+Simply put, if you have a plugin with a shortcode that just renders a specific set of HTML, you use Create Block to scaffold a new block, copy the reelvant code from the scaffoled block to your plugin, and then convert the HTML from your shortcode into JSX to be returned in the block’s `edit` and `save` functions.
 
 This was the process I followed when I started converting the Seriously Simple Podcasting plugin to support blocks.
 
@@ -89,19 +95,13 @@ In version [1.19.2](https://github.com/CastosHQ/Seriously-Simple-Podcasting/rele
 
 The shortcode could be added to a podcast enabled post without any attributes, and it would render the player for that post.
 
-[shortcode usage]
-
-[rendered player]
-
-[example html code]
-
 Turning this shortcode into a block was an easier implementation than anything else I still had to do, I tackled this first.
 
-I scaffolded a new plugin using Create Block, and then copied over the `package.json` file, and the `src` directory.
+I scaffolded a new plugin using Create Block, and then copied over the `package.json` file, and the entire `src` directory.
 
 At the time, we were using grunt to minify our CSS and JavaScript assets for production use, so I had to merge the scaffolded [package.json](https://github.com/CastosHQ/Seriously-Simple-Podcasting/blob/7286c7571b3240c0ac270ee5b8d2f700888c8bcc/package.json) with what we already had.
 
-Then I took the HTML from the player template, copied it verbatim over the JSX in the return function of the block's edit function.
+Then I took the HTML from the player template, copied it verbatim over the JSX in the return function of the block's `edit` function.
 
 Example HTML
 
@@ -133,7 +133,7 @@ edit: () => {
 },
 ```
 
-My next step was to replace any classes with `className`, and create any variables I needed. I'd have to somehow pass the variables like the `episode_id` and `player_mode` to the block, which I figured I could do using the `props` object passed to the edit or save functions.
+My next step was to replace any HTML attributes with DOM properties (for example changing `class="castos-player"` `className={castos-player}`), and convert any PHP variables into JavaScript ones. I'd have to somehow pass the variables like the `episode_id` and `player_mode` to the block, which I figured I could do using the `props` object passed to the `edit` or `save` functions.
 
 ```js
 edit: (props) => {
@@ -152,19 +152,29 @@ edit: (props) => {
 },
 ```
 
-This did however make the edit function HUGE! And I knew that it would grow even more, because I was planning to add some editor functionality to the block, like the ability to select the episode to be rendered. It was at this point I remembered learning about creating [custom React components](https://reactjs.org/docs/react-component.html).
+This was one of the early lessons I learned about JSX, it's very much like HTML, but it's not exactly HTML. However, because it's very similar to HTML, it's easy to convert existing HTML to JSX, and then make the necessary changes to make it work.
+
+For the first iteration I also neeeded to wire up the CSS from the shortcode. At the time [I managed this using](https://github.com/CastosHQ/Seriously-Simple-Podcasting/blob/7286c7571b3240c0ac270ee5b8d2f700888c8bcc/php/classes/blocks/class-player-block.php) `enqueue_block_editor_assets` action, but today I'd probably do it using the style option in the `block.json` [metadata](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#style).
+
+This code is now lost to time, but for the first iteration I just passed the variables as hardcoded attributes to the block's `props`, so that I could see it all working. I would figure out how to update the block code to make it possible for the user to choose the episode and player mode later.
+
+Once I code the player code to render in the editor, I made sure to update the save function with the same code, so that the block would render the same way on the front end.
+
+I was happily surprised to see it all work, and my player HTML rendered, with styling intact, in both the editor and the front end. 
+
+This did however make the edit and save functions HUGE! And I knew that they would grow even more, because I was planning to add additional functionality to the block, like the ability to select the episode to be rendered. It was at this point I remembered learning about creating [custom React components](https://reactjs.org/docs/react-component.html).
 
 ## Creating custom components to reduce redundancy
 
-Components in React are essentially a way to avoid repeating your code. If you've ever built blocks using things like BlockControls, or RichText, you're using a component. Components are great because they allow you to write once, and use everywhere. In this case, moving the Castos Player HTML to a component makes complete sense, because then I can write the code once, and reuse it for both the edit and save functions bo the block.
+Components in React are essentially a way to avoid repeating your code. If you've ever built blocks using things like BlockControls, or RichText, you're using a component. Components are great because they allow you to write once, and use everywhere. In this case, moving the Castos Player HTML to a component made complete sense, because then I could write and manage the code once, and reuse it for both the edit and save functions bo the block.
 
-The first thing I did, was move the JSX for the player, into a `/components/CastosPLayer.js` component
+The first thing I did, was move the JSX for the player into a `/components/CastosPLayer.js` component, and update the variables to be passed in as props.
 
 ```js
 class CastosPlayer extends Component {
     render() {
         return (
-            <div className="castos-player {player_mode}-mode" data-episode="{episode_id}">
+            <div className="{this.props.className} {this.props.player_mode}-mode" data-episode="{this.props.episode_id}">
                 <div class="player">
                     <!-- player image -->
                     <div class="player__body">
@@ -183,20 +193,26 @@ Then I imported the component into the main block `index.js` file
 ```js
 import CastosPlayer from "./components/CastosPlayer";
 ```
-Finally, I used the JSX syntax to implement the component in my edit function:
+Finally, I used the JSX syntax to implement the component in my edit function, passing the variables as props to the component.
+
+```js:
 
 ```js
 edit: (props) => {
     const episode_id = props.episode_id;
     const player_mode = props.player_mode;
+    const className = props.className;
     return (
         <CastosPlayer
+            className="{className}
 			episodeId={episode_id}
             playerMode={player_mode}
 		/>
     );
 },
 ```
+
+If I remember correctly, at the time, I also had to pass the className variable to the component.
 
 However, as the functionality for the edit function grew, I started realising that it would make sense to have a separate EditCastosPlayer component as well. So I did just that:
 
@@ -205,9 +221,10 @@ However, as the functionality for the edit function grew, I started realising th
 import CastosPlayer from "./CastosPlayer";
 
 class EditCastosPlayer extends Component {
-    constructor({episodeId, playerMode}) {
+    constructor({className, episodeId, playerMode}) {
         super(...arguments);
         this.state = {
+            className: className,
             episodeId: episodeId,
             playerMode: playerMode,
         };
@@ -215,6 +232,7 @@ class EditCastosPlayer extends Component {
     render() {
         return (
             <CastosPlayer
+                className={this.state.className}
                 episodeId={this.state.episodeId}
                 playerMode={this.state.playerMode}
             />
@@ -237,6 +255,8 @@ My final block edit function ended up looking pretty tidy.
 ```js
 edit: EditPlayer,
 ```
+
+I found custom components to be so useful, that I ended up creating custom components for pretty much [everything eventually](https://github.com/CastosHQ/Seriously-Simple-Podcasting/tree/master/src/components), and it's something I still do today when I see code that's going to be repeated, or could be simplified by separating it into it's own component. 
 
 ## A note on importing packages and components
 
@@ -295,5 +315,76 @@ This is pretty cool if the only data you need to query is core WordPress data, l
 
 WordPress core contributor Adam Zieliński recently created an amazing course on Learn WordPress on how to use [core data](https://learn.wordpress.org/course/using-the-wordpress-data-layer/), which I recommend checking out.
 
+## Conditional rendering
+
+One of the other cool things I learned about why React is so powerful is the ability to conditionally render differnt things, based on the value of a boolen variable.
+
+So for example, when the user added the Castos Player block to their post or page, they should first see a select box, populated with all the episodes fetch via the apiFetch call above.
+
+```js
+<div className={this.state.className}>
+    Select podcast Episode
+    <select ref={this.episodeRef}>
+        {this.state.episodes.map((item, key) =>
+            <option value={item.id}>{item.title}</option>
+        )}
+    </select>
+    <button onClick={activateEpisode}>Go</button>
+</div>
+```
+
+However, once they select the episode, and click the button to trigger the `activateEpisode` function, the select box should disappear, and the Castos Player should be rendered.
+
+So, I created a boolean variable named `editing` in the EditPlayer component constructor, and set it to `true` by default. 
+
+```js
+class EditPlayer extends Component {
+	constructor({className}) {
+		super(...arguments);
+		let editing = true;
+```
+
+Then, in the `activateEpisode` function, once the episode has been selected and the relevant episode data loaded, I'd set it to `false`.
+
+Finally, I'd wrap the component's return in a conditional, and then either return the select code, or return the CastosPLayer component, depending on the value of `editing`.
+
+```js
+if (editing) {
+    return (
+        <div className={this.state.className}>
+            Select podcast Episode
+            <select ref={this.episodeRef}>
+                {this.state.episodes.map((item, key) =>
+                    <option value={item.id}>{item.title}</option>
+                )}
+            </select>
+            <button onClick={activateEpisode}>Go</button>
+        </div>
+    );
+} else {
+    return [
+        controls, (
+            <CastosPlayer className={this.state.className}
+                          episodeImage={this.state.episode.episodeImage}
+                          episodeFileUrl={this.state.episode.episodeFileUrl}
+                          episodeTitle={this.state.episode.episodeTitle}
+                          episodeDuration={this.state.episode.episodeDuration}
+                          episodeDownloadUrl={this.state.episode.episodeDownloadUrl}
+            />
+        )];
+}
+```
+
+It's a tiny thing, but I was really pleased with that solution. It saved users the hassle of having to hunt down the episode ID, and enter it in a field in the block Sidebar somewhere. They could just add the block, select the episode, and it would render it right in the editor!
+
 ## Where to find help
 
+I'd be lying if I said I manage to figure this all out by myself. Besides completing the React course, I found various resources extremely helpful.
+
+Whenever folks ask me where to find help, my first suggestion is to try and find an experienced contributor to lean on. Through my connections in the WordPress community, I was able to make connections with a few folks who were willing to help me answer specific questions. I'm very grateful to them for their time and patience. Many Gutenberg contributors are sponsored full time to work on Gutenberg, and so I'd recommend trying to reach out to one of them via the [Make WordPress Slack](https://make.wordpress.org/chat/). I'm sure they'd be happy to help. 
+
+You are also very welcome to reach out to me directly. I'm happy to help where I can, and if I don't have the answers, I'll do my best to either find out, or connect you with the right person. 
+
+I'd also recommend reading the [Block Editor Handbook](https://developer.wordpress.org/block-editor/). It's a great resource for learning about the various components and packages that make up Gutenberg. But take the time to read it thoroughly, and then ask questions when you don't understand something. What I found really helpful was to try and solve the current problem with the info in the handbook, and then when I reached out to folks directly, to include my code, and the handbook link, so they could see what I'd tried, and then help me figure out what I was missing. This is imminently more helpful than just asking a generalised question without providing any context.
+
+Last, but very much not least, look at other block code. Find plugins in the WordPress plugin repository that have implemented blocks, and dive into what they have done, and how they've solved problems. 
