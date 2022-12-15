@@ -1,10 +1,10 @@
-# Developer Tips: Converting your Shortcodes to Blocks
+# Dev Tips: Converting your Shortcodes to Blocks
 
 I can still vividly remember the first time I tried the block editor.
 
-It was just after watching the WordCamp EU Paris Livestream, the one where Om interviewed Matt. Given that Europe is in a simialar timezone to South Africa, I could watch the chat live, instead of needing to catch up 12 hours later, like I usually did for State of the Word. Matt announced that the Gutenberg plugin was available in the WordPress plugin repository, and of course, I had to install it immediately and try it out. I could see the potential for innovating the editor experience almost instantly, and I was excited about the future of WordPress.
+It was just after watching the WordCamp EU Paris Livestream, the one where Om interviewed Matt. Given that Europe is in a similar timezone to South Africa, I could watch the chat live, instead of needing to catch up 12 hours later, like I usually did for State of the Word. Matt announced that the Gutenberg plugin was available in the WordPress plugin repository, and of course, I had to install it immediately and try it out. I could see the potential for innovating the editor experience almost instantly, and I was excited about the future of WordPress.
 
-That was in 2017, yet it took me a full two years before I “learned JavaScript (more) deeply” and built my first blocks. My main hurdle was time. By 2017 I was a dad of two boys, running a business with my wife, freelancing through Codeable, and teaching jiu-jitsu, but I was dying to dive into block development. Rool forward a couple of years, and in 2020, I was given the opportunity to build the first set of blocks for the Seriously Simple Podcasting plugin, and I thoroughly enjoyed the experience. I’ve been a proponent of teaching other developers the power of blocks ever since.
+That was in 2017, yet it took me a full two years before I “learned JavaScript (more) deeply” and built my first blocks. My main hurdle was time. By 2017 I was a dad of two boys, running a business with my wife, freelancing through Codeable, and teaching jiu-jitsu, but I was dying to dive into block development. Roll forward a couple of years and in 2020 I was given the opportunity to build the first set of blocks for the Seriously Simple Podcasting plugin, and I thoroughly enjoyed the experience. I’ve been a proponent of teaching other developers the power of blocks ever since.
 
 Given that Seriously Simple Podcasting had been round for a while, the first blocks we built were based on our existing shortcodes. For plugin developers, shortcodes are great, but they don't have the best experience for users. Many of our plugin users where also fans of blocks, and could see how some of our most popular shortcodes would make great blocks, so it just made sense.
 
@@ -22,9 +22,9 @@ Finally, this article will not guide you through the entire process of convertin
 
 Let’s get this out of the way, not every shortcode should be a block. The WordPress shortcode system is powerful and has its place. I certainly don’t see it being removed at any time in the future. Heck, even the block editor has a shortcode block.
 
-[Image of shortcode block]
+![The shortcode block](/images/shortcode-block.png)
 
-There are many cases where a shortcode still makes sense over a block. One of my favorite examples of a shortcode that doesn't need to be a block is the time shortcode that’s used on the Make WordPress blogs
+There are many cases where a shortcode still makes sense over a block. One of my favorite examples of a shortcode that doesn't need to be a block is the time shortcode that’s used on the Make WordPress blogs.
 
 ```
 [time relative]Tuesday 07:00 UTC[/time]
@@ -195,8 +195,6 @@ import CastosPlayer from "./components/CastosPlayer";
 ```
 Finally, I used the JSX syntax to implement the component in my edit function, passing the variables as props to the component.
 
-```js:
-
 ```js
 edit: (props) => {
     const episode_id = props.episode_id;
@@ -256,7 +254,7 @@ My final block edit function ended up looking pretty tidy.
 edit: EditPlayer,
 ```
 
-I found custom components to be so useful, that I ended up creating custom components for pretty much [everything eventually](https://github.com/CastosHQ/Seriously-Simple-Podcasting/tree/master/src/components), and it's something I still do today when I see code that's going to be repeated, or could be simplified by separating it into it's own component. 
+I found custom components to be so useful, that I ended up creating custom components for pretty much [everything eventually](https://github.com/CastosHQ/Seriously-Simple-Podcasting/tree/master/src/components), and it's something I still do today when I see code that's going to be repeated, or could be simplified by separating it into its own component. 
 
 ## A note on importing packages and components
 
@@ -376,6 +374,8 @@ if (editing) {
 ```
 
 It's a tiny thing, but I was really pleased with that solution. It saved users the hassle of having to hunt down the episode ID, and enter it in a field in the block Sidebar somewhere. They could just add the block, select the episode, and it would render it right in the editor!
+
+![The final Castos Player block](/images/castos-player.gif)
 
 ## Where to find help
 
