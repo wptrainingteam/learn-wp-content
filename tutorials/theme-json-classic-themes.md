@@ -18,17 +18,17 @@ In this lesson, you're going learn what happens when you add a theme.json file t
 
 ## What is theme.json?
 
-theme.json is a file that allows block theme developers to control the settings and styles of the blocks in the Editor.
+The theme.json is a file that allows block theme developers to control the settings and styles of the blocks in the Editor.
 
-theme.json file allows for a central point of configuration while also providing a more consistent experience when configuring theme settings and styles.
+This allows for a central point of configuration while also providing a more consistent experience when configuring theme settings and styles.
 
 To learn more about theme.json in block themes and how to use it, check out the [Introduction to theme.json tutorial](https://learn.wordpress.org/tutorial/introduction-to-theme-json/) on Learn WordPress.
 
 ## What happens when you add theme.json in classic themes
 
-Let's take a look at what happens when you add a theme.json file to a classic theme, by adding one to the Twenty Twenty-One theme. To do this, lets first familiarize ourselves with the layout of a page, as well as some block editor settings when using Twenty Twenty-One.
+Let's take a look at what happens when you add a theme.json file to a classic theme, by adding one to the Twenty Twenty-One theme. To do this, lets first familiarize ourselves with the layout of a page, as well as some block editor settings, when using Twenty Twenty-One.
 
-As you can see, in the block editor the page header and content is a fixed with, and centre aligned. 
+As you can see, in the block editor the page header and content is a fixed width, and is centre aligned. 
 
 [edit page in the WP dashboard]
 
@@ -40,7 +40,11 @@ If we want to change the color of something in the editor, say the text color, t
 
 [change text color in the editor]
 
-Now, let's add a theme.json file to the Twenty Twenty-One theme. To do this, we'll create a new file in the root of the theme folder, name it theme.json, and just give it the $schema and version keys and their respective values.
+Now, let's add a theme.json file to the Twenty Twenty-One theme. 
+
+To do this, we'll create a new file in the root of the theme folder called theme.json.
+
+Next add the `$schema` and `version` keys, and their respective values.
 
 ```php
 {
@@ -49,7 +53,11 @@ Now, let's add a theme.json file to the Twenty Twenty-One theme. To do this, we'
 }
 ```
 
-If you open a post in the block editor, the first thing you'll notice is that the editor content is slightly out of alignment. This is because the by adding a theme.json to the theme, the default theme.json that ships with WordPress is now activated. That theme.json does not configure the `settings.layout.contentSize` setting, so you need to create it.
+If you open a page in the block editor, the first thing you'll notice is that the editor content is slightly out of alignment. 
+
+[edit page in the WP dashboard]
+
+This is because the by adding a theme.json to the theme, the default theme.json that ships with WordPress is now activated. That theme.json does not configure the `settings.layout.contentSize` setting, so you need to create it.
 
 ```php
 {
@@ -65,13 +73,15 @@ If you open a post in the block editor, the first thing you'll notice is that th
 
 Fortunately this does not affect the front end rendering of the page, as this still uses the styling from the theme's style.css file. However, you might find that some default WordPress theme.json settings and styles conflict with or duplicate your existing CSS rules, so it's a good idea to check this, and fix anything that is causing issues.
 
-If you want to inspect the default WordPress theme.json file, you can find it in your WordPress install, in the /wp-includes/theme.json file.
+If you want to inspect the default WordPress theme.json file, you can find it in your WordPress install, in the /wp-includes/ folder.
 
-Next, if you go to change the color of the paragraph text, you'll notice that the available colors include the colors specified by the default WordPress theme.json. 
+[navigate to default theme.json]
+
+For example, if you go to change the color of the paragraph text, you'll notice that the available colors include the colors specified by the default WordPress theme.json. 
 
 ## Using theme.json to replace add_theme_support.
 
-One of the major benefits of using a theme.json file in your classic themes, is the ability to add support for block editor functionality, without having to use the `add_theme_support` function in your functions.php file.
+One of the major benefits of using a theme.json file in your classic themes, is the ability to add support for block editor functionality, without having to use the `add_theme_support` function in your themes functions.php file.
 
 For example, let's take a look at the editor-color-palette feature. In the Twenty Twenty-One theme, the theme colors are set up in the functions.php file, using the `add_theme_support` function.
 
@@ -212,6 +222,10 @@ However, with a theme.json file, all of this code can be replicated under the `s
 	}
 }
 ```
+
+If you remove the colour pallete from the functions.php file, but specificy them in the theme.json file, you can see that the colours are still available in the editor.
+
+[remove add_theme_support, refresh block editor, select color]
 
 This, and all the rest of the block editor settings and styles as detailed in the [theme.json tutorial](https://learn.wordpress.org/tutorial/introduction-to-theme-json/) can also be added and applied to your theme.json file.
 
