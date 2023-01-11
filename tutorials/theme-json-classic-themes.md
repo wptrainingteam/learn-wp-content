@@ -40,20 +40,20 @@ If we want to change the color of something in the editor, say the text color, t
 
 [change text color in the editor]
 
-Now, let's add a theme.json file to the Twenty Twenty-One theme. 
+Let's add a theme.json file to the Twenty Twenty-One theme. 
 
-To do this, we'll create a new file in the root of the theme folder called theme.json.
+To do this, switch to a code editor like Visual Code Studio and create a new file in the root of the theme folder called theme.json.
 
-Next add the `$schema` and `version` keys, and their respective values.
+Next use the curly braces to start a new JSON object, and add the `$schema` and `version` keys, and their respective values.
 
 ```php
 {
 	"$schema": "https://schemas.wp.org/trunk/theme.json",
-	"version": 2
+	"version": 2the
 }
 ```
 
-If you open a page in the block editor, the first thing you'll notice is that the editor content is slightly out of alignment. 
+If you refresh the page in the block editor, the first thing you'll notice is that the editor content is slightly out of alignment. 
 
 [edit page in the WP dashboard]
 
