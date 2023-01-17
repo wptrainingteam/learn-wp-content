@@ -92,9 +92,9 @@ function wp_learn_delete_form_submission() {
 }
 ```
 
-Here the ID is being used directly in the SQL query, without any validation. Again, this means that if a user were to submit an ID of `1; DROP TABLE form_submissions;` the same SQL DROP query would be run after the insert, and the table would be dropped. 
+Here the ID is being used directly in the SQL query, without any validation. Again, this means that if a user were to submit an ID of `1; DROP TABLE form_submissions;` the same SQL DROP query would be run after the delete, and the table would be dropped. 
 
-To prevent this, you can use PHP's type casting functionality, to ensure that the value of $id is always an integer value. This can be done by adding `(int)` before the variable name, like so:
+To prevent this, you can use [PHP's type casting](https://www.php.net/manual/en/language.types.type-juggling.php#language.types.typecasting) functionality, to ensure that the value of $id is always an integer value. This can be done by adding `(int)` before the variable name, like so:
 
 ```
 $id = (int) $_POST['id'];
