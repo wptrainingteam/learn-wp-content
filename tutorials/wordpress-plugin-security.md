@@ -232,6 +232,8 @@ First, in the form itself, you can add a nonce field by using the wp_nonce_field
 wp_nonce_field( 'wp_learn_form_nonce_action', 'wp_learn_form_nonce_field' );
 ```
 
+When the form is rendered on the front end, a hidden field is added to the form, using the nonce name as the id and name attribute of the hidden field, and the generated nonce as the field value. This data is posted when the form is submitted. 
+
 Then, in the function that processes the form data, you can verify that the nonce is valid by using the wp_verify_nonce function, and by passing the POSTed nonce field and the nonce action to this function. If the result of this verification is false, you can exit early, preventing any further code execution.
 
 ```php
