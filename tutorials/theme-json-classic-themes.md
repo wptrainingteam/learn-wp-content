@@ -1,13 +1,23 @@
 # Theme.json in classic themes
 
+## Learning Outcomes
+
+1. Learn how adding a theme.json affects a classic theme
+2. Use theme.json to enable Block Editor supports
+
+## Comprehension Questions
+
+1. What is the major benefit of adding a theme.json to a classic theme? 
+2. What is the name of the PHP functionality that can be replaced by using theme.json?
+3. What should you be aware of when adding a theme.json to a classic theme?
+
 ## Outline
 
 - Quick Overview of theme.json, what it is, what it can do
     - highlights, and link back to theme.json tutorial
 - What happens when you add a theme.json to a classic theme
     - How does theme.json affect an existing classic theme
-    - The WordPress theme.json presets are enabled when adding a theme.json to a classic theme 
-    
+    - The WordPress theme.json presets are enabled when adding a theme.json to a classic theme
 - Where to go for more information
 
 ## Introduction
@@ -223,7 +233,7 @@ However, with a theme.json file, all of this code can be replicated under the `s
 }
 ```
 
-If you remove the colour pallete from the functions.php file, but specificy them in the theme.json file, you can see that the colours are still available in the editor.
+If you remove the colour pallete from the functions.php file, but specify them in the theme.json file, you can see that the colours are still available in the editor.
 
 [remove add_theme_support, refresh block editor, select color]
 

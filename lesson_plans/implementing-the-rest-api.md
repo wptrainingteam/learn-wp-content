@@ -1,13 +1,64 @@
-# Using the WordPress REST API
+# Implementing the WP REST API
 
-## Outline
+# Objectives
 
+After completing this lesson, participants will be able to:
+- Create a new post using the WP REST API
+- Delete a post using the WP REST API
+
+# Prerequisite Skills
+
+Participants will get the most from this lesson if they have familiarity with:
+- PHP
+- JavaScript
+- The WP REST API
+- The Backbone.js client to interact with the WP REST API
+
+# Readiness Questions
+
+A list of questions for participants to see if they have the background and skills necessary to learn and understand the lesson.
+
+- Do you have a basic understanding of the WP REST API?
+- Do you have a basic understanding of Backbone.js?
+
+# Materials Needed
+
+A list of files, resources, equipment, or other materials the presenter will need for the lesson.
+
+- A WordPress site running the latest version of WordPress
+- A WordPress plugin that fetches posts from the WP REST API (download here)
+- A text editor
+
+# Notes for the presenter
+
+A list of any handy tips or other information for the presenter.
+
+- This lesson is intended to be a follow up to the Using the WordPress REST API tutorial. It is recommended that learners watch/take part in a lesson for that tutorial first, and then come back here.
+
+# Lesson Outline
+
+The plan for the lesson. Outline form works well.
+
+- Introduction
 - WP REST API Schema
 - Creating a Post
 - Deleting a Post
+- Summary
 
-- Where to go for more information
--
+# Exercises
+
+These are short or specific activities that help participants practice certain components of the lesson. They should not be fully scripted exercises, but rather something that participants could do on their own. For example, you can create an exercise based on one step of the Example Lesson.
+
+# Assessment
+
+A few questions to ask participants to evaluate their retention of the material presented. They should be a measure of whether the objectives were reached. Consider having a question for each objective. There should be one assement item (or more) for each objective listed above. Each assessment item should support an objective; there should be none that don't.
+
+# Additional Resources
+
+An optional section that can contain a list of resources that the presenter can use to get more information on the topic.
+
+# Example
+
 ## Introduction
 
 Hey there, and welcome to Learn WordPress.
@@ -205,7 +256,3 @@ allPosts.fetch(
 ```
 
 Now, if you enter an id in the delete field, and hit the delete button, then the `loadPosts` button, you should see that the post has been deleted.
-
-For more information in using and interacting with the WP REST API, as well as how to extend it, check out the [WP REST API Handbook](https://developer.wordpress.org/rest-api/) at developer.wordpress.org.
-
-Happy coding

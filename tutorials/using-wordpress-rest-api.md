@@ -14,9 +14,13 @@
 - 
 ## Introduction
 
-Hey there, and welcome to Learn WordPress.
+Hey there, and welcome to Learn WordPress. 
 
-In this tutorial, you're going to learn all about the WordPress REST API.
+In this tutorial, you're going to learn about the WordPress REST API, and how to use it in your projects. 
+
+You will learn about key WP REST API concepts like routes, endpoints and global parameters, as well as how to use it in place of something like admin-ajax.
+
+## Description
 
 The WordPress REST API provides an interface for applications to interact with a WordPress site. These applications could be WordPress plugins, themes, or custom applications that need to access WordPress site data.
 
@@ -36,7 +40,9 @@ Let's dive into some concepts of REST to understand them better.
 
 In the context of the WordPress REST API, a route is a URI which can be mapped to different HTTP methods. 
 
-An HTTP method is the type of request that's made whenever you interact with anything on the web. For example, when you browse to a URL on the web, a GET request is made to the server to request the data. When you submit a form, a POST request is made, which passes the submitted form data to the web server.
+An HTTP method is the type of request that's made whenever you interact with anything on the web. For example, when you browse to a URL on the web, a GET request is made to the server to request the data. 
+
+When you submit a form, a POST request is made, which passes the submitted form data to the web server.
 
 The mapping of an individual HTTP method to a route is known as an endpoint. Let's look at some examples of routes and endpoints.
 
@@ -44,17 +50,19 @@ If you open a browser, and go to the /wp-json/ URI of your local WordPress insta
 
 The data returned is a JSON response showing what routes are available, and what endpoints are available within each route. 
 
+By default, your browser will display the JSON data in its raw data format. To convert it to a more readable format, you can use a browser extension like [JSON Formatter](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) for Chrome, [Basic JSON Formatter](https://addons.mozilla.org/en-US/firefox/addon/basic-json-formatter/) for Firefox, or [JSON Peep](https://apps.apple.com/us/app/json-peep-for-safari/id1458969831?mt=12) for Safari.
+
 In this example /wp-json/ is a route, and when that route receives a GET request it's handled by the endpoint which displays the data. This data is what is known as the index for the WordPress REST API. 
 
 By contrast, the /wp-json/wp/v2/posts route offers a GET endpoint which returns a list of posts, but also a POST endpoint. If you are an authenticated user, and you submit the right data via a POST request to the /wp-json/wp/v2/posts route, that request is handled by the endpoint which creates new posts.
 
-Typically, the same route (in this case /wp-json/wp/v2/posts) will have different endpoints for different HTTP methods, including GET (fetching data), POST (creating data) and DELETE (deleting data) HTTP methods.
+Typically, the same route (in this case /wp-json/wp/v2/posts) will have different endpoints for different HTTP methods, including GET for fetching data, POST for creating data and DELETE for deleting data.
 
 ## Global Parameters 
 
 The WP REST API includes a number of global parameters which control how the API handles the request/response handling. These operate at a layer above the actual resources themselves, and are available on all resources.
 
-Global parameters are implemetned on REST API routes as query string parameters. Query strings start with a ? and are followed by a series of key=value pairs, separated by &.
+Global parameters are implemented on REST API routes as query string parameters. Query strings start with a ? and are followed by a series of key=value pairs, separated by &.
 
 Take a look at the /wp-json/wp/v2/posts route you looked at earlier, by requesting the route in a browser, thereby activating the GET endpoint. As you can see, the default is to return all available fields for a post.
 
@@ -98,11 +106,11 @@ However, it is also possible to application passwords, JSON Web Tokens, and OAut
 
 One of the biggest benefits of using the REST API in your plugins is that it can replace your admin-ajax requests, using less code, and making your requests more secure. To see this in action, let's take a look at a simplified example.
 
-In this example, we have a plugin which adds a menu page to the WordPress dashboard. The page has a button and a textarea, and when the button is clicked, an ajax request is made to get the most recent posts, and display their titles in the textarea.
+In this example code, the plugin which adds a menu page to the WordPress dashboard. The page has a button and a textarea, and when the button is clicked, an ajax request is made to get the most recent posts, and display their titles in the textarea.
 
 Besides the functionality to render the admin page, this is what the code looks like to implement Ajax. First, in the wp_learn_rest_enqueue_script function, you need to use wp_localize_script to pass the ajax_url to the wp_learn_ajax object, so that it's available when the script is loaded.
 
-Note that in this example, there's no implementation of a nonce for security, this would add additional code to this file, so it's been left out of this example, but it is required for a production plugin.
+Note that in this example, there's no implementation of a nonce for security, but it is recommended for a production plugin.
 
 ```
 /**
@@ -146,7 +154,7 @@ function wp_learn_ajax_fetch_posts() {
 }
 ```
 
-On the JavaScript side, some JavaScript is needed to handle the click event on the button, and make the Ajax request.
+On the JavaScript side, some JavaScript would needed to handle the click event on the button, and make the Ajax request. Typically this is usually handled using some jQuery:
 
 ```
 /**
@@ -155,7 +163,7 @@ On the JavaScript side, some JavaScript is needed to handle the click event on t
 jQuery( document ).ready(
     function ( $ ) {
         const loadPostsButton = $( '#wp-learn-ajax-button' );
-        if ( typeof ( loadPostsButton ) != 'undefined' && loadPostsButton != null ) {
+        if ( loadPostsButton ) {
             loadPostsButton.on(
                 'click',
                 function ( event ) {
@@ -180,68 +188,89 @@ jQuery( document ).ready(
 
 So what would this look like if you were using the WP REST API.
 
-First of all, you don't need to pass the ajax_url anywhere, so we can remove that code from wp_learn_rest_enqueue_script. We also won't be processing the ajax request, so we can remove the wp_learn_ajax_fetch_posts function and associated hook.
+First of all, you don't need to pass the ajax_url anywhere, so we can remove that code from wp_learn_rest_enqueue_script. We also won't be processing the ajax request, so we can remove the wp_learn_ajax_fetch_posts function and associated hook. Finally, we can remove the button, and add one to load the posts via the REST API
 
-For now we'll just comment out this code.
+WordPress ships with a [Backbone JavaScript Client](https://developer.wordpress.org/rest-api/using-the-rest-api/backbone-javascript-client/) for making direct requests to the WP REST API. This provides an interface for the WP REST API by providing Backbone Models and Collections for all endpoints exposed through the API. 
 
-Next, WordPress ships with a Backbone JavaScript Client for making direct requests to the WP REST API. This provides an interface for the WP REST API by providing Backbone Models and Collections for all endpoints exposed through the API. To ensure that our code is able to use the Backbone.js client, we merely need to update our plugin's dependancy from `jquery` to `wp-api`.
+To ensure that your code is able to use the Backbone.js client, you merely need to update your plugin's dependency from `jquery` to `wp-api`.
 
-This will ensure that our plugin's JavaScript code is only loaded after the REST API client JavaScript is loaded, so we can use it in our plugin.
+This will ensure that your plugin's JavaScript code is only loaded after the REST API JavaScript client is loaded, so you can use it in your plugin.
 
-To use the WP API client, use the global `wp` object, and create a new collection of posts
+In the JavaScript file, first you can delete the jQuery/Ajax related code. 
 
-```
-    const allPosts = new wp.api.collections.Posts();
-```
-
-Then, to fetch the posts, call the fetch method on the collection.
+Than you'll want to start by registering a click event handler for the new button.
 
 ```
-    allPosts.fetch();
+const loadPostsByRestButton = document.getElementById( 'wp-learn-rest-api-button' );
+if ( loadPostsByRestButton ) {
+    loadPostsButton.addEventListener( 'click', function () {
+      // do something
+    } );
+}
+```
+
+Then, in the event handler function, you can use the WP API client, by accessing it from the global `wp` object, to create a new collection of posts
+
+```
+const allPosts = new wp.api.collections.Posts();
+```
+
+At this point, allPosts is simply an empty collection, so you will need to fetch the posts, by calling the `fetch` method on the collection.
+
+```
+   allPosts.fetch();
 ``` 
 
-The fetch method returns a promise, so you can use the done method to handle the response. 
-
-```js
-    allPosts.fetch().done( function () {
-
-    } )
-```
-
-In this case, you can simply loop through the posts using `forEach` [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach).
+The fetch method returns a promise, so you can chain the `done` method to handle the response, and implement a callback function which will accept the response from the API request. You can specify a `posts` argument in this callback function, to accept the response from the API request
 
 ```
-    allPosts.fetch().done( function () {
-        allPosts.forEach( function ( post ) {
-            // do something with post
-        } );
-    } );
+    const posts = allPosts.fetch().done(
+        function ( posts ) {
+            // do something with posts
+        }
+    );
 ```
 
-Finally, we can add the output to the textarea.
+Now you can simply loop through the `posts` object using `forEach` [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach), and access each post individually.
 
 ```
-    const allPosts = new wp.api.collections.Posts();
-    allPosts.fetch().done( function () {
-        const textarea = document.getElementById( 'wp-learn-posts' );
-        allPosts.models.forEach( function ( post ) {
-            textarea.value += post.get( 'title' ).rendered + '\n'
-        } );
-    } );
+    const posts = allPosts.fetch().done(
+        function ( posts ) {
+            posts.forEach( function ( post ) {
+              // do something with post
+            } );
+        }
+    );
 ```
 
-To make sure this all works, you can hook it up to the click event handler of a button on the admin page
+Finally, you can add the post title to the textarea. First you need to create an instance of the textarea before the forEach loop, and then append the post title to the textarea's value property inside the forEach loop.
+
 ```
-const loadPostsButton = document.getElementById( 'wp-learn-rest-api-button' );
-if ( typeof ( loadPostsButton ) != 'undefined' && loadPostsButton != null ) {
+    const posts = allPosts.fetch().done(
+        function ( posts ) {
+            const textarea = document.getElementById( 'wp-learn-posts' );
+            posts.forEach( function ( post ) {
+              textarea.value += post.title.rendered + '\n'
+            } );
+        }
+    );
+```
+
+Your final code will look something like this.
+
+```
+const loadPostsByRestButton = document.getElementById( 'wp-learn-rest-api-button' );
+if ( loadPostsByRestButton ) {
     loadPostsButton.addEventListener( 'click', function () {
         const allPosts = new wp.api.collections.Posts();
-        allPosts.fetch().done( function () {
+        allPosts.fetch().done(
+          function ( posts ) {
             const textarea = document.getElementById( 'wp-learn-posts' );
-            allPosts.models.forEach( function ( post ) {
-                textarea.value += post.get( 'title' ).rendered + '\n'
+            posts.forEach( function ( post ) {
+              textarea.value += post.title.rendered + '\n'
             } );
-        } );
+        }
+    );
     } );
 }
 ```
