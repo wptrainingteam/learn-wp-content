@@ -1,4 +1,4 @@
-# WordPress REST API - Updates, Custom Fields, Authentication
+# WordPress REST API - Custom Fields, Authentication
 
 ## Objectives
 
@@ -34,69 +34,7 @@ To review, this plugin adds a new admin submenu page to the WordPress Tools menu
 
 The JavaScript code that powers this makes use of the Backbone.js client that ships with WordPress. Listing posts uses the Posts collection, and creating and deleting posts uses the Posts model. More specifically, the submitPost funciton uses the Posts model to create a new post. This function is then called when the Create Post button is clicked.
 
-## Updating Posts
 
-Using the Backbone.js client that ships with WordPress means you can update Posts in the same way as deleting posts. The main difference is that you also need to pass the post id to the Post model, so that it knows which post to update.
-
-First, in the PHP file for the plugin, you'll need to add a form to manage handling updates. For this, you can simply copy the code that's used to create posts, but update the field ids, add a field for the Post's id, and change the button text to Update:
-
-```html
-<div style="width:50%;">
-    <h2>Update Post</h2>
-    <form>
-        <div>
-            <label for="wp-learn-update-post-id">Post ID</label>
-            <input type="text" id="wp-learn-update-post-id" placeholder="ID">
-        </div>
-        <div>
-            <div>
-                <label for="wp-learn-update-post-title">Post Title</label>
-                <input type="text" id="wp-learn-update-post-title" placeholder="Title">
-            </div>
-            <div>
-                <label for="wp-learn-update-post-content">Post Content</label>
-                <textarea id="wp-learn-update-post-content" cols="100" rows="10"></textarea>
-            </div>
-            <div>
-                <input type="button" id="wp-learn-update-post" value="Update">
-            </div>
-    </form>
-</div>
-```
-
-That's all that's needed in the PHP side, so you can switch over to the JavaScript file. The next step is to add a function to handle the Post update. This will be very similar to the current submitPost function, but will need to update the various element ids, and pass the post id to the Post model.
-
-```js
-function updatePost() {
-    const id = document.getElementById( 'wp-learn-update-post-id' ).value;
-    const title = document.getElementById( 'wp-learn-update-post-title' ).value;
-    const content = document.getElementById( 'wp-learn-update-post-content' ).value;
-    const post = new wp.api.models.Post( {
-        id: id,
-        title: title,
-        content: content,
-        status: 'publish'
-    } );
-    post.save().done( function ( post ) {
-        alert( 'Post Updated!' );
-        clearFields();
-        loadPosts();
-    } );
-}
-```
-
-Finally, you need to add a click handler to the Update button, and call the updatePost function when it's clicked:
-
-```js
-const updatePostButton = document.getElementById( 'wp-learn-update-post' );
-if ( updatePostButton ) {
-	updatePostButton.addEventListener( 'click', updatePost );
-}
-```
-
-Go ahead and test this out in your browser, refresh the admin page and enter an id, updated post title and content, and click Update.
-
-Once the post has been updated, check the Post in the Posts list, to confirm the content has been updated.
 
 ## Working with custom fields
 
