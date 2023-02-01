@@ -34,8 +34,6 @@ To review, this plugin adds a new admin submenu page to the WordPress Tools menu
 
 The JavaScript code that powers this makes use of the Backbone.js client that ships with WordPress. Listing posts uses the Posts collection, and creating and deleting posts uses the Posts model. More specifically, the submitPost funciton uses the Posts model to create a new post. This function is then called when the Create Post button is clicked.
 
-
-
 ## Working with custom fields
 
 Besides the default fields that exist on a Post, WordPress also allows you to add and manage custom fields, also known as metadata. These fields are often used on custom post types, to store additional pieces of data that are specific to that post type. Under the hood, these custom fields are stored in the postmeta table, as a set of key/value pairs attached to the post by the post id.

@@ -21,21 +21,23 @@ Upon completion of this lesson the participant will be able to:
 
 Hey there, and welcome to Learn WordPress.
 
-In this tutorial, you're going to learn all about interacting with the WordPress REST API. 
+In this tutorial, you're going to learn about interacting with the WordPress REST API, using the Backbone.js client that ships with WordPress.
 
 This video will cover the WP REST API Schema, and then you'll learn how to create, update, and delete WordPress data.
 
-If this is your first time working with the WP REST API, I recommend watching the Using the WordPress REST API tutorial.
+If this is your first time working with the WP REST API, I recommend watching the Using the WordPress REST API tutorial. This will introduce you to using the WP REST API, with code examples.
+
+Alternatively, download the example code from that tutorial from this URL, and use it to follow this tutorial.
 
 ## WP REST API Schema
 
-The WordPress Developer Documentation on the WP REST API has an entire section dedicated to the [endpoints](https://developer.wordpress.org/rest-api/reference/) available to the REST API. These are the endpoints that ship with core WordPress. 
+When working with the REST API, it's useful to keep the [Endpoint Reference](https://developer.wordpress.org/rest-api/reference/) section of the WP REST API documentation handy. The Endpoint Reference lists all endpoints that ship with WordPress core. 
 
-Clicking on an individual endpoint, say [Posts](https://developer.wordpress.org/rest-api/reference/posts/), will show you the schema for that endpoint. The schema defines all the fields that exist for when fetching or creating data of that specific type.
+Clicking on an individual endpoint, say [Posts](https://developer.wordpress.org/rest-api/reference/posts/), will show you the schema for that endpoint. The schema defines all the fields that exist for a resource when fetching or creating data of that specific type.
 
 You will notice that many of the endpoint fields match up with the fields that are available in the WordPress database table related to that data type. Some however, are slightly different. For example, the `title` field for the Post endpoint will match up to the post_title field in the posts table. It is important to remember that these differences exist, and to use the correct field name when interacting with the API.
 
-For example, in the Using the WordPress REST API tutorial, when fetching the posts via the API, you would filter by the title field, not post_title:
+For example, when fetching the posts via the API using the built-in Backbone.js client, you would filter by the `title` field, and not `post_title`:
 
 ```js
 allPosts.fetch(
@@ -43,18 +45,7 @@ allPosts.fetch(
 )
 ```
 
-Similarly, the original admin-ajax response contained an array of posts, and when iterating through the posts to get the title, you would have used post.post_title, to build the list of posts: 
-
-```js
-function ( posts ) {
-    const textarea = $( '#wp-learn-posts' );
-    posts.forEach( function ( post ) {
-        textarea.append( post.post_title + '\n' )
-    } );
-},
-```
-
-However, when using the WP REST API, you would use post.title.rendered, as the title field on the post is an object, and the rendered property of that object is the actual content of the posts title.
+Similarly, when looping through a list of posts returned from the WP REST PAI, you would use post.title.rendered, as the title field on the post is an object, and the rendered property of that object is the actual content of the post's title.
 
 ```js
 done( function ( posts ) {
@@ -65,19 +56,13 @@ done( function ( posts ) {
 } );
 ```
 
-When working with the WP REST API, it's always a good idea to keep the schema documentation for the specific endpoint you are working with at hand.
-
 ## Creating a Post
 
-Let's take what you've learned about the WP REST API, and use it to create a new post.
+Let's use the WP REST API it to create a new post. To do so, we'll need to pass the title and content fields to a new post model.   
 
-You can either create a new plugin to test this out, or download the plugin that was created in the Using the WordPress REST API tutorial.
+You already have a plugin that allows you to list posts, so you can use that as a starting point.
 
-To get the latest version of the example plugin code, browse to https://github.com/jonathanbossenger/wp-learn-rest-api/releases/tag/0.0.2, and download the zip file. Then install it in your local development site as usual.
-
-The plugin registers an admin page which you can access via the Tools menu, with a button to load a list of posts, and clear that list. 
-
-First, you'll need to create a form that will allow you to enter the title and content of the post you want to create. You can use the following HTML to create the form, and add it to the admin page callback:
+First, you'll need to update the page with a form that will allow you to enter the title and content of the post you want to create. You can use the following HTML to create the form, and add it to the admin page callback:
 
 ```html
 <div style="width:50%;">
@@ -143,7 +128,7 @@ Inside the `submitPost` function, you'll need to get the title and content value
     const content = document.getElementById( 'wp-learn-post-content' ).value;
 ```
 
-Next, you'll need to create a new post model object, using [the Backbone.js Post model](https://developer.wordpress.org/rest-api/using-the-rest-api/backbone-javascript-client/#model-examples):
+Next, you'll need to create a new post model object, using [the Backbone.js Post model](https://developer.wordpress.org/rest-api/using-the-rest-api/backbone-javascript-client/#model-examples). You will then need to pass the values for the title and content to the model object:
 
 ```js
     const post = new wp.api.models.Post( {
@@ -152,14 +137,15 @@ Next, you'll need to create a new post model object, using [the Backbone.js Post
     } );
 ```
 
-Finally, you'll need to save the post to the database, using the Posts model's save method. You can also add a `done` callback to handle the response once the post is saved:
+Finally, you'll need to save the post to the database, using the Posts model's `save` method. You can also add a `done` callback to handle the response once the post is saved:
 
 ```js
 post.save().done( function ( post ) {
-    console.log( post );
     alert( 'Post saved!' );
 } );
 ```
+
+If you refresh the admin page, and enter a title and content, and click the Add button, you should see an alert that says "Post saved!".
 
 If you used the plugin example from the previous tutorial, you might now want to click the `loadPosts` button to load the posts. Notice however that the post doesn't appear. This is because the default value for the status field on the Post model is `draft`. You can change this by adding the status field to the post model object:
 
@@ -175,7 +161,7 @@ Create the new post, hit the `loadPosts` button, and you should see the new post
 
 ## Updating Posts
 
-You can also update Posts in the same way as deleting posts. The main difference is that you also need to pass the post id to the Post model, so that it knows which post to update.
+You can also update Posts in the same way as creating posts. The main difference is that you also need to pass the post id to the Post model, so that it knows which post to update.
 
 First, in the PHP file for the plugin, you'll need to add a form to manage handling updates. For this, you can simply copy the code that's used to create posts, but update the form field ids, add a field for the Post's id, and change the button text to Update:
 
@@ -230,13 +216,36 @@ if ( updatePostButton ) {
 }
 ```
 
-Go ahead and test this out in your browser, refresh the admin page and enter an id, updated post title and content, and click Update.
+The last thing you'll need to do is update `loadPosts` functionality to include the id in the list:
+
+```js                                                                                                 
+allPosts.fetch(                                                                                       
+    { data: { "_fields": "id, title" } }                                                              
+).done( function ( posts ) {                                                                          
+    const textarea = document.getElementById( 'wp-learn-posts' );                                     
+    posts.forEach( function ( post ) {                                                                
+        textarea.value += post.id  + ', ' +  post.title.rendered + '\n'                               
+    } );                                                                                              
+} );                                                                                                  
+```                                                                                                   
+
+Go ahead and test this out in your browser, refresh the admin page and load the posts. 
+
+Then enter an id, updated post title and content, and click Update.
 
 Once the post has been updated, reload the list of posts, to confirm the content has been updated. You can also check the Post in the WordPress admin to confirm the changes.
 
+Notice how the post content is displayed as a Classic Block. This is because in this simple example we're not passing block markup to the Post model. You can pass block markup to the Post model, for example by wrapping the content in a `wp:paragraph` block tags, but this is beyond the scope of this tutorial.
+
+```html
+<!-- wp:paragraph -->
+<p>Updated Post Content</p>
+<!-- /wp:paragraph -->
+```
+
 ## Deleting a Post
 
-Now that you know how to create a post, let's take a look at how to delete a post.
+Now that you know how to create and update a post, let's take a look at how to delete a post.
 
 First, you'll need to add a form to the admin page callback that will allow you to enter the ID of the post you want to delete, as well as a button to trigger the delete:
 
@@ -255,7 +264,7 @@ First, you'll need to add a form to the admin page callback that will allow you 
 </div>
 ```
 
-Then, as before, set up the click event listener for the button, as well as the functon to handle the deletion:
+Then, as before, set up the click event listener for the button, as well as the function to handle the deletion:
 
 ```js
 const deletePostButton = document.getElementById( 'wp-learn-delete-post' );
@@ -290,20 +299,11 @@ post.destroy().done( function ( post ) {
 } );
 ```
 
-To get a list of the ids, you can update the `loadPosts` functionality to include the id in the list:
+Now, refresh the page, and load the posts
 
-```js
-allPosts.fetch(
-    { data: { "_fields": "id, title" } }
-).done( function ( posts ) {
-    const textarea = document.getElementById( 'wp-learn-posts' );
-    posts.forEach( function ( post ) {
-        textarea.value += post.id  + ', ' +  post.title.rendered + '\n'
-    } );
-} );
-```
+Then, grab one of the post ids, paste it in the ID field for the delete post form, and hit the delete button. 
 
-Now, refresh the page, load the posts, and if you enter a valid id in the delete field, and hit the delete button, the post will be deleted. Use the load posts button to confirm the post has been deleted, or check the list of posts in the WordPress admin.
+The post should be deleted, and you can use the load posts button to confirm the post has been deleted, or check the list of posts in the WordPress admin.
 
 For more information in using and interacting with the WP REST API, as well as how to extend it, check out the [WP REST API Handbook](https://developer.wordpress.org/rest-api/) at developer.wordpress.org.
 
