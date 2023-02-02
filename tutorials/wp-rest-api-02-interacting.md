@@ -137,7 +137,7 @@ Next, you'll need to create a new post model object, using [the Backbone.js Post
     } );
 ```
 
-Finally, you'll need to save the post to the database, using the Posts model's `save` method. You can also add a `done` callback to handle the response once the post is saved:
+Finally, you'll need to send the request to the Posts route to save the data, using the Posts model's `save` method. You can also add a `done` callback to handle the response once the post is saved:
 
 ```js
 post.save().done( function ( post ) {
