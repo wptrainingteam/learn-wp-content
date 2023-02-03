@@ -1,5 +1,7 @@
 # WordPress REST API - Custom Fields, Authentication
 
+https://workpress.test/wp-json/wp/v2/
+
 ## Objectives
 
 Upon completion of this lesson the participant will be able to:

@@ -1,4 +1,15 @@
-# WordPress plugin security
+# Introduction to securely developing plugins
+
+
+## Objectives
+
+Upon completion of this lesson the participant will be able to:
+
+1.Securing (sanitizing) input
+1.Data validation
+1.Securing (escaping) output
+1.Preventing untrusted requests
+1.Checking User Capabilities
 
 ## Outline
 
