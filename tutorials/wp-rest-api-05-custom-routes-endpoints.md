@@ -1,7 +1,5 @@
 # WordPress REST API - Custom Routes & Endpoints
 
-https://workpress.test/wp-json/wp/v2/
-
 ## Objectives
 
 Upon completion of this lesson the participant will be able to:
@@ -188,6 +186,18 @@ To test this, create a new POST request in your API testing tool, and submit the
 You should see the number of rows inserted returned as a JSON object.
 
 Notice how you didn't need to pass any authentication credentials to this route. This is because you set the permission_callback to __return_true. This means that anyone can access the route, and create a new form submission. If you want to restrict access to the route, you can specify a permissions_callback function, and use the current_user_can function to check if the user has the required permissions. 
+
+```php
+'permission_callback' => 'wp_learn_require_auth'
+```
+
+```php
+function wp_learn_require_auth() {
+	return current_user_can( 'edit_posts' );
+}
+```
+
+Try testing this by creating a form submission using the route. You should see an authentication error, which means that you don't have permission to access the route. Now, set up an Application Password, configure it in Postman, and try the route again.
 
 ## Creating a custom WP REST API endpoint to fetch a single submission
 

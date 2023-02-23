@@ -1,4 +1,4 @@
-# WordPress REST API - Custom Fields, Authentication
+# WordPress REST API - Modifying responses
 
 https://workpress.test/wp-json/wp/v2/
 
@@ -40,13 +40,15 @@ Before we get started, it's important to note that modifying WP REST API respons
 
 If you need to retrieve a subset of data from a REST API request, the recommended method is to rather use the [_fields](https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_fields) global parameter, to limit the fields returned in the response.
 
-[Example of using fields to limit fields returned by Posts GET route]
+For example, you can use the fields parameter to limit the fields returned to just id, title, and expert, if those are the only fields you need for your application.
 
-Adding fields is less risky, and so this tutorial only covers adding fields to REST API responses.
+[Show limiting fields in a GET request via Postman]
+
+Adding fields to a REST API response is less risky, and so this tutorial only covers adding fields.
 
 ## Enabling Custom Fields for the WP REST API
 
-In the [Custom Fields and Authentication tutorial], you learned how take custom fields, also known as post meta, added using the `register_meta` function and enable them for the WP REST API. 
+In the [Custom Fields and Authentication tutorial](), you learned how take custom fields, also known as post meta, added using the `register_meta` function and enable them for the WP REST API. 
 
 To do this, you used the show_in_rest argument in the arguments array passed to the `register_meta` function, and set it to true.
 
@@ -65,15 +67,15 @@ To do this, you used the show_in_rest argument in the arguments array passed to 
 
 This will enable the custom field to be added to the REST API response, and will also allow you to post data to the custom field using the REST API. This is handled by passing the custom field as a key value pair in the meta object of the request body.
 
-```js
-const post = new wp.api.models.Post( {
-  title: title,
-  content: content,
-  status: 'publish',
-  meta: {
-    'url': url_value
-  }
-} );
+```json
+{
+	"title": "New Post Title",
+    "content": "New Post Content",
+    "status": "publish",
+    "meta": {
+		"url": "https://learn.wordpress.org"
+	}
+}
 ```
 
 [Show posting a meta object to the Posts POST endpoint via Postman]
@@ -149,32 +151,68 @@ You then decide you want the url custom field to only be available on the book c
     );
 ```
 
-If you queried Posts, the url meta field would no longer be visible. It would now only appear if you queried the Books.
+If you queried Posts via the REST API, the url meta field would no longer be visible. It would now only appear if you queried the Books.
 
-You can of course also register custom fields on a per custom post type basis. For example, if you wanted to register a custom field `isbn` on the book custom post type, you could do this:
+You can register additional custom fields on a custom post type using the `object_subtype` argument. For example, if you wanted to register a custom field `isbn` on the book custom post type:
 
 ```php
-	register_meta(
-		'book',
-		'isbn',
-		array(
-			'single'       => true,
-			'type'         => 'string',
-			'default'      => '',
-			'show_in_rest'   => true,
-		)
-	);
+    register_meta(
+        'post',
+        'url',
+        array(
+            'single'         => true,
+            'type'           => 'string',
+            'default'        => '',
+            'show_in_rest'   => true,
+            'object_subtype' => 'book',
+        )
+    );
 ```
 
 You would now have both `url` and `isbn` custom fields available on the `book` custom post type.
 
+You can test this by adding a book via the REST API. 
+
+Create a new POST request to the book route:
+
+```
+https://example.com/wp-json/wp/v2/book
+```
+
+Then post the following in the request body:
+
+```json
+{
+	"title": "New Book",
+    "content": "New Book Content",
+    "status": "publish",
+    "meta": {
+		"url": "https://book.wordpress.org",
+        "isbn": "978-1-4302-6418-2"
+	}
+}
+```
+
+[show POSTing a book with url and isbn fields]
+
 ## Adding Custom Fields as top level fields to API Responses
 
-The other way to add custom fields to the WP REST API is to add them as top level fields to the API responses. 
+The other way to add custom fields to the WP REST API is to add them as top level fields on the API responses. 
 
 In the earlier example, the isbn was registered as a meta field, and is therefore available in the meta object of the REST API response. But what if you'd prefer to have it as a top level field, alongside the title, content, and excerpt?
 
-This can be acheived using the register_rest_field function. 
+This can be achieved using the [register_rest_field](https://developer.wordpress.org/reference/functions/register_rest_field/) function. Let's look at how this would be implemented.
+
+First, you need to register your rest fields in the rest_api_init action hook. This is to ensure that the field is only registered on the REST API.
+
+```php
+add_action( 'rest_api_init', 'wp_learn_rest_add_fields' );
+function wp_learn_rest_add_fields() { 
+    // register some REST API functionality
+}
+```
+
+You then use the register_rest_field function to register the field. The first parameter is the object type the field should be registered on. This can be a string, for a single object, or an array, for more than one object. In this case, just register the field on the `book` custom post type. The second argument is the name of the field. In this case, just make it the same as the custom field, `isbn`. 
 
 ```php
     register_rest_field(
@@ -183,7 +221,7 @@ This can be acheived using the register_rest_field function.
     );
 ```
 
-You then need to pass at least the following three arguments to the $args array for this to work
+The third parameter is an array of arguments that determines how the field functions. You need pass at least the following three arguments to the array.
 1. get_callback - a function that returns the value of the field
 2. update_callback - a function that updates the value of the field
 3. schema - an array containing the schema for the field
@@ -193,28 +231,11 @@ You then need to pass at least the following three arguments to the $args array 
         'book',
         'isbn',
         array(
-            'schema'          => null,
             'get_callback'    => null,
             'update_callback' => null,
+            'schema'          => null,
         )
     );
-```
-
-Also, new rest fields should only be registered on the REST API. To do this, hook your function to the rest_api_init action.
-
-```php
-    add_action( 'rest_api_init', 'wp_learn_rest_add_fields' );
-    function wp_learn_rest_add_fields() {
-        register_rest_field(
-            'book',
-            'isbn',
-            array(
-                'schema'          => null,
-                'get_callback'    => null,
-                'update_callback' => null,
-            )
-        );
-    }
 ```
 
 For now, you can leave the schema argument of the rest field as null, but you will need to specify the get_callback and update_callback functions. These are the functions that will be triggered when the API request is made, either to fetch the data, or to create or update the data.
@@ -231,7 +252,7 @@ For now, you can leave the schema argument of the rest field as null, but you wi
     );
 ```
 
-By default, an array of the post type's prepared data is passed to the get_callback function as the first argument. An implementation of the this function could be as straightforward as returning the value of the custom field. 
+By default, an array of the post type's prepared data is passed to the get_callback function as the first argument. An implementation of this function could be as straightforward as returning the value of the custom field. 
 
 ```php
 function wp_learn_rest_get_isbn( $book ){
@@ -239,7 +260,7 @@ function wp_learn_rest_get_isbn( $book ){
 }
 ```
 
-The value sent for the field from a REST API create or update request is passed to the update_callback function as the first argument, and the model object (ie the post). An implementation of this function could be as simple as straightforward the value of the custom field.
+The value sent for the field from a REST API create or update request is passed to the update_callback function as the first argument, and the model object (ie the post) as the second. An implementation of this function could be as simple as updating the value of the custom field.
 
 ```php
 function wp_learn_rest_update_isbn( $value, $book ){
@@ -247,7 +268,7 @@ function wp_learn_rest_update_isbn( $value, $book ){
 }
 ```
 
-If you test this out by creating a new book, and passing a value for the isbn field, you'll see the data being saved to the database in the post_meta table, but being displayed as a top level field in the REST API response.
+If you test this out by creating a new book, and passing a value for the isbn field, you'll see the data being saved to the database in the post_meta table, but is also displayed as a top level field in the REST API response.
 
 ## Including Schema
 
@@ -272,7 +293,7 @@ You can read more about how to define the schema for REST API resources and fiel
 
 ## Deciding between register_rest_field vs register_meta
 
-The main advantage of using the register_meta route is that you do not need to add any further code to enable storing or retrieving data from the custom fields, as long as you remember to fetch and save the data using the meta object in your JavaScript code. You enable the field to show in the REST API, and you can use it straight away. This is also the more performant option, as it does not add any additional code that needs to be executed.
+The main advantage of using the register_meta route is that you do not need to add any further code to enable storing or retrieving data from the custom fields, as long as you remember to fetch and save the data using the meta object in your application code. You enable the field to show in the REST API, and you can use it straight away. This is also the more performant option, as it does not add any additional code that needs to be executed.
 
 On the other hand, the main advantage of using the register_rest_field route is that the fields appear as top level fields in your REST API routes. The other advantage is that you can perform additional processing on the data before it is returned, or before it is saved. For example, you could perform some validation on the data before it is saved to the database. You could also add hooks to the get_callback and update_callback functions to either perform additional processing on the data, or to allow other developers to extend your custom fields. The downside is that you're adding a slight overhead to the API requests, as it adds more code that needs to be executed.
 

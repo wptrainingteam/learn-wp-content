@@ -1,5 +1,13 @@
 # Using the WordPress REST API
 
+# Learning Objectives
+
+Upon completion of this lesson the participant will be able to:
+1. Identify the key elements of the WordPress REST API
+2. Use the WordPress REST API global parameters to filter data
+3. Use the Backbone.js client to interact with the WP REST API
+4. Replace an admin-ajax example with a REST API example
+
 ## Outline
 
 - Key Concepts
