@@ -21,13 +21,13 @@ Upon completion of this lesson the participant will be able to:
 
 Hey there, and welcome to Learn WordPress.
 
-In this tutorial, you're going to learn how to extend the WP REST API by creating your own simple routes and endpoints.
+In this tutorial, you're going to learn how to extend the WP REST API by creating your own routes and endpoints.
 
 You will learn how to use the register_rest_route function to register routes, and how to create specific endpoints by setting the route method. You will also learn how it's possible to specify route arguments, and how to use them fetch specific data.
 
 # Creating a custom table to store form submissions
 
-Let's consider a requirement to build a simple submissions form plugin, which allows a name and email field to be captured via the WP REST API. The plugin should allow for a form-submissions REST API route, which has three endpoints:
+Let's consider a requirement to build a simple form submissions plugin, which allows a name and email field to be captured via the WP REST API. The plugin should allow for a form-submissions REST API route, which has three endpoints:
 
 1. One to fetch all form submissions
 2. One to post a form submission
@@ -35,7 +35,7 @@ Let's consider a requirement to build a simple submissions form plugin, which al
 
 To start, because you're only storing a few simple fields, you might create a custom table to store the form submissions. 
 
-The custom table code might look something like this:
+The plugin code to create this custom table might look something like this:
 
 ```php
 register_activation_hook( __FILE__, 'wp_learn_setup_table' );
@@ -55,7 +55,9 @@ function wp_learn_setup_table() {
 }
 ```
 
-Once the plugin is activated, this will create the form_submissions table in the database, with the two fields.
+Here, in a function hooked into the plugin activation hook, you're using the global $wpdb object and the dbDelta function to create a new table in the WordPress database called form_submissions. The table has three fields: id, name, and email. The id field is set to auto-increment, and is the primary key.
+
+Once the plugin is activated, this will create the form_submissions table in the database, with the three fields.
 
 # Registering a custom WP REST API route to fetch submissions
 
@@ -85,7 +87,7 @@ Let's look at what the code might look like to register a custom route to fetch 
 		'/form-submissions/',
 		array(
 			'methods'  => 'GET',
-			'callback' => 'wp_learn_rest_get_form_submissions',
+			'callback' => 'wp_learn_get_form_submissions',
 			'permission_callback' => '__return_true'
 		)
 	);
@@ -93,7 +95,7 @@ Let's look at what the code might look like to register a custom route to fetch 
 
 1. The namespace is wp-learn-form-submissions-api/v1
 2. The route is /form-submissions/
-3. The route arguments specify the route method as GET, and the callback function as wp_learn_rest_get_form_submissions. It also specifies a permission callback function, which is used to check if the user has permission to access the route. In this case, we're using the built-in __return_true function, which returns true, so anyone can access the route.
+3. The route arguments specify the route method as GET, and the callback function as wp_learn_get_form_submissions. It also specifies a permission callback function, which is used to check if the user has permission to access the route. In this case, we're using the built-in __return_true function, which returns true, so anyone can access the route.
 
 Once the route is created, you'll need to create the callback function, wp_learn_rest_get_form_submissions. This function will be called when the route is accessed, and it will return the form submissions.
 
@@ -103,7 +105,7 @@ Once the route is created, you'll need to create the callback function, wp_learn
  *
  * @return array|object|stdClass[]|null
  */
-function wp_learn_rest_get_form_submissions() {
+function wp_learn_get_form_submissions() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'form_submissions';
 
@@ -113,9 +115,9 @@ function wp_learn_rest_get_form_submissions() {
 }
 ```
 
-This function uses the global $wpdb variable to access the database, and then uses the get_results function to fetch all the rows from the form_submissions table. It then returns the results as an array. Because you've registered this callback against a WP REST API route using register_rest_route, the results will be returned as a JSON object. 
+This function uses the global $wpdb variable to access the database, and then uses the get_results function to fetch all the rows from the form_submissions table. It then returns the results as an array. Because you've registered this callback against a WP REST API route using register_rest_route, the array will automatically be sent in the REST API response as a JSON object. 
 
-To test this, access the form_submissions table using your favourite database tool, and add a few rows of data. Then open a REST API testing tool like Postman, and create a new request to test the route.
+To test this, activate the plugin. Then check if the form_submissions table has been created using your favourite database tool. Next add a few rows of data. Then open a REST API testing tool like Postman, and create a new request to test the route.
 
 ```
 GET https://workpress.test/wp-json/wp-learn-form-submissions-api/v1/form-submissions
@@ -125,7 +127,7 @@ You should see the results returned as a JSON object.
 
 # Registering a custom WP REST API route to post submissions
 
-Now that you can fetch form submissions, you can create a route to create them. To do this, you'll register a route to use the POST method, and create a callback function to handle the POST request.
+Now that you can fetch form submissions, you can register a route to create them. To do this, you'll register a new route to use the POST method, and specify a callback function which will handle the POST request.
 
 ```php
 	/**
@@ -136,15 +138,13 @@ Now that you can fetch form submissions, you can create a route to create them. 
 		'/form-submission/',
 		array(
 			'methods'  => 'POST',
-			'callback' => 'wp_learn_rest_create_form_submission',
+			'callback' => 'wp_learn_create_form_submission',
 			'permission_callback' => '__return_true'
 		)
 	);
 ```
 
-As you can see, the namespace and route are the same, but the method is set to POST, and a different callback function is specified. This callback function will be called when the route is accessed using the POST method.
-
-The other thing to notice is the use of the $request parameter. This is a WP_REST_Request object, which contains all the data that was sent to the route. In this case, the name and email fields will be available in the $request object.
+As you can see, the namespace and route are the same, but the method is set to POST, and a different callback function is specified. This callback function will be called when the route is accessed using the POST method, and could look like this:
 
 ```php
 /**
@@ -154,7 +154,7 @@ The other thing to notice is the use of the $request parameter. This is a WP_RES
  *
  * @return void
  */
-function wp_learn_rest_create_form_submission( $request ){
+function wp_learn_create_form_submission( $request ){
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'form_submissions';
 
@@ -170,11 +170,21 @@ function wp_learn_rest_create_form_submission( $request ){
 }
 ```
 
-The callback function uses the global $wpdb variable in order to access the database, and then uses the insert function to insert a new row into the form_submissions table. It then returns the number of rows inserted.
+The callback function accepts a single parameter which is a WP_REST_Request object and contains all the data that was sent to the route. 
 
-Note that in this example there's no validating of the inputs. For more information on validating inputs, check out the Introduction to securely developing plugins tutorial at Learn.WordPress.org.
+In this case, the name and email fields will be available in the $request object, which can be used to create the form submission.
 
-To test this, create a new POST request in your API testing tool, and submit the following data as a JSON object in the request body:
+Again, the callback function uses the global $wpdb variable in order to access the database, and then uses its insert function to insert a new row into the form_submissions table, using the name and email fields sent to the route. 
+
+Notice how the code accessed the name and email properties using an array-like syntax. This is because the WP_REST_Request object implements a PHP interface called ArrayAccess, which allows you to access object properties using array syntax
+
+Finally, it returns the number of rows inserted.
+
+Note that in this example there's no validation of the name and email inputs, which is a security vulnerability. For more information on how to validate inputs, check out the [Introduction to securely developing plugins tutorial](https://learn.wordpress.org/tutorial/introduction-to-securely-developing-plugins/) at Learn.WordPress.org.
+
+Note also that in this example the callback function does not check if the fields have been sent in the request, or if they contain data. For the purposes of this example, we'll assume they will always been passed.
+
+To test this, create a new POST request in your API testing tool, and submit the name and email data as a JSON object in the request body:
 
 ```json
 {
@@ -183,29 +193,41 @@ To test this, create a new POST request in your API testing tool, and submit the
 }
 ```
 
-You should see the number of rows inserted returned as a JSON object.
+When you save and send the request you should see the number of rows inserted returned in the response.
 
-Notice how you didn't need to pass any authentication credentials to this route. This is because you set the permission_callback to __return_true. This means that anyone can access the route, and create a new form submission. If you want to restrict access to the route, you can specify a permissions_callback function, and use the current_user_can function to check if the user has the required permissions. 
+Notice how you didn't need to pass any authentication credentials to this route. This is because you set the permission_callback to __return_true. This means that anyone can currently create a POST request to the route, and create a new form submission. 
+
+If you want to restrict access to the route, you can specify a permissions_callback function.  
 
 ```php
-'permission_callback' => 'wp_learn_require_auth'
+'permission_callback' => 'wp_learn_require_permissions'
 ```
 
+Then you can use the current_user_can function to check if the user has the required permissions.
+
 ```php
-function wp_learn_require_auth() {
+function wp_learn_require_permissions() {
 	return current_user_can( 'edit_posts' );
 }
 ```
 
-Try testing this by creating a form submission using the route. You should see an authentication error, which means that you don't have permission to access the route. Now, set up an Application Password, configure it in Postman, and try the route again.
+In this case this checks for a valid user, with permissions to edit posts.
+
+Try testing this by submitting the POST request using the route. 
+
+You should see an authentication error, which means that you don't have permission to access the route. 
+
+Now, set up an Application Password for your current user, configure it in Postman under Authorization, and try the request again. 
+
+It should work this time.
 
 ## Creating a custom WP REST API endpoint to fetch a single submission
 
-The last requirement for your custom route was a route that could fetch a single submission. One way you could do this is to set up the wp_learn_rest_get_form_submissions to also accept the $request parameter, and then check if an id value is passed in the request body.
+The last requirement for your custom API route was an endpoint that could fetch a single submission. One way you could do this is to set up the wp_learn_get_form_submissions callback to also accept the $request parameter, and then check if an id value is passed in the request body.
 
-A better solution is to use something called path variables. You've seen these before in the Using the WP REST API tutorial, were we discussed global variables. Path variables are similar, but they're used to pass data to a route.
+A better solution is to use something called path variables. You've seen REST API variables before in the Using the WP REST API tutorial, where global variables were discussed. Path variables are similar, but they're used to pass data to a route.
 
-To create a path variable, you add a placeholder to the route, and then specify the name of the placeholder in the route arguments. For example, if you wanted to fetch a single submission, you could create a route like this:
+To implement a path variable, you add the path variable to the route name when you register the route. For example, if you wanted to implement a path variable for the id field to fetch a single submission, you could create a route like this:
 
 ```php
 	/**
@@ -222,16 +244,17 @@ To create a path variable, you add a placeholder to the route, and then specify 
 	);
 ```
 
-The key thing to notice here is the use of the (?P<id>\d+) placeholder. 
+They key thing to not is the format of the path variable: 
 
-It uses the following format: `?P<{name}>{regex pattern}`
+`?P<{name}>{regex-pattern}`
 
-1. name is the name of the placeholder. This will be used to access the value in the $request object eg $request['{name}']
-2. regex pattern is the regular expression pattern that the value should match. In this case, \d+ means that the value should be a number.
+1. The start of the path variable is a query string using an upper case P as the query parameter
+2. name is the name of the placeholder. This will be used to create the property on the $request object, to access the path variable value
+2. regex-pattern is the regular expression pattern that the value should match. In this case, \d+ means that the value should be a number.
 
-This tells the route that the id value will be passed to the route and that it should be a number. The id value will then be available in the $request object.
+This tells the route that a value will be passed to the route and that it should be a numeric. This numeric value will then set up as a property with the name 'id' on the request object.
 
-Now you just need to create the wp_learn_rest_get_form_submission function, which could look something like this:
+Now you just need to create the wp_learn_get_form_submission function, to get the form_submission based on the id, which could look something like this:
 
 ```php
 function wp_learn_rest_get_form_submission( $request ) {
@@ -245,6 +268,12 @@ function wp_learn_rest_get_form_submission( $request ) {
 }
 ```
 
+As you can see in the first line of this callback function, it's expecting the id to be passed in the route. 
+
+It then uses that id to retrieve the specific record from the form_submissions table
+
+Because you have set up this path variable, you only need to append the id value at the end of the route URI when you make the request. The path variable will handle getting the value, and setting it up inside the id property on the request object.
+
 To test this, create a new GET request in your API testing tool, and add the id value to the end of the route.
 
 ```
@@ -255,6 +284,6 @@ You should see the results returned as a JSON object.
 
 Play around with this a little to test it, create a few more form submissions, use the GET route to fetch them, and then use the GET single route to fetch a single submission by id.
 
-This has been a fairly brief introcution to what you can acheive using register_rest_route. For more information and examples, check out the [Extending the REST API](https://developer.wordpress.org/rest-api/extending-the-rest-api/) chapter of the WP REST API handbook on developer.wordpress.org, specufucally the [Adding Custom Endpoints](https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/) and [Routes and Endpoints](https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/) sections.
+This has been a fairly brief introduction to what you can achieve using register_rest_route. For more information and examples, check out the [Extending the REST API](https://developer.wordpress.org/rest-api/extending-the-rest-api/) chapter of the WP REST API handbook on developer.wordpress.org, specifically the [Adding Custom Endpoints](https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/) and [Routes and Endpoints](https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/) sections.
 
 Happy coding
