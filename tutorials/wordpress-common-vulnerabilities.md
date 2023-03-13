@@ -3,7 +3,12 @@
 ## Objectives
 
 Upon completion of this lesson the participant will be able to:
-1. 
+1. Identify common security vulnerabilities in WordPress plugins
+2. Prevent SQL Injection vulnerabilities
+3. Prevent Cross Site Scripting (XSS) vulnerabilities
+4. Prevent Cross-site Request Forgery (CSRF) vulnerabilities
+5. Prevent Broken Access Control vulnerabilities
+6. Locate more information on securely developing WordPress plugins
 
 ## Outline
 
