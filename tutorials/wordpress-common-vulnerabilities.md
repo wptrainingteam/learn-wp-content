@@ -3,15 +3,16 @@
 ## Objectives
 
 Upon completion of this lesson the participant will be able to:
+1. 
 
 ## Outline
 
 - Preventing common security vulnerabilities
   - Common Vulnerabilities
-  - SQL Injection
-  - Cross Site Scripting (XSS)
-  - Cross-site Request Forgery (CSRF)
-  - Broken Access Control
+    - SQL Injection
+    - Cross Site Scripting (XSS)
+    - Cross-site Request Forgery (CSRF)
+    - Broken Access Control
   - Bonus round
   - Where to go for more information
     - https://owasp.org/www-project-top-ten/
@@ -21,27 +22,50 @@ Upon completion of this lesson the participant will be able to:
 
 Hey there, and welcome to Learn WordPress.
 
-In this tutorial, you're going to learn how to protect your WordPress plugins against common security vulnerabilities.
+In this tutorial, you're going to learn how to protect your WordPress plugins and themes against common security vulnerabilities.
 
-You will learn the benefits of ensuring your plugin code is secure, what steps to follow to secure your plugins, and where to find more information around plugin security.
+You will learn about common vulnerabilities to consider when building a WordPress plugin or theme, examples of how to prevent each type of vulnerability, and where to find more information around developing plugins and themes securely.
 
 ## Common Vulnerabilities
 
-Security is an ever-changing landscape, and vulnerabilities evolve over time. 
+Security is an ever-changing landscape, and vulnerabilities evolve over time. You just have to take a look at the [Open Web Application Security Project (OWASP) Top 10 list](https://owasp.org/www-project-top-ten/) to see how things have changed from 2017 to 2021.
 
-See https://owasp.org/www-project-top-ten/ and how things have changed from 2017 to 2021
+The benefit of using WordPress as the base of your next development project, is that many of these vulnerabilities have already been addressed by the WordPress core team. 
 
-The following is a discussion of common vulnerabilities you should protect against in WordPress, and the techniques for protecting your theme from exploitation. To do so, we'll be looking at the code of the badly coded form submission plugin, and fixing any security vulnerabilities we find.
+However, if you're building a custom theme or plugin that's going to process any user data, you will need to ensure that your code does not create any of the common security vulnerabilities discussed in this lesson.
+
+In the [Introduction to securely developing plugins](https://learn.wordpress.org/tutorial/introduction-to-securely-developing-plugins/) tutorial, we looked at the 5 main security principles that you should follow when developing a custom plugin or theme. 
+
+1. Securing (sanitizing) input
+2. Data validation
+3. Securing (escaping) output
+4. Preventing untrusted requests
+5. Checking User Capabilities
+
+To see these 5 principles in action, we'll be looking at the code of a badly coded form submission plugin, and fixing any security vulnerabilities we find.
 
 https://github.com/jonathanbossenger/wp-learn-plugin-security
 
+1. At the top of the main plugin PHP file , some constants are set up, which are used elsewhere in the plugin. The first two are used to define page slugs that the plugin will use to redirect to. For this plugin functionally to work, these pages need to exist, with the correct slugs.
+2. Next a callback function is registered on the plugin activation hook. This sets up a custom form_submissions table in the database.
+3. After that, the plugin's admin JavasScript and front end style CSS files are enqueued
+4. Next, a shortcode is registered, which is used to display a form on the front end.
+5. After that, a callback function is hooked into the wp action, which is what the plugin uses to process a form submission. 
+6. Next, the plugin registers an admin submenu, which displays a list of form submissions.
+7. There is a function that the admin submenu uses to fetch the form submissions from the database.
+8. Lastly there is a callback function that's hooked into a wp_ajax function, which is the ajax endpoint the plugin uses to delete form submissions from the admin submenu page
+
+The admin JavaScript file handles the ajax request to delete form submissions from the submissions page.
+
+The front end style CSS file is used when the user enters a class attribute for the shortcode. It defaults to red, but the user can change this to blue. It simply adds a border to the form.
+
+When the shortcode is added to a post or page, it renders the form, and users can submit their details. when the form is submitted, it will redirect either to the success or error page, depending on whether the form submission was successful or not. Then in the dashboard, admins can view the form submissions, and delete the submission using Ajax.
+
 ## SQL Injection
 
-SQL injection happens when values being inputted are not properly sanitized allowing for any SQL commands in the inputted data to potentially be executed.
+The first common vulnerability we're going to look for is SQL injection.
 
-The first rule for hardening your theme or plugin against SQL injection is: When there’s a WordPress function, use it.
-
-But sometimes you need to do complex queries, that have not been accounted for in the API. If this is the case, always use the $wpdb functions. These were built specifically to protect your database.
+SQL injection happens when values being inputted are not properly sanitized allowing for any SQL commands using the inputted data to potentially be executed on the database.
 
 The first place we need to tackle a possible SQL Injection vulnerability is in the `wp_learn_maybe_process_form` function.
 
@@ -99,9 +123,11 @@ function wp_learn_maybe_process_form() {
 }
 ```
 
+This will ensure that the name and email field values are both sanitized as they are accepted from the form submission request and that they are sanitized before being used to store the record in the database. While this might seem like overkill, if you just sanitize the inputs, and the code is later changed to use the values in a different way, you could still be vulnerable to a SQL injection.
+
 The other place we need to prevent SQL injection is in the `wp_learn_delete_form_submission` function.
 
-1. We need to make sure that any `$_POST` data is sanitized before being used in the query.
+1. We need to make sure that any `$_POST` data is sanitized before being used in the query. 
 2. We need to either use the `wpdb` prepare or delete functions.
 
 ```php
@@ -120,11 +146,15 @@ function wp_learn_delete_form_submission() {
 }
 ```
 
+Because this is an integer, we can use the PHP type casting functionality to make sure it's always cast as an integer.
+
 ## Cross Site Scripting (XSS)
 
-Cross Site Scripting (XSS) happens when a nefarious party injects JavaScript into a web page.
+The next common vulnerability we're going to look for is Cross Site Scripting (XSS).
 
-Avoid XSS vulnerabilities by escaping output, stripping out unwanted data. Your code should escape dynamic content with the proper function depending on the type of the content.
+Cross Site Scripting (XSS) happens when a nefarious party injects JavaScript into a web page, which can be used to launch multiple different attacks or malicious activities from the website.
+
+You can avoid XSS vulnerabilities by escaping output, stripping out unwanted data. Your code should escape dynamic content with the proper function depending on the type of the content being escaped.
 
 Let's look at some places where data is being outputted, and make sure it's being escaped properly.
 
@@ -182,35 +212,41 @@ Here the $submission->name, $submission->email and $submission->id should be esc
 <?php } ?>
 ```
 
-Here we use esc_html because this is the correct function to use anytime an HTML element encloses a section of data being displayed. Always pay close attention to what each escaping function does, as some will remove HTML while others will permit it. You must use the most appropriate function to the content and context of what you’re echoing.
+In this example you can use esc_html because this is the correct function to use anytime an HTML element encloses a section of data being displayed. Always pay close attention to what each escaping function does, as some will remove HTML while others will permit it. 
 
-Finally, we cast the ID to an integer, as it is being used in a data attribute. 
+You must use the most appropriate function to the content and context of what you’re echoing.
+
+Finally, you cast the ID to an integer, as it is being used in a data attribute. 
 
 ## Cross-site Request Forgery (CSRF)
 
-Cross-site request forgery or CSRF (pronounced sea-surf) is when a nefarious party tricks a user into performing an unwanted action within a web application they are authenticated in. For example, a phishing email might contain a link to a page that would delete a user’s account in the WordPress admin.
+The next vulnerability to prevent is Cross-site request forgery. CSRF is when a nefarious party tricks a user into performing an unwanted action within a web application they are authenticated in. 
 
-When developing with WordPress, becoming familiar with the nonce API is a must. Nonces are Number Used Once and provide a way to verify that the origin of the request is legitimate. 
+When developing with WordPress, becoming familiar with WordPress nonces is a must to help prevent CSRF. 
+
+A Nonce is a Number Used Once and provides a way to verify that the origin of the request is legitimate. 
 
 1. You create a nonce when you need to verify that the request is legitimate.
-2. You output or pass the nonce to where ever needs to make a request
+2. You output or pass the nonce to whereever needs to make a request
 3. You verify the nonce when the request is made.
 
-There are to possible CSRF vulnerabilities in this plugin. The first is when the form is submitted, and the data is processed. To fix this, we need to add a nonce to the form being rendered in the shortcode, and then verify it when the form is submitted.
+There are to possible CSRF vulnerabilities in this plugin. 
+
+The first is when the form is submitted, and the data is processed. To fix this, we need to add a nonce to the form being rendered in the shortcode, and then verify it when the form is submitted.
 
 In the form, we use the wp_nonce_field function to add a hidden field with the nonce.
 
 ```php
 <?php
-/**
- * 04 (b). Add a nonce to the form
- * https://developer.wordpress.org/apis/security/nonces/
- */
 wp_nonce_field( 'wp_learn_form_nonce_action', 'wp_learn_form_nonce_field' );
 ?>
 ```
 
-Then in the form submission function, we verify the nonce. 
+Notice how you pass in an action and a name. The action is used to identify the nonce, and the name is the name of the field that will be added to the form.
+
+If you inspect the form, you can see the nonce field, which using the name you passed to the funciton, and the nonce value. 
+
+Then in the form submission function, you verify the nonce, using the wp_verify_nonce function, passing in the value of the nonce field, and the action. 
 
 ```php
 	/**
@@ -223,7 +259,7 @@ Then in the form submission function, we verify the nonce.
 	}
 ```
 
-Here we are checking that the nonce field has been passed in the request, and then verifying that the nonce is valid. If the nonce is invalid, we redirect to the error page.
+Here we are checking that the nonce field has been passed in the request, and then verifying that the nonce is valid. If the nonce is not pass, or is invalid, we redirect to the error page.
 
 The other place we need to prevent CSRF is in the ajax callback used to delete a form submission. 
 
@@ -243,7 +279,7 @@ function wp_learn_delete_form_submission() {
 }
 ```
 
-To fix this, first we need to manually create the nonce using wp_create_nonce and then pass the nonce to the JavaScript layer using wp_localize_script.
+To fix this, first we need to manually create a nonce using wp_create_nonce and then pass the nonce to the JavaScript layer using wp_localize_script.
 
 ```php
   /**
@@ -260,6 +296,8 @@ To fix this, first we need to manually create the nonce using wp_create_nonce an
       )
   );
 ```
+
+
 
 Then, we need to include the nonce in jQuery POST request.
 
@@ -279,7 +317,7 @@ jQuery.post(
 );
 ```
 
-Note how we specify the nonce in the POST request as _ajax_nonce. This is the name of the nonce that WordPress expects.
+Note how we specify the nonce in the POST request as _ajax_nonce. This is the name of the nonce that WordPress expects when processing an Ajax request.
 
 Lastly, in the Ajax callback, we verify the nonce, using the handy `check_ajax_referrer` function.
 
@@ -289,9 +327,11 @@ Lastly, in the Ajax callback, we verify the nonce, using the handy `check_ajax_r
 
 You'll see that the string passed to `check_ajax_referer` is the same string we passed to `wp_create_nonce` when creating the nonce.
 
+If check_ajax_referrer fails, it will cause execution to stop, so we don't need to check the result of the function.
+
 ## Broken Access Control
 
-Broken access control is when a user is able to access a resource they should not be able to access. For example, a user might be able to access an admin function, even though they are not an administrator.
+There's one more vulnerability in this plugin, and it's a broken access control vulnerability. BAC is when a user is able to access a resource they should not be able to access. For example, a user might be able to access an admin function, even though they are not an administrator.
 
 In our example, we have a broken access control vulnerability in ajax function, at the present moment, anyone could make a request to the ajax request url with the right data, and it would delete a form_submission. 
 
@@ -303,16 +343,18 @@ To fix this, we can use the WordPress Roles and Capabilities API to check that t
 	}
 ```
 
+
+
 Note that we're doing two checks here, one against CSRF and once for access control. In this example the order of execution is not super important, but in general, it's a good idea to check for CSRF first, and then check for access control.
 
 ## Bonus round
 
 There's one additional security vulnerability in this plugin. Can you find it?
 
-It's a tough one to spot, but all instances of wp_redirect should be replaced with wp_safe_redirect. This is because the code is redirecting to a local url, and wp_safe_redirect checks whether the $location is using an allowed host, if it has an absolute path. This prevents the possibility of malicious redirects if the redirect $location is ever attacked.
+It's a tough one to spot, but all instances of wp_redirect should be replaced with wp_safe_redirect. This is because the code is redirecting to a local url, and wp_safe_redirect checks whether the $location its using an allowed host, if it has an absolute path. This prevents the possibility of malicious redirects if the redirect $location is ever attacked.
 
 ## Where to go for more information
 
-Firstly, make sure to vist the Open Worldwide Application Security Project's (OWASP) [top ten list](https://owasp.org/www-project-top-ten/), to learn about the most common web vulnerabilities. Then, make sure to read the entry in the [WordPress Developer Documentation](https://developer.wordpress.org/plugins/security) on Security, as it includes code examples, additional information on security best practices, and much more.
+To learn more about common web application vulnerabilities, make sure to vist the Open Worldwide Application Security Project's (OWASP) [top ten list](https://owasp.org/www-project-top-ten/). Then, make sure to read the entry in the [WordPress Developer Documentation](https://developer.wordpress.org/plugins/security) on Security, as it includes code examples, additional information on security best practices, and much more.
 
 Happy coding!

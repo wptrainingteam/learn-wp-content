@@ -61,7 +61,7 @@ Once the plugin is activated, this will create the form_submissions table in the
 
 # Registering a custom WP REST API route to fetch submissions
 
-To register a custom WP REST API route you can use the register_rest_route function. This function requires the following parameters:
+To register a custom WP REST API route you can use the [register_rest_route](https://developer.wordpress.org/reference/functions/register_rest_route/) function. This function requires the following parameters:
 
 1. The namespace - this is the portion of the route URL that comes before the route itself. For example, in the route /wp/v2/posts, the namespace is wp/v2.
 2. The route - this is the portion of the route URL that comes after the namespace. For example, in the route /wp/v2/posts, the route is posts.
@@ -97,7 +97,7 @@ Let's look at what the code might look like to register a custom route to fetch 
 2. The route is /form-submissions/
 3. The route arguments specify the route method as GET, and the callback function as wp_learn_get_form_submissions. It also specifies a permission callback function, which is used to check if the user has permission to access the route. In this case, we're using the built-in __return_true function, which returns true, so anyone can access the route.
 
-Once the route is created, you'll need to create the callback function, wp_learn_rest_get_form_submissions. This function will be called when the route is accessed, and it will return the form submissions.
+Once the route is created, you'll need to create the callback function, wp_learn_rest_get_form_submissions. This function will be called when the route is requested, and it will return the form submissions.
 
 ```php
 /**
@@ -115,9 +115,17 @@ function wp_learn_get_form_submissions() {
 }
 ```
 
-This function uses the global $wpdb variable to access the database, and then uses the get_results function to fetch all the rows from the form_submissions table. It then returns the results as an array. Because you've registered this callback against a WP REST API route using register_rest_route, the array will automatically be sent in the REST API response as a JSON object. 
+This function uses the global $wpdb variable to access the database, and then uses the get_results function to fetch all the rows from the form_submissions table, based on the sql query. It then returns the results as an array. 
 
-To test this, activate the plugin. Then check if the form_submissions table has been created using your favourite database tool. Next add a few rows of data. Then open a REST API testing tool like Postman, and create a new request to test the route.
+Because you've registered this callback against a WP REST API route using register_rest_route, the array will automatically be sent in the REST API response as a JSON object. 
+
+To test this, activate the plugin. 
+
+Then check if the form_submissions table has been created using your favourite database tool. 
+
+Next add a few rows of data. 
+
+Then open a REST API testing tool like Postman, and create a new request to test the route.
 
 ```
 GET https://workpress.test/wp-json/wp-learn-form-submissions-api/v1/form-submissions
@@ -176,7 +184,7 @@ In this case, the name and email fields will be available in the $request object
 
 Again, the callback function uses the global $wpdb variable in order to access the database, and then uses its insert function to insert a new row into the form_submissions table, using the name and email fields sent to the route. 
 
-Notice how the code accessed the name and email properties using an array-like syntax. This is because the WP_REST_Request object implements a PHP interface called ArrayAccess, which allows you to access object properties using array syntax
+Notice how the code accesses the name and email properties using an array-like syntax. This is because the WP_REST_Request object implements a PHP interface called [ArrayAccess](ArrayAccess), which allows you to access object properties using array syntax.
 
 Finally, it returns the number of rows inserted.
 
@@ -219,7 +227,7 @@ You should see an authentication error, which means that you don't have permissi
 
 Now, set up an Application Password for your current user, configure it in Postman under Authorization, and try the request again. 
 
-It should work this time.
+It should work this time, and you'll see the number of rows inserted in the response. To verify this, check the form_submissions table in your database, to make sure the data has been inserted.
 
 ## Creating a custom WP REST API endpoint to fetch a single submission
 
