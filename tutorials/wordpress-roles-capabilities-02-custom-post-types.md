@@ -1,8 +1,15 @@
-# WordPress User Roles and Capabilities
+# Custom Post Types and Capabilities
 
 ## Objectives
 
 Upon completion of this lesson the participant will be able to:
+
+- Identify how capabilities are assigned to a custom post type
+- Create custom post type capabilities using the capability_type argument
+- Map specific primitive capabilities to a custom post type using the capabilities argument
+- Map all the primitive capabilities to a custom post type using the map_meta_cap argument
+- Add custom post type capabilities to an existing role
+- Create a new role with specific custom post type capabilities
 
 ## Outline
 
@@ -13,13 +20,12 @@ Upon completion of this lesson the participant will be able to:
 - Meta capabilities vs primitive capabilities and the map_meta_cap function
 - Understanding map_meta_cap
 - Mapping the capabilities on the custom post type
+
 ## Introduction
 
 Hey there, and welcome to Learn WordPress! 
 
-In this tutorial, you'll be learning how to restrict access to custom post types via the built-in capabilities' system. 
-
-After a brief review to the default WordPress roles and capabilities, you will learn how to create custom capabilities for your custom post type. You will learn how the custom post type capabilities are mapped to the default WordPress capabilities, and how to create custom roles that can only access your custom post type.
+In this tutorial, you'll be learning how to restrict access to custom post types via the built-in capabilities' system. You will learn how the different capabilities are assigned to a custom post type and now to manage them, as well as how to add custom post type capabilities to new or existing roles.
 
 ## Example project
 
@@ -28,7 +34,7 @@ Let's say you need to create a plugin that allows a site owner to add the follow
 1. The ability to define a custom post type called story.
 2. The ability to create users with a writer role, who can only create, edit, and delete unpublished stories.
 3. These writers should also be able to publish their stories, but not edit or delete stories once published. 
-4. Any site administrator should be able to create, edit, and delete any stories, regardless of whether they are published or not.
+4. Any site administrator should be able to create, edit, and delete any stories, regardless of whether they are published or not, or who they were created by.
 
 To create the story custom post type, you might have some code that looks like this. 
 
@@ -60,20 +66,23 @@ function wp_learn_init() {
 
 When a custom post type is registered in this way, it inherits the capabilities of the post custom post type. 
 
-To see this in your dashboard, you might register a submenu page that displays the capabilities of the story post type, which is only available to admins. 
+To see these capabilities in your dashboard during development, you might register a submenu page that displays the capabilities of the story post type, which is only available to admins. 
 
 ```php
-add_submenu_page(
-    'tools.php',
-    esc_html__( 'WP Learn Story CPT', 'wp_learn' ),
-    esc_html__( 'WP Learn Story CPT', 'wp_learn' ),
-    'manage_options',
-    'wp_learn_story_cpt',
-    'wp_learn_render_story_cpt'
-);
+add_action( 'admin_menu', 'wp_learn_submenu', 11 );
+function wp_learn_submenu() {
+    add_submenu_page(
+        'tools.php',
+        esc_html__( 'WP Learn Story CPT', 'wp_learn' ),
+        esc_html__( 'WP Learn Story CPT', 'wp_learn' ),
+        'manage_options',
+        'wp_learn_story_cpt',
+        'wp_learn_render_story_cpt'
+    );
+}
 ```
 
-Inside the callback function for this page, you could access the custom post type object from the wp_post_types global array variable. You could then print out the capability_type, map_meta_cap and cap properties of the story post type.
+Inside the callback function for this page, you could access the custom post type object from the `wp_post_types` global array variable. You could then print out the `capability_type`, `map_meta_cap` and `cap` properties of the `story` post type.
 
 ```php
 function wp_learn_render_story_cpt() {
@@ -90,7 +99,7 @@ function wp_learn_render_story_cpt() {
 }
 ```
 
-This is what you might see when you visit the page in your dashboard.
+With the plugin active, when logged in as an admin user, this is what you might see when you visit the page in your dashboard.
 
 ```php 
 array(
@@ -116,19 +125,21 @@ array(
 )
 ```
 
-As you can see, the `capability_type` inherits from post, `map_meta_cap` is set to true, and the `cap` property is an array of capabilities that are inherited from the default WordPress capabilities for a post.
+As you can see, the `capability_type` inherits from post, `map_meta_cap` is set to true, and the `cap` property is an array of capabilities that are inherited from the default WordPress capabilities for a post. 
+
+To understand how these capabilities are mapped to the custom post type, you need to understand how these three properties are set up.
 
 ## Understanding the default capabilities for a custom post type
 
-To understand how this works, take a look at the `register_post_type` function, in line 1694 of the wp-includes/post.php file.
+Take a look at the `register_post_type` function, in line 1679 of the wp-includes/post.php file.
 
 ```php
 $post_type_object = new WP_Post_Type( $post_type, $args );
 ```
 
-Here a new WP_Post_Type object is created, and the $args array is passed to the constructor. 
+Here a new `WP_Post_Type` object is created, and the `$args` array is passed to the constructor. 
 
-If you then open the WP_Post_Type class, in the wp-includes/class-wp-post-type.php file, you can see that at around line 541, the following happens.
+If you then open the file for the `WP_Post_Type` class, at wp-includes/class-wp-post-type.php, you can see the following code at around line 541:
 
 ```php
     if ( empty( $args['capabilities'] )
@@ -150,8 +161,13 @@ If you then open the WP_Post_Type class, in the wp-includes/class-wp-post-type.p
     }
 ```
 
-1. If the capabilities argument is not set, and the map_meta_cap argument is not set, and the capability_type argument is set to either post or page, then set the map_meta_cap argument to true. If you scroll back up to line 480, you can see that the default value for the capability_type argument is post. So because your custom post type doesn't have a capability_type set, then the map_meta_cap argument will be set to true.
-2. Later on, the cap property is set to the result of the get_post_type_capabilities function, which is defined in the same file. This function takes the $args array as an argument, and returns an array of capabilities. So here, because the capability_type argument is set to post, and the map_meta_cap argument is set to true, then the cap property on the story custom post type will be set to an array of capabilities that are mapped to the default WordPress capabilities for a post.
+1. If the `capabilities` argument is empty, and the `map_meta_cap` argument is `null`, and the `capability_type` argument is set to either `post` or `page`, then set the `map_meta_cap` argument to `true`. If you scroll back up to line 480, you can see that the default value for the `capability_type` argument is `post`. So because your custom post type doesn't pass any of these arguments, then the `map_meta_cap` argument will be set to `true`.
+2. Later on, the `cap` property is set to the result of the `get_post_type_capabilities` function. This function accepts the `$args` array as an argument, and returns an array of capabilities. So here, because the `capability_type` argument is set to `post`, and the `map_meta_cap` argument is set to true, then the `cap` property on the `story` custom post type will be set to an array of capabilities that are mapped to the default WordPress capabilities for a post.
+
+You can control these capabilities by passing relevant values to the three arguments that are used above, and described in the [developer handbook entry](https://developer.wordpress.org/reference/functions/register_post_type/) for `register_post_type`. The possible arguments are:
+1. `capability_type`
+2. `capabilities`
+3. `map_meta_cap`
 
 ## Setting the capability_type argument
 
@@ -161,9 +177,9 @@ The first step in setting custom capabilities for your custom post type is to se
 'capability_type' => 'story',
 ```
 
-If you take a look at the cap property on your custom post type, you will see that the capabilities have changed. 
+If you take a look at the `cap` property on your custom post type, you will see that the capabilities have changed. 
 
-However, it's not using the correct pluralisation of story, so you need to explicitly set the plural version of the capability_type argument, by passing in an array of values, the first being the singular name, the second being the pluralisation.
+However, it's not using the correct pluralisation of story, so you need to explicitly set the plural version of the `capability_type` argument, by passing in an array of values, the first being the singular name, the second being the pluralisation.
 
 ```php  
 'capability_type' => array( 'story', 'stories' ),
@@ -189,7 +205,7 @@ array(
 )
 ```
 
-Notice that this list does not include the following mapped capabilities when they were inherited from post.
+Notice that this list does not include all the same capabilities when they were inherited from post.
 
 ```php
     'read' => 'read',
@@ -200,41 +216,51 @@ Notice that this list does not include the following mapped capabilities when th
     'edit_published_posts' => 'edit_published_stories',
 ```
 
-This is because the map_meta_cap argument is set to false, so the additional capabilities are not mapped for the custom post type.
+This is because by setting a `capability_type`, the first conditional in the WP_Post_Type class you looked at earlier returns `false`, and so the `map_meta_cap` argument is now set to `false`, which means the additional capabilities are not mapped for the custom post type.
 
 ## Meta capabilities vs primitive capabilities and the map_meta_cap function
 
-Now would be a good time to talk about the difference between the meta capabilities, primitive capabilities, and the map_meta_cap function.
+Now would be a good time to talk about the different types of capabilities. There are three types of capabilities available to custom post types.
 
 Meta capabilities are capabilities that are mapped to primitive capabilities. The 3 meta capabilities are `edit_post`, `read_post`, and `delete_post`.
 
 As an example, the `edit_post` meta capability is mapped to primitive capabilities like `edit_posts` and `edit_others_posts`. 
 
-Because the meta capabilities are automatically mapped to certain primitive capabilities, it's generally recommended not to grant the meta capabilities directly to users or roles, and rather to add any of the primitive capabilies.
+Because the meta capabilities are automatically mapped to certain primitive capabilities, it's generally recommended not to grant the meta capabilities directly to users or roles, and rather to add any of the primitive capabilities.
 
 There are two different types of primitive capabilities, those that are automatically mapped to a meta capability when you register a custom post type with a specific capability type, and those that are not. 
 
-To understand the differences, take a look at the `get_post_type_capabilities` function, in the wp-includes/class-wp-post-type.php file. 
+To understand the differences, take a look at the `get_post_type_capabilities` function, in the wp-includes/post.php file. 
 
-This is the function that builds the capabilities object for the cap property on the custom post type object.
+This is the same function you saw earlier in the `WP_Post_Type` class that builds the capabilities object for the `cap` property on the custom post type object.
 
-Here you can see that the default capabilities are always set, which include the 3 meta capabilities, and 5 primitive capabilities. Then, an additional 6 primitive capabilities are added. These are known as the **Primitive capabilities used within the map_meta_cap function**. Below that, the `create_posts` capability is automatically mapped to `edit_posts`.
+Here you can see that the default capabilities are always set, which include the 3 meta capabilities, and 5 primitive capabilities. Then, an additional 6 primitive capabilities are added. These are known as the **Primitive capabilities used within the map_meta_cap function**. Below that, the `create_posts` capability is automatically mapped to `edit_posts`, for a total of 15 possible capabilities.
+
+You might be wondering what the `map_meta_cap` function is, and what it does.
 
 ## Understanding map_meta_cap
 
-The `map_meta_cap` function is a function that is used when the `current_user_can` function is called to check if a user has a specific capability. 
+The `map_meta_cap` function is a function that is used when the `current_user_can` function is called to check if a user role has a specific capability. 
 
 If you dive into the code underneath the `current_user_can` function, you'll see it eventually calls the `has_cap` function of the WP_User class, which in turn calls the `map_meta_cap` function.
 
-map_meta_cap maps a capability to the primitive capabilities required of the given user to satisfy the capability being checked, based on the context of the check. The map_meta_cap function does not check whether the user has the required capabilities, it just returns what the required capabilities are.
+`map_meta_cap` maps a capability to the primitive capabilities required of the given user to satisfy the capability being checked, based on the context of the check. The map_meta_cap function does not check whether the user has the required capabilities, it just returns what the required capabilities are.
 
-To help explain this, let's look at an example. Let's say you want to use `current_user_can` to check if the current user can edit a specific post, by checking against the `edit_post` meta capability. Based on the context of the post, the result for this check can depend on a few factors: 
+To help explain this, let's look at an example. Let's say you want to use `current_user_can` to check if the current user can edit a specific post, by checking against the `edit_post` meta capability. 
+
+```php
+function check_permissions_callback( $post ) {
+	current_user_can( 'edit_post', $post->ID );
+}
+```
+
+Based on the context of the post, the result for this check can depend on a few factors: 
 1. Is the user the author of the post? 
 2. Is the post already published?
 
-When checking against the `edit_post` capability, the map_meta_cap function will check all these factors and return the correct set of primitive capabilities that the user must have to allow editing of the post. 
+When checking against the `edit_post` capability, the `map_meta_cap` function will check all these factors and return the correct set of primitive capabilities that the user must have to allow editing of the post. 
 
-So, if the post is written by someone else and published, it would return the following:
+So, if the post is written by someone else and published, it would return an array containing the 'edit_others_posts' and 'edit_published_posts' capabilities:
 
 ```
 array('edit_others_posts', 'edit_published_posts')
@@ -244,9 +270,9 @@ In this case, the user would not only need the `edit_post` capability, but also 
 
 ## Mapping the capabilities on the custom post type
 
-If you look at the different lists of capabilities that you might need for your writer, you'll notice some exist as the meta capabilities, some as the automatically mapped primitive capabilities, and some exist as the primitive capabilities mapped inside map_meta_cap.
+If you look at the different lists of capabilities that you might need for your writer, you'll notice some exist as the meta capabilities, some as the automatically mapped primitive capabilities, and some exist as the primitive capabilities mapped inside `map_meta_cap`.
 
-As discussed above, you should not grant the meta capabilities directly to users or roles, and rather to add any of the primitive capabilities.
+As discussed earlier, you should not grant the meta capabilities directly to users or roles, and rather to add any of the primitive capabilities.
 
 Therefore, you are going to want to add the following automatically mapped primitive capabilities:
 
@@ -297,11 +323,11 @@ Ultimately, it's up to you which option you choose. The `capabilities` argument 
 
 One other thing changed when you set the custom `capability_type` argument. Suddenly your admin user can no longer access stories! This is because the administrator user role has not been given the capabilities to access stories.
 
-Because your admin user roles should be able to access everything, now would be a good time to add all the capabilities to the admin role. This is another reason to use the map_meta_cap argument, as it will automatically map all the capabilities, which you can assign to the administrator role. As you learned in the Developing WordPress User Roles and Capabilities, the right place to do this is inside a plugin activation hook callback. 
+Because your admin user roles should be able to access everything, now would be a good time to add all the capabilities to the admin role. This is another reason to use the map_meta_cap argument, as it will automatically map all the capabilities, which you can assign to the administrator role. As you learned in the Developing WordPress User Roles and Capabilities tutorial, the right place to do this is inside a plugin activation hook callback. 
 
-First, deactivate the plugin, so that you can activate it and trigger the activation hook. 
+First, deactivate the plugin, so that you can activate it to trigger the activation hook. 
 
-Then, add the following code to your plugin file:
+Then, create the register the activation hook in your plugin, and use it to assign the required capabilities to the administrator user:
 
 ```php
 register_activation_hook( __FILE__, 'wp_learn_activate' );
@@ -355,7 +381,7 @@ function wp_learn_deactivation() {
 
 Now, you can create the writer role, and only apply the capabilities that the writer needs.
 
-Inside the activation hook callback function you can create the writer role using the add_role function, and add the relevant capabilities. As a reminder:
+Inside the activation hook callback function you can create the writer role using the `add_role` function, and add the relevant capabilities. As a reminder:
 
 1. The writer role can only create, edit, and delete unpublished stories.
 2. These writers should also be able to publish their stories, but not edit or delete stories once published.
@@ -387,7 +413,7 @@ At the same time, update the deactivation hook callback function (or create a ne
 
 Now activate the plugin, and check that the admin can create, edit, publish and edit a published story. 
 
-Then, create a new user, and assign the writer role to the user. Log in as the writer, and check that the writer can create, edit and publish a story, but cannot delete a published story. They can also not edit or delete anyone elses stories.
+Then, create a new user, and assign the writer role to the user. Log in as the writer, and check that the writer can create, edit and publish a story, but cannot delete a published story. They can also not edit or delete anyone else's stories.
 
 ## Summary
 
@@ -402,7 +428,7 @@ Generally, your process for setting up custom post type capabilities will be:
 
 ## Where to learn more
 
-You can read up on how capabilities can be mapped on custom post types in the [Parameter Detail Information section](https://developer.wordpress.org/reference/functions/register_post_type/#parameter-detail-information) of the register_post_type documentation in the WordPress developer handbook.
+You can read up on how capabilities can be mapped on custom post types in the [Parameter Detail Information section](https://developer.wordpress.org/reference/functions/register_post_type/#parameter-detail-information) of the register_post_type documentation in the WordPress developer handbook, as well as the function reference entry on the get_post_type_capabilities [function](https://developer.wordpress.org/reference/functions/get_post_type_capabilities/).
 
 Happy coding
 
