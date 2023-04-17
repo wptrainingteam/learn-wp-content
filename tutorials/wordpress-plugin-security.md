@@ -299,3 +299,9 @@ The WordPress Developer Documentation has a detailed section on [User Roles and 
 Finally, make sure to read the entry in the [WordPress Developer Documentation](https://developer.wordpress.org/plugins/security) on Security, as it includes all the examples in this video, as well as additional information on security best practices, common vulnerabilities, and more example code.
 
 Happy coding!
+
+# Promo
+
+Oh, hey there. I'm Jonathan, it's nice to meet you. 
+
+Did you know there's a tutorial on Learn WordPress called the [Introduction to securely developing plugins](https://learn.wordpress.org/security/wordpress-security-101/), and it's a great place to start if you're new to plugin security. Check it out!
