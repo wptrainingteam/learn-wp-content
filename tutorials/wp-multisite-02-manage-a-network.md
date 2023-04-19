@@ -7,8 +7,6 @@ Upon completion of this lesson the participant will be able to:
 1. Manage a WordPress multisite network
 2. Create and manage sub sites
 3. Allow users to register their own sub sites
-4. Export a subsite into a single site
-5. Convert a multisite network back to a single site install
 
 ## Outline
 
@@ -16,16 +14,14 @@ Upon completion of this lesson the participant will be able to:
 2. The Network Admin dashboard
 3. The Network Settings page
 4. Creating and Managing Sub-sites
-5. Exporting a subsite into a single site
-6. Converting a multisite network back to a single site install
 
 ## Introduction
 
 Hey there, and welcome to Learn WordPress.
 
-In this tutorial, you're going to learn what tools are available to manage your WordPress multisite network.
+In this tutorial, you're going to learn how to manage your WordPress multisite network. 
 
-You will learn about the options in the Network Settings page, how to create and manage sub-sites, how you might export a subsite into a single site, and what do to if you want to convert your multisite back to a single site install. 
+You will learn about the Network Admin dashboard, and the options available in the Network Settings page, as well as different ways to create and manage sub-sites on the network. 
 
 ## The Network Admin dashboard
 
@@ -33,7 +29,23 @@ Once you have enabled your multisite network, your Admin user will change to a S
 
 ## The Network Settings page
 
-The Network Settings page is where you manage your multisite network. Here you can set things like the Network Title, Registration Settings, and Email Settings. For example, if you want to allow users to register new sites on the network, you can enable the "Both sites and user accounts can be registered" option. 
+The Network Settings page is where you manage your multisite network. 
+
+The Operational Settings allow you to set the Network Title and Admin Email
+
+The Registration Settings allow you to set the registration options for the network.
+
+For example, if you want to allow users to register new sites on the network, you can enable the "Both sites and user accounts can be registered" option.
+
+You can also set banned names for new sites, limit registrations by certain email domains, and ban registrations by certain email domains
+
+New Site Settings controls what emails are sent and what content is created when creating a new site on the network. 
+
+Upload Settings controls file uploads, including file size limits, and allowed file types.
+
+Language Settings allows you to control the default language for new sites on the network.
+
+Finally, the Menu Settings allows you to control which menus are available to site admins.
 
 ## Creating and Managing Sub-sites
 
@@ -70,53 +82,6 @@ If they choose to create a site, they will need to set the site name and title.
 ### Site Themes
 
 The Themes page allows you to activate specific themes on site. This page lists any themes that are not activated for the entire network, and allows you to activate the theme for a specific site. This is useful if you want to have a parent theme for the network, and then allow individual sites to use a child theme.
-
-## Export a site to a single site install
-
-Under some circumstances, you might want to extract one of the sub sites to its own single site WordPress install. This is possible, but requires some manual steps. There are a few ways to do this, but this is one possiblity.
-
-Use the WordPress export tool to export your posts, pages, comments to the WXR format. 
-
-Create the new single site, and associated user. Make sure to install any plugins and the theme used on the sub site.
-
-Use the WordPress importer to import the data into the new site, and assign the data to the relevant users on the new site.
-
-Copy the uploads directory for the sub site over to the new single site. 
-
-Run a search and replace tool like [Better Search Replace](https://wordpress.org/plugins/better-search-replace/) to update any urls in the database.
-
-Test, test, test
-
-An alternative to the WordPress data export option is to manually copy the database tables for the sub site to the new site. However, this might lead to further issues if the content isn't associated with the correct user.
-
-### Caveats
-
-If you have any plugins that create custom database tables, you might need to manually copy these tables over to the new installation. 
-
-In that case, it might be easier to rely on paid third-party backup solutions that have multisite extensions and will handle this for you
-
-https://servmask.com/products/multisite-extension
-https://deliciousbrains.com/wp-migrate-db-pro/doc/multisite-tools-addon/
-
-## Convert a Multisite back to a single site install
-
-It's also possible to convert a multisite back to a single site install. This is useful if you have a multisite network, but only have one site on it.
-
-If you have other sub sites, it might be a good idea to export them to single site installs first, as this will delete the sub site content tables. Additionally, delete any users that were created for the sub sites.
-
-To revert back to a single site, you first need to remove all multisite-related constants in wp-config
-
-Then, if you previously updated the .htaccess file, you will need to revert that back to the original .htaccess file. 
-
-You can do this by resetting permalinks.
-
-Then, delete the tables specifically created during the multisite installation
-
-```sql
-wp_blogmeta, wp_blogs, wp_registration_log, wp_signups, wp_site, wp_site_meta
-```
-
-If everything went well, you should now have a working single site installation of your main site.
 
 ## Further reading.
 
