@@ -304,4 +304,4 @@ Happy coding!
 
 Oh, hey there. I'm Jonathan, it's nice to meet you. 
 
-Did you know there's a tutorial on Learn WordPress called the [Introduction to securely developing plugins](https://learn.wordpress.org/security/wordpress-security-101/), and it's a great place to start if you're new to plugin security. Check it out!
+Did you know there's a tutorial on Learn WordPress called the [Introduction to securely developing plugins](https://learn.wordpress.org/tutorial/introduction-to-securely-developing-plugins/), and it's a great place to start if you're new to plugin security. Check it out!
