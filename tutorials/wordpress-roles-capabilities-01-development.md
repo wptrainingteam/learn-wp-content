@@ -4,6 +4,10 @@
 
 Upon completion of this lesson the participant will be able to:
 
+Explain the WordPress user roles and capabilities system 
+Assign capabilities to an existing role 
+Create a new User Role and assign capabilities to it
+
 ## Outline
 
 - Introduction

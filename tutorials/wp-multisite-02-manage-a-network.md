@@ -53,6 +53,16 @@ Finally, the Menu Settings allows you to control which menus are available to si
 
 One of the first things that you might want to do is create a sub-site. To do this, go to the Sites page, and click the "Add New" button. You'll be asked to enter the site address (either a subdomain or a subdirectory), the site title, site language, and the site admin email address. If you use an email address of an already existing user, that user will be added as the site admin. Otherwise a new user will be created, and made admin of the new site
 
+Once the site is created, you can edit the site by clicking on the Edit button in the Sites list.
+
+The Info tab manages the site address, shows when the site was registered and last updated, and manages the site attributes
+
+The Users tab allows you to add existing users to the site, or add new users to the site.
+
+The Themes tab allows you to activate a theme for the site. The themes available here are the themes that are not activated for the entire network. This means you can have specific themes only available for specific sites on the network.
+
+The Settings tab contains all the rest of the site settings that you can manage.
+
 ### Assign a TLD to a site
 
 It is also possible to set a top-level or apex domain for a site on the network. This is useful if you or the site admin wants to use a different domain for a site on the network. 
@@ -65,10 +75,6 @@ Then, in the Network Admin, edit to the site in question, and change the Site Ad
 
 Now, when you browse to that domain, you will be redirected to the associated site on the network.
 
-### Site Users
-
-The Users page allows you to manage users on the network. You can add exiting users on the network to the site, or add new users.
-
 ### Allow users to register their own sites
 
 Depending on how you plan to use your multisite network, you might want users to be able to register their own subsites. To do this, go to the Network Settings page, and enable the "Both sites and user accounts can be registered" option.
@@ -77,11 +83,11 @@ Now, if a user browses to the default WordPress registration url, they will see 
 
 https://multipress.test/wp-login.php?action=register
 
-If they choose to create a site, they will need to set the site name and title. 
+After entering their username and email address, they will be asked if they want to create a site, or just register a user account on the network. 
 
-### Site Themes
+If they choose to create a site, they will need to set the site name and title.
 
-The Themes page allows you to activate specific themes on site. This page lists any themes that are not activated for the entire network, and allows you to activate the theme for a specific site. This is useful if you want to have a parent theme for the network, and then allow individual sites to use a child theme.
+Once they click signup, the site will be created and the user will be sent an email to activate the new site, after which they will be able to log in to the subsite. 
 
 ## Further reading.
 
