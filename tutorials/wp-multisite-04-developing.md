@@ -9,7 +9,13 @@ Upon completion of this lesson the participant will be able to:
 ## Outline
 
 1. Introduction
-2. 
+2. A note on naming conventions
+3. Useful functions
+4. Useful hooks
+5. Developing for sites in a network
+6. Developing themes and child themes
+7. Developing plugins
+8. Where to find multisite information
 
 ## Introduction
 
@@ -19,15 +25,17 @@ In this tutorial, you'll learn about things to consider when developing themes o
 
 You'll learn about useful multisite specific functions and hooks, and what to consider when developing themes and plugins to work on a multisite network.
 
+### A note on naming conventions
+
+Before we get started, it's worth noting that there are a couple of different naming conventions used in the WordPress codebase when it comes to multisite. 
+
+WordPress multisite was originally known as WordPress MU (or WordPress multi-user), and some multisite related functions and hooks still use the `wpmu_` prefix. Additionally, because WordPress was originally a blogging platform, most of the original code was written using the keyword `blog` when referring to different sites on the network. As WordPress MU became WordPress multisite, most new multisite related functions referred to `sites` on the network, but some functions still use the old termininolgy of `blogs`.
+
 ## Useful functions
 
 When you're developing a product to support a multisite network, there are a some of useful internal functions and hooks worth knowing.
 
-### A note on naming conventions
-
-Before we get started, it's worth noting that there are a couple of different naming conventions used in the WordPress codebase when it comes to multisite. Initially WordPress Multisite was 
-
-The first is the is_multsite function. This function will return true if multisite is enabled, and is probably the most widely used function related to multisite. If you do a search through the WordPress codebase for uses of the is_multsite function, you'll see that it's used in a number of places, to either perform specific tasks in the context of a multisite network, or to restrict functionality only to multisite networks.
+The first is the is_multsite function. This function will return true if multisite is enabled, and is probably the most widely used function related to multisite. As mentioned earlier, if you do a search through the WordPress codebase for uses of the is_multsite function, you'll see that it's used in a number of places, to either perform specific tasks in the context of a multisite network, or to restrict functionality only to multisite networks.
 
 There are also some common functions that are useful when developing administration interfaces for a multisite network:
 
@@ -35,22 +43,20 @@ There are also some common functions that are useful when developing administrat
 - is_network_admin is the multisite equivalent of the is_admin function, and determines whether the current request is for the network administrative interface.
 - network_admin_url is the multisite equivalent of the admin_url function, and allows you to create URLs relative to the admin area of the network. This is useful for redirecting to different areas of the network admin dashboard.
 
-
-
-
+When working with site content, there are some functions that are widely used. 
 
 is_main_site determines whether the current site is the main site of the current network or not.
 
-Next there is the get_sites() function, which will return a list of sites matching requested arguments. Using this function, as well as the switch_to_blog, restore_current_blog and get_current_blog_id functions, you can perform actions across the network. 
+Next there is the get_sites() function, which will return a list of sites matching requested arguments. Then there is switch_to_blog, which allows you to switch to a different site in the network, restore_current_blog which restores the current site after you've switched to a different sitem and get_current_blog_id, which returns the ID of the current site.
 
-switch_to_blog allows you to switch to a different site in the network, restore_current_blog restores the current site after you've switched to a different sitem and get_current_blog_id function, which returns the ID of the current site.
+Using these functions, you can perform actions across the network.
 
 For example, let's say you wanted to create a function that updated an option on a specific site on the network.
 
 ```php
-function update_site_option( $site_id ){
+function update_site_option( $site_id,  $option_name, $option_value ){
     switch_to_blog( $site_id );
-    update_option( 'my_option', 'my_value' );
+    update_option(  $option_name, $option_value );
     restore_current_blog();
 }
 ```
@@ -97,6 +103,10 @@ signup_blogform is a filter that allows you to modify the signup form for new si
 
 wp_initialize_site is an action that is fired when a new site is created. This is useful if you want to perform actions when a new site is created, for example if you wanted to assign a custom top level domain to a sub site.
 
+## Developing for sites in a network
+
+When you are rendering any content in the scope of a site on the network, WordPress core is clever enough to know that you are working inside the scope of that site. This means that any functions that you use to retrieve information, such as get_bloginfo, get_option, get_posts, or get_post_meta, and any functions you might use to add or update information, like update_option, wp_insert_post or update_post_meta, will get, add or update the correct tables for the site that you are currently working with. Additionally, if you use functions like register_post_type or register_taxonomy, these will be registered for the current site only.
+
 ## Developing themes and child themes
 
 Generally themes and child themes work exactly the same on a multisite network as they do on a single site. Once a theme or child theme is network activated, it can be activated on any single site on the network. 
@@ -126,6 +136,8 @@ if ( ! function_exists( 'tt3c_get_site_name' ) ) {
 }
 ```
 
+Taking this one step further, perhaps you want to exlude the main site only from this custom functionality. You could use the is_main_site function to check whether the current site is the main site, and if so, just return the site name.
+
 ```php
 if ( ! function_exists( 'tt3c_get_site_name' ) ) {
 	function tt3c_get_site_name() {
@@ -144,7 +156,7 @@ if ( ! function_exists( 'tt3c_get_site_name' ) ) {
 
 ## Developing plugins
 
-Like themes, most plugin functionality will work the same in a single site as well as a multisite. Functions like register_post_type or get_posts will function in the same way, just in the sceop of the specific site in question.
+Like themes, most plugin functionality will work the same in a single site as well as a multisite. Functions like register_post_type or get_posts will function in the same way, just in the scope of the specific site in question.
 
 However, there are two things to consider when developing plugins for multisite.
 
@@ -202,5 +214,26 @@ Let's test this out on our multisite.
 And we can see all the right tables have been created.
 
 But what happens when a new site is created?
+
+In that case, you'd need to use a hook like wp_initialize_site, to create the table for the new site.
+
+```php
+add_action( 'wp_initialize_site', 'wp_learn_setup_newsite_table' );
+function wp_learn_setup_newsite_table( $site ) {
+    switch_to_blog( $site->id );
+    wp_learn_create_table();
+    restore_current_blog();
+}
+```
+
+Let's test that out by creating a new site.
+
+And it should create the new table for that site's form submissions in the database.
+
+### Where to find multisite information
+
+Besides the documentation on [Creating a network ](https://wordpress.org/documentation/article/create-a-network/) and things to [consider before creating a network](https://wordpress.org/documentation/article/before-you-create-a-network/), there's not a lot of developer focused documentation specific to multisite. While all multisite related functions and hooks are documented in the code reference, there's no easy way to filter by the multisite specific ones.
+
+Two good places to look are the code in the `wp-admin/network` directory, as these files are primarily what power the Network Admin dashboard, and for any instances of the `is_multisite` function in the `wp-settings.php` file, as the files and functionality that are loaded where this function returns true are the ones that are multisite specific.
 
 Happy coding!
