@@ -17,9 +17,8 @@ Upon completion of this lesson the participant will be able to:
   - Ordering results
 - Backbone.js client
 - Replacing an admin-ajax example with a REST API example
-
 - Where to go for more information
-- 
+
 ## Introduction
 
 Hey there, and welcome to Learn WordPress. 
