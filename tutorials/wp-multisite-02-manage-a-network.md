@@ -4,9 +4,9 @@
 
 Upon completion of this lesson the participant will be able to:
 
-1. Manage a WordPress multisite network
-2. Create and manage sub sites
-3. Allow users to register their own sub sites
+Manage a WordPress multisite network
+Create and manage sub sites
+Allow users to register their own sub sites
 
 ## Outline
 

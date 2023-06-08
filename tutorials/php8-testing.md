@@ -16,7 +16,9 @@ You will learn why it's important to test for PHP version compatibility, where t
 
 ## Why test for PHP version compatibility?
 
-WordPress is written in PHP, and as such, it needs to be able to run on at least the minimum supported version of PHP that is available to web hosts. While WordPress has a minimum requirement of PHP 7.4, PHP 7.4 is officially considered end of life by the PHP developers, and will not receive any security updates in the near future. 
+WordPress is written in PHP, and as such, it needs to be able to run on at least the minimum supported version of PHP that is available to web hosts. While WordPress has a spectici minimum requirement for PHP, older PHP versions will eventuall reach end of life by the PHP developers, and will not receive any security updates in the near future. 
+
+For example, the current version of PHP required to run WordPress is 7.4, which reached end of life status on the 28th November 2022
 
 WordPress core itself is considered compatible with PHP 8.0, and the WordPress core team is working on making WordPress compatible with PHP 8.1 and PHP 8.2. However, they cannot guarantee that all plugins will be compatible with current or future versions of PHP.
 
@@ -96,7 +98,9 @@ The manual method involves you setting up a WordPress environment with the PHP v
 
 Setting up this environment can be done in a few ways, but the most common option would be to use a local development environment that supports changing PHP version, such as Mamp, Laragon, LocalWP, and DevKinsta.
 
-For the purposes of this example we'll test on PHP 8.0. A quick way to check that you're on the right version, is you create an info.php file in the root of your WordPress install, and use the following code:
+For the purposes of this example we'll test on PHP 8.0. 
+
+A quick way to check that you're on the right version, is you create an info.php file in the root of your WordPress install, and use the following code:
 
 ```php  
 <?php
@@ -105,7 +109,7 @@ phpinfo();
 
 Then, navigate to the info.php file in your browser, and you should see the PHP version displayed.
 
-Once you have your test environment set up, you need to enable WP debugging. 
+Once you have your test environment set up, you need to enable WordPress debugging. 
 
 To do this, edit the `wp-config.php` file, and update the line which defines the `WP_DEBUG` constant, setting it to `true`
 
@@ -113,7 +117,7 @@ To do this, edit the `wp-config.php` file, and update the line which defines the
 define( 'WP_DEBUG', true );
 ```
 
-Additionally, disable the `WP_DEBUG_DISPLAY` constant and enable the `WP_DEBUG_LOG` constant, so that errors are logged to a `debug.log` file in the `wp-content` directory.
+Additionally, add the `WP_DEBUG_DISPLAY` constant and set it to false and add the `WP_DEBUG_LOG` constant and set it to tru, so that errors are logged to a `debug.log` file in the `wp-content` directory.
 
 ```php
 define( 'WP_DEBUG_DISPLAY', false );
@@ -183,15 +187,31 @@ property_exists( $post, 'post_title' )
 
 If you refresh the page, you'll see the shortcode is now working again.
 
+And if you check the debug.log, no new errors have been reported.
+
 ### Automated compatibility testing using PHPCompatibility
+
+While the manual method works, it's a tedious process, and it would be preferable to automate the process somehow. 
 
 There are a number of automated or command line tools that you can use to test for PHP Compatibility, but one that is quite useful is the PHPCompatibility tool, which is a set of rules for the PHP_CodeSniffer tool.
 
 What's great about PHPCompatibility is that you don't have to configure a different PHP version to use it. You can use it with your existing PHP version, and it will check your code against the rules for the PHP version you specify.
 
-To install PHPCompatibility, you need to install Composer, which is a dependency manager for PHP. 
+To install PHPCompatibility, you need to install Composer, which is a dependency manager for PHP projects. For Composer to work, you also need the cli version of PHP installed on your system. 
 
-Installing Composer is outside the scope of this lesson, but you can find instructions on the [Composer website](https://getcomposer.org/) for both [macOS/Linux](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) and [Windows](https://getcomposer.org/doc/00-intro.md#installation-windows) operating systems.
+Installing Composer is outside the scope of this lesson, but you can find instructions on the [Composer website](https://getcomposer.org/) for both [macOS/Linux](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) and [Windows](https://getcomposer.org/doc/00-intro.md#installation-windows) operating systems. You can find ways to install PHP on your system on the [PHP website](https://www.php.net/manual/en/install.php).
+
+You can check that you have php installed by running the following command in your terminal:
+
+```bash
+php -v
+```
+
+Similarly, you can check that you have Composer installed by running the following command in your terminal:
+
+```bash
+composer -v
+```
 
 Once you have Composer installed, you can install PHPCompatibility and the PHP_CodeSniffer with the WordPress coding standards by running the following command in your plugin directory:
 

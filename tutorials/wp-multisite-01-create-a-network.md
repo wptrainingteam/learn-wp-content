@@ -3,9 +3,9 @@
 # Learning Objectives
 
 Upon completion of this lesson the participant will be able to:
-1. Describe what a WordPress multisite network is
-2. Describe why you might use a WordPress multisite network
-3. Create a WordPress multisite network
+Describe what a WordPress multisite network is
+Describe why you might use a WordPress multisite network
+Create a WordPress multisite network
 
 ## Outline
 
@@ -57,6 +57,8 @@ Before you create your multisite network, make sure to read the [Before You Crea
 
 Next, you should make a backup of the current site files and database. This is not strictly necessary, especially if you've created a brand-new WordPress install, but it's a good idea if you've already created some content on the site you want to turn into a multisite network. 
 
+Additionally, if you have a backup of the site files, you can quickly revert any changes you make creating the multisite network, if anything goes wrong during the process.
+
 At the same time, you should make sure that Permalinks work on the site, and that any plugins installed are deactivated. 
 
 Finally, if you want to have your WordPress install running in its own directory, make sure to do that before you create the multisite network.
@@ -64,6 +66,10 @@ Finally, if you want to have your WordPress install running in its own directory
 ### Enable Multisite
 
 To enable multisite, you need to edit the `wp-config.php` file in the root directory of your WordPress install and define the PHP constant `WP_ALLOW_MULTISITE` as `true`.
+
+```php
+define( 'WP_ALLOW_MULTISITE', true );
+```
 
 Then, refresh your WordPress dashboard. By setting this constant, you'll now see a new menu item in the dashboard under the Tools menu called "Network Setup".
 
