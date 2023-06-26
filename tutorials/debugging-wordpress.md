@@ -178,7 +178,9 @@ In addition to using the built-in debugging tools, there are also a few plugins 
 
 ### Query Monitor
 
-The first plugin is Query Monitor, which is a debugging plugin that adds a debug menu to the admin bar, and displays information about the current page request. It includes information about the database queries that have been run, the current HTTP Request, the hooks and actions that have been run, loaded scripts and styles, and much more. 
+The first plugin is Query Monitor, which is a debugging plugin that adds a debug menu to the admin bar, and displays information about the current page request. 
+
+It includes information about the database queries that have been run, the current HTTP Request, the hooks and actions that have been run, loaded scripts and styles, and much more. 
 
 ### Debug Bar
 

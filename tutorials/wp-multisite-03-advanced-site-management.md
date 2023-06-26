@@ -4,10 +4,10 @@
 
 Upon completion of this lesson the participant will be able to:
 
-1. Update subsite statuses
-2. Delete a subsite
-3. Export a subsite into a single site
-4. Convert a multisite network back to a single site install
+Update subsite statuses
+Delete a subsite
+Export a subsite into a single site
+Convert a multisite network back to a single site install
 
 ## Outline
 

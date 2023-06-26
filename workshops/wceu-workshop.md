@@ -1,5 +1,7 @@
 ## Developing WordPress Blocks using vanilla JavaScript
 
+
+
 1. Show the final block code using JSX
 2. Show the final block code using "vanilla" JavaScript
 4. Cover the 4 basic files needed
@@ -13,4 +15,5 @@
    10. RichText
 11. How to create custom components
     12. Form
+13. Set up the CSS
 13. Why JSX makes life easier
