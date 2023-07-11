@@ -59,7 +59,7 @@ Using these functions, you can perform actions across the network.
 For example, let's say you wanted to create a function that updated an option on a specific site on the network.
 
 ```php
-function update_site_option( $site_id,  $option_name, $option_value ){
+function update_site_option( $site_id,  $option_name, $option_value ) {
     switch_to_blog( $site_id );
     update_option(  $option_name, $option_value );
     restore_current_blog();
@@ -77,7 +77,7 @@ function update_option_on_all_sites( $option_name, $option_value ) {
         restore_current_blog();
     }
 }
-``` 
+```
 
 You could also use the [update_blog_option](https://developer.wordpress.org/reference/functions/update_blog_option/) function to update an option on a specific site, without having to switch to that site.
         
@@ -88,7 +88,7 @@ function update_option_on_all_sites( $option_name, $option_value ) {
         update_blog_option( $site->blog_id, $option_name, $option_value );
     }
 }
-``` 
+```
 
 When developing multsite plugins, there is the [is_network_only_plugin](https://developer.wordpress.org/reference/functions/is_network_only_plugin/) function. This is a plugin specific function that checks for the “Network: true” in the plugin header to see if this should be activated only as a network wide plugin. This is useful if you want to restrict a plugin to only be activated on a network, and not on individual sites.
 
@@ -114,7 +114,7 @@ Generally themes and child themes work exactly the same on a multisite network a
 
 All specific functionality that you may want to code into a functions.php file will work in the scope of the current theme. For example, if you wanted to display the sitename in the footer of the theme, you could use the standard get_bloginfo function to retrieve the site name.
 
-```php 
+```php
 if ( ! function_exists( 'tt3c_get_site_name' ) ) {
 	function tt3c_get_site_name() {
         return get_bloginfo( 'name' );

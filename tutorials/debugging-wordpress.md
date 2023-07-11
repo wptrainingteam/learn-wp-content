@@ -23,7 +23,13 @@ You'll learn how to enable the built-in WordPress debugging options and how they
 
 ## What is debugging?
 
-Debugging is the process of finding and fixing errors in your code. Given that the two primary programming languages of WordPress are PHP and JavaScript, you need to be able to debug both. With JavaScript code, which is executed in the browser, it's fairly straightforward to use to console.log() to write messages to the browser console for the purposes of testing and debugging. PHP on the other hand, is executed on the server and so you need ways to find out what's happening when things go wrong.
+Debugging is the process of finding and fixing errors in your code. 
+
+As the two primary programming languages of WordPress are PHP and JavaScript, you need to be able to debug both. 
+
+With JavaScript code, which is executed in the browser, it's fairly straightforward to use to console.log() to write messages to the browser console for the purposes of testing and debugging. 
+
+PHP on the other hand, is executed on the server and so you need ways to find out what's happening when things go wrong.
 
 There are a few third party tools you can use for advanced debugging, like Xdebug or Ray, but for the purposes of this tutorial, you'll learn about options that are specific to WordPress, and require no additional software. 
 
@@ -58,7 +64,9 @@ This configuration will:
 2. Disable displaying errors on screen
 3. Enable logging errors to the wp-content/debug.log file
 
-Depending on your personal preference, you can enable displaying the errors on screen, but this can lead to the errors either being missed, or overlaying other important content on screen, which is not ideal. Additionally if you're ever debugging an issue on a production site, you don't want to display errors on screen, as this can lead to sensitive information being displayed to the user.
+Depending on your personal preference, you can enable displaying the errors on screen, but this can lead to the errors either being missed, or overlaying other important content on screen, which is not ideal. 
+
+Additionally, if you're ever debugging an issue on a production site, you don't want to display errors on screen, as this can lead to sensitive information being displayed to the user.
 
 To see this in action, let's look at an example. 
 
@@ -136,7 +144,9 @@ By simply enabling debugging, any errors in your code are automatically logged t
 
 ```
 
-In this case, two errors are being reported. First us a PHP Notice triggered by WordPress, which is caused by hooking the wp_learn_register_routes funtion on the wrong action. Second is an error related to the database query being run to fetch the form submissions, which is querying the table form_submission, not form_submissions.
+In this case, two errors are being reported. First us a PHP Notice triggered by WordPress, which is caused by hooking the wp_learn_register_routes funtion on the wrong action. Second is an error related to the database query being run to fetch the form submissions.
+
+It looks like it is querying the table form_submission, not form_submissions.
 
 Once you fix this errors, and visit the REST API GET route, you'll see the form submissions are returned.
 
@@ -150,7 +160,7 @@ For example, if you wanted to log a sql query being rung to the debug.log file, 
 error_log( $wpdb->last_query );
 ```
 
-And you'll see the query being logged
+If you refresh the request and view the debug.log file, you see the query being logged to the file. 
 
 ```
 [02-Jun-2023 13:55:35 UTC] SELECT * FROM wp_form_submissions
@@ -158,7 +168,9 @@ And you'll see the query being logged
 
 ## Using the SAVEQUERIES constant
 
-In addition to logging the last query, you can also log all queries that are run during a WordPress request lifecycle. To do this, you can enable the SAVEQUERIES constant in your wp-config.php file.
+In addition to logging the last query, you can also log all queries that are run during a WordPress request lifecycle. 
+
+To do this, you can enable the SAVEQUERIES constant in your wp-config.php file.
 
 ```php
 define( 'SAVEQUERIES', true );
@@ -170,7 +182,9 @@ Once you've enabled this constant, you can log all queries by using the followin
 error_log( print_r( $wpdb->queries, true ) );
 ```
 
-This uses the error_log function combined with the PHP print_r function to log the $wpdb->queries array to the debug.log file. This array contains all the queries that have been run during the WordPress request lifecycle, and is only available if the SAVEQUERIES constant is enabled.
+This uses the error_log function combined with the PHP print_r function to log the $wpdb->queries array to the debug.log file. 
+
+This array contains all the queries that have been run during the WordPress request lifecycle, and is only available if the SAVEQUERIES constant is enabled.
 
 ## Using debugging plugins
 
@@ -188,5 +202,5 @@ The second plugin is Debug Bar, which also adds a debug menu to the admin bar, a
 
 And that wraps up this tutorial on debugging in WordPress. For more information and debugging options, check out the [Debugging in WordPress](https://wordpress.org/documentation/article/debugging-in-wordpress/) page in the WordPress developer documentation. 
 
-Happy coding.
+Happy debugging.
 
