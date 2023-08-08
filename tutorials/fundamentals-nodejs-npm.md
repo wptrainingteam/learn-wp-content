@@ -6,6 +6,11 @@ Why you should install Node.js and npm.
 What is required to install Node.js and npm.
 How to install Node.js and npm.
 
+## Comprehension Questions
+
+Are you comfortable installing software on your computer?
+Do you have access to a terminal on your computer?
+
 ## Introduction
 
 Hey there, and welcome to Learn WordPress.

@@ -1,6 +1,12 @@
 # WordPress Developer Fundamentals - The WordPress Database
 
-https://gist.github.com/jonathanbossenger/d96520acd6225ea969f091752a3bca8b
+<!-- 
+This area is for general notes about the tutorial script, and not to be recorded in the final audio/video.
+PHP script to be used in the tutorial https://gist.github.com/jonathanbossenger/d96520acd6225ea969f091752a3bca8b
+Any linked URLS do not need to be read out, as they will be displayed on screen.
+Headings do not need to be read out, as they will be displayed on screen.
+When reading things like function names or table names, it's not required to read out the _'s. So wp_posts can be read as "wp posts".
+-->
 
 ## Introduction
 
@@ -34,7 +40,11 @@ For the purposes of this tutorial, we will be using phpMyAdmin to interact with 
 
 ## Database Tables
 
-The WordPress database is made up of many tables. Each table stores a different type of information about your website. 
+The WordPress database is made up of many tables. Each table stores a different type of data for your website. 
+
+Each table has the same prefix, which is defined in the wp-config file. By default, the prefix is `wp_`, but you can change this to anything you like during the WordPress installation process.
+
+Let's start by looking at the most important tables for managing content. 
 
 ### wp_posts and wp_postmeta
 
@@ -50,7 +60,11 @@ The `wp_users` table stores all the information about your website's users. Each
 
 ## Functions to interact with posts, comments, and users
 
-For the tables discussed so far, there are functions that you can use to interact with that table. These functions form part of the WordPress Database API.
+For all WordPress database tables, there are functions that you can use to interact with that table. 
+
+These functions form part of the WordPress Database API.
+
+All of these functions can be found by using the search feature in the WordPress developer documentation, under Code Reference.
 
 Generally, the functions that you can use to interact with the WordPress database all follow a similar pattern.
 
@@ -58,13 +72,21 @@ There is an insert function, an update function, and a delete function.
 
 These usually have the same name, with the prefix `wp_` followed by the action, followed by the name of the table.
 
-So for example for posts, the insert function is `wp_insert_post`, the update function is `wp_update_post`, and the delete function is `wp_delete_post`.
+Let's look at these functions for posts for example: 
+
+`wp_insert_post` is the function to create a new post
+
+`wp_update_post` is the function to update an existing post
+
+`wp_delete_post` is the function to delete a post
 
 Then there are usually a functions to fetch either all the records from a table, or a single record.
 
 These usually have the same name, with the prefix `get_` followed by either the singular or plural name of the table.
 
-So for example for posts, the function to fetch all the posts is `get_posts`, and the function to fetch a single post is `get_post`.
+So for example `get_posts` is the function to fetch a collection of posts.
+
+And `get_post` is the function to fetch a singular post.
 
 Each of these functions typically has a number of parameters that you can use to filter the results that are returned.
 
@@ -72,9 +94,9 @@ Then, there are also functions to interact with any meta tables, usually to inse
 
 These usually have the same name, with the action, followed by the singular name of the table, followed by `_meta`.
 
-So for example for posts, the function to insert a meta field is `add_post_meta`, the function to update a meta field is `update_post_meta`, and the function to delete a meta field is `delete_post_meta`.
+So for example for posts, `add_post_meta` is the function to insert a meta field. 
 
-All of these functions can be found by using the search feature in the WordPress developer documentation, under Code Reference.
+Similarly `update_post_meta` the function to update a meta field and `delete_post_meta` the function to delete a meta field.
 
 ## wp_terms, wp_termmeta, wp_term_relationships, and wp_term_taxonomy
 
@@ -82,7 +104,11 @@ The `wp_terms`, `wp_termmeta`, `wp_term_relationships`, and `wp_term_taxonomy` t
 
 The `wp_terms` table stores information about your website's terms. Each row in the `wp_terms` table represents a single term. Under the hood, categories and tags are both terms. 
 
-What determines whether they are a category or a tag is the taxonomy that they are associated with, which is stored in the `wp_term_taxonomy` table. Here you can see the default taxonomies that are registered in WordPress are `category` and `post_tag`. It is also possible to register additional custom taxonomies, which will be stored in this table as well.
+What determines whether they are a category or a tag is the taxonomy that they are associated with, which is stored in the `wp_term_taxonomy` table. 
+
+Here you can see the default taxonomies that are registered in WordPress are `category` and `post_tag`. 
+
+It is also possible to register additional custom taxonomies, which will be stored in this table as well.
 
 The `wp_term_relationships` table stores the relationships between terms and their parent objects, be that a post, page, or custom post type.
 
@@ -106,17 +132,12 @@ The [Options API](https://developer.wordpress.org/apis/options/) is typically us
 
 ### wp_links
 
-The `wp_links` table stores information about your website's links. Each row in the `wp_links` table represents a single link. Links was a feature that was removed from WordPress in version 3.5.
+The `wp_links` table stores information about your website's links. Each row in the `wp_links` table represents a single link. Links was a feature that was [removed from WordPress in version 3.5](https://core.trac.wordpress.org/ticket/21307).
 
-https://core.trac.wordpress.org/ticket/21307
-
-However, the `wp_links` table is still included in the WordPress database for backwards compatibility, and it is still possible to add links to your website using the Links Manager plugin.
-
-https://wordpress.org/plugins/link-manager/
-https://downloads.wordpress.org/plugin/link-manager.zip
+However, the `wp_links` table is still included in the WordPress database for backwards compatibility, and it is still possible to add links to your website using [the Links Manager plugin](https://wordpress.org/plugins/link-manager/).
 
 ## Conclusion
 
-And that wraps up this overview of the WordPress database. Look out for the tutorial on how to add an interact with custom tables in the WordPress database.
+And that wraps up this overview of the WordPress database. 
 
 Happy coding.
