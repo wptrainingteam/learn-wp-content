@@ -1,7 +1,7 @@
 # WordPress Developer Fundamentals - The WordPress Database
 
 <!-- 
-This area is for general notes about the tutorial script, and not to be recorded in the final audio/video.
+This area is for general notes about the tutorial script, and does not to be recorded in the final audio/video.
 PHP script to be used in the tutorial https://gist.github.com/jonathanbossenger/d96520acd6225ea969f091752a3bca8b
 Any linked URLS do not need to be read out, as they will be displayed on screen.
 Headings do not need to be read out, as they will be displayed on screen.

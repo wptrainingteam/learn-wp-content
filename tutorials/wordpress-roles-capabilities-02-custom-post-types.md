@@ -3,13 +3,12 @@
 ## Objectives
 
 Upon completion of this lesson the participant will be able to:
-
-- Identify how capabilities are assigned to a custom post type
-- Create custom post type capabilities using the capability_type argument
-- Map specific primitive capabilities to a custom post type using the capabilities argument
-- Map all the primitive capabilities to a custom post type using the map_meta_cap argument
-- Add custom post type capabilities to an existing role
-- Create a new role with specific custom post type capabilities
+Identify how capabilities are assigned to a custom post type 
+Create custom post type capabilities using the capability_type argument 
+Map specific primitive capabilities to a custom post type using the capabilities argument 
+Map all the primitive capabilities to a custom post type using the map_meta_cap argument
+Add custom post type capabilities to an existing role
+Create a new role with specific custom post type capabilities
 
 ## Outline
 
@@ -101,7 +100,7 @@ function wp_learn_render_story_cpt() {
 
 With the plugin active, when logged in as an admin user, this is what you might see when you visit the page in your dashboard.
 
-```php 
+```php
 array(
     'capability_type' => 'post',
     'map_meta_cap' => true,
@@ -181,13 +180,13 @@ If you take a look at the `cap` property on your custom post type, you will see 
 
 However, it's not using the correct pluralisation of story, so you need to explicitly set the plural version of the `capability_type` argument, by passing in an array of values, the first being the singular name, the second being the pluralisation.
 
-```php  
+```php
 'capability_type' => array( 'story', 'stories' ),
 ```
 
 Now if you take a look at the cap property on your custom post type, you will see that the capabilities have changed again.
 
-```php 
+```php
 array(
     'capability_type' => 'story',
     'map_meta_cap' => false,
@@ -262,7 +261,7 @@ When checking against the `edit_post` capability, the `map_meta_cap` function wi
 
 So, if the post is written by someone else and published, it would return an array containing the 'edit_others_posts' and 'edit_published_posts' capabilities:
 
-```
+```php
 array('edit_others_posts', 'edit_published_posts')
 ```
 

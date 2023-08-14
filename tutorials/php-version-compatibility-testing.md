@@ -16,7 +16,7 @@ You will learn why it's important to test for PHP version compatibility, where t
 
 ## Why test for PHP version compatibility?
 
-WordPress is written in PHP, and as such, it needs to be able to run on at least the minimum supported version of PHP that is available to web hosts. While WordPress has a spectici minimum requirement for PHP, older PHP versions will eventuall reach end of life by the PHP developers, and will not receive any security updates in the near future. 
+WordPress is written in PHP, and as such, it needs to be able to run on at least the minimum supported version of PHP that is available to web hosts. While WordPress has a spectici minimum requirement for PHP, older PHP versions will eventually reach end of life by the PHP developers, and will not receive any security updates in the near future. 
 
 For example, the current version of PHP required to run WordPress is 7.4, which reached end of life status on the 28th November 2022
 
@@ -102,7 +102,7 @@ For the purposes of this example we'll test on PHP 8.0.
 
 A quick way to check that you're on the right version, is you create an info.php file in the root of your WordPress install, and use the following code:
 
-```php  
+```php
 <?php
 phpinfo();
 ```
@@ -197,8 +197,6 @@ There are a number of automated or command line tools that you can use to test f
 
 What's great about PHPCompatibility is that you don't have to configure a different PHP version to use it. You can use it with your existing PHP version, and it will check your code against the rules for the PHP version you specify.
 
-
-
 To install and use PHPCompatibility, you need to install Composer, which is a dependency manager for PHP projects. For Composer to work, you also need the cli version of PHP installed on your system. 
 
 Installing Composer is outside the scope of this lesson, but you can find instructions on the [Composer website](https://getcomposer.org/) for both [macOS/Linux](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) and [Windows](https://getcomposer.org/doc/00-intro.md#installation-windows) operating systems. 
@@ -238,7 +236,6 @@ You'll be installing the develop branch of PHPCompatibility tool, which at the t
 Then you need to require the WordPress coding standard rules for PHP_CodeSniffer:
 
 ```bash
-
 composer require --dev wp-coding-standards/wpcs
 ```
 
@@ -252,7 +249,7 @@ With all this installed, you can run the PHPCompatibility tool on your plugin fi
 
 The recommended way to do this is run PHPCompatibility against a specific base version of PHP. In this example you can run it against version 7.4 of PHP and above by setting the `testVersion` runtime variable to `7.4-`.
 
-```bash:
+```bash
 ./vendor/bin/phpcs --runtime-set testVersion 7.4- -p wp-learn-php8.php --standard=PHPCompatibility
 ```
 
