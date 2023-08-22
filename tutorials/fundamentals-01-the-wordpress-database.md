@@ -32,7 +32,9 @@ The majority of local development environments or hosting companies use a free t
 
 An alternative to phpMyAdmin is a tool called [Adminer](https://www.adminer.org/). Adminer is a single PHP file that you can upload to your website, and it provides a similar interface to phpMyAdmin. Some hosting companies and local development environments prefer to use Adminer instead of phpMyAdmin.
 
-Finally, if you don't have access to either, you can also install a plugin called [SQL Buddy](https://wordpress.org/plugins/sql-buddy/). This is a free WordPress plugin that provides a similar interface to phpMyAdmin and Adminer, but it runs inside your WordPress dashboard.
+Finally, if you don't have access to either, you can also install a plugin called [SQL Buddy](https://wordpress.org/plugins/sql-buddy/). 
+
+This is a free WordPress plugin that provides a similar interface to phpMyAdmin and Adminer, but it runs inside your WordPress dashboard.
 
 If you do decide to use SQL Buddy, please remember to deactivate and delete the plugin when you are done using it. Leaving it installed on your website is a possible security risk.
 
@@ -105,10 +107,6 @@ The `wp_terms`, `wp_termmeta`, `wp_term_relationships`, and `wp_term_taxonomy` t
 The `wp_terms` table stores information about your website's terms. Each row in the `wp_terms` table represents a single term. Under the hood, categories and tags are both terms. 
 
 What determines whether they are a category or a tag is the taxonomy that they are associated with, which is stored in the `wp_term_taxonomy` table. 
-
-Here you can see the default taxonomies that are registered in WordPress are `category` and `post_tag`. 
-
-It is also possible to register additional custom taxonomies, which will be stored in this table as well.
 
 The `wp_term_relationships` table stores the relationships between terms and their parent objects, be that a post, page, or custom post type.
 
