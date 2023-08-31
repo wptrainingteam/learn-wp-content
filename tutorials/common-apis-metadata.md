@@ -41,7 +41,9 @@ In the wp_postmeta table, each row has a post_id column, which is the ID of the 
 
 To make this process a little easier, WordPress provides a Custom Fields meta box in the edit screen, which allows you to add metadata to a post, without having to write any code. This is one of th reasons metadata is also commonly called Custom Fields. 
 
-As the name suggests, a meta box is an area that displays all of the metadata associated with a given data type. So the Custom Fields meta box at the bottom of the Post edit screen will show you all meta data for that post. 
+As the name suggests, the Custom Fields meta box is an area that displays all of the metadata associated with a given data type. It is possible to [add custom meta boxes](https://developer.wordpress.org/plugins/metadata/custom-meta-boxes/) to the edit screen, but that is beyond the scope of this tutorial. 
+
+### Enabling the Custom Fields meta box
 
 In the classic editor, you can enable the Custom Fields meta box by clicking on the Screen Options tab in the top right corner of the screen, and checking the Custom Fields checkbox.
 
@@ -49,13 +51,15 @@ In the block editor, you can enable the Custom Fields meta box by clicking on th
 
 You will need to do this for any data type that you want to add metadata to.
 
+### Adding, updating, and deleting metadata in the Custom Fields meta box
+
 Once enabled you can add a new custom field, by proving the field name (which will be stored as the meta_key) and the field value (which will be stored as the meta_value).
 
 Start by adding a custom field with the name "location" and the value "Los Angeles". Then click the Add Custom Field button. 
 
 Now take a look at the wp_postmeta table in the database. You should see a new row with the post_id of the post you added the custom field to, a meta_key of "location", and a meta_value of "Los Angeles".
 
-It's also possible to add more than one record of meta data to a data object, with the same key. So you could add another custom field with the name "location" and the value "California". 
+It's also possible to add more than one record of metadata to a data object, with the same key. So you could add another custom field with the name "location" and the value "California". 
 
 And if you inspect the wp_postmeta table again, you'll see that there are now two rows with the same post_id and meta_key, but different meta_values.
 
@@ -251,7 +255,9 @@ As an example, the post metadata wrapper functions are:
 - `get_post_meta()`
 - `delete_post_meta()`
 
-If you compare the function signatures for these functions with the core functions, you'll notice that they are identical, except that the `$meta_type` parameter is not required, as it is assumed to be 'post'. This is the same for all of the metadata wrapper functions. Knowing that these wrappers exist can save you some time when working with metadata if you know the data type you are working with. This is especially useful when rendering metadata in the front end for posts or pages. 
+If you compare the function signatures for these functions with the core functions, you'll notice that they are identical, except that the `$meta_type` parameter is not required, as it is assumed to be 'post'. This is the same for all of the metadata wrapper functions. Knowing that these wrappers exist can save you some time when working with metadata if you know the data type you are working with. 
+
+This is especially useful when creating custom meta boxes in the edit screen for specific object types, or for rendering metadata for specific object types on the front end. 
 
 ## Conclusion
 
