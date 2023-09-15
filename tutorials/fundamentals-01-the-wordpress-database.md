@@ -8,6 +8,28 @@ Headings do not need to be read out, as they will be displayed on screen.
 When reading things like function names or table names, it's not required to read out the _'s. So wp_posts can be read as "wp posts".
 -->
 
+## Learning Objectives
+
+Upon completion of this lesson the participant will be able to:
+
+Describe what the WordPress database is
+Identify the different tables in the WordPress database
+Explain how to interact with the WordPress database
+Describe the different functions to interact with the WordPress database
+
+## Outline
+1. Introduction
+2. The WordPress Database
+3. Interacting with your WordPress database
+4. Database Tables
+5. Functions to interact with posts, comments, and users
+6. wp_terms, wp_termmeta, wp_term_relationships, and wp_term_taxonomy
+7. Functions to interact with terms and taxonomies
+8. wp_options
+9. Functions to interact with options
+10. wp_links
+11. Conclusion
+
 ## Introduction
 
 Hey there, and welcome to Learn WordPress.

@@ -68,9 +68,24 @@ Once it's installed, you can launch it by searching for PowerShell in the Start 
 
 Once you have a working terminal, you will be able to install the software you need to start developing blocks.
 
-## Understanding package managers
+## Why install Chocolatey for Windows?
+
+If you are running macOS or Linux, you can skip this lesson.
+
+In the Installing Node.js and npm lesson, we suggested using Chocolatey on Windows to install nvm, to then install Node.js and npm. But we also mentioned that you can use something called [nvm-windows](https://github.com/coreybutler/nvm-windows). 
+
+So why recommend Chocolatey?
+
+The main reason we suggested Chocolatey is to get you comfortable using the terminal. Later on in this course, there will be times when you will need to use the terminal to run commands, and so we wanted to get you used to using it as soon as possible.
+
+There are however a few advantages to using a package manager like Chocolatey on Windows:
+
+- It makes it easier to install and update software, as long as the software is available as a Chocolatey pacakge, you can install, update or delete it with a single command.
+- When installing anything, Chocolatey, like other package managers, will also install any dependencies that the software needs to run.
+- It also makes it easier to keep track of what software you have installed on your computer. 
 
 ## Why install nvm to install node.js, and npm
 
+å
 ## Wrap up
 

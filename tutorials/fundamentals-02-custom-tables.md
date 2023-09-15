@@ -1,6 +1,20 @@
 # WordPress Developer Fundamentals - The WordPress Database
 
-https://gist.github.com/jonathanbossenger/d96520acd6225ea969f091752a3bca8b
+## Learning Objectives
+
+Upon completion of this lesson the participant will be able to:
+
+## Outline
+1. Introduction
+2. Where to find information
+3. Creating Custom Database Tables
+4. Creating the table
+5. Inserting data
+6. Updating data
+7. Selecting data
+8. Table updates
+9. Cleaning up
+10. Conclusion
 
 ## Introduction
 
@@ -12,26 +26,19 @@ For the occasions where you need to store data that doesn't fit into the default
 
 ## Where to find information
 
-While the WordPress developer documentation does not include anything around custom database tables, there is an older version of the developer documentation called the Codex that does.
+While the WordPress developer documentation does not include anything around custom database tables, there is an older version of the developer documentation called the Codex that does. You can find everything you need to know about custom database tables in the [Creating Tables with Plugins](https://codex.wordpress.org/Creating_Tables_with_Plugins ) page of the Codex
 
 ## Creating Custom Database Tables
 
-https://codex.wordpress.org/Creating_Tables_with_Plugins
+The first thing you'll notice is that this is typically done in a plugin. 
 
-The first thing you'll notice is that this is typically done in a plugin. This is because plugins are loaded before themes, and therefore the database table can be created before you need to use it.
-
-Additionally, it is possible, and recommended, to create custom tables when the plugin is activated, and delete them when the plugin is deactivated. This allows this functionality to be run once, and not every time the plugin is loaded.
-
-https://developer.wordpress.org/reference/functions/register_activation_hook/
-https://developer.wordpress.org/reference/functions/register_deactivation_hook/
+Additionally, it is possible, and recommended, to create custom tables when the plugin is activated, using the `register_activation_hook` [function](https://developer.wordpress.org/reference/functions/register_activation_hook/), and if you delete them to do that when the plugin is deactivated using the `register_deactivation_hook` [function](https://developer.wordpress.org/reference/functions/register_deactivation_hook/). This allows this functionality to be run once, and not every time the plugin is loaded.
 
 ## Creating the table
 
 To create a custom table on plugin activation, you need to use a few things
 
-First, you need to use the $wpdb global WordPress database object, as it contains all the methods you need to interact with the database. 
-
-https://developer.wordpress.org/reference/classes/wpdb/
+First, you need to use the `$wpdb` global [WordPress database object](https://developer.wordpress.org/reference/classes/wpdb/), as it contains all the methods you need to interact with the database. 
 
 This will allow you to set up the new table name, using the WordPress database prefix.
 
@@ -41,19 +48,21 @@ This will allow you to set up the new table name, using the WordPress database p
     $table_name = $wpdb->prefix . 'custom_table';
 ````
 
-It will also allow you to access the `get_charset_collate` method, which will return the correct character set and collation for the database.
+It will also allow you to access the `get_charset_collate` [method](https://developer.wordpress.org/reference/classes/wpdb/get_charset_collate/), which will return the correct character set and collation for the database.
 
 ```php
     $charset_collate = $wpdb->get_charset_collate();
 ```
 
-To create a table, you need to know SQL to execute a SQL statement on the database. This is done via the `dbDelta` function. dbDelta is a function that is generally used during WordPress updates, if default WordPress tables need to be updated or change. It examines the current table structure, compares it to the desired table structure, and either adds or modifies the table as necessary.
+To create a table, you need to know SQL to execute a SQL statement on the database. This is done via the `dbDelta` [function](https://developer.wordpress.org/reference/functions/dbdelta/). dbDelta is a function that is generally used during WordPress updates, if default WordPress tables need to be updated or change. It examines the current table structure, compares it to the desired table structure, and either adds or modifies the table as necessary.
 
-In order to use dbDelta, you need to write your SQL statement in a specific way. 
+In order to use `dbDelta`, you need to write your SQL statement in a specific way. 
+
+You can read more about these requirements here:
 
 https://codex.wordpress.org/Creating_Tables_with_Plugins#Creating_or_Updating_the_Table
 
-Once you've created the SQL statement, you need to pass it to the dbDelta function. This is done by including the `upgrade.php` file, which contains the function declaration.
+Once you've created the SQL statement, you need to pass it to the `dbDelta` function. This is done by including the `wp-admin/includes/upgrade.php` file, which contains the function declaration.
 
 ```php
 	function create_database_table() {
@@ -87,7 +96,7 @@ Hooking this function into your plugin activation hook will ensure that the tabl
 
 It's also possible to use the plugin activate hook to insert data into your table on plugin activation.
 
-To do this you can use the `insert` method of the $wpdb object, passing an array of field names and values.
+To do this you can use the `insert` method of the `$wpdb` object, passing an array of field names and values.
 
 ```php
     function insert_record_into_table(){
@@ -109,7 +118,7 @@ To do this you can use the `insert` method of the $wpdb object, passing an array
 
 ## Updating data
 
-To update data in your custom table, use the `update` method of the $wpdb object, passing an array of field names and values, as well as an array of field names and values to match.
+To update data in your custom table, use the `update` method of the `$wpdb` object, passing an array of field names and values, as well as an array of field names and values to match.
 
 ```php
     function update_record_in_table() {
@@ -132,7 +141,7 @@ To update data in your custom table, use the `update` method of the $wpdb object
 
 ## Selecting data
 
-Selecting data from your custom table is done using the `get_results` method of the $wpdb object.
+Selecting data from your custom table is done using the `get_results` method of the `$wpdb` object.
 
 ```php
     function select_records_from_table() {
@@ -159,9 +168,9 @@ It's also a good idea to store a db version number as a WordPress option, in cas
 
 ## Cleaning up
 
-It's also possible to use the plugin deactivate hook to delete the custom table when the plugin is deactivated. To do this, you can use the `query` method of the $wpdb object, passing a SQL statement to delete the table.
+It's also possible to use the plugin deactivate hook to delete the custom table when the plugin is deactivated. To do this, you can use the `query` method of the `$wpdb` object, passing a SQL statement to delete the table.
 
-Query will run any SQL query, but it's best to only use it for queries that don't insert or update data, as those functions include built in sanitization.
+`query` will run any SQL query, but it's best to only use it for queries that don't insert or update data, as those functions include built in sanitization.
 
 ```php
     function delete_table() {
@@ -180,3 +189,7 @@ Remember to do this on plugin deactivation, not plugin uninstall, as plugin unin
 ```
 
 ## Conclusion
+
+This tutorial only scratches the surface of what's possible with custom tables, but hopefully it gives you an idea of what's possible.
+
+Happy coding. 

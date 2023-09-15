@@ -116,7 +116,9 @@ echo twentytwentyone_get_responsive_image( 22 );
 ``
 ```
 
-This is perfect if you're adding images to classic themes. Block themes will handle responsive images and srcset attributes automatically.
+This is perfect if you're adding images to classic themes. 
+
+Block themes will handle responsive images and srcset attributes automatically.
 
 You can see this by adding an image from the media library to a template file. 
 
