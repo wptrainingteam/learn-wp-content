@@ -18,6 +18,10 @@ Upon completion of this lesson the participant will be able to:
 
 ## Introduction
 
+Hey there, and welcome to Learn WordPress.
+
+In this tutorial, you'll be learning about creating custom database tables for WordPress.
+
 The default WordPress database schema is typically enough for all content types. The ability to register custom post types and use post meta usually covers most options.
 
 However, in some cases, you may need to store data that doesn't fit into the default schema. For example, in an ecommerce store, a custom post type would work for products, as it has similar fields to a post (title, featured image, content, author etc). However, and order does not have these types of fields, and therefore it might be useful to store orders in a custom table.
