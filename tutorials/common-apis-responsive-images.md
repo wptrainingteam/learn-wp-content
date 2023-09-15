@@ -120,4 +120,8 @@ Then, you can call this function in any theme files that support PHP, so for exa
 echo custom_responsive_image( 22 );
 ```
 
+## Conclusion
+
+And that wraps up this introduction to the Responsive Images API in WordPress.
+
 Happy coding
