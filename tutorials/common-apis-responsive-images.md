@@ -38,6 +38,8 @@ So what you might want is to be able to show a cropped version of that image on 
 
 https://mdn.github.io/learning-area/html/multimedia-and-embedding/responsive-images/responsive.html
 
+As you can see in this responsive images example, both the header image and the main content image are cropped when you switch to mobile. 
+
 While the knowledge of how responsive images works is outside the scope of this tutorial, you can read more about how to implement responsive images in the [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
 
 ## The WordPress Responsive Images API
@@ -95,37 +97,27 @@ As a safeguard against adding very large images to srcset attributes, a `max_src
 
 ## Customizing the responsive images markup
 
-To modify the default srcset and sizes attributes, you should use the wp_calculate_image_srcset and wp_calculate_image_sizes filters, respectively.
+It is also possible to customize the responsive images markup if you need to.
 
-Overriding the srcset or sizes attributes for images not embedded in post content (e.g. post thumbnails, galleries, etc.), can be accomplished using the wp_get_attachment_image_attributes filter, similar to how other image attributes are modified.
+You can modify the default srcset and sizes attributes, by using the wp_calculate_image_srcset and wp_calculate_image_sizes filters 
+or override the srcset or sizes attributes for images not embedded in post content (e.g. post thumbnails, galleries, etc.), by using the wp_get_attachment_image_attributes filter, similar to how other image attributes are modified.
 
-Additionally, you can create your own custom markup patterns by using wp_get_attachment_image_srcset() directly in your templates. Here is an example of how you could use this function to build an <img> element with a custom sizes attribute for a classic theme: 
+If you are developing themes you also can create your own custom markup patterns by using the wp_get_attachment_image_srcset() function.
+
+So for example, you could use this code in a custom function in your themes functions.php
 
 ```php
-function twentytwentyone_get_responsive_image( $attachment_id ) {
+function custom_responsive_image( $attachment_id ) {
 	$img_src    = wp_get_attachment_image_url( $attachment_id, 'medium' );
 	$img_srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' );
 	return '<img src="' . $img_src . '" srcset="' . $img_srcset . '" sizes="(max-width: 50em) 87vw, 680px" alt="Our responsive image">';
 }
 ```
 
-Then, you can call this function in your template files, for example, in your footer template somewhere.
+Then, you can call this function in any theme files that support PHP, so for example templates and template parts in classic themes, or block patterns in block themes.
 
 ```php
-echo twentytwentyone_get_responsive_image( 22 );
-``
+echo custom_responsive_image( 22 );
 ```
-
-This is perfect if you're adding images to classic themes. 
-
-Block themes will handle responsive images and srcset attributes automatically.
-
-You can see this by adding an image from the media library to a template file. 
-
-Once the image is added, and you view it on the frond end, you'll see the HTML rendered contains the relevant attributes.
-
-Note that this does mean the image will need to be part of the media library, and not shipped with the theme. 
-
-This is another reason to ship template images that are placeholders and then allow users to replace these images with their own, as this will automatically include the responsive images' markup.
 
 Happy coding
