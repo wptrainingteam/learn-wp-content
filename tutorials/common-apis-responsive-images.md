@@ -75,50 +75,78 @@ Responsive design uses things like media queries to allow a single page to be re
 
 Let's see this in action by adding your image to a post, and setting it's size to full size in the editor.
 
-When you preview the image, you'll see that the image tag contains more than just the image url
+When you preview the image, you'll see that the image tag contains more than just the image url. It also contains a `srcset` attribute and a `sizes` attribute. 
 
 ```html
-<img decoding="async" width="2048" height="1605" src="https://learnpress.test/wp-content/uploads/2023/07/4831876143_be927a496c_o.jpeg" alt="" class="wp-image-22" srcset="https://learnpress.test/wp-content/uploads/2023/07/4831876143_be927a496c_o.jpeg 2048w, https://learnpress.test/wp-content/uploads/2023/07/4831876143_be927a496c_o-300x235.jpeg 300w, https://learnpress.test/wp-content/uploads/2023/07/4831876143_be927a496c_o-1024x803.jpeg 1024w, https://learnpress.test/wp-content/uploads/2023/07/4831876143_be927a496c_o-768x602.jpeg 768w, https://learnpress.test/wp-content/uploads/2023/07/4831876143_be927a496c_o-1536x1204.jpeg 1536w" sizes="(max-width: 2048px) 100vw, 2048px">
+<img decoding="async" fetchpriority="high" width="799" height="533" src="https://learnpress.test/wp-content/uploads/2023/09/water-4.jpeg" alt="" class="wp-image-9" 
+     srcset="
+     https://learnpress.test/wp-content/uploads/2023/09/water-4.jpeg 799w, 
+     https://learnpress.test/wp-content/uploads/2023/09/water-4-300x200.jpeg 300w, 
+     https://learnpress.test/wp-content/uploads/2023/09/water-4-768x512.jpeg 768w" 
+     sizes="(max-width: 799px) 100vw, 799px">
 ```
 
-The srcset attribute contains a list of all the different versions of the image that WordPress has generated. The browser will then use this information to determine which image to load based on the device it is being viewed on. No more server side logic is required, thereby speeding up page request times. And because the images are served statically, they can be cached by the browser, further speeding up page load times.
+[Re-record from here]
+
+Let's take a closer look at this image tag to understand what those attributes do.
+
+The `srcset` attribute contains a list of all the different versions of the image that WordPress has generated, along with that image's width in pixels. In this case there are 3 different versions of the image, with widths of `799`, `769`, and `300` respectively.
+
+The `sizes` attribute specifies the layout width of the image for each of a list of media conditions. In this example the media condition is `(max-width: 799px)`, and there are two layout widths, `100vw` and `799px`. `100vw` means that the image will be displayed at 100% of the viewport width, and `799px` means that the image will be displayed at 799px. So in this example, the image will be displayed at 100% of the viewport width if the width of the viewport is less than 799px, otherwise it will display the image at a width of 799px.
+
+[End re-record]
+
+The browser can then use this information to determine which image to load based on the device it is being viewed on determined by its viewport width. No more server side logic is required, thereby speeding up page request times. And because the images are served statically, they can be cached by the browser, further speeding up page load times.
 
 ## New functions and hooks
 
 WordPress 4.4 introduced a number of new functions and hooks to make it easier to work with responsive images.
 
- - wp_get_attachment_image_srcset() – Retrieves the value for an image attachment’s srcset attribute.
- - wp_calculate_image_srcset() – A helper function to calculate the image sources to include in a srcset attribute.
- - wp_get_attachment_image_sizes() – Creates a sizes attribute value for an image.
- - wp_calculate_image_sizes() – A helper function to create the sizes attribute for an image.
- - wp_image_add_srcset_and_sizes() – Adds srcset and sizes attributes to an existing img element.
+ - [wp_get_attachment_image_srcset](https://developer.wordpress.org/reference/functions/wp_get_attachment_image_srcset/)() – Retrieves the value for an image attachment’s srcset attribute.
+ - [wp_calculate_image_srcset](https://developer.wordpress.org/reference/functions/wp_calculate_image_srcset/)() – A helper function to calculate the image sources to include in a srcset attribute.
+ - [wp_get_attachment_image_sizes](https://developer.wordpress.org/reference/functions/wp_get_attachment_image_sizes/)() – Creates a sizes attribute value for an image.
+ - [wp_calculate_image_sizes](https://developer.wordpress.org/reference/functions/wp_calculate_image_sizes/)() – A helper function to create the sizes attribute for an image.
+ - [wp_image_add_srcset_and_sizes](https://developer.wordpress.org/reference/functions/wp_image_add_srcset_and_sizes/)() – Adds srcset and sizes attributes to an existing img element.
 
-As a safeguard against adding very large images to srcset attributes, a `max_srcset_image_width` filter has been added, which allows themes to set a maximum image width for images include in source set lists. The default value is 2048px.
+As a safeguard against adding very large images to srcset attributes, a `max_srcset_image_width` [filter](https://developer.wordpress.org/reference/hooks/max_srcset_image_width/) has been added, which allows themes to set a maximum image width for images include in source set lists. The default value is 2048px.
 
 ## Customizing the responsive images markup
 
 It is also possible to customize the responsive images markup if you need to.
 
-You can modify the default srcset and sizes attributes, by using the wp_calculate_image_srcset and wp_calculate_image_sizes filters 
-or override the srcset or sizes attributes for images not embedded in post content (e.g. post thumbnails, galleries, etc.), by using the wp_get_attachment_image_attributes filter, similar to how other image attributes are modified.
+You can modify the default srcset and sizes attributes, by using the `wp_calculate_image_srcset` [filter](https://developer.wordpress.org/reference/hooks/wp_calculate_image_srcset/) and the `wp_calculate_image_sizes` [filter](https://developer.wordpress.org/reference/hooks/wp_calculate_image_sizes/) or override the srcset or sizes attributes for images not embedded in post content (e.g. post thumbnails, galleries, etc.), by using the wp_get_attachment_image_attributes [filter](https://developer.wordpress.org/reference/hooks/wp_get_attachment_image_attributes/), similar to how other image attributes are modified.
 
-If you are developing themes you also can create your own custom markup patterns by using the wp_get_attachment_image_srcset() function.
+If you are developing themes you also can create your own custom markup patterns by using the `wp_get_attachment_image_srcset` [function](https://developer.wordpress.org/reference/functions/wp_get_attachment_image_srcset/).
 
-So for example, you could use this code in a custom function in your themes functions.php
+[Re-record from here]
+
+Let's say you wanted to generate a function that outputs the img tag for this image, but you only want to redner the medium sized image, and therefore set a custom sizes attribute
+
+Instead of the default, which displays the image at 100% of the viewport at viewport widths of less than 799px, and 799px width on wider viewports, you want to set the sizes attribute to use the medium image width of 768px. So that means you would need to set the sizes attribute to `(max-width: 768px) 100vw, 768px`.
 
 ```php
-function custom_responsive_image( $attachment_id ) {
+function get_custom_responsive_image( $attachment_id ) {
 	$img_src    = wp_get_attachment_image_url( $attachment_id, 'medium' );
 	$img_srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' );
-	return '<img src="' . $img_src . '" srcset="' . $img_srcset . '" sizes="(max-width: 50em) 87vw, 680px" alt="Our responsive image">';
+	return '<img src="' . $img_src . '" srcset="' . $img_srcset . '" sizes="(max-width: 768w) 100vw, 768px" alt="Our custom responsive image">';
 }
 ```
 
-Then, you can call this function in any theme files that support PHP, so for example templates and template parts in classic themes, or block patterns in block themes.
+Then, you can call this function in any theme files that support PHP, so for example templates and template parts in classic themes, or block patterns in block themes. In the example above the image ID is 9, so you would call the function like this:
 
 ```php
-echo custom_responsive_image( 22 );
+echo custom_responsive_image( 9 );
 ```
+
+If you look at this on the front end, you can see the custom sizes attribute has been used for this specific image.
+
+[Show image being rendered, and the size differences at different viewport widths]
+
+Therefore, at widths of less than 768px, the image will be displayed at 100% of the viewport width, and at widths of 768px or more, the image will be displayed at a width of 768px.
+
+While this type of customization is not something you will need to do often, it's useful to know that it is possible.
+
+[End re-record]
 
 ## Conclusion
 
