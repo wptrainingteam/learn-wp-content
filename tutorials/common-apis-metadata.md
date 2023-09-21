@@ -19,7 +19,7 @@ Use the metadata wrapper functions for posts, users, and comments
 
 ## Introduction
 
-Hey there, and welcome to Learn WordPress. 
+Hey there, and welcome to Learn WordPress.
 
 In this tutorial, you're going to learn about the WordPress Metadata API.
 
@@ -33,15 +33,15 @@ The columns in the wp_posts table are set by the table schema, and do not change
 
 But let's say you want to store some additional information about a post. For example, for each post, you want to store the location where the post was written, and display it when the post is displayed. In order to do this, you would have to either add a new column to the wp_posts table, or create a new table to store this information.
 
-This is where metadata comes in. Instead of adding a new column to the wp_posts table, you can use the WordPress Metadata API to store the location information in the wp_postmeta table, and associate it with the post. 
+This is where metadata comes in. Instead of adding a new column to the wp_posts table, you can use the WordPress Metadata API to store the location information in the wp_postmeta table, and associate it with the post.
 
 In the wp_postmeta table, each row has a post_id column, which is the ID of the post that the metadata is associated with. The metadata is stored in the table as a key/value pair, where the meta_key column stores the name of the additional field, and the meta_value column stores the value.
 
 ## How to access metadata in the WordPress dashboard
 
-To make this process a little easier, WordPress provides a Custom Fields meta box in the edit screen, which allows you to add metadata to a post, without having to write any code. This is one of th reasons metadata is also commonly called Custom Fields. 
+To make this process a little easier, WordPress provides a Custom Fields meta box in the edit screen, which allows you to add metadata to a post, without having to write any code. This is one of th reasons metadata is also commonly called Custom Fields.
 
-As the name suggests, the Custom Fields meta box is an area that displays all of the metadata associated with a given data type. It is possible to [add custom meta boxes](https://developer.wordpress.org/plugins/metadata/custom-meta-boxes/) to the edit screen, but that is beyond the scope of this tutorial. 
+As the name suggests, the Custom Fields meta box is an area that displays all of the metadata associated with a given data type. It is possible to [add custom meta boxes](https://developer.wordpress.org/plugins/metadata/custom-meta-boxes/) to the edit screen, but that is beyond the scope of this tutorial.
 
 ### Enabling the Custom Fields meta box
 
@@ -55,11 +55,11 @@ You will need to do this for any data type that you want to add metadata to.
 
 Once enabled you can add a new custom field, by proving the field name (which will be stored as the meta_key) and the field value (which will be stored as the meta_value).
 
-Start by adding a custom field with the name "location" and the value "Los Angeles". Then click the Add Custom Field button. 
+Start by adding a custom field with the name "location" and the value "Los Angeles". Then click the Add Custom Field button.
 
 Now take a look at the wp_postmeta table in the database. You should see a new row with the post_id of the post you added the custom field to, a meta_key of "location", and a meta_value of "Los Angeles".
 
-It's also possible to add more than one record of metadata to a data object, with the same key. So you could add another custom field with the name "location" and the value "California". 
+It's also possible to add more than one record of metadata to a data object, with the same key. So you could add another custom field with the name "location" and the value "California".
 
 And if you inspect the wp_postmeta table again, you'll see that there are now two rows with the same post_id and meta_key, but different meta_values.
 
@@ -140,7 +140,7 @@ So to programmatically add the location metadata to the post with the ID of 1, y
 	}
 ```
 
-`add_metadata()` also has a fifth optional parameter, `unique`, which defaults to false. If set to true, the metadata will only be added if there is no existing metadata entry with the same meta_key and meta_value. 
+`add_metadata()` also has a fifth optional parameter, `unique`, which defaults to false. If set to true, the metadata will only be added if there is no existing metadata entry with the same meta_key and meta_value.
 
 To update an existing metadata entry, you can use the `update_metadata()` function, which functions in a similar way to `add_metadata()`. This function has four require parameters:
 
@@ -194,7 +194,7 @@ To understand how this works, try using the `get_metadata()` function to retriev
     echo '<pre>' . print_r( $meta_data, true ) . '</pre>';
 ```
 
-Notice how by passing only the object type and the ID, it returns all meta data associated to that post. 
+Notice how by passing only the object type and the ID, it returns all meta data associated to that post.
 
 Now include a specific meta_key, say location
 
@@ -255,9 +255,9 @@ As an example, the post metadata wrapper functions are:
 - `get_post_meta()`
 - `delete_post_meta()`
 
-If you compare the function signatures for these functions with the core functions, you'll notice that they are identical, except that the `$meta_type` parameter is not required, as it is assumed to be 'post'. This is the same for all of the metadata wrapper functions. Knowing that these wrappers exist can save you some time when working with metadata if you know the data type you are working with. 
+If you compare the function signatures for these functions with the core functions, you'll notice that they are identical, except that the `$meta_type` parameter is not required, as it is assumed to be 'post'. This is the same for all of the metadata wrapper functions. Knowing that these wrappers exist can save you some time when working with metadata if you know the data type you are working with.
 
-This is especially useful when creating custom meta boxes in the edit screen for specific object types, or for rendering metadata for specific object types on the front end. 
+This is especially useful when creating custom meta boxes in the edit screen for specific object types, or for rendering metadata for specific object types on the front end.
 
 ## Conclusion
 
