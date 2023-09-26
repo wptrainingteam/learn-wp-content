@@ -1,4 +1,4 @@
-# WordPress Developer Fundamentals - The WordPress Database
+# WordPress Developer Fundamentals - Custom Database Tables
 
 ## Learning Objectives
 
@@ -22,15 +22,23 @@ Hey there, and welcome to Learn WordPress.
 
 In this tutorial, you'll be learning about creating custom database tables for WordPress.
 
+You will learn where to find information about creating custom database tables, how to create custom database tables, and how to interact with them.
+
+## Why create custom database tables?
+
 The default WordPress database schema is typically enough for all content types. The ability to register custom post types and use post meta usually covers most options.
 
-However, in some cases, you may need to store data that doesn't fit into the default schema. For example, in an ecommerce store, a custom post type would work for products, as it has similar fields to a post (title, featured image, content, author etc). However, and order does not have these types of fields, and therefore it might be useful to store orders in a custom table.
+However, in some cases, you may need to store data that doesn't fit into the default schema. 
+
+For example, in an ecommerce store, a custom post type would work for products, as it has similar fields to a post; for example a title, image, and content. Any additional fields it might need can be stored as post meta. 
+
+However, an order does not use the same fields as a post, and therefore it might be useful to store orders in a custom table.
 
 For the occasions where you need to store data that doesn't fit into the default schema, you can create your own custom database tables.
 
 ## Where to find information
 
-While the WordPress developer documentation does not include anything around custom database tables, there is an older version of the developer documentation called the Codex that does. You can find everything you need to know about custom database tables in the [Creating Tables with Plugins](https://codex.wordpress.org/Creating_Tables_with_Plugins ) page of the Codex
+While the WordPress developer documentation does not include anything around custom database tables, there is an older version of the developer documentation called the Codex that does. You can find everything you need to know about custom database tables in the [Creating Tables with Plugins](https://codex.wordpress.org/Creating_Tables_with_Plugins ) page of the Codex.
 
 ## Creating Custom Database Tables
 
@@ -40,16 +48,25 @@ Additionally, it is possible, and recommended, to create custom tables when the 
 
 ## Creating the table
 
-To create a custom table on plugin activation, you need to use a few things
+To create a custom table on plugin activation, you need to use a few things.
 
-First, you need to use the `$wpdb` global [WordPress database object](https://developer.wordpress.org/reference/classes/wpdb/), as it contains all the methods you need to interact with the database. 
+To start, create a function to manage the table creation:
+
+```php
+    function create_database_table() {
+    }
+```
+
+Then, you need to use the `$wpdb` global [WordPress database object](https://developer.wordpress.org/reference/classes/wpdb/), as it contains all the methods you need to interact with the database. 
 
 This will allow you to set up the new table name, using the WordPress database prefix.
 
 ```php
-    global $wpdb;
-
-    $table_name = $wpdb->prefix . 'custom_table';
+    function create_database_table() {
+        global $wpdb;
+    
+        $table_name = $wpdb->prefix . 'custom_table';
+    }
 ````
 
 It will also allow you to access the `get_charset_collate` [method](https://developer.wordpress.org/reference/classes/wpdb/get_charset_collate/), which will return the correct character set and collation for the database.
@@ -58,13 +75,11 @@ It will also allow you to access the `get_charset_collate` [method](https://deve
     $charset_collate = $wpdb->get_charset_collate();
 ```
 
-To create a table, you need to know SQL to execute a SQL statement on the database. This is done via the `dbDelta` [function](https://developer.wordpress.org/reference/functions/dbdelta/). dbDelta is a function that is generally used during WordPress updates, if default WordPress tables need to be updated or change. It examines the current table structure, compares it to the desired table structure, and either adds or modifies the table as necessary.
+To create a table, you need to know SQL to execute a SQL statement on the database. This is done via the `dbDelta` [function](https://developer.wordpress.org/reference/functions/dbdelta/). `dbDelta` is a function that is generally used during WordPress updates, if default WordPress tables need to be updated or change. It examines the current table structure, compares it to the desired table structure, and either adds or modifies the table as necessary.
 
 In order to use `dbDelta`, you need to write your SQL statement in a specific way. 
 
-You can read more about these requirements here:
-
-https://codex.wordpress.org/Creating_Tables_with_Plugins#Creating_or_Updating_the_Table
+You can read more about these requirements in the Creating or Updating the Table section of the [Codex](https://codex.wordpress.org/Creating_Tables_with_Plugins#Creating_or_Updating_the_Table) page.
 
 Once you've created the SQL statement, you need to pass it to the `dbDelta` function. This is done by including the `wp-admin/includes/upgrade.php` file, which contains the function declaration.
 
@@ -90,10 +105,13 @@ Once you've created the SQL statement, you need to pass it to the `dbDelta` func
 	}
 ```
 
+In this example, a new table is being created called `custom_table`. It has 5 fields, an `id`, a `time`, a `name`, a `text`, and a `url`. The `id` is an auto incrementing integer, the `time` is a datetime field, the `name` is a tinytext field, the `text` is a text field, and the `url` is a varchar field. The `id` is the primary key.
+
 Hooking this function into your plugin activation hook will ensure that the table is created when the plugin is activated.
 
 ```php
     register_activation_hook( __FILE__, 'create_database_table' );
+register_activation_hook( __FILE__, 'create_custom_database_table' );
 ```
 
 ## Inserting data 
@@ -101,6 +119,8 @@ Hooking this function into your plugin activation hook will ensure that the tabl
 It's also possible to use the plugin activate hook to insert data into your table on plugin activation.
 
 To do this you can use the `insert` method of the `$wpdb` object, passing an array of field names and values.
+
+Here is an example of what this could look like.
 
 ```php
     function insert_record_into_table(){
@@ -138,7 +158,7 @@ To update data in your custom table, use the `update` method of the `$wpdb` obje
                 'text' => 'Hello World!',
                 'url'  => 'https://wordpress.org'
             ),
-            array( 'ID' => 1 )
+            array( 'id' => 1 )
         );
     }
 ```
@@ -160,6 +180,8 @@ Selecting data from your custom table is done using the `get_results` method of 
         }
     }
 ```
+
+By default, get_results will return an array of objects, which you can loop through and access the fields as properties.
 
 ## Table updates
 
