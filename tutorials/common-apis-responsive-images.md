@@ -90,9 +90,13 @@ When you preview the image, you'll see that the image tag contains more than jus
 
 Let's take a closer look at this image tag to understand what those attributes do.
 
-The `srcset` attribute contains a list of all the different versions of the image that WordPress has generated, along with that image's width in pixels. In this case there are 3 different versions of the image, with widths of `799`, `769`, and `300` respectively.
+The `srcset` attribute contains a list of all the different versions of the image that WordPress has generated, along with that image's width in pixels. 
 
-The `sizes` attribute specifies the layout width of the image for each of a list of media conditions. In this example the media condition is `(max-width: 799px)`, and there are two layout widths, `100vw` and `799px`. `100vw` means that the image will be displayed at 100% of the viewport width, and `799px` means that the image will be displayed at 799px. So in this example, the image will be displayed at 100% of the viewport width if the width of the viewport is less than 799px, otherwise it will display the image at a width of 799px.
+In this case there are 3 different versions of the image, with widths of `799`, `769`, and `300` respectively.
+
+The `sizes` attribute specifies the layout width of the image for each of a list of media conditions. In this example the media condition is `(max-width: 799px)`, and there are two layout widths, `100vw` and `799px`. `100vw` means that the image will be displayed at 100% of the viewport width, and `799px` means that the image will be displayed at 799px. 
+
+So in this example, the image will be displayed at 100% of the viewport width if the width of the viewport is less than 799px, otherwise it will display the image at a width of 799px.
 
 [End re-record]
 
@@ -120,31 +124,37 @@ If you are developing themes you also can create your own custom markup patterns
 
 [Re-record from here]
 
-Let's say you wanted to generate a function that outputs the img tag for this image, but you only want to redner the medium sized image, and therefore set a custom sizes attribute
+Let's look at an example. 
 
-Instead of the default, which displays the image at 100% of the viewport at viewport widths of less than 799px, and 799px width on wider viewports, you want to set the sizes attribute to use the medium image width of 768px. So that means you would need to set the sizes attribute to `(max-width: 768px) 100vw, 768px`.
+Let's say you wanted to generate a function that outputs the img tag for this image, but you only want to render the medium-sized image, and set a custom sizes attribute.
+
+Instead of the default, which displays the image at 100% of the viewport at viewport widths of less than 799px, and 799px width on wider viewports, you want to set the sizes attribute to use the medium image width of 768px. 
+
+So that means you would need to set the sizes attribute to `(max-width: 768px) 100vw, 768px`.
 
 ```php
 function get_custom_responsive_image( $attachment_id ) {
 	$img_src    = wp_get_attachment_image_url( $attachment_id, 'medium' );
 	$img_srcset = wp_get_attachment_image_srcset( $attachment_id, 'medium' );
-	return '<img src="' . $img_src . '" srcset="' . $img_srcset . '" sizes="(max-width: 768w) 100vw, 768px" alt="Our custom responsive image">';
+	echo '<img src="' . $img_src . '" srcset="' . $img_srcset . '" sizes="(max-width: 768w) 100vw, 768px" alt="Our custom responsive image">';
 }
 ```
 
-Then, you can call this function in any theme files that support PHP, so for example templates and template parts in classic themes, or block patterns in block themes. In the example above the image ID is 9, so you would call the function like this:
+Then, you can call this function in any theme files that support PHP, so for example templates and template parts in classic themes, or block patterns in block themes. 
+
+In this example it's being added to the footer-default pattern of the Twenty Twenty-Three theme, inside a group block at the top of the pattern. The image ID is 9, which you would pass to the function:
 
 ```php
-echo custom_responsive_image( 9 );
+	<!-- wp:group {"align":"wide"} -->
+	<div class="wp-block-group alignwide" style="padding-top:var(--wp--preset--spacing--40)">
+		<?php get_custom_responsive_image( 9 ); ?>
+	</div>
+	<!-- /wp:group -->
 ```
 
-If you look at this on the front end, you can see the custom sizes attribute has been used for this specific image.
+If you look at this on the front end, you can see the custom sizes attribute has been used for this specific image. 
 
-[Show image being rendered, and the size differences at different viewport widths]
-
-Therefore, at widths of less than 768px, the image will be displayed at 100% of the viewport width, and at widths of 768px or more, the image will be displayed at a width of 768px.
-
-While this type of customization is not something you will need to do often, it's useful to know that it is possible.
+If you test this out in Device mode, you will see that on device sizes below 768px, the image is displayed at 100% of the viewport width, and on sizes above 768px, the image is displayed at a width of 768px.
 
 [End re-record]
 
