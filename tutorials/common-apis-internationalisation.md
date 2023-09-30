@@ -4,11 +4,20 @@
 
 Upon completion of this lesson the participant will be able to:
 
-1. 
+1. Explain what Internationalization is
+2. Explain what Internationalization is not
+3. Explain why Internationalization is important
+4. Use the WordPress i18n functions to internationalize their code
+5. Test their Internationalization functions
 
 ## Outline
 
 1. Introduction
+2. What is Internationalization?
+3. What Internationalization is not
+4. How to internationalize your code
+5. How test your Internationalization functions
+6. Conclusion
 
 ## Introduction
 
@@ -16,15 +25,19 @@ Hey there, and welcome to Learn WordPress.
 
 In this tutorial, you're going to learn about the Internationalization in your WordPress plugins and themes. 
 
-You will learn what internationalization is, what it isnt, why it's important, and how to implement it in your WordPress code.
+You will learn what internationalization is, what it isn't, why it's important, and how to implement it in your WordPress code.
 
 ## What is Internationalization?
 
 Internationalization is the process of developing your application in a way it can easily be translated into other languages. Internationalization is often abbreviated as i18n (because there are 18 letters between the letters i and n).
 
-WordPress is used all over the world, by people who speak many different languages. Therefore, any text strings in WordPress need to be coded so that they can be easily translated into other languages. The process of making sure your text strings can be translation is called Internationalization while the process of translating and adapting the strings to a specific location is called Localization. 
+WordPress is used all over the world, by people who speak many languages. 
 
-While localization is outside the scope of this tutorial, you can [more about it here](https://developer.wordpress.org/apis/internationalization/localization/).
+Therefore, any text strings in WordPress need to be coded so that they can be easily translated into other languages. 
+
+The process of making sure your text strings can be translated is called Internationalization while the process of translating and adapting the strings to a specific location is called Localization. 
+
+While localization is outside the scope of this tutorial, you can read more about it [in the Localization section](https://developer.wordpress.org/apis/internationalization/localization/) of the Common APIs handbook.
 
 As a developer, you may not be able to provide localization for all your users; however, using the i18n functions and tools to create specific files, a translator can successfully localize your code without needing to modify the source code itself.
 
@@ -34,9 +47,9 @@ Internationalization is not the same as making sure your content is available in
 
 ## How to internationalize your code
 
-Whenever you find yourself writing a string of text that will be displayed to the user, you should use the [WordPress i18n functions](https://developer.wordpress.org/apis/internationalization/internationalization-functions/) to make sure it can be translated.
+Whenever you find yourself writing a string of text that will be displayed to the user, you should use the [WordPress i18n functions](https://developer.wordpress.org/apis/internationalization/internationalization-functions/) to make sure it can be translated. There are a number of i18n functions available, with each performing a different task related to internationalization.
 
-Let's look at the most basic i18n function: `__()`. This function takes a string of text and returns the translated version of that string. If no translation is available, it returns the original string. 
+Let's look at the most basic i18n function: the `__()` function. This function takes a string of text and returns the translated version of that string. If no translation is available, it returns the original string. 
 
 You will also notice that this function, and most other i18n functions, takes a second parameter. This parameter is used to specify the text domain. A text domain is a unique identifier for your plugin or theme. It is used to make sure that the correct translation files are loaded.
 
@@ -46,136 +59,169 @@ The text domain is also used to create the translation files. The final translat
 __( 'Some Text', 'my-textdomain' );
 ```
 
-To see how this works, let's take a look at an example. Let's say you've created a cloned version of the Twenty Twenty-Three theme, with a functions.php file that enqueues a JavaScript file for the theme and adds a settings page to the Appearance menu. 
+To see how this works, let's take a look at an example inside a child theme of Twenty Twenty Three. 
+
+In the functions.php file a JavaScript file is enqueued in the context of the WordPress dashboard, It also registers a submenu item and in the Appearance menu, which renders a child theme settings page. 
 
 ```php
+<?php
 /**
  * Enqueue theme.js file in the dashboard.
  */
-add_action( 'admin_enqueue_scripts', 'twentytwentythreeclone_enqueue_scripts' );
-function twentytwentythreeclone_enqueue_scripts() {
+add_action( 'admin_enqueue_scripts', 'twentytwentythreechild_enqueue_scripts' );
+function twentytwentythreechild_enqueue_scripts() {
 	wp_enqueue_script(
-		'twentytwentythreeclone-theme-js',
+		'twentytwentythreechild-theme-js',
 		get_stylesheet_directory_uri() . '/assets/theme.js',
-		array( 'wp-i18n' ),
+		array(),
 		'1.0.0',
 		true
 	);
-	wp_set_script_translations('twentytwentythreeclone-theme-js', 'twentytwentythreeclone');
 }
 
-
 /**
- * Create an admin submenu item under the "Appearance" menu.
+ * Create a submenu item under the "Appearance" menu.
  */
-add_action( 'admin_menu', 'twentytwentythreeclone_add_submenu_page' );
-function twentytwentythreeclone_add_submenu_page() {
+add_action( 'admin_menu', 'twentytwentythreechild_add_submenu_page' );
+function twentytwentythreechild_add_submenu_page() {
 	add_submenu_page(
-		'themes.php', // parent slug
-		'Twenty Twenty Three Clone', // page title
-		'Twenty Twenty Three Clone', // menu title
-		'manage_options', // capability
-		'twentytwentythreeclone', // slug
-		'twentytwentythreeclone_display_page' // callback
+		'themes.php', 
+		'Twenty Twenty Three Child', 
+		'Twenty Twenty Three Child',
+		'manage_options', 
+		'twentytwentythreechild', 
+		'twentytwentythreechild_display_page' 
 	);
 }
 
 /**
  * Render the page for the submenu item.
  */
-function twentytwentythreeclone_display_page() {
+function twentytwentythreechild_display_page() {
 	?>
 	<div class="wrap">
-		<h1>Twenty Twenty Three Clone Settings</h1>
-		<p>This is a settings page for the Twenty Twenty Three Clone theme</p>
-        <button id="twentytwentythreeclone-settings-button" class="button button-primary">Alert</button>
+		<h1>Twenty Twenty Three Child Settings</h1>
+		<p>This is a settings page for the Twenty Twenty Three Child theme</p>
+        <button id="twentytwentythreechild-settings-button" class="button button-primary">Alert</button>
 	</div>
 	<?php
 }
 ```
 
-The settings page contains a button, which when clicked shows an alert. This is handled in the JavaScript file for the theme.
+The settings page contains a button, which when clicked shows an alert. 
+
+This alert is handled in the JavaScript file for the theme.
 
 ```js
 /**
  * Add event listener to the button
  */
-document.querySelector( '#twentytwentythreeclone-settings-button' ).addEventListener( 'click', settingsButtonClick );
-function settingsButtonClick() {
+document.querySelector( '#twentytwentythreechild-settings-button' ).addEventListener( 'click', function(){
 	alert( 'Settings button clicked' );
-}
+} );
 ```
 
 In this code, you have a number of English text strings that need to be made translatable.
 
+The first step is to internationalize the text strings in the PHP code. To do this, you can wrap text strings in the `__()` function and specify the text domain. 
+
+Start by updating the text strings in the `twentytwentythreechild_add_submenu_page()` function.
+
 ```php
-<?php
-
-/**
- * Enqueue theme.js file in the dashboard.
- */
-add_action( 'admin_enqueue_scripts', 'twentytwentythreeclone_enqueue_scripts' );
-function twentytwentythreeclone_enqueue_scripts() {
-	wp_enqueue_script(
-		'twentytwentythreeclone-theme-js',
-		get_stylesheet_directory_uri() . '/assets/theme.js',
-		array( 'wp-i18n' ),
-		'1.0.0',
-		true
-	);
-	wp_set_script_translations('twentytwentythreeclone-theme-js', 'twentytwentythreeclone');
-}
-
 /**
  * Create an admin submenu item under the "Appearance" menu.
  */
-add_action( 'admin_menu', 'twentytwentythreeclone_add_submenu_page' );
-function twentytwentythreeclone_add_submenu_page() {
+add_action( 'admin_menu', 'twentytwentythreechild_add_submenu_page' );
+function twentytwentythreechild_add_submenu_page() {
 	add_submenu_page(
 		'themes.php', // parent slug
-		__( 'Twenty Twenty Three Clone', 'twentytwentythreeclone' ), // page title
-		__( 'Twenty Twenty Three Clone', 'twentytwentythreeclone' ), // menu title
+		__( 'Twenty Twenty Three Child', 'twentytwentythreechild' ), // page title
+		__( 'Twenty Twenty Three Child', 'twentytwentythreechild' ), // menu title
 		'manage_options', // capability
-		'twentytwentythreeclone', // slug
-		'twentytwentythreeclone_display_page' // callback
+		'twentytwentythreechild', // slug
+		'twentytwentythreechild_display_page' // callback
 	);
 }
+```
 
+You can do the same for the text strings in the `twentytwentythreechild_display_page()` function.
+
+```php
 /**
  * Render the page for the submenu item.
  */
-function twentytwentythreeclone_display_page() {
+function twentytwentythreechild_display_page() {
 	?>
     <div class="wrap">
-        <h1><?php _e( 'Twenty Twenty Three Clone Settings', 'twentytwentythreeclone' ); ?></h1>
-        <p><?php _e( 'This is a settings page for the Twenty Twenty Three Clone theme', '__' ); ?></p>
-        <button id="twentytwentythreeclone-settings-button" class="button button-primary"><?php _e( 'Alert', 'twentytwentythreeclone' ); ?></button>
+        <h1><?php echo __( 'Twenty Twenty Three Child Settings', 'twentytwentythreechild' ); ?></h1>
+        <p><?php echo __( 'This is a settings page for the Twenty Twenty Three Child theme', '__' ); ?></p>
+        <button id="twentytwentythreechild-settings-button" class="button button-primary"><?php echo __( 'Alert', 'twentytwentythreechild' ); ?></button>
     </div>
 	<?php
 }
 ```
 
+WordPress also contains a shorthand function to echo a translatable string. This function is the `_e()` function. It both translates and echoes the string. You can use this function to simplify your code.
+
+```php
+function twentytwentythreechild_display_page() {
+	?>
+    <div class="wrap">
+        <h1><?php _e( 'Twenty Twenty Three Child Settings', 'twentytwentythreechild' ); ?></h1>
+        <p><?php _e( 'This is a settings page for the Twenty Twenty Three Child theme', '__' ); ?></p>
+        <button id="twentytwentythreechild-settings-button" class="button button-primary"><?php _e( 'Alert', 'twentytwentythreechild' ); ?></button>
+    </div>
+	<?php
+}
+```
+
+Next, you need to internationalize the text strings in the JavaScript file. To do this, there is a JavaScript equivalent to the PHP __() function, which is available in the `wp.i18n` object on the WordPress frontend. To ensure that you can use this function, you need to update your `twentytwentythreechild_enqueue_scripts()` function to require the `wp-i18n` package as a dependency. This will ensure that your JavaScript code is only loaded when the `wp-i18n` package loaded and the `wp.i18n` object is available.
+
+```php
+/**
+ * Enqueue theme.js file in the dashboard.
+ */
+add_action( 'admin_enqueue_scripts', 'twentytwentythreechild_enqueue_scripts' );
+function twentytwentythreechild_enqueue_scripts() {
+	wp_enqueue_script(
+		'twentytwentythreechild-theme-js',
+		get_stylesheet_directory_uri() . '/assets/theme.js',
+		array( 'wp-i18n' ),
+		'1.0.0',
+		true
+	);
+}
+```
+
+Then, you need to call the wp_set_script_translations function for the script you want to translate. This function takes the handle of the script and the text domain as parameters. This will load the translations for the script.
+
+```php
+wp_set_script_translations( 'twentytwentythreechild-theme-js', 'twentytwentythreechild' );
+```
+
+With this done, you can then use the `__()` function to translate the text string in your JavaScript file.
+
 ```js
 /**
  * Add event listener to the button
  */
-document.querySelector( '#twentytwentythreeclone-settings-button' ).addEventListener( 'click', settingsButtonClick );
-
-function settingsButtonClick() {
-	alert( __( 'Settings button clicked', 'twentytwentythreeclone' ) );
-}
+document.querySelector( '#twentytwentythreechild-settings-button' ).addEventListener( 'click', function(){
+	alert( __( 'Settings button clicked', 'twentytwentythreechild' ) );
+} );
 ```
 
 ## How test your Internationalization functions
 
-Once you've set up your code to use the i18n functions, you can test it by generating a POT file. This is a file a translater would use to create the translation files. You can generate a POT file using the [WP CLI](https://developer.wordpress.org/cli/commands/i18n/make-pot/).
+Once you've set up your code to use the i18n functions, you can test it by generating a POT file. This is a file a translator would use to create the translation files. You can generate a POT file using the [WP CLI](https://developer.wordpress.org/cli/commands/i18n/make-pot/).
 
 ```bash
-wp i18n make-pot path/to/your-plugin-directory
+wp i18n make-pot path/to/your/plugin/or/theme
 ```
 
 This will scan the code in your plugin or theme, find any translatable strings, and place them in the POT file. 
 
 ## Conclusion
+
+This has been a brief introduction to Internationalisation in WordPress plugins or themes. For more information, make sure to read the [Internationalization section](https://developer.wordpress.org/apis/internationalization/) of the Common APIs handbook on the WordPress developer documentation site.
 
 Happy coding
