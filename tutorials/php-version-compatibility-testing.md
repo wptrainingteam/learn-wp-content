@@ -16,7 +16,7 @@ You will learn why it's important to test for PHP version compatibility, where t
 
 ## Why test for PHP version compatibility?
 
-WordPress is written in PHP, and as such, it needs to be able to run on at least the minimum supported version of PHP that is available to web hosts. While WordPress has a spectici minimum requirement for PHP, older PHP versions will eventually reach end of life by the PHP developers, and will not receive any security updates in the near future. 
+WordPress is written in PHP, and as such, it needs to be able to run on at least the minimum supported version of PHP that is available to web hosts. While WordPress has a specific minimum requirement for PHP, older PHP versions will eventually reach end of life by the PHP developers, and will not receive any security updates in the near future. 
 
 For example, the current version of PHP required to run WordPress is 7.4, which reached end of life status on the 28th November 2022
 

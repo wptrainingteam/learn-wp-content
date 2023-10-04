@@ -56,7 +56,7 @@ There are two return statements, and the parent container `div`, with the paragr
 
 If you decided to change that code you'd have to make the same change twice. 
 
-To avoid this, you can create a custom component, which can handle the rendering of the list of books. The component can handle the check if there are books fetched from the REST API. 
+To avoid this, you can create a custom React [component](https://react.dev/learn/your-first-component), which can handle the rendering of the list of books. The component can handle the check if there are books fetched from the REST API. 
 
 Then all you need is one `return` statement in your `Edit` component, which renders the parent container, paragraph, and the custom component.
 
@@ -64,9 +64,87 @@ Think of components as special functions that return some JSX markup. You can pa
 
 ### Creating a custom component
 
-To start, create a new directory insidecompo your `src` directory called `components`.
+To start, create a new directory inside of your `src` directory called `components`.
 
 Then create a new file in that directory called `BookList.js`.
+
+Start by using the `export default` syntax to export a function called `BookList`.
+
+```js
+export default function BookList() {
+	
+}
+```
+
+This is the same syntax used to export the `Edit` component from the `Edit.js` file.
+
+Inside this function, you're going to return the markup for the list of books. You can copy the code from the `Edit` component, and paste it inside the `BookList` function.
+
+```js
+export default function BookList() {
+	return books.map( ( book ) => (
+		<div>
+			<h2>{ book.title.rendered }</h2>
+			<img src={ book.featured_image_src } />
+			<div dangerouslySetInnerHTML={ { __html: book.content.rendered } }></div>
+		</div>
+	) );
+}
+```
+
+The main difference is that you're returning the output from the `books.maps` loop here, which returns the markup back to the `Edit` component. 
+
+To make this work, you'll need to pass the `books` from the `Edit` component to the `BookList` component. You will do this by passing the books to the `BookList` component as a property. This property will be added to the `props` object of the `BookList` component. So you need to access the `props` object in the `BookList` component, which you do by adding a `props` parameter to the `BookList` function.
+
+```js
+export default function BookList( props ) {
+```
+
+[!Note] Components use `props` to communicate with each other. Every parent component can pass some information to its child components by giving them `props`. 
+
+To access the books, you can use the dot notation to access the `books` property of the `props` object.
+
+```js
+books = props.books;
+```
+
+However, another way to do this is to use something called [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), which means it will look for a property called `books` on the `this.props` object, and assign it to a variable called `books`. You can do this directly in the function parameter.
+
+```js
+export default function BookList( { books } ) {
+```
+
+You can also add the `if` statement that checks if there are any books to display. You can copy this from the `Edit` component. However, instead of returning any markup, you can return `null`, which means nothing will be rendered.
+
+Add this above the original `return` statement
+
+```js
+	if ( ! books ) {
+    	return null;
+    }
+```
+
+Your final `BookList` component should look like this.
+
+```js
+export default function BookList( { books } ) {
+
+	if ( ! books ) {
+		return null;
+	}
+	
+	return books.map( ( book ) => (
+		<div>
+			<h2>{ book.title.rendered }</h2>
+			<img src={ book.featured_image_src } />
+			<div dangerouslySetInnerHTML={ { __html: book.content.rendered } }></div>
+		</div>
+	) );
+	
+}
+```
+
+[REDACTED]
 
 At the top of this file, import the `Component` [class](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/#component) from the `@wordpress/element` [package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-element/).
 
@@ -162,6 +240,8 @@ class BookList extends Component {
 export default BookList;
 ```
 
+[REDACTED]
+
 Now, you can import the `BookList` component into your `Edit` component, and use it to render the books.
 
 At the top of your `Edit` component, import the `BookList` component.
@@ -204,9 +284,9 @@ return (
 );
 ```
 
-Because you have defined the `books` property when you use the `BookList` component, it will be passed to the `this.props` parameter object, and you can extract it.
+Because you have defined the `books` property when you use the `BookList` component, it will be passed to the `props` parameter object, and you can extract it.
 
-You're updated Edit component should look like this.
+Your updated Edit component should look like this.
 
 ```js
 export default function Edit() {
@@ -225,6 +305,7 @@ export default function Edit() {
 	);
 }
 ```
+
 If everything is working correctly, you should see the same output in the editor as you did before. The main difference is that you've moved the code that renders the books to a separate component.
 
 This makes your code cleaner, easier to maintain, and easier to reuse elsewhere. 
@@ -634,9 +715,63 @@ At this stage, you have completed the requirements for the reading list block. Y
 Your last step will be to update the save function, so that the block markup is updated to reflect the changes made in the editor, which we will tackle in next week's content.
 
 # Components
-- Classes
-- Component props
-- Importing components
+
+Components are a handy tool when developing your blocks. Being able to take code that's either repeating, or that you want to be able to use elsewhere, and move it to a separate component, makes your code cleaner, easier to maintain, and easier to reuse.
+
+Using components is also one of the best things about using a modern JavaScript framework like React. Consider the code for your block's sidebar settings:
+
+```js
+<InspectorControls key="setting">
+	<Panel>
+		<PanelBody title="My Reading List Settings">
+			<ToggleControl
+				label="Toggle Image"
+				checked={ showImage }
+				onChange={ (newValue) => {
+					setAttributes( { showImage: newValue } );
+				} }
+			/>
+			<ToggleControl
+				label="Toggle Content"
+				checked={ showContent }
+				onChange={ ( newValue ) => {
+					setAttributes( { showContent: newValue } );
+				} }
+			/>
+		</PanelBody>
+	</Panel>
+</InspectorControls>
+```
+
+That's a lot of code in your Edit component that's not really going to change much over time. Wouldn't it be great if you could move it elsewhere? There's absolutely no reason you couldn't create a new component called `BlockControls`, move the controls to the component, and make your `Edit` component even cleaner.
+
+Try it out yourself. Here's a hint, think about what it would take to make it possible to replace all the InspectorControls code in the Edit component, with this?
+
+```js
+<BlockControls attributes={ attributes } setAttributes={ setAttributes } />
+```
+
+### Importing components
+
+You'll notice that when you imported the BookList component into the Edit component, you used a slightly different syntax as when you import components from Block Editor packages.
+
+BookList
+
+```js
+import BookList from './components/BookList';
+```
+
+Block Editor components
+
+```
+import { Panel, PanelBody, ToggleControl } from '@wordpress/components';
+```
+
+You've probably already guessed that this is because your BookList component is a custom or built in component, whereas the Block Editor components are external components. 
+
+Additionally, there are multiple components available in the Block Editor packages, so you need to use the curly braces to import them, using the destructuring assignment.
+
+
 # Attributes
 # Controls
 # Passing props

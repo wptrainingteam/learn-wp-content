@@ -110,7 +110,7 @@ In this example, a new table is being created called `custom_table`. It has 5 fi
 Hooking this function into your plugin activation hook will ensure that the table is created when the plugin is activated.
 
 ```php
-    register_activation_hook( __FILE__, 'create_database_table' );
+register_activation_hook( __FILE__, 'create_database_table' );
 register_activation_hook( __FILE__, 'create_custom_database_table' );
 ```
 
@@ -139,6 +139,34 @@ Here is an example of what this could look like.
         );
     }
 ```
+
+[INSERT NEW RECORDING]
+
+It would also be a good idea to check that the table exists before attempting to insert data into it. This can be done using the `get_var` method of the `$wpdb` object, passing a SQL statement to check if the table exists.
+
+```php
+    function insert_record_into_table(){
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'custom_table';
+
+        $table_exists = $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" );
+
+        if ( $table_exists ) {
+            $wpdb->insert(
+                $table_name,
+                array(
+                    'time' => current_time( 'mysql' ),
+                    'name' => 'John Doe',
+                    'text' => 'Hello World!',
+                    'url'  => 'https://wordpress.org'
+                )
+            );
+        }
+    }
+```
+
+[END INSERT NEW RECORDING]
 
 ## Updating data
 
@@ -189,16 +217,16 @@ It's also a good idea to store a db version number as a WordPress option, in cas
 
 1. Store the version number in the options table
 2. Create an upgrade routine that triggers when the plugin is updated, perhaps using something like https://developer.wordpress.org/reference/hooks/upgrader_process_complete/
-2. Based on the version, upgrade the table, by creating a separate function which contains the full SQL statement to update the table
-3. Once the upgrade has run, update the version number
+3. Based on the version, upgrade the table, by creating a separate function which contains the full SQL statement to update the table
+4. Once the upgrade has run, update the version number
+
+[START RE-RECORD]
 
 ## Cleaning up
 
-It's also possible to use the plugin deactivate hook to delete the custom table when the plugin is deactivated. To do this, you can use the `query` method of the `$wpdb` object, passing a SQL statement to delete the table.
+It's also possible to delete your custom tables. To do this, you can use the `query` method of the `$wpdb` object, passing a SQL statement to delete the table.
 
-`query` will run any SQL query, but it's best to only use it for queries that don't insert or update data, as those functions include built in sanitization.
-
-```php
+```
     function delete_table() {
         global $wpdb;
 
@@ -208,11 +236,27 @@ It's also possible to use the plugin deactivate hook to delete the custom table 
     }
 ```
 
-Remember to do this on plugin deactivation, not plugin uninstall, as plugin uninstall is only run when the plugin is deleted, not deactivated.
+`query` will run any SQL query, but it's best to only use it for queries that don't insert or update data, as those functions include built-in sanitization.
 
-```php
-    register_deactivation_hook( __FILE__, 'delete_table' );
+You should try to never use the `query` method to insert or update data, but for whatever reason if you must use it to insert or update data, you should always use the [prepare](https://developer.wordpress.org/reference/classes/wpdb/prepare/) method on the SQL Query. This will ensure that the SQL query is sanitized to prevent any security vulnerabilities.
+
+Depending on your requirements, or the requirements of your plugin's users, you could delete the table in two ways.
+
+If your plugin users will not need the data in this table if they deactivate the plugin, you could trigger this on the plugin deactivation hook.
+
 ```
+register_deactivation_hook( __FILE__, 'delete_table' );
+```
+
+However, if the data in that table is important, and your users might want to keep it, even if the plugin is deactivated, you could delete the table using one of the [two uninstall methods](https://developer.wordpress.org/plugins/plugin-basics/uninstall-methods/) available to plugins. For example, if you choose to use the register_uninstall_hook.
+
+```
+register_uninstall_hook( __FILE__, 'delete_table');
+```
+
+It's generally recommended to check with your user and then use one of the uninstall methods over plugin deactivation.
+
+[END RE-RECORD]
 
 ## Conclusion
 
