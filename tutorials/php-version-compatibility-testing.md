@@ -12,7 +12,7 @@ Hey there, and welcome to Learn WordPress.
 
 In this tutorial, you're going to learn about testing your WordPress plugins for PHP version compatibility.
 
-You will learn why it's important to test for PHP version compatibility, where to find information about PHP version changes, as well as two methods to test your plugins.
+You will learn why it's important to test for PHP version compatibility, where to find information about PHP version changes, as well as three methods to test your plugins for PHP version compatibility.
 
 ## Why test for PHP version compatibility?
 
@@ -40,9 +40,9 @@ For the purposes of this tutorial, let's imagine you've developed a simple plugi
 
 ```php
 /**
- * Plugin Name: WP Learn PHP8
- * Description: Learn to get a plugin ready for PHP 8
- * Version: 1.0.0
+ * Plugin Name: WP Learn Compatibility
+ * Description: Learn to test a plugin for PHP Version Compatibility 
+ * Version: 1.0.1
  */
 
 /**
@@ -59,7 +59,7 @@ class post_fetcher {
 	public function fetch_posts() {
 		$post_html = '<div class="post">';
 		foreach ( $this->posts as $post ) {
-			if ( array_key_exists( 'post_title', $post ) ) {
+			if ( property_exists( $post, 'post_title' ) ) {
 				$post_html .= sprintf(
 					'<h4><a href="%s">%s</a></h4>',
 					get_permalink( $post->ID ),
@@ -76,8 +76,8 @@ class post_fetcher {
  * Shortcode to render posts
  * Uses the post_fetcher class
  */
-add_shortcode( 'wp_learn_php8', 'wp_learn_php8_shortcode_render' );
-function wp_learn_php8_shortcode_render() {
+add_shortcode( 'wp_learn_php_compatibility', 'wp_learn_php_compatibility_shortcode_render' );
+function wp_learn_php_compatibility_shortcode_render() {
 	$post_fetcher = new post_fetcher();
 	$post_html = $post_fetcher->fetch_posts();
 	return $post_html;
@@ -90,7 +90,7 @@ Testing the shortcode on a page, you can see that it works as expected when runn
 
 ## How to test for PHP version compatibility
 
-There are a few ways to test for PHP version compatibility, which require different combinations of newer PHP versions and installation of various tools. For the purposes of this tutorial, we will look at one manual way, and one automated tool.
+There are a few ways to test for PHP version compatibility, which require different combinations of newer PHP versions and installation of various tools. For the purposes of this tutorial, we will look at three possible methods, each with their own pros and cons.
 
 ### Manual compatibility testing
 
@@ -124,6 +124,12 @@ define( 'WP_DEBUG_DISPLAY', false );
 define( 'WP_DEBUG_LOG', true );
 ```
 
+You can also set your `WP_DEBUG_LOG` constant to a custom location, by specifying the path to the file. For example:
+
+```php
+define( 'WP_DEBUG_LOG', '/home/ubuntu/wp-local-env/sites/learnpress/logs/debug.' . date( 'Y-m-d' ) . '.log' );
+```
+
 Then, test your plugin, by refreshing the page. Notice that the shortcode functionality breaks.
 
 If you look at the debug.log, you'll see the following error displayed:
@@ -142,68 +148,31 @@ Methods with the same name as the class are no longer interpreted as constructor
 
 So in this case, our class constructor method needs to be updated.
 
-Once that's fixed, refresh the page, and you'll see that a more serious error has occured. 
+Once that's fixed, refresh the page, and you'll see that the plugin is working again as expected. 
 
-Time to check the log.
+While manual testing does work, it's a tedious process. Fortunately you can also automate most tests using a tool called PHPUnit. This will allow you to continuously safeguard your code both against bugs and for PHP compatibility issues, but that's outside of the scope of this tutorial.
 
-This time we have a new error:
+### Scanning your code using PHPCompatibilityWP
 
-```
-[16-May-2023 12:14:59 UTC] PHP Fatal error:  Uncaught TypeError: array_key_exists(): Argument #2 ($array) must be of type array, WP_Post given in /home/ubuntu/wp-local-env/sites/learnpress/wp-content/plugins/wp-learn-php8/wp-learn-php8.php:22
-Stack trace:
-#0 /home/ubuntu/wp-local-env/sites/learnpress/wp-content/plugins/wp-learn-php8/wp-learn-php8.php(42): post_fetcher->fetch_posts()
-#1 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/shortcodes.php(355): wp_learn_php8_shortcode_render()
-#2 [internal function]: do_shortcode_tag()
-#3 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/shortcodes.php(227): preg_replace_callback()
-#4 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/class-wp-hook.php(308): do_shortcode()
-#5 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/plugin.php(205): WP_Hook->apply_filters()
-#6 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/blocks/post-content.php(54): apply_filters()
-#7 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/class-wp-block.php(258): render_block_core_post_content()
-#8 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/class-wp-block.php(244): WP_Block->render()
-#9 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/blocks.php(1051): WP_Block->render()
-#10 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/blocks.php(1089): render_block()
-#11 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/block-template.php(240): do_blocks()
-#12 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/template-canvas.php(12): get_the_block_template_html()
-#13 /home/ubuntu/wp-local-env/sites/learnpress/wp-includes/template-loader.php(106): include('...')
-#14 /home/ubuntu/wp-local-env/sites/learnpress/wp-blog-header.php(19): require_once('...')
-#15 /home/ubuntu/wp-local-env/sites/learnpress/index.php(17): require('...')
-#16 {main}
-  thrown in /home/ubuntu/wp-local-env/sites/learnpress/wp-content/plugins/wp-learn-php8/wp-learn-php8.php on line 22
-```
+There are also tools you can use to test for PHP Compatibility, the most useful being the aptly named [PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility) tool, which is a set of rules for the [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) tool. 
 
-If you look at that line in the plugin, you'll see that it's trying to use the `array_key_exists()` function on the `$post` variable inside the foreach loop, but this variable is an object, not an array.
+PHP_CodeSniffer is a command line tool that can be used to scan your code for errors and warnings, and the PHPCompatibility tool is a set of rules that can be used with PHP_CodeSniffer to scan your code for PHP version compatibility.
 
-If you look at the Backward Incompatible Changes section of the migration guide, and search for `array_key_exists`, you'll see the following change:
+For WordPress developers, there is a specific ruleset called [PHPCompatibilityWP](https://github.com/PHPCompatibility/PHPCompatibilityWP), which is a PHPCompatibility ruleset for WordPress projects.
 
-```
-The ability to use array_key_exists() with objects has been removed. isset() or property_exists() may be used instead.
-```
+What's great about PHPCompatibility/PHPCompatibilityWP is that you don't have to configure a different PHP version to use it. You can use it with your existing PHP version, and it will check your code against the rules for the PHP version you specify.
 
-This means that previously it was possible to use array_key_exists() on an object, but now it's not. So we need to update our code to use `property_exists()` instead.
+To install and use PHPCompatibilityWP, you need to install Composer, which is a dependency manager for PHP projects. 
 
-```php
-property_exists( $post, 'post_title' )
-```
-
-If you refresh the page, you'll see the shortcode is now working again.
-
-And if you check the debug.log, no new errors have been reported.
-
-### Automated compatibility testing using PHPCompatibility
-
-While the manual method works, it's a tedious process, and it would be preferable to automate the process somehow. 
-
-There are a number of automated or command line tools that you can use to test for PHP Compatibility, but one that is quite useful is the PHPCompatibility tool, which is a set of rules for the PHP_CodeSniffer tool.
-
-What's great about PHPCompatibility is that you don't have to configure a different PHP version to use it. You can use it with your existing PHP version, and it will check your code against the rules for the PHP version you specify.
-
-To install and use PHPCompatibility, you need to install Composer, which is a dependency manager for PHP projects. For Composer to work, you also need the cli version of PHP installed on your system. 
+For Composer to work, you also need PHP installed on your computer, so that you can use the PHP CLI binary, which allows you to run PHP scripts in the terminal, instead of just in a browser.
 
 Installing Composer is outside the scope of this lesson, but you can find instructions on the [Composer website](https://getcomposer.org/) for both [macOS/Linux](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos) and [Windows](https://getcomposer.org/doc/00-intro.md#installation-windows) operating systems. 
 
 You can find ways to install PHP on your system on the [PHP website](https://www.php.net/manual/en/install.php) under the Installation and Configuration section.
 
-You can check that you have php installed by running the following command in your terminal:
+Once you install PHP, make sure to add the path to the PHP CLI binary to the operating system path of your computer, so that you can run PHP commands from anywhere on your computer.
+
+You can check that you have PHP installed by running the following command in your terminal:
 
 ```bash
 php -v
@@ -215,7 +184,7 @@ Similarly, you can check that you have Composer installed by running the followi
 composer -v
 ```
 
-Once you have Composer installed, you can initialise the composer project by running the following command inside the plugin directory:
+Once you have Composer installed, you can initialise the composer project by running the following command inside the plugin directory. If you’re already using Composer for your plugin, you can skip this step.
 
 ``` bash
 composer init
@@ -223,63 +192,78 @@ composer init
 
 This will initialise a new Composer project in your plugin directory. You can accept the defaults for most of the questions, but when it asks you to define your dependencies (require) interactively and define your dev dependencies (require-dev) interactively?, you should answer no. You can also skip the PSR-4 autoload mapping.
 
-If you're already using composer for your plugin, you can skip this step.
+Once this is done, you will have a package.json file, which is the file Composer uses to manage your project dependencies.
 
-Next, you need to require PHPCompatibility, which requires PHP_CodeSniffer by running the following command.  
+Next, you will need to install a Composer plugin to manage the installed_paths setting for PHP_CodeSniffer by running the following from the command. If you already have this plugin installed, you can ignore this.
 
 ```bash
-composer require --dev phpcompatibility/php-compatibility:"dev-develop"
+composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
 ```
 
-You'll be installing the develop branch of PHPCompatibility tool, which at the time of creating this tutorial contains the latest version of the code. Once version 10 of PHPCompatibility is released, you can leave out the specifying of the develop branch.
-
-Then you need to require the WordPress coding standard rules for PHP_CodeSniffer:
+Then you can install the Composer installer plugin, and the PHPCompatibilityWP tool by running the following commands:
 
 ```bash
-composer require --dev wp-coding-standards/wpcs
+composer require --dev dealerdirect/phpcodesniffer-composer-installer:"^0.7" 
+composer require --dev phpcompatibility/phpcompatibility-wp:"*"
 ```
 
-Once you've set up your dependencies, you'll need to install them by running the following command:
-
-```bash
-composer install
-``` 
+This will both setup and install the required dependencies in your package.json file.
 
 With all this installed, you can run the PHPCompatibility tool on your plugin file. 
 
 The recommended way to do this is run PHPCompatibility against a specific base version of PHP. In this example you can run it against version 7.4 of PHP and above by setting the `testVersion` runtime variable to `7.4-`.
 
 ```bash
-./vendor/bin/phpcs --runtime-set testVersion 7.4- -p wp-learn-php8.php --standard=PHPCompatibility
+./vendor/bin/phpcs --runtime-set testVersion 7.4- -p wp-learn-php-compatibility.php --standard=PHPCompatibilityWP
 ```
 
-This is what the output looks like 
+And you will see this output:
 
 ```bash
-E 1 / 1 (100%)
+W 1 / 1 (100%)
 
 
 
-FILE: /Users/jonathanbossenger/wp-local-env/sites/learnpress/wp-content/plugins/wp-learn-php8/wp-learn-php8.php
-------------------------------------------------------------------------------------------------------------------
-FOUND 1 ERROR AFFECTING 1 LINE
-------------------------------------------------------------------------------------------------------------------
-15 | ERROR | Declaration of a PHP4 style class constructor is deprecated since PHP 7.0 and removed since PHP 8.0
-------------------------------------------------------------------------------------------------------------------
+FILE: /Users/jonathanbossenger/wp-local-env/sites/learnpress/wp-content/plugins/wp-learn-php-compatibility/wp-learn-php-compatibility.php
+-----------------------------------------------------------------------------------------------------------------------------------------
+FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
+-----------------------------------------------------------------------------------------------------------------------------------------
+ 15 | WARNING | Use of deprecated PHP4 style class constructor is not supported since PHP 7.
+-----------------------------------------------------------------------------------------------------------------------------------------
 
-Time: 46ms; Memory: 10MB
+Time: 33ms; Memory: 8MB
 ```
 
 Notice how the same error is reported as the manual method, but this time it's a lot more specific. It tells us exactly what line the error is on, and what the error is.
 
 So now we can fix the class constructor error.
 
-However, notice that the second `array_key_exists` error is not reported. This is because the PHPCompatibility tool is an open source project that relies on contributions, based on the changes in PHP versions. At the time of recording this tutorial the [array_key_exists removal has not yet been added](https://github.com/PHPCompatibility/PHPCompatibility/issues/808).
+### A note on PHPCompatibility versions.
 
-#### Pros and Cons of using PHPCompatibility
+At this time, the stable release of PHPCompatibility, which PHPCompatibilityWP uses, is [9.3.5](https://github.com/PHPCompatibility/PHPCompatibility/releases/tag/9.3.5), and the most recent sniffs [are part of the upcoming version 10.0.0. release](https://github.com/PHPCompatibility/PHPCompatibility/issues/1236#issuecomment-708443602).
 
-As noted, one of the downsides of using something like PHPCompatibility is that it's not always up to date with the latest changes in PHP versions. Additionally, it requires familiarity with the command line, which not all developers may have.
+Fortunately, it is possible to install the dev-develop branch of PHPCompatibility to run PHPCS with the cutting-edge additions of PHP 8 sniffs before their release in version 10.0.0 of PHPCompatibility as detailed in this [WordPress VIP documentation](https://docs.wpvip.com/technical-references/php/version-updates/phpcs-scans/#Upcoming-releases-of-PHPCompatibility).
 
-However, it does have some benefits, such as being able to scan your entire codebase, without needing to install and configure additioanl PHP versions, and being able to automate the process.
+Inside your project directory, run the following commands to alias the dev-develop branch of PHPCompatibility:
 
-As such, combining something like PHPCompatibility with the manual testing process we've already discussed, is a good step closer to ensuring your plugin is compatible with current and future versions of PHP.
+```bash
+composer config minimum-stability dev
+composer require --dev phpcompatibility/phpcompatibility-wp
+composer require --dev phpcompatibility/php-compatibility:"dev-develop as 9.99.99"
+```
+
+These commands will alias the `develop` branch of PHPCompatibility to a 9.x version which is within the allowed range for PHPCompatibility.
+
+Once PHPCompatibility 10 is out, it should be possible to update the PHPCompatibilityWP version constraint from "*" to "^3.0", which will depend on version 10 of PHPCompatibility.
+
+#### Considerations
+
+One of the considerations when using something like PHPCompatibilityWP is that it can't pick up every single compatibility error.
+
+For example, one of the other changes from PHP 7.4 to PHP 8.0 is the removal of the ability to use `array_key_exists()` with objects, and instead something like `property_exists()` should be used.
+
+However, the PHPCompatibilityWP tool doesn't know if the variable you're passing to `array_key_exists()` is an array or an object, so it can't warn you about this.
+
+This is where automating your manual tests would come in handy, as the if you ran the tests in a new PHP environment, the tests would fail, altering you to a possible problem. And with logging enabled, you'd see the error logged to the log file. 
+
+Ultimately combining a tool like PHPCompatibility with automated testing and the manual testing process we've discussed, will allow you to ensure that your plugin is compatible with current and future versions of PHP.
