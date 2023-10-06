@@ -4,6 +4,7 @@
 
 Upon completion of this lesson the participant will be able to:
 
+
 ## Outline
 
 ## Introduction
