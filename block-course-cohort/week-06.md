@@ -2,17 +2,17 @@
 
 # The save function, and dynamic blocks
 
-Now that you have your Edit component fully functional, it's time to implement the save function. The save function is responsible for saving the output of your block to the database, so that it can be rendered on the front end.
+Now that you have your `Edit` component fully functional, it's time to implement the `save` function. The `save` function is responsible for saving the output of your block to the database, so that it can be rendered on the front end.
 
-The code in the save function is usually a lot simpler than the code in the Edit function, because you don't need to worry about user interactions, or updating any data of the block. The primary goal of the save function is to return the final output of the block to be saved in the database.
+The code in the `save` function is usually a lot simpler than the code in the `Edit` function, because you don't need to worry about user interactions, or updating any data of the block. The primary goal of the `save` function is to return the final output of the block to be saved in the database.
 
 ## Adding the RichText component
 
-Before we do that though, in the last module there was a [Block Attributes lesson](https://learn.wordpress.org/lesson/block-attributes/), in which you could optionally add a RichText component to your block, to make the paragraph text at the top of the block editable. 
+Before we do that though, in the last module there was a [Block Attributes lesson](https://learn.wordpress.org/lesson/block-attributes/), in which you could optionally add a `RichText` component to your block, to make the paragraph text at the top of the block editable. 
 
-If you didn't add that code to your block, you can add it now.
+If you haven't yet added that code to your block, you can do it now.
 
-In the block.json file, add the content attribute to the attributes object:
+In the `block.json` file, add the `content` attribute to the `attributes` object:
 
 ```json
 	"attributes": {
@@ -33,7 +33,7 @@ In the block.json file, add the content attribute to the attributes object:
   },
 ````
 
-In the Edit component, update the imports from the `@wordpress/block-editor` package to include the `RichText` component.
+In the `Edit` component, update the imports from the `@wordpress/block-editor` package to include the `RichText` component.
 
 ```js
 import { useBlockProps, RichText, InspectorControls } from '@wordpress/block-editor';
@@ -49,13 +49,13 @@ If you want a reminder of what this code does, go back and review the [Block Att
 
 ## Implementing the save function
 
-First, as you've added the RichText component to your block, you need to update the save to import RichText from the @wordpress/block-editor package.
+First, as you've added the `RichText` component to your block, you need to update the `save` to import `RichText` from the `@wordpress/block-editor` package.
 
 ```js
 import { useBlockProps, RichText } from '@wordpress/block-editor';
 ```
 
-Because the save function is merely saving the output, you don't need to re-run the `getEntityRecords` selector using the `useSelect` hook. Instead, you can just use the `select` function on the `core` store, and fetch the books that are already in the store.
+Because the `save` function is merely returning the output, you don't need to re-run the `getEntityRecords` selector using the `useSelect` hook. Instead, you can just use the `select` function on the `core` store, and fetch the books that are already in the store.
 
 So next, you can import the `select` function from the `@wordpress/data` package.
 
@@ -63,44 +63,44 @@ So next, you can import the `select` function from the `@wordpress/data` package
 import { select } from '@wordpress/data';
 ```
 
-At the same time, you can import the BookList component, so we can reuse it in the save function
+At the same time, you can import the `BookList` component, so we can reuse it in the `save` function.
 
 ```js
 import BookList from './components/BookList';
 ```
 
-Now you can focus on the actual save function.
+Now you can focus on the actual `save` function.
 
-First, destruct the block props so you can access the attributes property.
+First, destruct the block `props` so you can access the `attributes` property.
 
 ```js
 export default function save( { attributes } ) {
 ```
 
-Then, inside the save function create the `books` variable and use the `select` function to fetch the books from the `core` store.
+Then, inside the `save` function create the `books` variable and use `select` to fetch the books from the `core` store.
 
 ```js
 const books = select( 'core' ).getEntityRecords( 'postType', 'book' );
 ```
 
-Finally, update the return statement to return the markup for the block.
+Finally, update the `return` statement to return the markup for the block.
 
 ```js
     return (
-	<div {...useBlockProps.save()}>
-		<RichText.Content tagName="p" value={ attributes.content } />
-		<BookList books={books} attributes={attributes} />
-	</div>
-);
+        <div {...useBlockProps.save()}>
+            <RichText.Content tagName="p" value={ attributes.content } />
+            <BookList books={books} attributes={attributes} />
+        </div>
+    );
 ```
 
-You'll notice however there are a few differences between the Edit component and the Save function.
+You'll notice there are a few differences between the return in the `Edit` component and the `save` function.
 
-1. Instead of useBlockProps() you use useBlockProps.save()
-2. Instead of RichText you use RichText.Content and you don't need any onChange handler
-3. There are no InspectorControls, because those are only used in the editor
+1. Instead of `useBlockProps()` you use `useBlockProps.save()`. This will return the subset of the block attributes needed for the `save` function.
+2. Instead of `RichText` you use `RichText.Content` and you don't need any `onChange` handler. Again, this is because you only need to save the content of the `RichText` component.
+3. There are no `InspectorControls`, because those are only needed in the editor.
 
-[Note] This is the main reason the Edit component is referred to as a component, vs the save function. A component does more than just return markup, whereas a function just returns markup. It's a small but important distinction.
+[Note] This is the main reason the `Edit` component is referred to as a component, vs the `save` function. A component does more than just return markup, whereas a function just returns markup. It's a small but important distinction.
 
 Your updated save function should look like this:
 
@@ -129,12 +129,6 @@ export default function save( { attributes } ) {
 
 	const books = select( 'core' ).getEntityRecords( 'postType', 'book' );
 
-	/*return (
-		<p {...useBlockProps.save()}>
-			{'My Reading List – hello from the saved content!'}
-		</p>
-	);*/
-
     return (
         <div {...useBlockProps.save()}>
             <RichText.Content tagName="p" value={ attributes.content } />
@@ -150,34 +144,38 @@ If you refresh the browser, and you had already added the block to the editor, y
 
 [Block error](/images/save-01.png)
 
-This is because you've made a change to the save function code. When the block editor loads, it compares the output of the save function with the output that was saved in the database. If the output is different, the block will be marked as invalid, and you'll see an error in the editor.
+This is because you've made a change to the `save` function code. When the block editor loads, it compares the output of the `save` function with the output that was saved in the database. If the output is different, the block will be marked as invalid, and you'll see an error in the editor.
 
-If you click on the Attempt block recovery button, it will reload the code, and the error will go away.
+If you click on the "Attempt block recovery" button, it will reload the block, and the error will go away.
 
-[!INFO] Whenever you edit the code in your save function, it's useful to first remove the block from the post or page you're testing it on, save the content, then refresh the browser before adding the block again.
+[!INFO] Whenever you edit the code in your `save` function, it's useful to first remove the block from the post or page you're testing it on, save the content, and then refresh the browser before adding the block again.
 
 Do this now, and you shouldn't see any errors.
 
 Now try and either preview, or publish the post or page, and view it. You should see the same output as you saw in the editor, only with the black border you defined in the front end style.
 
-Well done, you've successfully finished your block! Or have you?
+Well done, you've successfully finished your block! 
+
+Or have you?
 
 ## Dynamic blocks
 
-What would happen if you added a new book to your book custom post type. Your block would still be displaying the original list of books, because the save function saved the list of books at the time you added the block. What would be ideal is if you could somehow fetch the most recent list of books from the database when the block is rendered on the front end, so that the list of books is always up to date.
+What would happen if you added a new book to your book custom post type? Your saved block content would only include original list of books, because the `save` function saved the list of books at the time you added the block. This is what is known as a "static block".
 
-This is where [dynamic blocks](https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/) come in. Dynamic blocks are blocks that fetch data from the database when they are rendered on the front end. This means that the output of the block is always up to date.
+What would be ideal is if you could somehow fetch the most recent list of books from the database when the block is rendered on the front end, so that the list of books is always up-to-date.
 
-In order to make sure you think about all the different parts of your block, you also need to consider the block supports you added, as well as the settings you added to the block. 
+This is where [dynamic blocks](https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/) come in. Dynamic blocks are blocks that fetch data from the database when they are rendered on the front end. This means that the output of the block is always up-to-date.
+
+When converting a block from a static block to a dynamic one, you also need to consider any block supports you added, as well as the attributes and controls you added to the block. 
 
 1. You added the alignment support, and background and text colour supports
-2. You added the `showContent` and `showImage` settings, making it possible to hide the content and image of the book
+2. You added the `showContent` and `showImage` attributes, making it possible to hide the content and image of the book
 
 Now would be a good idea to set all of these settings to something other than the default, so you can see how they affect the output of the block. 
 
 For example, set the alignment to "Align center", the background colour to "Cyan bluish gray", and the text colour to "Contrast". Then, turn the "Toggle Content" setting off. 
 
-Switch back to the Code Editor view, and look at the block attributes stored in the block markup.
+In the block editor, switch to the "Code Editor" view, and look at the block attributes stored in the block markup.
 
 ```json
 {"showContent":false,"align":"center","backgroundColor":"cyan-bluish-gray","textColor":"contrast"}
@@ -185,7 +183,9 @@ Switch back to the Code Editor view, and look at the block attributes stored in 
 
 This will come in handy later on.
 
-Dynamic blocks use PHP to fetch the data from the database. To make use of dynamic blocks, you need to add a function as the `render_callback` property of the `register_block_type` function. 
+## Adding dynamic block support
+
+Dynamic blocks use PHP to fetch the data from the database. To make your block dynamic, you need to add a function as the `render_callback` property of the `register_block_type` function. 
 
 You do this by adding an array as the second argument of the `register_block_type` function, and adding the `render_callback` key and the function to be called as the value.
 
@@ -193,7 +193,7 @@ You do this by adding an array as the second argument of the `register_block_typ
 register_block_type( __DIR__ . '/build', array( 'render_callback' => 'my_reading_list_render_callback' ) );
 ```
 
-This should go inside the `my_reading_list_register_block_type` function, just before the closing curly brace.
+Update your `my_reading_list_register_block_type` function, with this new `register_block_type` call.
 
 ```php
 function my_reading_list_reading_list_block_init() {
@@ -201,7 +201,7 @@ function my_reading_list_reading_list_block_init() {
 }
 ```
 
-Then, you need to create the callback function, in this case `my_reading_list_render_callback`. This function will be responsible for fetching the books from the database, and returning the markup for the block, and it receives the attributes of the block as it's only parameter, which is an array of data.
+Then, you need to create the callback function, in this case `my_reading_list_render_callback`. This function will be responsible for fetching the books from the database, and returning the markup for the block. It receives the attributes of the block as it's only parameter, which is an array of attribute properties and their value.
 
 ```php
 function my_reading_list_render_callback( $attributes ){
@@ -209,18 +209,18 @@ function my_reading_list_render_callback( $attributes ){
 }
 ```
 
-For now, let's just return the content of the $attributes variable, so you can see what it contains.
+For now, let's just return the content of the `$attributes` variable, so you can see what it contains.
 
 ```php
 function my_reading_list_render_callback( $attributes ){
     $output = '<pre>';
     $output .= print_r( $attributes, true );
     $output .= '<pre>';
-    echo $output;
+    return $output;
 }
 ```
 
-The last step is to update the save function. Generally, when using dynamic blocks, the save function can merely return `null`, because the output of the block is generated by the PHP function. And because it's returning null, you can remove everything else in the file, and all you need is this.
+The last step is to update the save function. Generally, when making the block dynamic, the save function can merely return `null`, because the output of the block is generated by the PHP function. And because it's returning `null`, you can remove everything else in the file, and all you need is this.
 
 ```js
 export default function save() {
@@ -228,11 +228,13 @@ export default function save() {
 }
 ```
 
-Once the new block code is build, remove the block from the post or page you're working on, save the content, then refresh the browser before adding the block again.
+[INFO] There's an even better way to do this, which is to remove the `save.js` file altogether, but you'll learn about that in a future lesson. 
+
+Once the new block code is built, remove the block from the post or page you're working on, save the content, then refresh the browser before adding the block again.
 
 Now, preview or view the post or page on the front end.
 
-You should see the output of the $attributes variable, which is an array of all the attributes relevant to the block's output.
+You should see the output of the `$attributes` variable, which is an array of all the attributes relevant to the block's output.
 
 [Block output](/images/save-02.png)
 
@@ -248,42 +250,34 @@ Array
 )
 ```
 
-Notice that the attributes array contains the same attributes you defined in the block.json file, with whatever you set in the editor, and which you saw in the block markup in the code view. 
+Notice that the attributes array contains the same attributes you defined in the `block.json` file, with whatever you set in the editor, and which you saw in the block markup in the code view. 
 
 You can use this to determine what output to return.
 
 Now, you can update the `my_reading_list_render_callback` function to fetch the books from the database, and return the markup for the block.
 
-First, you need to fetch the books from the database. You can do this using the `get_posts` function, which is a WordPress function that fetches posts from the database. To return the list of books, you pass an array of arguments to the `get_posts` function, and you specify the post type as `book`.
+If you take a look at your `Edit` component, there are a few things you need to do in the `my_reading_list_render_callback` function. 
+
+You need to fetch the books from the database. You can do this using the `get_posts` [function](https://developer.wordpress.org/reference/functions/get_posts/), which is a WordPress function that fetches posts from the database. To return the list of books, you pass an array of arguments to the `get_posts` function, and you specify the post type as `book`.
 
 ```php
-function my_reading_list_render_callback( $attributes ) {
 	$args  = array(
 		'post_type' => 'book',
 	);
 	$books = get_posts( $args );
-		
-}
 ```
 
-Next, you need to get the parent container div attributes, using the `get_block_wrapper_attributes` function. This function essentially does the same thing as the `useBlockProps` hook in the Edit component, but it's the PHP equivalent.
+Next, you need to get the parent container `div` attributes. You can do this using the `get_block_wrapper_attributes` [function](https://developer.wordpress.org/reference/functions/get_block_wrapper_attributes/). This function essentially does the same thing as the `useBlockProps` hook in the `Edit` component, but it's the PHP equivalent.
 
 ```php
-function my_reading_list_render_callback( $attributes ) {
-	$args  = array(
-		'post_type' => 'book',
-	);
-	$books = get_posts( $args );
-
     $wrapper_attributes = get_block_wrapper_attributes();	
 }
 ```
-
-There are multiple ways to return the block markup, but one way is to create an $output variable, concatenate the markup to the $output variable, and then return the $output variable.
+If you've never used PHP before, there are multiple ways to handle generating the block markup, but one way is to create an `$output` variable, and add the markup as text strings to the `$output` variable.
 
 ```php
 	$output  = '';
-	$output  = sprintf( '<div %1$s>', $wrapper_attributes );
+	$output .= sprintf( '<div %1$s>', $wrapper_attributes );
 	$output .= '<p>' . $attributes['content'] . '</p>';
 
 	foreach ( $books as $book ) {
@@ -301,12 +295,13 @@ There are multiple ways to return the block markup, but one way is to create an 
 	$output .= '</div>';
 ```
 
-1. The sprintf function is a PHP function that allows you to insert variables into a string. In this case, you're inserting the $wrapper_attributes variable into the string, which is the markup for the parent div.
-2. Then, you concatenate the `<p>` tag, and the content attribute of the block, which is the paragraph text at the top of the block.
-3. Next, you loop through the books, and concatenate the markup for each book to the $output variable. This is similar to the `books.map` method you used in the Edit component.
-4. Inside the loop, you check if the showImage attribute is true, and if it is, you concatenate the featured image of the book to the $output variable, and do the same for the showContent attribute, and the book content.
+1. The `sprintf` [function](https://www.php.net/manual/en/function.sprintf.php) is a PHP function that allows you to insert variables into a string. In this case, you're inserting the `$wrapper_attributes` variable into the string, which is the markup for the parent `div`.
+2. Then, you [concatenate](https://www.php.net/manual/en/language.operators.string.php) the `<p>` tag, and the `content` attribute of the block, which is the paragraph text at the top of the block.
+3. Next, you loop through the `$books`, and concatenate the markup for each book to the `$output` variable. This is similar to the `books.map` method you used in the `Edit` component.
+4. Inside the loop, you check if the `showImage` attribute is `true`, and if it is, you concatenate the featured image of the book to the $output variable, and do the same for the `showContent` attribute, and the book content.
+5. Notice how you can use the `get_the_post_thumbnail` WordPress [function](https://developer.wordpress.org/reference/functions/get_the_post_thumbnail/) here, to fetch the image for the book. 
 
-Last but not least, just as you did in the Edit component, you can return markup, in this case the $output variable.
+Last but not least, just as you did in the `Edit` component, you can return markup, in this case the `$output` variable.
 
 ```php
 return $output;
@@ -324,7 +319,7 @@ function my_reading_list_render_callback( $attributes ) {
 	$wrapper_attributes = get_block_wrapper_attributes();
 
 	$output  = '';
-	$output  = sprintf( '<div %1$s>', $wrapper_attributes );
+	$output .= sprintf( '<div %1$s>', $wrapper_attributes );
 	$output .= '<p>' . $attributes['content'] . '</p>';
 
 	foreach ( $books as $book ) {
@@ -351,7 +346,30 @@ You should see the correct output on the front end as before.
 
 [Block output](/images/save-03.png)
 
-However, if you add a new book to the book custom post type, and refresh the front end of the post or page, you should see the new book in the output.
+However, if you add a new book to the book custom post type, and refresh the front end of the post or page, you should see the new book included in the output.
 
-## Block supports in dynamic blocks
+[Block output](/images/save-04.png)
 
+Your final step is to stop the npm development server, and build the final version of your block.
+
+Hit **Ctrl + C** in the terminal to stop the npm development server.
+
+Then, run the build command to build the final version of your block.
+
+```bash
+npm run build
+```
+
+Congratulations! You've successfully completed the My Reading List block.
+
+# Streamlining dynamic blocks
+
+- the other reason this block should be dymanic
+- return null in the index.js file
+- InnerBlocks content
+
+# Diving into the render_callback
+
+# Preparing your block plugin for distribution
+
+# Wrap Up
