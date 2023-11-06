@@ -4,24 +4,38 @@
 
 Upon completion of this lesson the participant will be able to:
 
+Explain why it's important to test for PHP version compatibility
+Identify where to find information about PHP version changes
+Demonstrate how to test manually for PHP version compatibility
+Execute scanning of code for PHP version compatibility using PHPCompatibilityWP
 
 ## Outline
+
+1. Introduction
+2. Why test for PHP version compatibility?
+3. Where to find information on PHP version changes
+4. Example plugin
+5. How to test for PHP version compatibility
+    1. Manual compatibility testing
+    2. Scanning your code using PHPCompatibilityWP
+    3. A note on PHPCompatibility versions.
+        1. Considerations
 
 ## Introduction
 
 Hey there, and welcome to Learn WordPress.
 
-In this tutorial, you're going to learn about testing your WordPress plugins for PHP version compatibility.
+In this tutorial, you're going to learn about testing your WordPress products for PHP version compatibility.
 
-You will learn why it's important to test for PHP version compatibility, where to find information about PHP version changes, as well as three methods to test your plugins for PHP version compatibility.
+You will learn why it's important to test for PHP version compatibility, where to find information about PHP version changes, as well as two methods to test your plugins and themes for PHP version compatibility.
 
 ## Why test for PHP version compatibility?
 
-WordPress is written in PHP, and as such, it needs to be able to run on at least the minimum supported version of PHP that is available to web hosts. While WordPress has a specific minimum requirement for PHP, older PHP versions will eventually reach end of life by the PHP developers, and will not receive any security updates in the near future. 
+WordPress is written in PHP, and as such, it needs to be able to run on at least the minimum supported version of PHP that is available to web hosts. While WordPress recommends a specific minimum version of PHP, older PHP versions will eventually reach end of life, and will not receive any security updates in the near future. 
 
-For example, the current version of PHP required to run WordPress is 7.4, which reached end of life status on the 28th November 2022
+For example, the current minimum recommended PHP version to run WordPress is 7.4, which reached end of life status on the 28th November 2022
 
-WordPress core itself is considered compatible with PHP 8.0, and the WordPress core team is working on making WordPress compatible with PHP 8.1 and PHP 8.2. However, they cannot guarantee that all plugins will be compatible with current or future versions of PHP.
+WordPress core itself is considered compatible (with select explicit exceptions) with PHP 8.0 and PHP 8.1 and beta-compatible with PHP 8.2 and the upcoming PHP 8.3 release. However, they cannot guarantee that all plugins will be compatible with current or future versions of PHP.
 
 As a plugin developer, it's therefore important to have a process in place to test your plugins for PHP version compatibility.
 
@@ -31,32 +45,48 @@ In order to know when and how PHP versions are going to change, it's a good idea
 
 On the [Supported Versions](https://www.php.net/supported-versions.php) page, you can find information about which versions are currently supported, at what level of support, and which versions are end of life.
 
-At the time of this recording, all PHP 7.x versions or end of life, PHP 8.0 is supported for security fixes only, and PHP 8.1 and PHP 8.2 are actively supported, meaning bug and security flaws will be fixed. Note that PHP 8.0 will only be supported for security fixes till November 2023, which is around the time PHP 8.4 will be released, and then PHP 8.0 will be considered end of life. 
+At the time of this recording, all PHP 7.x versions are end of life, PHP 8.0 is supported for security fixes only, and PHP 8.1 and PHP 8.2 are actively supported, meaning bug and security flaws will be fixed. Note that PHP 8.0 will only be supported for security fixes till November 2023, which is around the time PHP 8.4 will be released, and then PHP 8.0 will be considered end of life. 
 
-In the Appendices section of the PHP documentation you can find the guides on migrating from older PHP versions, which list all the changes between the old version and the new one. For example, the [Migrating from PHP 7.4.x to PHP 8.0.x](https://www.php.net/manual/en/migration80.php) guide lists all the changes between PHP 7.4 and PHP 8.0.
+In the Appendices section of the PHP documentation you can find the guides on migrating from older PHP versions, which list the most important changes between the old version and the new one. For example, the [Migrating from PHP 7.4.x to PHP 8.0.x](https://www.php.net/manual/en/migration80.php) guide lists all the changes between PHP 7.4 and PHP 8.0.
 
 ## Example plugin
 
 For the purposes of this tutorial, let's imagine you've developed a simple plugin. 
 
 ```php
+<?php
 /**
  * Plugin Name: WP Learn Compatibility
- * Description: Learn to test a plugin for PHP Version Compatibility 
+ * Description: Learn to test a plugin for PHP Version Compatibility
  * Version: 1.0.1
+ *
+ * @package wp-learn-compatibility
  */
 
 /**
  * Posts fetcher class
  */
-class post_fetcher {
+class Post_Fetcher {
 
+	/**
+	 * Array posts
+	 *
+	 * @var array
+	 */
 	protected $posts;
 
+	/**
+	 * Fetch the WordPress posts
+	 */
 	public function post_fetcher() {
-		$this->posts     = get_posts();
+		$this->posts = get_posts();
 	}
 
+	/**
+	 * Fetch the posts and return the formatted HTML
+	 *
+	 * @return string
+	 */
 	public function fetch_posts() {
 		$post_html = '<div class="post">';
 		foreach ( $this->posts as $post ) {
@@ -73,16 +103,19 @@ class post_fetcher {
 	}
 }
 
-/**
- * Shortcode to render posts
- * Uses the post_fetcher class
- */
 add_shortcode( 'wp_learn_php_compatibility', 'wp_learn_php_compatibility_shortcode_render' );
+
+/**
+ * Shortcode callback function for wp_learn_php_compatibility shortcode
+ *
+ * @return string
+ */
 function wp_learn_php_compatibility_shortcode_render() {
 	$post_fetcher = new post_fetcher();
-	$post_html = $post_fetcher->fetch_posts();
+	$post_html    = $post_fetcher->fetch_posts();
 	return $post_html;
 }
+
 ```
 
 The plugin registers a shortcode, which fetches a list of posts and displays the post title of each post whenever the shortcode is used. The post_fetcher class handles the fetching of the posts.
@@ -118,7 +151,7 @@ To do this, edit the `wp-config.php` file, and update the line which defines the
 define( 'WP_DEBUG', true );
 ```
 
-Additionally, add the `WP_DEBUG_DISPLAY` constant and set it to false and add the `WP_DEBUG_LOG` constant and set it to tru, so that errors are logged to a `debug.log` file in the `wp-content` directory.
+Additionally, add the `WP_DEBUG_DISPLAY` constant and set it to false and add the `WP_DEBUG_LOG` constant and set it to true, so that errors are logged to a `debug.log` file in the `wp-content` directory.
 
 ```php
 define( 'WP_DEBUG_DISPLAY', false );
@@ -182,7 +215,7 @@ php -v
 Similarly, you can check that you have Composer installed by running the following command in your terminal:
 
 ```bash
-composer -v
+composer -V
 ```
 
 Once you have Composer installed, you can initialise the composer project by running the following command inside the plugin directory. If you’re already using Composer for your plugin, you can skip this step.
@@ -193,7 +226,7 @@ composer init
 
 This will initialise a new Composer project in your plugin directory. You can accept the defaults for most of the questions, but when it asks you to define your dependencies (require) interactively and define your dev dependencies (require-dev) interactively?, you should answer no. You can also skip the PSR-4 autoload mapping.
 
-Once this is done, you will have a package.json file, which is the file Composer uses to manage your project dependencies.
+Once this is done, you will have a `composer.json` file, which is the file Composer uses to manage your project dependencies.
 
 Next, you will need to install a Composer plugin to manage the installed_paths setting for PHP_CodeSniffer by running the following from the command. If you already have this plugin installed, you can ignore this.
 
@@ -204,8 +237,8 @@ composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer tru
 Then you can install the Composer installer plugin, and the PHPCompatibilityWP tool by running the following commands:
 
 ```bash
-composer require --dev dealerdirect/phpcodesniffer-composer-installer:"^0.7" 
-composer require --dev phpcompatibility/phpcompatibility-wp:"*"
+composer require --dev dealerdirect/phpcodesniffer-composer-installer:"^1.0" 
+composer require --dev phpcompatibility/phpcompatibility-wp:"^2.1 || ^3.0"
 ```
 
 This will both setup and install the required dependencies in your package.json file.
@@ -255,7 +288,7 @@ composer require --dev phpcompatibility/php-compatibility:"dev-develop as 9.99.9
 
 These commands will alias the `develop` branch of PHPCompatibility to a 9.x version which is within the allowed range for PHPCompatibility.
 
-Once PHPCompatibility 10 is out, it should be possible to update the PHPCompatibilityWP version constraint from "*" to "^3.0", which will depend on version 10 of PHPCompatibility.
+Once PHPCompatibility 10 is out, it should be possible to update the PHPCompatibilityWP version constraint to "^3.0", which will depend on version 10 of PHPCompatibility.
 
 #### Considerations
 
@@ -265,6 +298,6 @@ For example, one of the other changes from PHP 7.4 to PHP 8.0 is the removal of 
 
 However, the PHPCompatibilityWP tool doesn't know if the variable you're passing to `array_key_exists()` is an array or an object, so it can't warn you about this.
 
-This is where automating your manual tests would come in handy, as the if you ran the tests in a new PHP environment, the tests would fail, altering you to a possible problem. And with logging enabled, you'd see the error logged to the log file. 
+This is where automating your manual tests would come in handy. When you run the tests in a new PHP environment, the tests would fail, altering you to a possible problem. And with logging enabled, you'd see the error logged to the log file. 
 
 Ultimately combining a tool like PHPCompatibility with automated testing and the manual testing process we've discussed, will allow you to ensure that your plugin is compatible with current and future versions of PHP.

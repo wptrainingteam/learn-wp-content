@@ -1,14 +1,15 @@
 # Common APIs - Internationalization
 
+Internationalization is the process of developing your application in a way that can easily be translated into other languages, which is known as localization. In this tutorial, you will learn why Internationalization is important, and how to implement it in your WordPress plugin or theme.
+
 ## Learning Objectives
 
 Upon completion of this lesson the participant will be able to:
 
-1. Explain what Internationalization is
-2. Explain what Internationalization is not
-3. Explain why Internationalization is important
-4. Use the WordPress i18n functions to internationalize their code
-5. Test their Internationalization functions
+Explain what Internationalization is
+Explain why Internationalization is important 
+Use WordPress i18n functions to internationalize your code
+Test your Internationalization implementation
 
 ## Outline
 
@@ -219,6 +220,15 @@ wp i18n make-pot path/to/your/plugin/or/theme
 ```
 
 This will scan the code in your plugin or theme, find any translatable strings, and place them in the POT file. 
+
+## Internationalization Guidelines
+
+It is important to follow best practices when internationalizing your code.
+
+Under Internationalization in the Common APIs section of the WordPress Developer Resources there is a page on [Internationalization Guidelines](https://developer.wordpress.org/apis/internationalization/internationalization-guidelines/), which is good to be familar with.
+
+Additionally, if you plan to submit a theme to the WordPress theme directory, you should read the section on [Language & internationalization](https://make.wordpress.org/themes/handbook/review/required/#8-language-internationalization) in the theme review handbook. 
+
 
 ## Conclusion
 

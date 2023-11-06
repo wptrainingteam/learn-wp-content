@@ -6,22 +6,18 @@ Now that you have your `Edit` component fully functional, it's time to implement
 
 The code in the `save` function is usually a lot simpler than the code in the `Edit` function, because you don't need to worry about user interactions, or updating any data of the block. The primary goal of the `save` function is to return the final output of the block to be saved in the database.
 
-## Adding the RichText component
+## Removing the RichText component
 
 Before we do that though, in the last module there was a [Block Attributes lesson](https://learn.wordpress.org/lesson/block-attributes/), in which you could optionally add a `RichText` component to your block, to make the paragraph text at the top of the block editable. 
 
-If you haven't yet added that code to your block, you can do it now.
+If you added that code to your block, now would be a good idea to remove it.
 
-In the `block.json` file, add the `content` attribute to the `attributes` object:
+[NOTE] If you didn't add this code, you can skip this step.
+
+In the `block.json` file, remove the `content` attribute from the `attributes` object, so only showContent and showImage remain:
 
 ```json
 	"attributes": {
-	"content": {
-		"type": "string",
-			"source": "html",
-			"selector": "p",
-			"default": "My Reading List"
-	},
 	"showContent": {
 		"type": "boolean",
 			"default": true
@@ -31,31 +27,25 @@ In the `block.json` file, add the `content` attribute to the `attributes` object
 			"default": true
 	}
   },
-````
-
-In the `Edit` component, update the imports from the `@wordpress/block-editor` package to include the `RichText` component.
-
-```js
-import { useBlockProps, RichText, InspectorControls } from '@wordpress/block-editor';
 ```
 
-Then, finally, remove the `<p>` tag and replace it with the `RichText` component implementation. 
+In the `Edit` component, remove the RichText import from the `@wordpress/block-editor` package, so only useBlockProps and InspectorControls remain.
 
 ```js
-<RichText tagName="p" value={ attributes.content } onChange={ ( content ) => setAttributes( { content } ) } />
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 ```
 
-If you want a reminder of what this code does, go back and review the [Block Attributes lesson](https://learn.wordpress.org/lesson/block-attributes/) from the previous module.
+Then, finally, remove the  `RichText` component from the Edit component and replace it with the original `p` tag. 
+
+```js
+<p>{__( 'My Reading List – hello from the editor!', 'my-reading-list') }</p>
+```
 
 ## Implementing the save function
 
-First, as you've added the `RichText` component to your block, you need to update the `save` to import `RichText` from the `@wordpress/block-editor` package.
+Because the `save` function is merely returning the output of the block, you don't need to re-run the `getEntityRecords` selector using the `useSelect` hook. 
 
-```js
-import { useBlockProps, RichText } from '@wordpress/block-editor';
-```
-
-Because the `save` function is merely returning the output, you don't need to re-run the `getEntityRecords` selector using the `useSelect` hook. Instead, you can just use the `select` function on the `core` store, and fetch the books that are already in the store.
+Instead, you can just use the `select` function on the `core` store, and fetch the books that are already in the store.
 
 So next, you can import the `select` function from the `@wordpress/data` package.
 
@@ -88,7 +78,7 @@ Finally, update the `return` statement to return the markup for the block.
 ```js
     return (
         <div {...useBlockProps.save()}>
-            <RichText.Content tagName="p" value={ attributes.content } />
+			<p>{__( 'My Reading List – hello from the saved content!', 'my-reading-list' )}</p>
             <BookList books={books} attributes={attributes} />
         </div>
     );
@@ -97,10 +87,7 @@ Finally, update the `return` statement to return the markup for the block.
 You'll notice there are a few differences between the return in the `Edit` component and the `save` function.
 
 1. Instead of `useBlockProps()` you use `useBlockProps.save()`. This will return the subset of the block attributes needed for the `save` function.
-2. Instead of `RichText` you use `RichText.Content` and you don't need any `onChange` handler. Again, this is because you only need to save the content of the `RichText` component.
-3. There are no `InspectorControls`, because those are only needed in the editor.
-
-[Note] This is the main reason the `Edit` component is referred to as a component, vs the `save` function. A component does more than just return markup, whereas a function just returns markup. It's a small but important distinction.
+2. There are no `InspectorControls`, because those are only needed in the editor.
 
 Your updated save function should look like this:
 
@@ -111,7 +98,7 @@ Your updated save function should look like this:
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 import { select } from '@wordpress/data';
 
 import BookList from './components/BookList';
@@ -129,12 +116,12 @@ export default function save( { attributes } ) {
 
 	const books = select( 'core' ).getEntityRecords( 'postType', 'book' );
 
-    return (
-        <div {...useBlockProps.save()}>
-            <RichText.Content tagName="p" value={ attributes.content } />
-            <BookList books={books} attributes={attributes} />
-        </div>
-    );
+	return (
+		<div {...useBlockProps.save()}>
+			<p>{__( 'My Reading List – hello from the saved content!', 'my-reading-list' )}</p>
+			<BookList books={books} attributes={attributes} />
+		</div>
+	);
 }
 ```
 
@@ -362,11 +349,76 @@ npm run build
 
 Congratulations! You've successfully completed the My Reading List block.
 
-# Streamlining dynamic blocks
+# Dynamic blocks
 
-- the other reason this block should be dymanic
-- return null in the index.js file
-- InnerBlocks content
+There's another reason why this block makes more sense as a dynamic block and not a static block, and it's related to how blocks work.
+
+Before you converted the block save function to return null, and implemented the render_callback function, if you had added the block to a post or page, saved the page, and then refreshed it, while you had Dev Tools open, you might have seen this error.
+
+[Block error](/images/save-error-01.png)
+
+Take a look at the top of the error being reported:
+
+```
+Content generated by `save` function:
+
+<div class="wp-block-my-reading-list-reading-list-block"><p>My Reading List</p></div>
+
+Content retrieved from post body:
+
+<div class="wp-block-my-reading-list-reading-list-block"><p>My Reading List</p><div><h2>Make It Stick</h2><img src="https://learnpress.test/wp-content/uploads/2023/09/41AwfdbjUGL._SL500_-300x300.jpg"/><div>
+<p><strong>The Science of Successful Learning</strong></p>
+```
+
+Why does this happen?
+
+If you remember when you implemented the book data into the `Edit` component using the `@wordpress/core-data` package, you used the `useSelect` hook when fetching the books from the database. In that lesson, it was explained that:
+
+> `useSelect` will ensure that the `getEntityRecords` selector is re-run when the data is available in the store.
+> This is because the data is fetched asynchronously, and you want to make sure the block content is rendered when the data is available.
+
+When the editor loads with a block already added to the editor, the block editor compares the markup returned by the save function against what's stored in the database. This means every time a block loads in the editor, it runs the save function to compare that markup. If the markup is different, the block is marked as invalid, and you see the error in the editor.
+
+In this case, because you're using the `useSelect` hook to re-run the `getEntityRecords` selector once the data is available in the store in the `Edit` component, those books are not available in the store only when block validation check is done. 
+
+There are ways you could rewrite the code to allow the books to be available in the store when the block validation check is done, but in this case it just makes more sense to convert this to a dynamic block.
+
+## Streamlining the current save function
+
+Before you do that though, there's one more thing you can do to streamline the current save function. Currently your save looks like this 
+
+```js
+export default function save() {
+	return null;
+}
+```
+
+However, you can remove the `save.js` file altogether, and just return `null` for the save property of the `registerBlockType` call in the `index.js` file.
+
+```js
+/**
+ * Every block starts by registering a new block type definition.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+registerBlockType(metadata.name, {
+	/**
+	 * @see ./edit.js
+	 */
+	edit: Edit,
+
+	/**
+	 * @see ./save.js
+	 */
+	save: () => {
+		return null;
+	},
+});
+```
+
+The only time you would not retun null for the save property, is if you wanted to use [InnerBlocks](https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/nested-blocks-inner-blocks/). InnerBlocks is a component that allows you to next blocks inside other blocks. This is great if you wanted to use pre-existing blocks (like the RichText block), to add functionality to your custom block.
+
+[NOTE] Diving into InnerBlocks is outside the scope of this course, but there's another "introduction to block development" course on Learn WordPress that covers the use of InnerBlocks, if you're interested.
 
 # Diving into the render_callback
 

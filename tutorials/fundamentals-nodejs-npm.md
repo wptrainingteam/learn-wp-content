@@ -83,13 +83,19 @@ Once nvm is installed, use the nvm install command to install the required Nodej
 
 ## NVM usage
 
-To install Node.js and npm, use the nvm install command with the version number you want to install. At the time of this tutorial, the current stable version of Node.js is version 18.
+To install Node.js and npm, use the nvm install command with the version number you want to install. At the time of this tutorial, the current stable LTS (long term support) version of Node.js is version 18.
 
 ```bash
 nvm install 18
 ```
 
-You can also run nvm list to see which versions of Node.js are installed.
+It is also possible to install the latest LTS version by running the following command.
+
+```bash
+nvm install --lts
+```
+
+You can then run nvm list to see which versions of Node.js are installed.
 
 ```bash
 nvm list
@@ -103,7 +109,13 @@ nvm use 18
 
 This will set the version of node.js for the current terminal instance to version 18. 
 
-You can also set the default version of node.js and npm to use by running the nvm alias command.
+Additionally, it's possible to run the npm use command with the LTS option.
+
+```bash
+nvm use --lts
+```
+
+Finally, if you do have more than one version of node.js and npm installed, you can set the default version to use by running the nvm alias command.
 
 ```bash
 nvm alias default 18
