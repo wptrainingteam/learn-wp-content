@@ -238,10 +238,30 @@ Then you can install the Composer installer plugin, and the PHPCompatibilityWP t
 
 ```bash
 composer require --dev dealerdirect/phpcodesniffer-composer-installer:"^1.0" 
-composer require --dev phpcompatibility/phpcompatibility-wp:"^2.1 || ^3.0"
+composer require --dev phpcompatibility/phpcompatibility-wp:"*"
 ```
 
 This will both setup and install the required dependencies in your package.json file.
+
+### A note on PHPCompatibility and PHPCompatibilityWP versions.
+
+Currently, the stable release of PHPCompatibility is [9.3.5](https://github.com/PHPCompatibility/PHPCompatibility/releases/tag/9.3.5), and the most recent sniffs [are part of the upcoming version 10.0.0. release](https://github.com/PHPCompatibility/PHPCompatibility/issues/1236#issuecomment-708443602). The current stable version of PHPCompatibilityWP is [2.1.4](https://github.com/PHPCompatibility/PHPCompatibilityWP/releases/tag/2.1.4)
+
+When version 10.0 of PHPCompatibility is released, version 3.0 of PHPCompatibilityWP will be released, which will depend on PHPCompatibility version 10.0.
+
+In the meantime, it is possible to install the dev-develop branch of PHPCompatibility to run PHPCS with the cutting-edge additions of PHP 8 sniffs before their release in version 10.0.0 of PHPCompatibility as detailed in this [WordPress VIP documentation](https://docs.wpvip.com/technical-references/php/version-updates/phpcs-scans/#Upcoming-releases-of-PHPCompatibility).
+
+To do this, run the following commands to alias the dev-develop branch of PHPCompatibility:
+
+```bash
+composer config minimum-stability dev
+composer require --dev phpcompatibility/phpcompatibility-wp:"^2.1"
+composer require --dev phpcompatibility/php-compatibility:"dev-develop as 9.99.99"
+```
+
+These commands will alias the `develop` branch of PHPCompatibility to a 9.x version which is within the allowed range for PHPCompatibility, and set PHPCompatibilityWP to install the latest stable 2.1 version.
+
+Once PHPCompatibility 10 and PHPCompatibilityWP 3 are released, it should be possible to update the PHPCompatibilityWP version constraint to "^3.0", which will depend on version 10 of PHPCompatibility.
 
 With all this installed, you can run the PHPCompatibility tool on your plugin file. 
 
@@ -271,24 +291,6 @@ Time: 33ms; Memory: 8MB
 Notice how the same error is reported as the manual method, but this time it's a lot more specific. It tells us exactly what line the error is on, and what the error is.
 
 So now we can fix the class constructor error.
-
-### A note on PHPCompatibility versions.
-
-At this time, the stable release of PHPCompatibility, which PHPCompatibilityWP uses, is [9.3.5](https://github.com/PHPCompatibility/PHPCompatibility/releases/tag/9.3.5), and the most recent sniffs [are part of the upcoming version 10.0.0. release](https://github.com/PHPCompatibility/PHPCompatibility/issues/1236#issuecomment-708443602).
-
-Fortunately, it is possible to install the dev-develop branch of PHPCompatibility to run PHPCS with the cutting-edge additions of PHP 8 sniffs before their release in version 10.0.0 of PHPCompatibility as detailed in this [WordPress VIP documentation](https://docs.wpvip.com/technical-references/php/version-updates/phpcs-scans/#Upcoming-releases-of-PHPCompatibility).
-
-Inside your project directory, run the following commands to alias the dev-develop branch of PHPCompatibility:
-
-```bash
-composer config minimum-stability dev
-composer require --dev phpcompatibility/phpcompatibility-wp
-composer require --dev phpcompatibility/php-compatibility:"dev-develop as 9.99.99"
-```
-
-These commands will alias the `develop` branch of PHPCompatibility to a 9.x version which is within the allowed range for PHPCompatibility.
-
-Once PHPCompatibility 10 is out, it should be possible to update the PHPCompatibilityWP version constraint to "^3.0", which will depend on version 10 of PHPCompatibility.
 
 #### Considerations
 
