@@ -27,7 +27,7 @@ Hey there, and welcome to Learn WordPress.
 
 In this tutorial, you're going to learn about testing your WordPress products for PHP version compatibility.
 
-You will learn why it's important to test for PHP version compatibility, where to find information about PHP version changes, as well as two methods to test your plugins and themes for PHP version compatibility.
+You will learn why it's important to test for PHP version compatibility, where to find information about PHP version changes, as well as two methods to test your plugins and themes against newer PHP versions.
 
 ## Why test for PHP version compatibility?
 
@@ -35,23 +35,21 @@ WordPress is written in PHP, and as such, it needs to be able to run on at least
 
 For example, the current minimum recommended PHP version to run WordPress is 7.4, which reached end of life status on the 28th November 2022
 
-WordPress core itself is considered compatible (with select explicit exceptions) with PHP 8.0 and PHP 8.1 and beta-compatible with PHP 8.2 and the upcoming PHP 8.3 release. However, they cannot guarantee that all plugins will be compatible with current or future versions of PHP.
+WordPress core itself is considered compatible (with select explicit exceptions) with PHP 8.0 and PHP 8.1 and beta-compatible with PHP 8.2 and the PHP 8.3 release. However, they cannot guarantee that all plugins will be compatible with current or future versions of PHP.
 
 As a plugin developer, it's therefore important to have a process in place to test your plugins for PHP version compatibility.
 
 ## Where to find information on PHP version changes
 
-In order to know when and how PHP versions are going to change, it's a good idea to refer to the official PHP website at https://www.php.net/. 
+In order to know when and how PHP versions are going to change, it's a good idea to refer to the official PHP website at https://www.php.net/.
 
 On the [Supported Versions](https://www.php.net/supported-versions.php) page, you can find information about which versions are currently supported, at what level of support, and which versions are end of life.
 
-At the time of this recording, all PHP 7.x versions are end of life, PHP 8.0 is supported for security fixes only, and PHP 8.1 and PHP 8.2 are actively supported, meaning bug and security flaws will be fixed. Note that PHP 8.0 will only be supported for security fixes till November 2023, which is around the time PHP 8.4 will be released, and then PHP 8.0 will be considered end of life. 
+At the time of this recording, all PHP 7.x versions are end of life, PHP 8.0 is supported for security fixes only, and PHP 8.1 and PHP 8.2 and 8.3 are actively supported, meaning bug and security flaws will be fixed. Note that PHP 8.0 will only be supported for security fixes till November 2023, which is around the time PHP 8.3 will be released, and then PHP 8.0 will be considered end of life. 
 
-In the Appendices section of the PHP documentation you can find the guides on migrating from older PHP versions, which list the most important changes between the old version and the new one. For example, the [Migrating from PHP 7.4.x to PHP 8.0.x](https://www.php.net/manual/en/migration80.php) guide lists all the changes between PHP 7.4 and PHP 8.0.
+In the Appendices section of the PHP documentation you can find the guides on migrating from older PHP versions, which list the most important changes between the old version and the new one. For example, the [Migrating from PHP 7.4.x to PHP 8.0.x](https://www.php.net/manual/en/migration80.php) guide lists the most important changes between PHP 7.4 and PHP 8.0.
 
 ## Example plugin
-
-For the purposes of this tutorial, let's imagine you've developed a simple plugin. 
 
 ```php
 <?php
@@ -118,13 +116,15 @@ function wp_learn_php_compatibility_shortcode_render() {
 
 ```
 
+For the purposes of this tutorial, look at an example plugin.
+
 The plugin registers a shortcode, which fetches a list of posts and displays the post title of each post whenever the shortcode is used. The post_fetcher class handles the fetching of the posts.
 
 Testing the shortcode on a page, you can see that it works as expected when running PHP 7.4.
 
 ## How to test for PHP version compatibility
 
-There are a few ways to test for PHP version compatibility, which require different combinations of newer PHP versions and installation of various tools. For the purposes of this tutorial, we will look at three possible methods, each with their own pros and cons.
+There are a few ways to test for PHP version compatibility, which require different combinations of newer PHP versions and installation of various tools. For the purposes of this tutorial, we will look at two possible methods, each with their own pros and cons.
 
 ### Manual compatibility testing
 
@@ -132,7 +132,7 @@ The manual method involves you setting up a WordPress environment with the PHP v
 
 Setting up this environment can be done in a few ways, but the most common option would be to use a local development environment that supports changing PHP version, such as Mamp, Laragon, LocalWP, and DevKinsta.
 
-For the purposes of this example we'll test on PHP 8.0. 
+For the purposes of this example we'll test on PHP 8.1. 
 
 A quick way to check that you're on the right version, is you create an info.php file in the root of your WordPress install, and use the following code:
 
@@ -169,10 +169,10 @@ Then, test your plugin, by refreshing the page. Notice that the shortcode functi
 If you look at the debug.log, you'll see the following error displayed:
     
 ```
-[16-May-2023 12:07:35 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/ubuntu/wp-local-env/sites/learnpress/wp-content/plugins/wp-learn-php8/wp-learn-php8.php on line 21
+[24-Nov-2023 12:59:49 UTC] PHP Warning:  foreach() argument must be of type array|object, null given in /home/ubuntu/wp-local-env/sites/learnpress/wp-content/plugins/wp-learn-php-compatibility/wp-learn-php-compatibility.php on line 36
 ```
 
-Now, if you go to line 21 of the plugin file, you'll see the following code, you'll see that it's trying to loop through the `$this->posts` property, which is null for some reason. The reason might not be immediately obvious, so you might have to dig into the [Migrating from PHP 7.4.x to PHP 8.0.x](https://www.php.net/manual/en/migration80.php) guide.
+Now, if you go to line 36 of the plugin file, you'll see the following code, you'll see that it's trying to loop through the `$this->posts` property, which is null for some reason. The reason might not be immediately obvious, so you might have to dig into the [Migrating from PHP 7.4.x to PHP 8.0.x](https://www.php.net/manual/en/migration80.php) guide.
 
 In the Backward Incompatible Changes section, you see the following change:
 
@@ -241,7 +241,7 @@ composer require --dev dealerdirect/phpcodesniffer-composer-installer:"^1.0"
 composer require --dev phpcompatibility/phpcompatibility-wp:"*"
 ```
 
-This will both setup and install the required dependencies in your package.json file.
+This will both setup and install the required dependencies in your composer.json file.
 
 ### A note on PHPCompatibility and PHPCompatibilityWP versions.
 
@@ -263,9 +263,9 @@ These commands will alias the `develop` branch of PHPCompatibility to a 9.x vers
 
 Once PHPCompatibility 10 and PHPCompatibilityWP 3 are released, it should be possible to update the PHPCompatibilityWP version constraint to "^3.0", which will depend on version 10 of PHPCompatibility.
 
-With all this installed, you can run the PHPCompatibility tool on your plugin file. 
+With all this installed, you can run the PHPCompatibilityWP tool on your plugin file. 
 
-The recommended way to do this is run PHPCompatibility against a specific base version of PHP. In this example you can run it against version 7.4 of PHP and above by setting the `testVersion` runtime variable to `7.4-`.
+The recommended way to do this is run PHPCompatibilityWP against a specific base version of PHP. In this example you can run it against version 7.4 of PHP and above by setting the `testVersion` runtime variable to `7.4-`.
 
 ```bash
 ./vendor/bin/phpcs --runtime-set testVersion 7.4- -p wp-learn-php-compatibility.php --standard=PHPCompatibilityWP
