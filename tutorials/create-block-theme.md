@@ -1,6 +1,7 @@
 # Create Block Theme Improvements
 
 # Learning Objectives
+Describe the improvements that have been made to Create Block Theme for WordPress 6.3 and 6.4
 
 ## Outline
 1. Introduction
