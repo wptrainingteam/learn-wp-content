@@ -36,7 +36,7 @@ if ( isset( $_GET['color'] ) ) {
 
 In this example:
 1. The PHP code at the top of the file is been wrapped in PHP tags.
-2. A variable called `$color` has been created, which stores the value of the `color` query string parameter, if it exists, or the value `red` if it doesn't.
+2. A variable called `$color` has been created, which stores the value of the `color` query string parameter from the `$_GET` global array, if it exists, or the value `red` if it doesn't.
 3. The value of the `$color` variable has been added to the `style` attribute of the heading element.
 4. A link has been added to the document which changes the value of the `color` query string parameter to `blue`.
 

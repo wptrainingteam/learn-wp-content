@@ -102,7 +102,9 @@ For example, you can target the `class` attribute of the body element, and add a
 
 CSS can do a lot more than just change the color and font size of elements. It can be used to create complex layouts, animations, and more.
 
-Like HTML, CSS is used all across a WordPress site. The dashboard has its own set core set of CSS to control its look and feel, and everything theme will ship with a custom set of CSS to style the theme elements. Plugins that add content to the front end of a site will also use CSS to style that content.
+Like HTML, CSS is used all across a WordPress site. The dashboard has its own set core set of CSS to control its look and feel, and everything theme will ship with a custom set of CSS to style the theme elements. Plugins that add content to the front end of a site will also use CSS to style that content. 
+
+WordPress also allows you the flexibility to add your own custom CSS, or to use external CSS frameworks, such as Bootstrap or Tailwind.
 
 ## Where to find more information about CSS
 To learn more about CSS, check out the following resources:

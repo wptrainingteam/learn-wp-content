@@ -73,7 +73,7 @@ button.addEventListener('click', () => {
 
 JavaScript is used in quite a number of places across a WordPress site. One of the biggest uses of JavaScript is in the new block editor, which is powered by a JavaScript framework called React. 
 
-There are also a number of external JavaScript libraries that are used in WordPress, which you can find listed at the bottom of the credits page in the WordPress dashboard.
+There are also a number of external JavaScript libraries that are used in WordPress, which you can find listed at the bottom of the credits page in the WordPress dashboard. Additionally, like with CSS, WordPress allow you the flexibility to add custom JavaScript or external JavaScript libraries to your plugins and themes.
 
 ## Where to find more information about JavaScript
 To learn more about JavaScript, check out the following resources:
