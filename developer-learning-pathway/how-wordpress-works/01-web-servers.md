@@ -1,5 +1,18 @@
 # WordPress and Web servers
 
+## Introduction
+
+Welcome to the introduction to WordPress and Web Servers. 
+
+If you want to develop custom WordPress sites, plugins or themes, it's important to understand how WordPress works under the hood. 
+
+One of the first things you should learn about is how WordPress and web servers work together.
+
+In this lesson, you'll learn the basics of web servers, and how they power your WordPress sites.
+
+
+## What is a web server
+
 At the most basic level, WordPress is a web application that runs on a web server. But what makes up a web server, and what makes it possible for the web server to run WordPress?
 
 A web server is computer that is connected to the internet and is configured to serve web pages. Web servers come in all shapes, sizes and configurations, but ultimately they are all just computers, just like the one you use every day to work on.
@@ -22,7 +35,7 @@ MySQL is a database software that is used to store information about the site on
 
 PHP is a programming language that is used to create dynamic web pages. PHP is a server side language, which means that it is executed on the web server, and the results are sent to the browser. In the online store example above, PHP is used to fetch the product information from the MySQL database and display it on the web page in the browser.
 
-# Apache/Nginx configuration
+## Apache/Nginx configuration
 
 When you install Apache or Nginx on a server, there are some files that you can configure to change the way that the web server works. Generally this configuration is done by a server system administrator. However, it's useful to understand one specific configuration set, and that's the configuration that allows a single instance of a web server to serve content for multiple websites.
 
@@ -50,7 +63,7 @@ server {
 
 In both examples, the web server is configured to listen for requests on port 80, which is the default port for HTTP requests. When the server receives a request for the domain www.example.com, it will serve the files that are located in the directory `/www/example1`.
 
-# Directory Index
+## Directory Index
 
 By default, the web server is configured to look for a Directory Index file. If it finds one, it will serve that file. If it doesn't find one, it will return a 404 error. The default Directory Index file is usually `index.html`.
 
@@ -72,7 +85,7 @@ Most LAMP or LEMP web servers will have this configuration set up by default.
 
 So in the above examples, with the Directory Index set, when you visit www.example.com in your browser, the web server will look for the `index.php` Directory Index file in the `/www/example1` directory and execute that file. If no `index.php` is found, it will look for a serve an `index.html` file. If no `index.html` file is found, it will return a 404 "Not found" error.
 
-# WordPress request flow
+## WordPress request flow
 
 When a user visits a URL on a WordPress site, the following happens:
 

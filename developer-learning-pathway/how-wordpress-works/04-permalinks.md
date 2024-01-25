@@ -1,8 +1,16 @@
 # Permalinks - rewriting dynamic URLS
 
-In the Web Servers lesson, you learned that most PHP based applications will have a Directory Index file. This is the file that will be executed when a user browses to the URL of the site in question.
+In this lesson, you'll learn about a concept called Permalinks, and how they are used to rewrite dynamic URLs in a WordPress site.
 
-With a site powered by WordPress however, it's possible to have multiple different types of content rendered, like posts, pages, or products, all via the same Directory Index file. The key behind how this works is a feature called Permalinks.
+## Introduction
+
+In the web servers lesson, you learned that most PHP based applications, including WordPress, will have a Directory Index file. 
+
+This is the file that will be executed when a user browses to the URL of the site in question.
+
+With a site powered by WordPress however, it's possible to have multiple different types of content rendered, like posts, pages, or products, all via the same Directory Index file. 
+
+The key behind how this works is a feature called Permalinks.
 
 ## Query String Variables
 

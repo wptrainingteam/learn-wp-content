@@ -1,5 +1,7 @@
 # The WordPress Database
 
+## Introduction
+
 WordPress uses a database to store, retrieve, and display all the content that you create on your website. This includes posts, pages, comments, and more.
 
 The database is also used to store information about your website's users, and various site options that power your site.
@@ -115,3 +117,7 @@ The [Options API](https://developer.wordpress.org/apis/options/) is typically us
 The `wp_links` table stores information about your website's links. Links was a feature that was [removed from WordPress in version 3.5](https://core.trac.wordpress.org/ticket/21307).
 
 However, because it is still possible to renable this functionality using [the Links Manager plugin](https://wordpress.org/plugins/link-manager/), the table has remained for backwards compatibility. 
+
+## Conclusion
+
+Being able to correctly identify and interact with the tables in a WordPress database is an extremely useful skill, and will help you to better understand how WordPress works when you are developing with WordPress.

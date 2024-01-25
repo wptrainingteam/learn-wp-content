@@ -1,6 +1,14 @@
 # WordPress Admin page request
 
-The functionality of the WordPress administration interface is handled by the files in the `wp-admin` directory. Unlike the typical front end request, different PHP files are executed depending on the functionality being used. Additionally, permalinks are not used in the dashboard, and instead query strings are used to pass data to these locations.
+## Introduction
+
+The functionality of the WordPress administration interface is handled by all the files in the `wp-admin` directory.
+
+Let's dive a bit deeper into the code that runs on a typical WordPress admin request, and understand how it differs from a front end request.
+
+## What is an admin request?
+
+Unlike the typical front end request, different PHP files are executed depending on the functionality being used. Additionally, permalinks are not used in the dashboard, and instead query strings are used to pass data to these locations.
 
 For example, the default URL of the admin dashboard is `https://example.com/wp-admin/`
 

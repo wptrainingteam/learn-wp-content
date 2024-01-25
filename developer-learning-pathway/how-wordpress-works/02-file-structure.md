@@ -1,8 +1,16 @@
 # The WordPress file structure
 
-Like most software applications, WordPress is made up of a collection of files organised into a specific structure. Because WordPress is open source, when you download the archive of the latest version of WordPress, you're able to see and inspect all the files.
+## Introduction
+
+Welcome to this lesson on the WordPress file structure.
+
+Like most software applications, WordPress is made up of a collection of files organised into a specific structure. 
+
+Because WordPress is open source, when you download the archive of the latest version of WordPress, you're able to see and inspect all the files.
 
 Let's explore the root directory of a WordPress installation in Visual Studio Code, a free and open source code editor.
+
+## The root directory
 
 The root directory of a WordPress site contains a series of files, as well as three directories.
 

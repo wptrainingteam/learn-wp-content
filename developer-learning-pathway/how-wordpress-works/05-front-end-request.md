@@ -1,6 +1,10 @@
 # WordPress Front End Request
 
-Let's dive a bit deeper into the code that runs on a typical WordPress front end request.
+## Introduction
+
+There are two types of requests that can be made to a WordPress site, a front end request, and an admin request. Let's dive a bit deeper into the code that runs on a typical WordPress front end request.
+
+### What is a front end request?
 
 Except for specific requests (like the ones we looked at in the File structure lesson), any requests for content on a WordPress site (also known as the WordPres front end)  is handled by the `index.php` file in the root directory.
 
