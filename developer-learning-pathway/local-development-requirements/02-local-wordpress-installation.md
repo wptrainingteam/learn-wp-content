@@ -14,15 +14,17 @@ While knowing how to install WordPress manually is not an essential skill, it is
 
 Before you can install WordPress, you will need to know the following details about your local development environment.
 
-- The location of the document root or web root folder. This is the folder that your local development environment uses to serve files to the web browser.
+- The location of the document root or web root folder. This is the folder that your local development environment uses to serve files to the web browser. 
 - The database details. This includes the database server name database name, the database username, and the database password. On local development environments the database server name is usually `localhost`, and the database username is usually `root`. The database password is either blank or `password`. You may need to create a new database for your WordPress site.
-- The URL of your local site. This is the URL that you will use to access your local site in a web browser. This is usually something like `http://localhost/`.
+- The URL of your local site. This is the URL that you will use to access your local site in a web browser. 
 
-It's a good idea to refer to the documentation for your local development environment to find out where to find this information.
+It's a good idea to refer to the documentation for your local development environment to find out this information.
 
 ## Downloading WordPress
 
-The first step is to download the WordPress core files. You can do this from the [Get WordPress](https://wordpress.org/download/) page on the WordPress.org website. Click on the "Download WordPress" button to download the latest version of WordPress, which is available as a zip file.
+The first step is to download the WordPress core files. You can do this from the [Get WordPress](https://wordpress.org/download/) page on the WordPress.org website. 
+
+Click on the "Download WordPress" button to download the latest version of WordPress, which is available as a zip file.
 
 Depending on your browser, you may be prompted to save the file, or it may be downloaded automatically. It may also default to being saved in your Downloads folder, or a custom folder if you have set one up.
 

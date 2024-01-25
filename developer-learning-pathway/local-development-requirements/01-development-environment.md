@@ -28,7 +28,7 @@ In the WordPress space, there are typically two types of local development envir
 
 [VVV or Varying Vagrant Vagrants](https://varyingvagrantvagrants.org/) is another local development environment maintained by members of the WordPress community. It also requires a working knowledge of the command line, and an installation of [VirtualBox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/).
 
-Another free and open source option is [XAMPP](https://www.apachefriends.org/). XAMPP is a local development environment that is maintained by Apache Friends, a non-profit project created to promote the Apache web server. While not specifically a WordPress local development environment, it includes everything you need, the Apache web server, a MySQL database server, and PHP.
+Another free and open source option is [XAMPP](https://www.apachefriends.org/). XAMPP is a local development environment that is maintained by Apache Friends, a non-profit project created to promote the Apache web server. While not specifically a WordPress local development environment, it includes everything you need, the Apache web server, a database server, and PHP.
 
 Like XAMPP, [MAMP](https://www.mamp.info/en) is another local development environment that is not specifically designed for WordPress, but it includes everything you need to get started. Unlike XAMPP, MAMP is not open source, and is available in both a free and a paid version.
 
