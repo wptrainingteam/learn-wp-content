@@ -1,14 +1,14 @@
-# Local WordPress installation
+# WordPress installation
 
 ## Introduction
 
-Once you have decided on a local development environment, you will need to install the WordPress core files, to set up a working WordPress site.
+Once you have decided on a local development environment, you will need to install the WordPress core files, to set up a working WordPress site on your computer.
 
 Tools like LocalWP, DevKinsta, and VVV all include a way to automatically create a new local site, and install WordPress for you. To do this, you will need to check the documentation for your chosen tool, and you can skip this lesson.
 
 However, if you decide to use something like MAMP or XAMPP, you will need to install WordPress yourself, which you will learn in this lesson.
 
-While knowing how to install WordPress manually is not an essential skill, it is a good idea to understand the process.
+While knowing how to install WordPress manually is not an essential skill, it is a good idea to understand the process if you ever need to do it.
 
 ## Requirements
 
@@ -28,7 +28,7 @@ Click on the "Download WordPress" button to download the latest version of WordP
 
 Depending on your browser, you may be prompted to save the file, or it may be downloaded automatically. It may also default to being saved in your Downloads folder, or a custom folder if you have set one up.
 
-If you're on a Mac using Safari, the zip file may be automatically extracted for you. If not, you will need to extract the files from the zip manually. Either way, you should now have a folder called `wordpress` on your computer.
+If you're on a Mac using Safari, the zip file may be automatically extracted for you. If not, you will need to extract the files from the zip manually. Either way, you should end up with a folder called `wordpress` on your computer.
 
 If you open that folder, you'll see the core WordPress files. 
 
@@ -70,5 +70,7 @@ You will now be presented with a screen that confirms the installation is comple
 
 ## Conclusion
 
-Congratulations, you've successfully installed WordPress on your local development environment.
+Congratulations, you've successfully installed WordPress on your local development environment. 
+
+For more information on this process you can refer to the [How to install WordPress](https://developer.wordpress.org/advanced-administration/before-install/howto-install/) section in the developer documentation on WordPress.org.
 

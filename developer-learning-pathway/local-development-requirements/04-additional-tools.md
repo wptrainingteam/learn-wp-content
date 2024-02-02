@@ -1,4 +1,4 @@
-# Other development tools
+# Other useful development tools
 
 While a local development environment and a code editor are the foundational pieces of developing for WordPress, there are other community tools and resources that you may find useful.
 
@@ -13,6 +13,6 @@ There are also a number of plugins that can help with debugging your code. These
 - [Debug Bar](https://wordpress.org/plugins/debug-bar/) which adds a debug menu to the admin bar that shows query, cache, and other helpful debugging information.
 - [Query Monitor](https://wordpress.org/plugins/query-monitor/) which enables debugging of database queries, PHP errors, hooks and actions, block editor blocks, enqueued scripts and stylesheets, HTTP API calls, and more..
 
-There is also [Log Deprecated Notices](https://wordpress.org/plugins/log-deprecated-notices/) which logs incorrect function usage, deprecated file usage, and deprecated function usage in your theme.
+There is also [Log Deprecated Notices](https://wordpress.org/plugins/log-deprecated-notices/) which logs incorrect function usage, deprecated file usage, and deprecated function usage in your plugin or theme.
 
 You will learn more about each of these tools in future lessons.

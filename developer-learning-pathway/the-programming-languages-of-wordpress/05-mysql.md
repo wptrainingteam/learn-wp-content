@@ -34,6 +34,8 @@ CREATE TABLE colors (
 )
 ```
 
+This will create the colors table, with the relevant columns.
+
 ## Adding rows to a table
 
 Now, if you wanted to add a row to the table, you would use the `INSERT` statement. This statement takes the name of the table, and the values for each column.
@@ -43,6 +45,8 @@ For example, to add a row to the `colours` table, you would use the following SQ
 ```
 INSERT INTO colors (type, value) VALUES ('header', 'red');
 ```
+
+If you know browse the colors table, you'll see the row you just added.
 
 ## Reading rows from a table
 
@@ -54,11 +58,15 @@ For example, to read the row with the `type` of `header` from the `colors` table
 SELECT * FROM colors WHERE type = 'header';
 ```
 
+This will return all the requested rows.
+
 If you just wanted the value of the `value` column, you would use the following SQL statement:
 
 ```
 SELECT value FROM colors WHERE type = 'header';
 ```
+
+And this would only display the data from the `value` column.
 
 ## Updating rows in a table
 
@@ -70,6 +78,8 @@ For example, to update the value of the `value` column in the `colours` table, y
 UPDATE colors SET value = 'blue' WHERE type = 'header';
 ```
 
+If you browse the table, you'll see the value of the `value` column has been updated.
+
 ## Deleting rows from a table
 
 If you wanted to delete a row from the table, you would use the `DELETE` statement. This statement takes the name of the table, and the row to delete.
@@ -79,6 +89,8 @@ For example, to delete the row with the `type` of `header` from the `colors` tab
 ```
 DELETE FROM colors WHERE type = 'header'
 ```
+
+Browsing the table shows that the data has been deleted.
 
 ## Database Keys
 

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-To develop with WordPress, there are a couple of things you will need to install on your computer, the first of which is a local development environment.
+To develop with WordPress, there are a few things you will need to install on your computer, the first of which is a local development environment.
 
 There are many options for local development environments, and in this lesson, you'll learn about some of the most popular options.
 
@@ -12,9 +12,9 @@ Developers tend to use different terms to refer to the different WordPress envir
 
 The WordPress site that lives on the internet, and that users interact with, is often referred to as the live or production environment. This is the site where all the final content is published and any custom code is live.
 
-Sometimes, developers will create a separate environment for testing new features or changes to the site. This is often referred to as the staging environment. This is a copy of the live site, but it is not typically accessible to the public. It is used to test new features or changes before they are deployed to the live site.
+Sometimes, developers will create a separate server environment for testing new features or changes to the site. This is often referred to as the staging environment. This is a copy of the live site that is accessible via the internet, but usually only to the site owner or the developer. It is used to test new features or changes before they are deployed to the live site.
 
-Finally, developers will often have a local development environment. This is a copy of the live site that is installed on their computer. This is where they will do the majority of their development work.
+Finally, developers will often have a local environment. This is a copy of the live or staging site that is installed on their computer. This is where they will do the majority of their development work.
 
 ## Local development environments
 
@@ -24,7 +24,9 @@ Some local development environments also offer additional features, such as a bu
 
 In the WordPress space, there are typically two types of local development environments: those that are created and maintained by members of the WordPress community, and those that are created and maintained by non-profits or companies. 
 
-[wp-env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) is the local development environment currently recommended by the WordPress developer documentation. It requires a working knowledge of the command line, an installation of [Docker](https://www.docker.com/), and [Node.js](https://nodejs.org/en/).
+[wp-env](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/) is the local development environment currently recommended by the WordPress developer documentation. 
+
+It requires a working knowledge of the command line, an installation of [Docker](https://www.docker.com/), and [Node.js](https://nodejs.org/en/).
 
 [VVV or Varying Vagrant Vagrants](https://varyingvagrantvagrants.org/) is another local development environment maintained by members of the WordPress community. It also requires a working knowledge of the command line, and an installation of [VirtualBox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/).
 
@@ -38,4 +40,6 @@ Each of these products is created and maintained by their parent company, and in
 
 ## Choosing a local development environment
 
-Choosing a local development environment is a personal choice, and there is no right or wrong answer. You will need to review all the features of each option, the pros and cons, and decide which one is best for you.
+Choosing a local development environment is a personal choice, and there is no right or wrong answer. 
+
+You will need to review all the features of each option, the pros and cons, and decide which one is best for you.
