@@ -68,3 +68,9 @@ For more information about HTML, you can visit the following online resources:
 - [HTML on Web.dev](https://web.dev/learn/html)
     - [Accessible HTML on Web.dev](https://web.dev/learn/accessibility)
 - [freeCodeCamp Responsive Web Design Course](https://www.freecodecamp.org/learn/2022/responsive-web-design/)
+
+## YouTube chapters
+
+(0:00) What is HTML?
+(0:00) Accessible HTML
+(0:00) Additional Resources

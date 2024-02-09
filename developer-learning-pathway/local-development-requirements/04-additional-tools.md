@@ -16,3 +16,4 @@ There are also a number of plugins that can help with debugging your code. These
 There is also [Log Deprecated Notices](https://wordpress.org/plugins/log-deprecated-notices/) which logs incorrect function usage, deprecated file usage, and deprecated function usage in your plugin or theme.
 
 You will learn more about each of these tools in future lessons.
+

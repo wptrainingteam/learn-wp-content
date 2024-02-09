@@ -43,3 +43,10 @@ Each of these products is created and maintained by their parent company, and in
 Choosing a local development environment is a personal choice, and there is no right or wrong answer. 
 
 You will need to review all the features of each option, the pros and cons, and decide which one is best for you.
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:00) A quick intro to terminology
+(0:00) Local development environments
+(0:00) Choosing a local development environment

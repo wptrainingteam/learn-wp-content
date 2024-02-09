@@ -123,3 +123,10 @@ For more information about CSS, you can visit the following online resources:
 - [CSS on MDN](https://developer.mozilla.org/en-US/docs/Web/CSS)
 - [CSS on Web.dev](https://web.dev/learn/css)
 - [freeCodeCamp Responsive Web Design Course](https://www.freecodecamp.org/learn/2022/responsive-web-design/)
+
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:00) What is CSS?
+(0:00) Additional Resources

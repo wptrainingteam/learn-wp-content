@@ -70,3 +70,9 @@ For more information about PHP, you can visit the following online resources:
 - [PHP Getting Started guide](https://www.php.net/manual/en/getting-started.php)
 - [Official PHP Documenation](https://www.php.net/docs.php)
 - [Learn PHP for Beginners on freeCodeCamp](https://www.freecodecamp.org/news/the-php-handbook/)
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:00) What is PHP?
+(0:00) Additional Resources

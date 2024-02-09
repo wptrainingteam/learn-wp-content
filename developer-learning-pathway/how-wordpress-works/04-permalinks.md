@@ -82,3 +82,10 @@ location / {
 ```
 
 Whenever a permalink structure is set, if you add links to internal content like posts or pages, WordPress will automatically generate the correct URL based on the permalink structure that you have set.
+
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:39) Query String Variables
+(2:18) WordPress and Permalinks

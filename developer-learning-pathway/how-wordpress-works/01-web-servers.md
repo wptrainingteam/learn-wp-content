@@ -10,7 +10,6 @@ One of the first things you should learn about is how WordPress and web servers 
 
 In this lesson, you'll learn the basics of web servers, and how they power your WordPress sites.
 
-
 ## What is a web server
 
 At the most basic level, WordPress is a web application that runs on a web server. But what makes up a web server, and what makes it possible for the web server to run WordPress?
@@ -97,3 +96,12 @@ When a user visits a URL on a WordPress site, the following happens:
 6. The PHP code will then output HTML code, and include any relevant CSS or JavaScript
 7. The web server will send the HTML, CSS and JavaScript code back to the browser
 8. The browser will render this code and display the page to the user
+
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:24) What is a web server?
+(3:10) Apache/Nginx configuration
+(4:16) Directory Index
+(5:37) WordPress request flow

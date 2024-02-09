@@ -32,3 +32,8 @@ There are however a lot of commonalities in how each of these different admin fi
 3. Next it will include the `wp-admin/admin-header.php` file, which performs things like setting up and rendering the header area of the admin interface as well as rendering the admin menu.
 4. After that it will generate and render the content for the specific admin page
 5. Finally, it will include the `wp-admin/admin-footer.php` file, which sets up and renders the footer of the admin interface
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:15) What is an admin request?

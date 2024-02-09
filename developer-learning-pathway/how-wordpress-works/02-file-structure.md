@@ -69,3 +69,13 @@ Along side these files, the root directory of a WordPress installation also cont
 `wp-content` contains any files that can be added to a default WordPress site. This includes any plugins, themes, and uploaded files. Any directories that plugins need to create to store additional files are also created in this directory.
 
 `wp-includes` contains the bulk of the core WordPress files. This includes all the PHP files that make up the WordPress core, as well as any JavaScript and CSS files that are required to run WordPress. Common functionality like the database API, HTTP API, and plugin API are all included in this directory, and are used by both the WordPress admin and any front end requests.
+
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:29) The root directory
+(0:35) Static files
+(1:53) PHP files that control a WordPress request
+(3:00) Additional PHP files in the root directory
+(5:32) Root directories

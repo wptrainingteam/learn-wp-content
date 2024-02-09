@@ -40,8 +40,14 @@ If you don't already have a code editor or IDE that you are comfortable with, he
 
 [PhpStorm](https://www.jetbrains.com/phpstorm/) is a fully integrated development environment created by JetBrains. It is available for Windows, Mac, and Linux. It is not free, but does offer a free trial, and is popular with developers who work with PHP based applications.
 
-## Choosing a code editor
+## Conclusion
 
 Just like choosing a local development environment, choosing a code editor is a personal choice, and there is no right or wrong answer. 
 
 For much of the content on Learn.WordPress.org, we will be using Visual Studio Code, but you are free to use whichever code editor you are most comfortable with.
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:00) Choosing a code editor
+(0:00) Conclusion

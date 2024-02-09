@@ -44,7 +44,7 @@ The `wp_comments` table stores information about the comments on your posts and 
 
 The `wp_users` table stores all the information about your website's users. Each row in the `wp_users` table represents a single user. Like other meta tables, the `wp_usermeta` table can store additional information about each user.
 
-## Functions to interact with posts, comments, and users
+### Functions to interact with posts, comments, and users
 
 For all WordPress database tables, there are functions that you can use to interact with that table.
 
@@ -84,7 +84,7 @@ So for example for posts, `add_post_meta` is the function to insert a meta field
 
 Similarly `update_post_meta` the function to update a meta field and `delete_post_meta` the function to delete a meta field.
 
-## wp_terms, wp_termmeta, wp_term_relationships, and wp_term_taxonomy
+### wp_terms, wp_termmeta, wp_term_relationships, and wp_term_taxonomy
 
 The `wp_terms`, `wp_termmeta`, `wp_term_relationships`, and `wp_term_taxonomy` tables are the tables that manage the categories and tags in your WordPress site.
 
@@ -121,3 +121,11 @@ However, because it is still possible to renable this functionality using [the L
 ## Conclusion
 
 Being able to correctly identify and interact with the tables in a WordPress database is an extremely useful skill, and will help you to better understand how WordPress works when you are developing with WordPress.
+
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:35) Interacting with your WordPress database
+(1:36) Database Tables
+(8:12) Conclusion

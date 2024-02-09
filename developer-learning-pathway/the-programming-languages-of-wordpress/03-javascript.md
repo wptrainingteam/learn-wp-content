@@ -89,3 +89,10 @@ For more information about JavaScript, you can visit the following online resour
 
 - [JavaScript on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [freeCodeCamp JavaScript Algorithms and Data Structures certification](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/)
+
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:00) What is JavaScript?
+(0:00) Additional Resources

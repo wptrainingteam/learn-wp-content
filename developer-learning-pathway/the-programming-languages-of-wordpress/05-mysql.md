@@ -115,3 +115,16 @@ For more information about MySQL and SQL statements, you can visit the following
 - [MySQL Tutorial](https://dev.mysql.com/doc/refman/8.2/en/tutorial.html)
 - [MySQL 8.2 Reference Manual](https://dev.mysql.com/doc/refman/8.2/en/)
 - [Learn MySQL – Beginner's Course on freeCodeCamp](https://www.freecodecamp.org/news/learn-mysql-beginners-course/)
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:00) What is MySQL?
+(0:00) Creating tables
+(0:00) Adding rows to a table
+(0:00) Reading rows from a table
+(0:00) Updating rows in a table
+(0:00) Deleting rows from a table
+(0:00) Database Keys
+(0:00) Running queries from PHP
+(0:00) Additional Resources

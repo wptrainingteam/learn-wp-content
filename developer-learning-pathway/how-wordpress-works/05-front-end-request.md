@@ -4,7 +4,7 @@
 
 There are two types of requests that can be made to a WordPress site, a front end request, and an admin request. Let's dive a bit deeper into the code that runs on a typical WordPress front end request.
 
-### What is a front end request?
+## What is a front end request?
 
 Except for specific requests (like the ones we looked at in the File structure lesson), any requests for content on a WordPress site (also known as the WordPres front end)  is handled by the `index.php` file in the root directory.
 
@@ -16,7 +16,7 @@ Here, the `WP_USE_THEMES` constant is set up, and then the first additional file
 
 There are also a supplementary statements namely require_once (or include_once) that will only include the file if it's not been included already.
 
-# wp-blog-header.php
+## wp-blog-header.php
 
 The wp-blog-header file sets up the WordPress environment by requiring the wp-load.php file
 
@@ -30,13 +30,13 @@ After that it finds and loads the wp-config.php file OR attempts to redirect to 
 
 You'll also note that this code allows the wp-config.php file to be moved outside of the WordPress directory, which is a common security best practice. By moving the wp-config.php file outside of the WordPress directory, you can prevent the file from being accessed by a malicious user.
 
-### wp-config.php
+## wp-config.php
 
 This file defines the database constants, debugging constants, and other constants that your WordPress installation might need
 
 It then requires the wp-settings.php file which sets up the WordPress environment
 
-### wp-settings.php
+## wp-settings.php
 
 wp-settings.php is the file that sets up the WordPress environment. It's does a lot of work, so this will be a high level summary of all the things it sets up.
 
@@ -109,3 +109,16 @@ Back to wp-blog-header.php, after all the query data is set up the template load
     1. Loop through each of the template conditionals, and find the appropriate template file.
 7. template_include filter - Filters the path of the current template before including it.
 8. include the template file - note the use of include not require, so that the rest of the page can still be rendered if the template file is missing.
+
+
+## YouTube chapters
+
+(0:00) Introduction
+(0:12) What is a front-end request?
+(0:33) A note on require, require_once, include, include_once
+(0:57) wp-blog-header.php
+(1:03) wp-load.php
+(1:43) wp-config.php
+(1:57) wp-settings.php
+(4:45) wp() function
+(6:53) template-loader.php
