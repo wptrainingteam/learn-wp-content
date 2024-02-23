@@ -1,16 +1,16 @@
-# Creating custom data types
+# Creating custom post types
 
-One of the more common uses for a plugin is to create some form of custom data type to store data that doesn't fit into the default WordPress data types of posts and pages.
-
-In this lesson, you'll learn how plugins can be used to create custom data types, more commonly known as custom post types
+One of the more common use cases for developing a custom plugin is to take advantage of the WordPress Post API to create custom post types.
 
 ## Building an online bookstore
 
-Let's say you're building a plugin for an online bookstore, and you want to store data about the books that are for sale.
+Let's say you're building an online bookstore, and you want to store data about the books that are for sale.
 
-Fortunately the WordPress core Post API allows you to register custom post types. These custom post types extend the core `post` data type, which is stored in the `posts` table in the WordPress database.
+The WordPress core Post API allows you to register custom post types. These custom post types extend the core `post` data type, which is stored in the `posts` table in the WordPress database.
 
-An example of a custom post type is the `page` data type, which are registered by WordPress core. So, you could create a custom post type to store information about books.
+An example of a custom post type is the `page` data type, which is registered by WordPress core. 
+
+Using the WordPress POST API, you could create a custom post type to store information about books.
 
 When you register a custom post type correctly, WordPress will automatically create a new admin menu item for your custom post type, and admin pages to manage the data.
 
@@ -73,10 +73,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ```
 
-Next, create a new function called `bookstore_register_book_post_type` that will register the custom post type.
+Next, create a new function called `bookstore_register_book_post_type` that will register the custom post type. Create the arguments array, and then call the `register_post_type` function, passing in the relevant arguments to create the custom post type for books.
 
 ```php
 function bookstore_register_book_post_type() {
+     $args = array(
         'labels' => array(
 			'name'          => 'Books',
 			'singular_name' => 'Book',
@@ -98,9 +99,13 @@ function bookstore_register_book_post_type() {
 }
 ```
 
-Notice the use of the `bookstore_` prefix in the function name. This is an example if prefixing function names to avoid conflicts with other plugins or themes. You can read more about this, and other methods to prevent function conflicts in the [Plugin best practices](https://developer.wordpress.org/plugins/plugin-basics/best-practices/#avoid-naming-collisions) page in the Plugin developer handbook.
+Notice the use of the `bookstore_` prefix in the function name. 
 
-The last step is to call the `bookstore_register_book_post_type` function. You need to hook into something called an `init` action to do this. 
+This is an example if prefixing function names to avoid conflicts with other plugins or themes. 
+
+You can read more about this, and other methods to prevent function conflicts in the [Plugin best practices](https://developer.wordpress.org/plugins/plugin-basics/best-practices/#avoid-naming-collisions) page in the Plugin developer handbook.
+
+The last step is to call the `bookstore_register_book_post_type` function. You need to hook into the `init` action to do this. 
 
 If you skipped the module on WordPress hooks, hooks that they are a way to run code at specific points in the WordPress request lifecycle.
 
@@ -146,13 +151,23 @@ function bookstore_register_book_post_type() {
 }
 ```
 
-Now, browse to your WordPress dashboard and activate the plugin. You should see a new menu item called "Books" in the admin menu with the ability to add new books to your book custom post type. 
+Now, browse to your WordPress dashboard and activate the plugin. 
 
-If you browse to the `wp_posts` table in the WordPress database, you'll see a new row with the `post_type` column set to `book`.
+You should see a new menu item called "Books" in the admin menu with the ability to add new books to your book custom post type. 
+
+If you browse to the `wp_posts` table in the WordPress database, you'll see a new row with the `post_type` column set to `book`, containing the new book data.
 
 ## Custom Post types and performance
 
-It's important to note that registering too many custom post types can have a performance impact on a WordPress site. This is because the custom post type registration process is executed on every page load, even if the custom post type is not being used on that page. So be careful of overusing custom post types and consider when you should use them vs creating custom tables to store custom data.
+It's important to note that registering too many custom post types can have a performance impact on a WordPress site. 
+
+This is because the custom post type registration process is executed on every site request, even if the custom post type is not being used on that page. 
+
+So be careful of overusing custom post types and consider when you should use them vs creating custom tables to store custom data.
+
+You can learn more about creating and using custom tables in the [Creating Tables with Plugins](https://developer.wordpress.org/plugins/plugin-basics/creating-tables-with-plugins/) page in the Plugin developer handbook.
+
+You will also learn more about this in the plugin developer learning pathway
 
 ## Further reading
 

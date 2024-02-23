@@ -40,7 +40,7 @@ To see this in action, let's create a simple example of how you can use a filter
 
 To do this, you're going to create a small plugin. Don't worry if you've never worked with plugins before, but do check out the Introduction to plugins module to learn more about them.
 
-For now, browse to your `wp-content/plugins` directory, and create a new file called `wp-learn-hooks.php`.
+For now, in your code editor, browse to your `wp-content/plugins` directory, and create a new file called `wp-learn-hooks.php`.
 
 Then, add the following code to this file:
 
@@ -59,7 +59,7 @@ function wp_learn_amend_content( $content ) {
 }
 ```
 
-Now, browse to the WordPress admin, go to Plugins, and activate your new plugin.
+Now, browse to the WordPress admin of your local WordPress installation, go to Plugins, and activate your new plugin.
 
 Then, browse to the front end of your site, and view any post or page. In this example, I'm going to view the sample page.
 

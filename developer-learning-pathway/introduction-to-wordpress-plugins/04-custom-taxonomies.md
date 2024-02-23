@@ -1,8 +1,12 @@
 # Custom taxonomies
 
-Taxonomies are a way to group things together. In a default WordPress install, there are two types of registered taxonomies: categories and tags.
+In WordPress, taxonomies are a way to group things together. In a default WordPress install, there are two types of registered taxonomies: categories and tags.
 
-When developing a plugin that registers a custom post type, you can also register custom taxonomies, which brings some additional flexibility to your plugin.
+## Introduction
+
+When developing a plugin that registers a custom post type, you can also register custom taxonomies.
+
+This adds some additional flexibility to your plugin, as it allows your custom post types to be grouped independently from the default categories or tags.
 
 Let's look at how this works, and what you need to do to register a custom taxonomy.
 
@@ -10,13 +14,13 @@ Let's look at how this works, and what you need to do to register a custom taxon
 
 You might think that the two custom taxonomies that come with WordPress are enough, but there are times when your plugin might need to group data in a different way.
 
-For example, in a bookstore, you might want to group books by genre, such as fiction, non-fiction, or science fiction.
+For example, in a bookstore, you might want to group books by genre, such as fiction, non-fiction, science fiction, etc.
 
-Additionally, when you register a custom taxonomy for a specific post type, that taxonomy will only be available to that post type, and will appear associated to the post type in the admin menu.
+Additionally, when you register a custom taxonomy for a specific post type, that taxonomy will only be available to that post type, and will appear associated to the post type in the admin menu and the edit screens.
 
 ## Registering a custom taxonomy
 
-Let's review the bookstore plugin we've been building in the previous lessons:
+Let's add a custom taxonomy to the bookstore plugin you were building in the previous lessons:
 
 ```php
 <?php
@@ -45,27 +49,23 @@ function bookstore_register_book_post_type() {
 
 	register_post_type( 'book', $args );
 }
-
-add_filter('postmeta_form_keys', 'bookstore_add_isbn_to_quick_edit', 10, 2);
-function bookstore_add_isbn_to_quick_edit($keys, $post) {
-	if ($post->post_type === 'book') {
-		$keys[] = 'isbn';
-	}
-	return $keys;
-}
 ```
 
-To register a custom taxonomy, you can use the `register_taxonomy` [function](https://developer.wordpress.org/reference/functions/register_taxonomy/) in a similar way to the register_post_type function.
+To register a custom taxonomy, you can use the `register_taxonomy` [function](https://developer.wordpress.org/reference/functions/register_taxonomy/) in a similar way to the `register_post_type` function.
 
 This function requires you to pass in the name of the taxonomy, the post type that the taxonomy is associated with, and an array of arguments.
 
 Similarly to the `register_post_type` function, the `register_taxonomy` function also needs to be hooked into the `init` action.
 
+So start by registering the callback to the action.
+
 ```php
 add_action( 'init', 'bookstore_register_genre_taxonomy' );
 ```
 
-Then, you can create the `bookstore_register_genre_taxonomy` function, which will call the `register_taxonomy` function, passing in the relevant arguments to create the taxonomy.
+Then, you can create the `bookstore_register_genre_taxonomy` callback function, 
+
+In this function create the arguments array, and call the `register_taxonomy` function, passing in the relevant arguments to create the taxonomy.
 
 ```php
 function bookstore_register_genre_taxonomy() {
@@ -88,9 +88,13 @@ function bookstore_register_genre_taxonomy() {
 }
 ```
 
+You could also add this code to the `bookstore_register_book_post_type` function, so that the genre taxonomy is registered when the book post type is registered. 
+
 Once this is added to your bookstore plugin, you'll see a new Genre menu item in the admin menu, and you'll be able to add genres to your books.
 
 Additionally, once you've added some genres, you'll be able to select from those genres when you add or edit a book.
+
+Just like with regular taxonomies, you will be able to browse the archive page for each taxonomy, and see all the books that are associated with that taxonomy.
 
 ## Further reading
 

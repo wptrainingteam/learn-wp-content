@@ -1,21 +1,21 @@
 # Plugin requirements
 
-Now that you know what a plugin is, let's talk about what you need to create a plugin.
+Now that you know what a plugin is, let's explore what you need to create one.
 
 ## Creating your first plugin
 
 The minimum requirements for a valid WordPress plugin are at least one PHP file, the main plugin file, with an opening PHP tag.
 
-Inside the main plugin file, the first piece of code should be the Plugin Header, which is a PHP comment block. At minimum it should contain a field for the plugin name. 
+Inside the main plugin file, the first piece of code should be the Plugin Header, which is a PHP comment block. At minimum, it should contain a field for the plugin name. 
 
-To create your first plugin, navigate to the wp-content/plugins directory, and create a single PHP file.
+To create your first plugin, navigate to the `wp-content/plugins` directory, and create a single PHP file called `example-plugin.php`.
 
 ```
 cd wp-content/plugins
 touch example-plugin.php
 ```
 
-Inside the file, make sure to open the PHP tags, so that the server can process the PHP code.
+Inside the file, make sure to open the PHP tags, so that the server can execute the PHP code.
 
 ```php
 <?php
@@ -29,9 +29,9 @@ Now, add the following code to the top of the file, just below the opening PHP t
  */
 ```
 
-This is known as the Plugin Header, and is written using a version of PHP's comment syntax called a Doc Block. 
+This is known as the Plugin Header, and is written using a version of PHP's comment syntax called a DocBlock. 
 
-To read more about comments in PHP, take a look at the commenting your code section of the PHP manual.
+To read more about comments in PHP, take a look at the [Comments](https://www.php.net/manual/en/language.basic-syntax.comments.php) page in the Basic Syntax section of the PHP manual.
 
 With your first plugin created, you can now browse to the Plugins page in the WordPress dashboard, and you will see your plugin available and ready to be activated.
 
@@ -61,7 +61,7 @@ The plugin example-plugin.php has been deactivated due to an error: Plugin file 
 
 Now activate the plugin. 
 
-Then go back and a look at the list of active plugins in the `wp_options table`, and see how the new slug is added to the serialised array.
+Then go back and a look at the list of active plugins in the `wp_options table`, and see how the new slug is added to the serialised array, which includes the directory name.
 
 ## Plugin header fields
 
@@ -81,7 +81,7 @@ You can see the full list of plugin header fields in the [Header Requirements](h
 
 ## Plugin best practices
 
-The plugin handbook lists a number of common best practices when developing plugins. 
+The plugin handbook also contains a section on common [best practices](https://developer.wordpress.org/plugins/plugin-basics/best-practices/) when developing plugins. 
 
 One of these suggestions is to include a check to ensure that the plugin code is only executed when part of a WordPress request.
 

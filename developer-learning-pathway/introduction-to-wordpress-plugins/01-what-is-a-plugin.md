@@ -1,10 +1,12 @@
 # Developing WordPress plugins
 
-## What is a plugin
+Welcome to the introduction to developing WordPress plugins.
+
+## What is a plugin?
 
 A WordPress plugin is a package of code that can be installed on a WordPress website to add new features or functionality.
 
-Whereas themes are used to control the look and feel of a WordPress site, plugins are used to extend its functionality.
+Whereas themes are used to control the look and feel of a WordPress site, plugins are used to add to or extend it's functionality.
 
 ## Why use a plugin?
 
@@ -12,7 +14,9 @@ As a WordPress developer, you will often need to create custom functionality for
 
 While it is possible to add this functionality to a theme or child theme's `functions.php` file, it often makes more sense to add this code to a WordPress plugin.
 
-This is because a plugin can be activated or deactivated without affecting the theme, and the same plugin can be used across multiple sites.
+This is because a plugin can be activated or deactivated without affecting the theme.
+
+Not only that, but the same plugin can be used across multiple sites.
 
 ## The WordPress plugin directory
 

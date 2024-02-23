@@ -1,6 +1,6 @@
 # Filter Hooks
 
-There are two types of WordPress hooks, action hooks, and filter hooks. These are more commonly known as actions and filters.
+There are two types of WordPress hooks, actions, and filters.
 
 In this video we’ll focus on filters, but check out the actions lesson for more information on action hooks.
 
@@ -12,7 +12,7 @@ In order to make use of a filter, you register a function in your code to a pre-
 
 To better explain this, let’s look at a filter called `the_content`.
 
-This filter is defined inside the function which is used in theme templates whenever the template needs to render any post or page content.
+This filter is defined in the `wp-includes/post-template.php` file, inside the function which is used in theme templates whenever the template needs to render any post or page content.
 
 Inside that function, we see this code
 
@@ -30,19 +30,23 @@ So the `apply_filters` function registers the filter hook, passes the value of `
 
 ## Using filter hooks
 
-Let's register a callback function on this filter. To register your callback function on a filter you use the WordPress add_filter [function](https://developer.wordpress.org/reference/functions/add_filter/).
+To register your callback function on a filter you use the WordPress add_filter [function](https://developer.wordpress.org/reference/functions/add_filter/).
 
 You will need to pass the hook name and the name of your callback function as arguments to the `add_filter` function.
 
 Let’s take a look at what this looks like in a theme’s functions.php file.
 
+In your code editor, navigate to your currently active theme’s `functions.php` file, and open it.
+
+If your theme doesn’t have a `functions.php` file, you can create one in the root of your theme directory. Just make sure it's named functions.php, and has the opening PHP tag at the top of the file.
+
+Then, add the following code to your `functions.php` file to hook a callback function into the `the_content` filter hook.
+
 ```php
 add_filter( 'the_content', 'wp_learn_amend_content' );
 ```
 
-Then, create the callback function, which accepts the relevant arguments from the filter.
-
-You don’t have to name the argument the same as the variable name passed from the filter, but it does make it easier if you do.
+Then, create the callback function, using the PHP function syntax, which accepts the relevant argument from the filter.
 
 ```php
 function wp_learn_amend_content( $content ) {
@@ -50,6 +54,8 @@ function wp_learn_amend_content( $content ) {
     return $content;
 }
 ```
+
+You don’t have to name the argument the same as the variable name passed from the filter, but it does make it easier if you do.
 
 Notice that you have to return the updated data. This is so that the original variable being updated from the `apply_filters` call gets the update data.
 
