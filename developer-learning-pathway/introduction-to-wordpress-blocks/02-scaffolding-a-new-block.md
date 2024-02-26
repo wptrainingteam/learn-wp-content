@@ -28,11 +28,14 @@ Ultimately though the block development experience and tooling is designed to wo
 
 ## What are we building?
 
-For the purposes of this series of lessons, you will be building  a “Copyright Date Block”. It's a basic yet practical block that displays 
- - the text "Copyright"
- - the copyright symbol (©) 
- - the current year 
- - an optional starting year
+For the purposes of this series of lessons, you will be building  a “Copyright Date Block”. 
+
+It's a basic yet practical block that has the following features: 
+
+ - It displays the text "Copyright", followed by the copyright symbol (©), then a starting year, and the current year 
+ - The user should be able to adjust the alignment of the block on the page
+ - It should have the following CSS applied to it at all times `border: 1px solid #111111;`
+ - The user should also be able to adjust the starting year
 
 ## Using Create Block
 
@@ -44,7 +47,7 @@ Generally this is done by running the following command:
 cd /path/to/your/wordpress/install/wp-content/plugins
 ```
 
-Then, run the create-block command, and include a plugin slug. The slug is the unique name of the plugin that you want to create.
+Then, run the `create-block` command, and include a plugin slug. The slug is the unique name of the plugin that you want to create.
 
 ```bash
 npx @wordpress/create-block@latest copyright-date-block
@@ -130,27 +133,30 @@ The `package-lock.json` contains a list of all the installed dependencies, as we
 
 Finally, there's a `readme.txt` file which you'll only need to edit if you intend to [publish](https://developer.wordpress.org/plugins/wordpress-org/) your plugin to the [WordPress Plugin Directory](https://wordpress.org/plugins/).
 
-### The `src` directory
+## The `src` directory
 
-For block development the most important directory is the `src` directory. This is where you'll spend most, if not all, of your time when developing a block.
+All of your block development takes place in the `src` directory. Let's take a look at the files that are scaffolded
 
-*   `block.json` stores the metadata for the block, defined as a JSON object. You can learn more about block metadata in [the block metadata handbook page](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/). This file allows you to define things like the block name, title, icon, the various files that make up the block, and much more.
-*   `edit.js` is where you'll spend most of your time as you work on a block. This file exports a React `Edit()` component, that is rendered in the editor and determines how the block appears and functions in the editor. The Edit component will usually accept an `attributes` parameter which is an object containing any attributes defined in the block metadata.
-*   `editor.scss` is a file containing CSS that styles the appearance of the block in the block editor. Usually, you will want the block to appear the same in the editor as it does in the front end of the website, so you'll probably make little or no changes to this file. You will notice that this example merely adds a border when the block is selected in the editor.
-*   `index.js` is the starting point for the JavaScript execution of the block. It imports the functions exported by `edit.js` and `save.js` and then executes `registerBlockType` passing as parameters the name of the block and an object containing the two imported functions.
-*   `save.js` exports a **function**, `save()`, which determines the markup that will be saved to the `post_content` field in the `wp_posts` table when the post or page is saved, and hence determines how the block appears and functions in the front end. Like with `edit.js`, the function defined here will usually accept an `attributes` parameter which is an object containing the attributes defined in `block.json`.
-*   `style.scss` is another file containing CSS. In this case, the CSS determines the styling of the block in the front end but also in the editor. Styles here can be overridden by styles in `editor.scss` if you need the block to appear different in the editor. However, it would be unusual to do this.
+* `block.json` stores the metadata for the block, defined as a JSON object. You can learn more about block metadata in [the block metadata handbook page](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/). This file allows you to define things like the block name, title, icon, the various files that make up the block, and much more.
+* `edit.js` is where you'll spend most of your time as you work on a block. This file exports a React `Edit()` component, that is rendered in the editor and determines how the block appears and functions in the editor. 
+* `editor.scss` contains the styles that control the appearance of the block in the block editor. Usually, you will want the block to appear the same in the editor as it does in the front end of the website, so you'll often not need this file at all.
+* `index.js` is the starting point for the JavaScript execution of the block. It sets up and executes the `registerBlockType` function to register the block in the editor.
+* `save.js` exports a `save()` function, which determines the markup that will be saved to the `post_content` field in the `wp_posts` table when the post or page is saved, and therefore determines how the block appears and functions in the front end. 
+* `style.scss` contains the styles that control the appearance of the block in the editor and the front end. Styles here can be overridden by styles in `editor.scss` if you need the block to appear different in the editor.
+* `view.js` is a file that is used to add any additional JavaScript to the block in the front end. This is another file that you will often not need. 
 
-Note that `editor.scss` and `style.scss` are actually SASS files and not standard CSS files. These files require the build step which you'll learn about in the next lesson.
+## The `build` directory
 
-Don't worry if some of the above is confusing at this stage. It will all become much, much clearer and make much more sense to you as you progress through the rest of the lessons.
+During development, you will execute the scripts you saw in the `package.json` file to compile the files in the `src` directory into the `build` directory.
+
+The process of building your block code, also known as bundling your code, is the process of converting your block code into a format that is compatible with all browsers. 
+
+When WordPress loads your block in the editor or on the front end, it's executing the code from the `build` directory.
+
+The `@wordpress/scripts` package defined as a dev dependency in the `package.json` file uses a tool called Webpack to bundle your block code. 
+
+The details of how this works is outside the scope of this lesson, but you can learn more about it in the [Webpack documentation](https://webpack.js.org/concepts/).
 
 ## Additional Resources
 
-For more information on the topics covered in this lesson, see the following resources:
-
- - The block editor [Quick Start Guide](https://developer.wordpress.org/block-editor/getting-started/quick-start-guide/) in the Block Editor handbook
- - The [build your first block tutorial](https://developer.wordpress.org/block-editor/getting-started/tutorial/) in the Block Editor Handbook 
- - The [register_block_type](https://developer.wordpress.org/reference/functions/register_block_type/) function reference
-
-
+To learn more about the `create-block` tool, as well as all the different options it offers, check out the [package reference](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/) for `create-block` in the Block Editor Handbook

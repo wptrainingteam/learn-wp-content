@@ -1,8 +1,12 @@
 # Getting set up for block development
 
-## Developing WordPress blocks
+WordPress' blocks are the default way in which a WordPress site represents content in the dashboard.
 
-WordPress' blocks are the default way in which a WordPress site represents content in the dashboard. Blocks are used in the Post and Page Editors when creating and editing content, as well as the Site Editor when creating and editing theme templates or patterns. 
+In this series of lessons, you will learn the fundamental concepts of block development, and how to build your own blocks.
+
+## WordPress blocks
+
+Blocks are used in the Post and Page Editors when creating and editing content, as well as the Site Editor when creating and editing theme templates or patterns. 
 
 Under the hood, blocks are made up of combination of an HTML comment with a specific format that defines the block, and if required, HTML entities to represent the block content.
 
@@ -20,7 +24,7 @@ Then, click on the options icon on the top right of the post, and select the cod
 
 As you can see, the HTML paragraph tag is wrapped in HTML comments with the name wp:paragraph. These wp:paragraph comments are how WordPress knows this is a paragraph block. The actual content of the block is everything inside the wp:paragraph tags, in this case the HTML paragraph tag, and the content inside that tag. 
 
-Now click the "Exit code editor", and in the sidebar, apply a background to the block. 
+Now click the "Exit code editor", and in the sidebar, apply a background color to the block. 
 
 Now switch back to the code view, and notice how the wp:paragraph tag contains some extra data
 
@@ -30,11 +34,11 @@ Now switch back to the code view, and notice how the wp:paragraph tag contains s
 <!-- /wp:paragraph -->```
 ```
 
-The backgroundColor property is added to the block wrapper in a special format called JSON. When this post is rendered on the front end, WordPress converts that to a CSS class to be applied to the block.
+The `backgroundColor` property is added to the block wrapper in a special format called JSON. When this post is rendered on the front end, WordPress converts that to a CSS class to be applied to the block.
 
 ## Getting set up
 
-Besides your local WordPress installation and a code editor, there are some additional tools you need to develop blocks
+Besides your local WordPress installation and a code editor, there are some additional tools you need to develop blocks.
 
 ## All about the terminal
 
@@ -156,3 +160,7 @@ npm -v
 This is useful if you are working on multiple projects that require different versions of Node.js and npm.
 
 Now that you have all the required tools, you can begin your block development journey.
+
+## Additional resources
+
+The WordPress Developer documentation has an entire section dedicated to the [Block Editor Handbook](https://developer.wordpress.org/block-editor/), which contains a wealth of information on block development. It is recommended reading if you want to get a better understanding of how blocks work, and how to develop them.
