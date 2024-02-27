@@ -2,7 +2,7 @@
 
 WordPress' blocks are the default way in which a WordPress site represents content in the dashboard.
 
-In this series of lessons, you will learn the fundamental concepts of block development, and how to build your own blocks.
+Let's take a quick look at what blocks are, how they work, and what you need to get started developing them.
 
 ## WordPress blocks
 
@@ -12,7 +12,9 @@ Under the hood, blocks are made up of combination of an HTML comment with a spec
 
 ## The structure of a block
 
-Let's take a look at an example of a block in a post. In your local WordPress installation, create a new post, give it a title, and type some text in the Post Editor. 
+Let's take a look at an example of a block in a post. 
+
+In your local WordPress installation, create a new post, give it a title, and type some text in the Post Editor. 
 
 Then, click on the options icon on the top right of the post, and select the code view. 
 
@@ -60,7 +62,7 @@ Once it's installed, you can launch it by searching for PowerShell in the Start 
 
 Once you have a working terminal, you will be able to install the software you need to start developing blocks.
 
-## Requirements
+## Node.js and npm
 
 Block development relies on the use of a JavaScript framework called [React](https://react.dev). To use React you need to install Node.js and npm on your local computer.
 
@@ -68,13 +70,11 @@ Block development relies on the use of a JavaScript framework called [React](htt
 
 Because npm is bundled with Node.js, you just need to install Node.js to get up and running.
 
-While there are a number of ways to install Node.js with npm, we recommend using a tool called nvm, which stands for Node Version Manager. You can find details about nvm at [github.com/nvm-sh](https://github.com/nvm-sh/nvm).
+While there are a number of ways to install Node.js with npm, we recommend using a tool called nvm, which stands for Node Version Manager. You can find details about nvm at [github.com/nvm-sh](https://github.com/nvm-sh).
 
 This will enable you to install and use different versions of Node.js, depending on the requirements of the software you're working with.
 
-## Installing NVM
-
-### MacOS and Linux
+## Installing NVM on MacOS and Linux
 
 If you are using MacOS or Linux, you can open your default terminal application, and install nvm by running the nvm install script, which you can copy from the [nvm documentation](https://github.com/nvm-sh/nvm/blob/master/README.md#installing-and-updating).
 
@@ -84,7 +84,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
 Once it is installed, you can use the `nvm install` command to install the Node.js and npm versions you need.
 
-### Windows
+## Installing NVM on Windows
 
 If you are on a Windows machine, you can install nvm via the Chocolatey package manager for Windows, specifically the Chocolatey CLI.
 
@@ -163,4 +163,6 @@ Now that you have all the required tools, you can begin your block development j
 
 ## Additional resources
 
-The WordPress Developer documentation has an entire section dedicated to the [Block Editor Handbook](https://developer.wordpress.org/block-editor/), which contains a wealth of information on block development. It is recommended reading if you want to get a better understanding of how blocks work, and how to develop them.
+The WordPress Developer documentation has an entire section dedicated to the [Block Editor](https://developer.wordpress.org/block-editor/), which contains a wealth of information on blocks, block development, as well as the various packages available to block developers. 
+
+It's also a good idea to read the [Fundamentals of Block Development](https://developer.wordpress.org/block-editor/getting-started/fundamentals/) section to get a better understanding of the process. 

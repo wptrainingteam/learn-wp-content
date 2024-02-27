@@ -1,6 +1,6 @@
 # Block supports and Block styles
 
-One of the benefits of building blocks is the ability to allow users to control the block's appearance and behavior. 
+One of the benefits of building blocks is the ability to control the block's appearance on a per block level. 
 
 To do this, you can use something called block supports, as well as define the block's styles. 
 
@@ -30,6 +30,8 @@ Open the `block.json` file in the `src` directory, and update the supports prope
 Once the build process is complete, create a post, and add the block to the post. You'll see that the block now has the ability to set its alignment.
 
 As you can see, simply by enabling the alignment support, the block now has the ability to set its alignment, without any additional code.
+
+Enabling any of the available block supports is as simple as adding them to the `supports` property in the `block.json` file, and it gives your user's a wealth of options to customize the block's appearance.
 
 ## Block styles
 
@@ -62,17 +64,24 @@ You may have noticed that this style is not being applied to the current block. 
 
 In the `block.json` file the name of the block is `copyright-date/copyright-date-block`, so the class name is generated as `wp-block-copyright-date-copyright-date-block`.
 
-The class name you see in the `style.scss` file is based on the scaffolded name of the block, so you need to change it to match the class name that is being generated.
+The class name you see being targeted in the `style.scss` file is based on the original name of the block, so you need to change it to match the class name that is being generated.
 
 At the same time, you can also add the border and border color to the block. 
 
 ```scss
 .wp-block-copyright-date-copyright-date-block {
 	border: 1px solid #111111;
+    padding: 5px;
 }
 ```
 
-Because you want the border to appear all the time, you don't need to define any specific editor styles. This means you can delete the `editor.scss` file. You can also delete the `editor` property in the `block.json` file. 
+Because you want the border to appear all the time, you don't need to define any specific editor styles. This means you can delete the `editor.scss` file. 
+
+You can also delete the `editorStyle` property in the `block.json` file. 
+
+And the importing of the `editor.scss` file in the `edit.js` file.
+
+Doing this might break your development server, so you may need to restart it. 
 
 Once the build process has been run, create a post, and add the block to the post. 
 
@@ -80,4 +89,4 @@ You'll see that the block now has the border and border color that you defined i
 
 ## Conclusion
 
-When you're developing your blocks, it's useful to think about what appearance elements you want users to be able to edit, vs what should always apply to the block, and then either add support for them or hard code them into the relevant stylesheet file. 
+When you're developing your blocks, it's useful to think about what appearance elements you want users to be able to edit, vs what should always apply to the block. Then you can either add the relevant support or hard code any specific styles into the relevant style file. 

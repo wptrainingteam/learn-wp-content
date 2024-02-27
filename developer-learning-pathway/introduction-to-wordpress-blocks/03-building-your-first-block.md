@@ -1,18 +1,33 @@
 # Building your first block
 
-Once you've scaffolded your block using create-block, you can start building out the functionality. Let's dive into what this might look like for our Copyright Date Block.
+Once you've scaffolded your block using create-block, you can start building out the functionality. 
+
+Let's dive into what this might look like for the Copyright Date Block you scaffolded in the previous lesson.
 
 ## Clean up
 
-To start, you can clean up any scaffolded code you don't need. For now, you can remove the `view.js` file, as well as the `viewScript` property from the block.json
+To start, you can clean up any scaffolded code you don't need. 
+
+Navigate to the `copyright-date-block/src` directory and remove the `view.js` file. At the same time, remove the `viewScript` property from the block.json. Make sure not to leave a trailing comma at the end of the last property in the block.json file.
 
 ## The main plugin file
 
-Navigate to the `copyright-date-block` directory in your code editor and then open the `copyright-date-block.php` file. 
+Now open the `copyright-date-block.php` file in the root of the plugin directory. 
 
 There's not a lot to be changed in this file, except maybe the `@package` annotation in the plugin header. This defaults to `create-block`, and you might want to change it to something more specific to your plugin. 
 
 For the purposes of this lesson, let's change it to `copyright-date`.
+
+You can also improve the code that registers the block, by moving the hook registration above the `init` hook's callback, and simplifying the callback function name. 
+
+```php
+add_action( 'init', 'copyright_date_copyright_date_block_block_init' );
+function copyright_date_copyright_date_block_block_init() {
+	register_block_type( __DIR__ . '/build' );
+}
+```
+
+This makes this code a little easier to read and understand.
 
 As you can see the code uses the `register_block_type` function to register the block using the metadata from the `block.json` file.
 
@@ -31,26 +46,26 @@ To modify the scaffolded block metadata for your block, you should change at lea
  - update the `icon`. For now, change the `icon` value to `calendar`. This icon comes from the [Gutenberg Icon Library](https://wordpress.github.io/gutenberg/?path=/story/icons-icon--library).
  - update the `description`, to make it more specific to your block.
 
-Your block.json file should look something like this:
+Your `block.json` file should look something like this:
 
 ```json
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 3,
-	"name": "copyright-date/copyright-date-block",
-	"version": "0.1.0",
-	"title": "Copyright Date Block",
-	"category": "widgets",
-	"description": "A Copyright Date block.",
-	"example": {},
-	"supports": {
-		"html": false
-	},
-	"textdomain": "copyright-date-block",
-	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": "file:./view.js"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "copyright-date/copyright-date-block",
+  "version": "0.1.0",
+  "title": "Copyright Date Block",
+  "category": "widgets",
+  "icon": "calendar",
+  "description": "A Copyright Date block.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "textdomain": "copyright-date-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
 }
 ```
 
@@ -74,11 +89,11 @@ Then it imports the `Edit` component. This component is exported from the `edit.
 
 After that it imports the `save` function. This function is exported from the `save.js` file.
 
-Last but not least, it imports the JSON object from the `block.json` file as the metadata variable. 
+Last but not least, it imports the JSON object from the `block.json` file as the `metadata` variable. 
 
-Finally, it uses the `registerBlockType` function, and passes in two variables, the block name, and an array of arguments that define the block. 
+Finally, it uses the `registerBlockType` function to register the block, and passes in two variables, the block name, and a block configuration object of block properties. 
 
-Inside the array of arguments, the `edit` property is set to the value of the `Edit` component, and the `save` property is set to the value of the `save` function.
+Inside the properties object, the `edit` property is set to the value of the `Edit` component, and the `save` property is set to the value of the `save` function. Because the `save` property and the imported `save` function have the same name, it uses a shorthand syntax to set the property value.
 
 ## Your first build
 
@@ -90,7 +105,9 @@ To build your block, open a terminal and navigate to the root of your block plug
 npm run build
 ```
 
-This will scan through the contents of your `src` directory, and compile the files from that directory into the `build` directory. If the `build` directory doesn't exist, it will be created.
+This will scan through the contents of your `src` directory, and compile the files from that directory into the `build` directory. 
+
+If the `build` directory doesn't exist, it will be created. 
 
 Whenever you make changes to your block code, you'll need to run this command again to update the build directory.
 

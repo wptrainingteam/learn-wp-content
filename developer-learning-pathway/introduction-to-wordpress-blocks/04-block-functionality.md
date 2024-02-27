@@ -12,7 +12,7 @@ It's often a good idea to start by building out the block's `Edit` component, so
 
 At the moment, the block displays in the editor with the scaffolded text: "Copyright Date Block – hello from the editor!"
 
-If you open the edit.js file in the `src` directory, and scroll to the bottom you'll see the following code:
+If you open the edit.js file in the `src` directory, and scroll past the imports to the bottom you'll see the following code:
 
 ```jsx
 export default function Edit() {
@@ -42,15 +42,15 @@ return (
 	);
 ```
 
-This code is known as JSX, and it's a special syntax that looks like HTML, but it's actually JavaScript. So while the `<p>` tags might look like typical HTML, you can see that there is some code inside the tags, which is wrapped in curly braces `{}`.
+This code is known as JSX, and it's a special syntax that looks like HTML, but it's actually JavaScript. So while the `<p>` tags might look like typical HTML paragraph tags, you can see that there is some code inside the tags, which is wrapped in curly braces `{}`.
 
 The curly braces are used to indicate that the code inside them should be evaluated as JavaScript, and the result should be inserted into the JSX.
 
 Learning about how JSX works is outside the scope of this lesson, but you can learn more about JSX on the [React](https://react.dev/learn/writing-markup-with-jsx) website.
 
-At this stage, what's important is to note that the code returned by the `Edit` component is wrapped in a `<p>` tag. This is the parent container of this component, and any React component can only return a single parent container.
+At this stage, what's important is to note that the code returned by the `Edit` component is wrapped in a single container element. This is the parent container of this component, and any React component must only return a single parent container. This means you can't return, for example, two `<p>` tags, or a `<p>` tag and a `<div>` tag, without ensuring they are inside one parent container.
 
-The second thing to note is the use of the `useBlockProps` function. This is a special function known as a React hook that is used to fetch the block's attributes.
+The second thing to note is the use of the `useBlockProps` function. This is a special function known as a [React hook](https://react.dev/reference/react/hooks) that is used to fetch the block's attributes.
 
 You'll see `useBlockProps` it has the three dots `...` before it, which is known in JavaScript as the [spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax). This takes the properties of an object and adds the objects key-value pairs to whatever it's being applied to.
 
@@ -74,7 +74,7 @@ return (
 );
 ```
 
-For the copyright symbol, you can use the HTML entity `&copy;`, which will be converted to the right symbol when it's rendered.
+For the copyright symbol, you can use the `&copy;` HTML entity, which will be converted to the right symbol when it's rendered.
 
 If you're wondering, the reason the symbol and year is rendered outside the `__()` function is because you only need to make the word "Copyright" translatable.
 
@@ -97,7 +97,7 @@ export default function Edit() {
 
 Once you've made the changes, save the file, and let the build run, or run the build command manually.
 
-When you refresh the post editor, you should see the block now displays the word "Copyright" followed by the copyright symbol and the current year.
+When you add the block to a post or page, you should see the block now displays the output you defined.
 
 ## Adding the block's save functionality
 
@@ -119,7 +119,7 @@ export default function save() {
 
 This is very similar to what was scaffolded in the `Edit` component, with a couple of differences.
 
-The biggest difference being that only a specific subset of the block's properties are applied to the parent tag, via `useBlockProps.save()`.
+The biggest difference being that only a specific subset of the block's properties are applied to the parent container, via `useBlockProps.save()`.
 
 This is because the `save` function is only concerned with the properties that are relevant to the front end, and not the editor.
 
@@ -144,4 +144,4 @@ Once the updated block has been built, add the block to a post, and preview it. 
 
 ## Additional resources
 
-To read more about the fundamentals of developing blocks, you can read the [Fundamentals of Block Development](https://developer.wordpress.org/block-editor/getting-started/fundamentals/) section of the Block Editor handbook as well as the [Edit and Save guide](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/) 
+To read more building your Edit and save functionality, take a look at the [Edit and Save reference guide](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/) in the Block Editor handbook. 

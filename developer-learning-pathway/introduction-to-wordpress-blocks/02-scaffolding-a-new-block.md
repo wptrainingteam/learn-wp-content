@@ -1,8 +1,8 @@
-# Scaffolding a new block with create-block
+# Scaffolding a new block
 
 Once you have the necessary tools installed for block development, you can start developing your first block.
 
-In this lesson, you will learn how to use a tool called create-block to scaffold your first block plugin.
+In this lesson, you will learn about a tool called create-block, which will allow you to quickly scaffold your first block plugin. You will learn why you should use create-block, how to use it, and review the code that it generates.
 
 ## What is create-block?
 
@@ -14,13 +14,13 @@ Create-block is a command line tool that helps you scaffold a new block plugin, 
 
 In software development, scaffolding is the process of creating a basic structure for a project, so that you can build on top of it.
 
-Using create-block, you can run a single terminal command to create a new block plugin, and create-block will set up the necessary files and folders for you.
+Using create-block, you can run a single terminal command to create a new block plugin, and create-block will set up the necessary files and folders for you, following the best practices for block development.
 
 ## Why a plugin?
 
 While it is not a requirement to develop a block as part of a plugin, it's generally the recommended approach.
 
-One of the main reasons for this is that custom blocks are not allowed in themes that are submitted to the WordPress.org theme repository.
+One of the main reasons for this is that custom blocks are not allowed in themes that are submitted to the WordPress.org theme directory.
 
 However, if you are developing a theme for your own use, or for a client, you can include custom blocks in your theme, the difference is that you register the blocks in a different way.
 
@@ -34,7 +34,7 @@ It's a basic yet practical block that has the following features:
 
  - It displays the text "Copyright", followed by the copyright symbol (©), then a starting year, and the current year 
  - The user should be able to adjust the alignment of the block on the page
- - It should have the following CSS applied to it at all times `border: 1px solid #111111;`
+ - It should have the following CSS applied to it at all times `border: 1px solid #111111; padding: 5px;`
  - The user should also be able to adjust the starting year
 
 ## Using Create Block
@@ -73,7 +73,7 @@ First, there are three directories:
 
 *   The `build` directory is where the final deployable build of the block will go. This is the code that powers the block when it's used in the editor. You should never need to touch this directory or any of the files in it directly.
 *   The `node_modules` directory is where all the modules that the build process depends on live. These are also known as the project dependencies. Again you will in all likelihood never look in here.
-*   The `src` directory is where you will spend most of your time. This is the directory that contains the files that you will work with to create the markup and the functionality of your block which are ultimately compiled into the `build` directory. 
+*   The `src` directory is where you will spend most of your time. This is the directory that contains the files that you will work with to create the markup and the functionality of your block. These are ultimately compiled into the code in the `build` directory. 
 
 Following those three directories are a number of files.
 
@@ -85,11 +85,13 @@ The purpose of these files is outside the knowledge needed for block development
 
 If you can't see these two files, you might have to enable Hidden Files in your directory browser or code editor.
 
-Next up is `wp-learn-new-block.php`. This is the main plugin file that initiates the execution of the plugin. Open up the file and look at the code inside.
+Next up is `copyright-date-block.php`. This is the main plugin file that initiates the execution of the plugin. 
 
-After the standard plugin header, this file contains just a few lines of executable PHP code consisting of a single function that is hooked onto the `init` action. 
+Inside that file you'll see the standard plugin header, and the PHP code that registers the block. 
 
-This function calls the `register_block_type()` function passing the path to the previously mentioned `build` directory as a parameter.
+Here the `copyright_date_block_copyright_date_block_block_init` function calls the `register_block_type()` function passing the path to the previously mentioned `build` directory as a parameter.
+
+This function is then hooked into the `init` action.
 
 Next, you'll see `package-lock.json` file and the `package.json` file.
 
@@ -150,6 +152,10 @@ All of your block development takes place in the `src` directory. Let's take a l
 During development, you will execute the scripts you saw in the `package.json` file to compile the files in the `src` directory into the `build` directory.
 
 The process of building your block code, also known as bundling your code, is the process of converting your block code into a format that is compatible with all browsers. 
+
+When you scaffolded the block, the `create-block` tool also ran the build process, generating the `build` directory for you. 
+
+You will notice that some files are bundled into the `build` directory as is, like the `block.json` file, while others are converted, like the `index.js` file. There are also additional files, like the `index.asset.php` file, that are generated during the build process. 
 
 When WordPress loads your block in the editor or on the front end, it's executing the code from the `build` directory.
 
