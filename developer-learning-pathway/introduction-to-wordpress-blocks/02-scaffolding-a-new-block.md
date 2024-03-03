@@ -71,9 +71,9 @@ Take a look at what the scaffolded block plugin looks like by opening the `copyr
 
 First, there are three directories:
 
-*   The `build` directory is where the final deployable build of the block will go. This is the code that powers the block when it's used in the editor. You should never need to touch this directory or any of the files in it directly.
-*   The `node_modules` directory is where all the modules that the build process depends on live. These are also known as the project dependencies. Again you will in all likelihood never look in here.
-*   The `src` directory is where you will spend most of your time. This is the directory that contains the files that you will work with to create the markup and the functionality of your block. These are ultimately compiled into the code in the `build` directory. 
+*   The `build` directory is where the final deployable build of the block code is located. This is the code that powers the block when it's used in the editor. You generally never need to touch this directory or any of the files in it.
+*   The `node_modules` directory is where all the Node.js packages are located. These are also known as the project dependencies, and you only need this for local block development. 
+*   The `src` directory is where you will spend most of your time writing block code. This is the directory that contains the files that you will use to develop yor block. These are ultimately compiled into the code in the `build` directory. 
 
 Following those three directories are a number of files.
 
@@ -122,11 +122,11 @@ The `package.json` file is a file that npm uses when developing a JavaScript pro
 
 It contains important details about your project, including any scripts that can be run on the project, and any dependencies.
 
-Dependencies are the external packages or modules that your project needs to run properly. For the purposes of block development, the only dependency you need is a development dependency of the `@wordpress/scripts` package. These dependencies are what are installed in your `node_modules` directory.
+Dependencies are the external packages or modules that your project needs to run properly. For the purposes of block development, the dependency you need is a development dependency of the `@wordpress/scripts` package. These dependencies are what are installed in your `node_modules` directory.
 
 The `scripts` object contains a list of command line scripts that can be run during development. The most important of these are:
 
- - `build` which compiles the JavaScript and SASS files in the `src` directory into the `build` directory
+ - `build` which compiles the files from the `src` directory into the `build` directory
  - `start` which starts a development server that watches for changes to the files in the `src` directory and automatically compiles them into the `build` directory
 
 You will learn how to use these scripts when you start developing your block.
@@ -149,7 +149,7 @@ All of your block development takes place in the `src` directory. Let's take a l
 
 ## The `build` directory
 
-During development, you will execute the scripts you saw in the `package.json` file to compile the files in the `src` directory into the `build` directory.
+During development, you will execute the scripts you saw in the `package.json` file to compile the files from the `src` directory into the `build` directory.
 
 The process of building your block code, also known as bundling your code, is the process of converting your block code into a format that is compatible with all browsers. 
 

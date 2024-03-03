@@ -2,11 +2,11 @@
 
 One of the benefits of building blocks is the ability to allow users to control the block's appearance and behavior via block attributes.
 
-Let's learn how to add attributes to a block, and now to add controls to your block to allow users to change those attributes.
+Let's learn how to add attributes to a block, and how to add controls to your block to allow users to change those attributes.
 
 ## Adding attributes to a block
 
-Attributes are the properties of a block that can be controlled by the user. For example, for the Copyright Date Block, the starting year should be an attribute that the user can change.
+Attributes are the properties of a block that can be controlled by the user. For example, for the Copyright Date Block, the starting year would be an attribute that the user can change.
 
 To add attributes to a block, you define them in the block's metadata in the `block.json` file.
 
@@ -101,7 +101,7 @@ You can fix this by using the "Attempt Block Recovery" button, which re-renders 
 
 ## Adding a Settings panel to the block
 
-To allow users to change the block's attributes, you need to make use of [Block Controls](https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/block-controls-toolbar-and-sidebar/). 
+To allow users to change the block's attributes, you need to make use of [Block Controls](https://developer.wordpress.org/block-editor/getting-started/fundamentals/block-in-the-editor/#block-controls-block-toolbar-and-settings-sidebar). 
 
 There are two ways to add controls, either in the block toolbar, that appears above the block when it's selected, or in the settings sidebar (also knowing as the inspector), which appears in the sidebar when the block is selected.
 
@@ -178,7 +178,7 @@ Alternatively you can use a [React Fragment](https://react.dev/reference/react/F
 ```jsx
 <>
     <InspectorControls>
-        <PanelBody title={ __( 'Settings', 'copyright-date-block' ) }>
+        <PanelBody title='Settings'>
             Testing
         </PanelBody>
     </InspectorControls>
@@ -196,9 +196,15 @@ Because the functionality of the block only really requires the paragraph tag, u
 
 Once the build process has finished, if you add the block to a post or page, and enable the Editor's Settings sidebar, you'll see the Settings panel you added to the block sidebar.
 
+To follow WordPress plugin development practices, one small update you might want to make, is to use the `__()` function to translate the title of the `PanelBody` component.
+
+```jsx
+<PanelBody title={ __( 'Settings', 'copyright-date-block' ) }>
+```
+
 ## Adding a TextControl to the block sidebar
 
-With the `PanelBody` component in place, you can now add a `TextControl` component to allow the user to edit your attribute.
+With Settings panel in place, you can now add a `TextControl` component to allow the user to edit your attribute.
 
 The `TextControl` component is a text input field that allows the user to enter a string. There are three properties you need to set on the `TextControl` component. The first two are the label and value:
 

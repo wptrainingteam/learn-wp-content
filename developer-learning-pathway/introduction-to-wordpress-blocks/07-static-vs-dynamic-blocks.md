@@ -73,7 +73,7 @@ You'll see that the block still renders as expected in the editor. However, if y
 
 When you preview it, the content is rendered. 
 
-However, if you simulate the year change, say by changing the date on your computer, the front end rendering of the block will update accordingly.
+However, if you simulate the year change, say by changing the value of the variable in PHP, the front end rendering of the block will update accordingly.
 
 ## Additional resources
 

@@ -1,6 +1,6 @@
 # Building your first block
 
-Once you've scaffolded your block using create-block, you can start building out the functionality. 
+Once you've scaffolded your block using `create-block`, you can start tweaking the code to meet your requirements. 
 
 Let's dive into what this might look like for the Copyright Date Block you scaffolded in the previous lesson.
 
@@ -29,13 +29,35 @@ function copyright_date_copyright_date_block_block_init() {
 
 This makes this code a little easier to read and understand.
 
-As you can see the code uses the `register_block_type` function to register the block using the metadata from the `block.json` file.
+As you can see the code uses the `register_block_type` function to register the block, which use the metadata from the `block.json` file.
 
 Therefore, now would be a good time to review the `block.json` file.
 
 ## Block Metadata
 
-Navigate to the `src` directory and open the `block.json` file. It contains the block metadata, in a JSON format.
+The `block.json` file contains the block metadata, in a JSON format.
+
+```json
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "create-block/copyright-date-block",
+	"version": "0.1.0",
+	"title": "Copyright Date Block",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "copyright-date-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
+
+```
 
 JSON stands for [JavaScript Object Notation](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON), and it's a lightweight data format that is easy for humans to read and write and easy for machines to parse and generate.
 
@@ -125,4 +147,4 @@ You'll notice that the icon has changed, and the description is more specific to
 
 ## Additional resources
 
-You can read more the block metadata fields in the [Metadata in block.json](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/) section of the [Block Editor Handbook](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/), as well as read more about the development platform and build process in the [Development platform](https://developer.wordpress.org/block-editor/how-to-guides/platform/) and the [Working with Javascript for the Block Editor](Working with Javascript for the Block Editor) sections.
+You can read more the block metadata fields in the [Metadata in block.json](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/) section of the Block Editor Handbook, as well as the development platform and build processes in the [Development platform](https://developer.wordpress.org/block-editor/how-to-guides/platform/) and the [Working with Javascript for the Block Editor](https://developer.wordpress.org/block-editor/getting-started/fundamentals/javascript-in-the-block-editor/) pages.

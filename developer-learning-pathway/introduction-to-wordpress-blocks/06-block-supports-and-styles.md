@@ -1,6 +1,6 @@
 # Block supports and Block styles
 
-One of the benefits of building blocks is the ability to control the block's appearance on a per block level. 
+One of the benefits of blocks is the ability to control the block's appearance on a per block level. 
 
 To do this, you can use something called block supports, as well as define the block's styles. 
 
@@ -8,9 +8,9 @@ Let's take a look at how this works.
 
 ## Block supports
 
-Block Supports is the API that allows a block to declare support for certain common features. 
+Block [Supports](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/) is the API that allows a block to declare support for certain common features. 
 
-For example, most blocks support the ability to set their alignment, background and text color, fonts and font size, and more.
+For example, most blocks support the ability to set their alignment, background and text color, typography, and more.
 
 You can define support for these common features in the block metadata, and once enabled, the block will have those abilities enabled in the Editor.
 
@@ -90,3 +90,5 @@ You'll see that the block now has the border and border color that you defined i
 ## Conclusion
 
 When you're developing your blocks, it's useful to think about what appearance elements you want users to be able to edit, vs what should always apply to the block. Then you can either add the relevant support or hard code any specific styles into the relevant style file. 
+
+For more information on Block Supports, check out the detailed [Supports](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/) page, in the Block Editor Handbook.

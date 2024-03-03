@@ -1,6 +1,6 @@
 # Getting set up for block development
 
-WordPress' blocks are the default way in which a WordPress site represents content in the dashboard.
+WordPress' blocks are the default way in which a WordPress site stores and represents content.
 
 Let's take a quick look at what blocks are, how they work, and what you need to get started developing them.
 
@@ -42,6 +42,10 @@ The `backgroundColor` property is added to the block wrapper in a special format
 
 Besides your local WordPress installation and a code editor, there are some additional tools you need to develop blocks.
 
+You need a terminal, to run commands.
+
+And you need an installation of Node.js and npm. 
+
 ## All about the terminal
 
 The first thing you will need is access to a terminal to run commands.
@@ -64,13 +68,15 @@ Once you have a working terminal, you will be able to install the software you n
 
 ## Node.js and npm
 
-Block development relies on the use of a JavaScript framework called [React](https://react.dev). To use React you need to install Node.js and npm on your local computer.
+Block development relies on the use of a JavaScript framework called [React](https://react.dev). To use React you need to install [Node.js and npm](https://nodejs.org/en) on your local computer.
 
 ## Installing Node.js.
 
 Because npm is bundled with Node.js, you just need to install Node.js to get up and running.
 
-While there are a number of ways to install Node.js with npm, we recommend using a tool called nvm, which stands for Node Version Manager. You can find details about nvm at [github.com/nvm-sh](https://github.com/nvm-sh).
+While there are a number of ways to install Node.js with npm, we recommend using a tool called nvm, which stands for Node Version Manager. 
+
+You can find details about nvm at [github.com/nvm-sh](https://github.com/nvm-sh).
 
 This will enable you to install and use different versions of Node.js, depending on the requirements of the software you're working with.
 
@@ -110,9 +116,9 @@ Once nvm is installed, use the `nvm install` command to install the required Nod
 
 ## NVM usage
 
-To install Node.js and npm, use the `nvm install` command with the version number you want to install. 
+At the time of this recording, the current stable LTS (long term support) version of Node.js is version 20, but check the Node.js website to see if a newer version is out when you're installing Node.js.
 
-At the time of this recording, the current stable LTS (long term support) version of Node.js is version 20, but check the Node.js website to see if a newer version is out when you're installing Node.js.  
+To install Node.js and npm, use the `nvm install` command with the version number you want to install.
 
 ```bash
 nvm install 20
@@ -144,7 +150,7 @@ Additionally, it's possible to run the `npm use` command with the LTS option.
 nvm use --lts
 ```
 
-Finally, if you do have more than one version of Node.js and npm installed, you can set the default version to use by running the `nvm alias` command.
+Finally, if you do have more than one version of Node.js and npm installed, you can set the default version to use by running the `nvm alias default` command.
 
 ```bash
 nvm alias default 20

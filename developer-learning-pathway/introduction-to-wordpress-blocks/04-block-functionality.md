@@ -1,8 +1,8 @@
 # Block Functionality
 
-Now that you have a basic block set up, you can start adding the block's functionality.
+After making any changes to your plugin file and block metadata, you can start adding the block's core functionality.
 
-This is usually a case of adding the block's functionality in the editor, via the Edit component, and how the block stores it's output, via the save function. 
+This is usually a case of adding the block's functionality in the editor, via the Edit component, and adding how the block stores it's output, via the save function. 
 
 Let's look at what it takes to add the block's functionality.
 
@@ -10,7 +10,7 @@ Let's look at what it takes to add the block's functionality.
 
 It's often a good idea to start by building out the block's `Edit` component, so it functions correctly in the editor.
 
-At the moment, the block displays in the editor with the scaffolded text: "Copyright Date Block – hello from the editor!"
+At the moment, the block displays in the editor with the scaffolded text: "Copyright Date Block – hello from the editor!", and the scaffolded styles
 
 If you open the edit.js file in the `src` directory, and scroll past the imports to the bottom you'll see the following code:
 
@@ -29,7 +29,7 @@ export default function Edit() {
 
 This is the code that displays the block in the editor, also known as the `Edit` component. There are a couple of things to note here.
 
-The first is that the component returns what looks like a paragraph block with some text inside it.:
+The first is that the component returns what looks like a paragraph tag with some text inside it.:
 
 ```jsx
 return (
@@ -49,6 +49,8 @@ The curly braces are used to indicate that the code inside them should be evalua
 Learning about how JSX works is outside the scope of this lesson, but you can learn more about JSX on the [React](https://react.dev/learn/writing-markup-with-jsx) website.
 
 At this stage, what's important is to note that the code returned by the `Edit` component is wrapped in a single container element. This is the parent container of this component, and any React component must only return a single parent container. This means you can't return, for example, two `<p>` tags, or a `<p>` tag and a `<div>` tag, without ensuring they are inside one parent container.
+
+Depending on your code editor, if you do this, you might see all kinds of red warnings.
 
 The second thing to note is the use of the `useBlockProps` function. This is a special function known as a [React hook](https://react.dev/reference/react/hooks) that is used to fetch the block's attributes.
 
@@ -78,7 +80,7 @@ For the copyright symbol, you can use the `&copy;` HTML entity, which will be co
 
 If you're wondering, the reason the symbol and year is rendered outside the `__()` function is because you only need to make the word "Copyright" translatable.
 
-You probably don't want to hard code that date though, so you can use some JavaScript to get the current year as a variable, and replace the year with the variable.
+You probably don't want to hard code that end date though, so you can use some JavaScript to get the current year as a variable, and replace the year with the variable.
 
 ```jsx
 export default function Edit() {
@@ -101,7 +103,9 @@ When you add the block to a post or page, you should see the block now displays 
 
 ## Adding the block's save functionality
 
-The next step is to update the block's save functionality, so it renders correctly on the front end.
+The next step is to update the block's save functionality, so it renders correctly on the front end. 
+
+Right now, when you preview the block, it's still showing the scaffolded text.
 
 The save function in the `save.js` file is what is run every time the block is saved in the Editor. This is the content that is stored in the `post_content` field in the database, and rendered on the front end.
 
@@ -119,13 +123,13 @@ export default function save() {
 
 This is very similar to what was scaffolded in the `Edit` component, with a couple of differences.
 
-The biggest difference being that only a specific subset of the block's properties are applied to the parent container, via `useBlockProps.save()`.
+One difference is that only a specific subset of the block's properties are applied to the parent container, via `useBlockProps.save()`.
 
 This is because the `save` function is only concerned with the properties that are relevant to the front end, and not the editor.
 
 The other difference is that the code inside the parent tag is all on one line.
 
-This is mostly irrelevant to the block's actually functionality, and it just shows a different way to write the same code. Some developers prefer to split out the code onto multiple lines, as it makes it more readable in some circumstances.
+This is mostly irrelevant to the block's actual functionality, and it just shows a different way to write the same code. Some developers prefer to split out the code onto multiple lines, as it makes it more readable in some circumstances.
 
 So you can update the `save` function to return the same content as the `Edit` component.
 
