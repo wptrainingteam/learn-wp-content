@@ -118,13 +118,13 @@ For more information about MySQL and SQL statements, you can visit the following
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:00) What is MySQL?
-(0:00) Creating tables
-(0:00) Adding rows to a table
-(0:00) Reading rows from a table
-(0:00) Updating rows in a table
-(0:00) Deleting rows from a table
-(0:00) Database Keys
-(0:00) Running queries from PHP
-(0:00) Additional Resources
+0:00 Introduction
+0:15 What is MySQL?
+1:11 Creating tables
+1:42 Adding rows to a table
+2:08 Reading rows from a table
+2:51 Updating rows in a table
+3:18 Deleting rows from a table
+3:45 Database Keys
+4:29 Running queries from PHP
+5:18 Additional Resources

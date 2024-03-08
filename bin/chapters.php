@@ -17,7 +17,7 @@ foreach (glob('*.md') as $file) {
 			// remove all hashes and any leading/trailing whitespace
 			$line = trim(str_replace('#', '', $line));
 			// store the heading in the headings array
-			$headings[] = '(0:00) ' . $line;
+			$headings[] = '0:00 ' . $line;
 		}
 	}
 	// write the headings to the bottom of the markdown file, with a heading of "YouTube chapters"

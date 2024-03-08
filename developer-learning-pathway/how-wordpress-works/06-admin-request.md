@@ -35,5 +35,5 @@ There are however a lot of commonalities in how each of these different admin fi
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:15) What is an admin request?
+0:00 Introduction
+0:15 What is an admin request?

@@ -74,13 +74,11 @@ Congratulations, you've successfully installed WordPress on your local developme
 
 For more information on this process you can refer to the [How to install WordPress](https://developer.wordpress.org/advanced-administration/before-install/howto-install/) section in the developer documentation on WordPress.org.
 
-
-
 ## YouTube chapters
 
-(0:00) Introduction
-(0:00) Requirements
-(0:00) Downloading WordPress
-(0:00) Copy the WordPress files to your local development environment
-(0:00) The famous five minute install
-(0:00) Conclusion
+0:00 Introduction
+0:43 Requirements
+1:42 Downloading WordPress
+2:36 Copy the WordPress files to your local development environment
+2:53 The famous five minute install
+5:25 Conclusion

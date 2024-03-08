@@ -127,6 +127,7 @@ For more information about CSS, you can visit the following online resources:
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:00) What is CSS?
-(0:00) Additional Resources
+0:00 Introduction
+0:17 What is CSS?
+2:28 Using CSS
+3:23 Additional Resources

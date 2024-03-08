@@ -140,7 +140,7 @@ You can use this list to check when the hook you want to use is run, and then us
 
 ## YouTube chapters
     
-(00:00) Introduction
-(00:10) Hook priority
-(01:00) Hook parameters
-(02:00) Hook order
+00:00 Introduction
+00:16 Hook priority
+2:25 Hook parameters
+5:47 Hook order

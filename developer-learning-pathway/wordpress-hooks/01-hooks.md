@@ -75,8 +75,8 @@ Don't worry if none of this makes sense right now, as we will cover this in more
 
 ## YouTube Chapters
 
-(0:00) Introduction
-(0:20) What are hooks?
-(1:00) How hooks work
-(2:00) How you can use hooks
-(3:00) Conclusion
+0:00 Introduction
+0:24 What are hooks?
+0:47 How hooks work
+2:00 How you can use hooks
+3:00 Conclusion

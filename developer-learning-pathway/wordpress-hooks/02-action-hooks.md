@@ -76,6 +76,6 @@ As you learned from this example you can use actions to perform something, eithe
 
 ## YouTube chapters
 
-(00:00) Introduction
-(00:10) What are action hooks
-(00:30) Using action hooks
+00:00 Introduction
+00:10 What are action hooks
+00:30 Using action hooks

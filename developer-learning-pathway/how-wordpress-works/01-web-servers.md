@@ -100,8 +100,8 @@ When a user visits a URL on a WordPress site, the following happens:
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:24) What is a web server?
-(3:10) Apache/Nginx configuration
-(4:16) Directory Index
-(5:37) WordPress request flow
+0:00 Introduction
+0:24 What is a web server?
+3:10 Apache/Nginx configuration
+4:16 Directory Index
+5:37 WordPress request flow

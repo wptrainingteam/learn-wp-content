@@ -46,7 +46,7 @@ You will need to review all the features of each option, the pros and cons, and 
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:00) A quick intro to terminology
-(0:00) Local development environments
-(0:00) Choosing a local development environment
+0:00 Introduction
+0:17 A quick intro to terminology
+1:07 Local development environments
+3:18 Choosing a local development environment

@@ -93,6 +93,7 @@ For more information about JavaScript, you can visit the following online resour
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:00) What is JavaScript?
-(0:00) Additional Resources
+0:00 Introduction
+0:15 What is JavaScript?
+0:35 Using JavaScript
+3:16 Additional Resources

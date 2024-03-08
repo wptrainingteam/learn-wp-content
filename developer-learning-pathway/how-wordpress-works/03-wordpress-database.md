@@ -125,7 +125,7 @@ Being able to correctly identify and interact with the tables in a WordPress dat
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:35) Interacting with your WordPress database
-(1:36) Database Tables
-(8:12) Conclusion
+0:00 Introduction
+0:35 Interacting with your WordPress database
+1:36 Database Tables
+8:12 Conclusion

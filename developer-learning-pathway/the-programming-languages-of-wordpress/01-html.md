@@ -71,6 +71,7 @@ For more information about HTML, you can visit the following online resources:
 
 ## YouTube chapters
 
-(0:00) What is HTML?
-(0:00) Accessible HTML
-(0:00) Additional Resources
+0:00 Introduction
+0:20 What is HTML?
+3:11 Accessible HTML
+3:50 Additional Resources

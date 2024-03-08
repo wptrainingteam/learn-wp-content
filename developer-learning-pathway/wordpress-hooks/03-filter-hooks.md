@@ -83,6 +83,6 @@ So, as you can see from this example, filter hooks allow you to modify certain p
 
 ## YouTube chapters
 
-(00:00) Introduction
-(00:10) What are filter hooks
-(00:30) Using filter hooks
+00:00 Introduction
+00:10 What are filter hooks
+00:30 Using filter hooks

@@ -38,6 +38,8 @@ if ( isset( $_GET['color'] ) ) {
 </html>
 ```
 
+## Using PHP
+
 The first thing you will notice is that the file extension of the document changed from `.html` to `.php`. This tells the server that the document contains PHP code. 
 
 Then, any PHP code you want to add to the document needs to be wrapped in PHP tags.
@@ -73,6 +75,7 @@ For more information about PHP, you can visit the following online resources:
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:00) What is PHP?
-(0:00) Additional Resources
+0:00 Introduction
+0:10 What is PHP?
+0:52 Using PHP
+3:27 Additional Resources

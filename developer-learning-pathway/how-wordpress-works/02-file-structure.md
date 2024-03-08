@@ -73,9 +73,9 @@ Along side these files, the root directory of a WordPress installation also cont
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:29) The root directory
-(0:35) Static files
-(1:53) PHP files that control a WordPress request
-(3:00) Additional PHP files in the root directory
-(5:32) Root directories
+0:00 Introduction
+0:29 The root directory
+0:35 Static files
+1:53 PHP files that control a WordPress request
+3:00 Additional PHP files in the root directory
+5:32 Root directories

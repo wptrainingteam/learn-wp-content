@@ -17,3 +17,10 @@ There is also [Log Deprecated Notices](https://wordpress.org/plugins/log-depreca
 
 You will learn more about each of these tools in future lessons.
 
+## YouTube chapters
+
+0:00 Introduction
+0:13 Theme test data
+0:28 Theme check and Plugin check
+0:45 Debugging tools
+

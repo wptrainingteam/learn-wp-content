@@ -113,12 +113,12 @@ Back to wp-blog-header.php, after all the query data is set up the template load
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:12) What is a front-end request?
-(0:33) A note on require, require_once, include, include_once
-(0:57) wp-blog-header.php
-(1:03) wp-load.php
-(1:43) wp-config.php
-(1:57) wp-settings.php
-(4:45) wp() function
-(6:53) template-loader.php
+0:00 Introduction
+0:12 What is a front-end request?
+0:33 A note on require, require_once, include, include_once
+0:57 wp-blog-header.php
+1:03 wp-load.php
+1:43 wp-config.php
+1:57 wp-settings.php
+4:45 wp() function
+6:53 template-loader.php

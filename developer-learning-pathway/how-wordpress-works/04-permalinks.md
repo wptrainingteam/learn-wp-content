@@ -86,6 +86,6 @@ Whenever a permalink structure is set, if you add links to internal content like
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:39) Query String Variables
-(2:18) WordPress and Permalinks
+0:00 Introduction
+0:39 Query String Variables
+2:18 WordPress and Permalinks

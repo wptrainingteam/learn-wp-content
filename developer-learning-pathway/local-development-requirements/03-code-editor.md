@@ -12,31 +12,31 @@ You would however be missing out on all the best features that true code editors
 
 If you don't already have a code editor or IDE that you are comfortable with, here are some options to consider.
 
-### Visual Studio Code
+## Visual Studio Code
 
 [Visual Studio Code](https://code.visualstudio.com/) is a free and open source code editor created by Microsoft. It is available for Windows, Mac, and Linux. It offers support for a wide range of languages, including HTML, PHP, JavaScript, and CSS. It also offers additional features like a built-in terminal, with the ability to add more features through extensions.
 
-### VIM
+## VIM
 
 [VIM](https://www.vim.org/) is a free and open source text editor that is available for Windows, Mac, and Linux. It is a command line based editor, and is not as user-friendly as other editors. It does however offer a wide range of features, and is highly customizable.
 
-### Brackets
+## Brackets
 
 [Brackets](http://brackets.io/) is a free and code editor originally created by Adobe but now open sourced. It is available for Windows, Mac, and Linux. Brackets is similar to Visual Studio Code in that it offers support for a wide range of languages, and additional features through extensions.
 
-### Sublime Text
+## Sublime Text
 
 [Sublime Text](https://www.sublimetext.com/) is a code editor that is available for Windows, Mac, and Linux. It is not free, but does offer a free trial, and was another popular code editor before Visual Studio Code was released.
 
-### Notepad++
+## Notepad++
 
 [Notepad++](https://notepad-plus-plus.org/) is a free and open source editor that is available for Windows. Often seen as a powerful replacement for the default Windows text editor, it's also popular as a code editor.
 
-### TextMate
+## TextMate
 
 [TextMate](https://macromates.com/) is a free and open source editor that is available for Mac. Like Notepad++, it is a replacement for the default MacOS text editor and offers code editor features.
 
-### PhpStorm
+## PhpStorm
 
 [PhpStorm](https://www.jetbrains.com/phpstorm/) is a fully integrated development environment created by JetBrains. It is available for Windows, Mac, and Linux. It is not free, but does offer a free trial, and is popular with developers who work with PHP based applications.
 
@@ -48,6 +48,13 @@ For much of the content on Learn.WordPress.org, we will be using Visual Studio C
 
 ## YouTube chapters
 
-(0:00) Introduction
-(0:00) Choosing a code editor
-(0:00) Conclusion
+0:00 Introduction
+0:07 Choosing a code editor
+0:31 Visual Studio Code
+0:52 VIM
+1:07 Brackets
+1:23 Sublime Text
+1:36 Notepad++
+1:48 TextMate
+1:58 PhpStorm
+2:14 Conclusion
