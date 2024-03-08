@@ -101,3 +101,10 @@ Just like with regular taxonomies, you will be able to browse the archive page f
 To read more about custom taxonomies, and how to register them, visit the [Taxonomies](https://developer.wordpress.org/plugins/taxonomies/) page in the Plugin developer handbook.
 
 It's also a good idea to read the full [register_taxonomy](https://developer.wordpress.org/reference/functions/register_taxonomy/) function reference page in the WordPress developer documentation, as it contains a full list of all the arguments that can be passed to the function, and what they do.
+
+## YouTube chapters
+
+0:00 Introduction
+0:00 Why use custom taxonomies
+0:00 Registering a custom taxonomy
+0:00 Further reading

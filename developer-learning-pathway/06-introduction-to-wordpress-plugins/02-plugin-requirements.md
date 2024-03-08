@@ -99,7 +99,7 @@ You can read more about this and other suggestions in the [Best Practices](https
 
 ## YouTube chapters
 
-(0:00) Creating your first plugin
-(0:00) How WordPress identifies and stores active plugins
-(0:00) Plugin header fields
-(0:00) Plugin best practices
+0:00 Creating your first plugin
+0:00 How WordPress identifies and stores active plugins
+0:00 Plugin header fields
+0:00 Plugin best practices

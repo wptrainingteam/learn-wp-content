@@ -42,8 +42,8 @@ You can find the plugin developer handbook by visiting developer.wordpress.org a
 
 ## YouTube chapters
 
-(0:00) What is a plugin
-(0:00) Why use a plugin
-(0:00) The WordPress plugin directory
-(0:00) The structure of a WordPress plugin
-(0:00) The plugin developer handbook
+0:00 What is a plugin
+0:00 Why use a plugin
+0:00 The WordPress plugin directory
+0:00 The structure of a WordPress plugin
+0:00 The plugin developer handbook

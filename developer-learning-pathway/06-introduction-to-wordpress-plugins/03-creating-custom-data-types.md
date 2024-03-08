@@ -177,8 +177,8 @@ It's also a good idea to read the full [register_post_type](https://developer.wo
 
 ## YouTube chapters
 
-(0:00) Building an online bookstore
-(0:00) Custom post types
-(0:00) Implementing the book custom post type
-(0:00) Custom Post types and performance
-(0:00) Further reading
+0:00 Building an online bookstore
+0:00 Custom post types
+0:00 Implementing the book custom post type
+0:00 Custom Post types and performance
+0:00 Further reading

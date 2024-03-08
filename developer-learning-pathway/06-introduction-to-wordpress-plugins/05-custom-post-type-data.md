@@ -88,10 +88,9 @@ Working with custom meta boxes however also requires a good understanding of dev
 
 You will learn how to work with meta boxes in the plugin developer learning pathway.
 
-Hello Bianca
+## YouTube chapters
 
-We would like to proceed with booking for the 30th & 31st of May.
-
-Please let me know what you would need from us to prepare a quote so that we can get sign-off.
-
-Regards
+0:00 What is post meta
+0:00 Adding post meta
+0:00 The Custom Fields panel
+0:00 Pre-populated field names for the Custom Fields panel
