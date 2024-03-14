@@ -1,12 +1,14 @@
 # Custom post type data
 
+## Introduction
+
 Sometimes, the default custom post type fields might not be enough, and you need to store additional data on a custom post type. 
 
 Fortunately WordPress supports something called post metadata, which allows you to store additional information about a post.
 
 Let's look at how you can use post metadata on a post, or custom post type.
 
-## What is post meta
+## What is post metadata
 
 Post metadata is a way to store additional information about a post in the WordPress database. 
 
@@ -14,9 +16,9 @@ Post metadata is stored in the `postmeta` table as key-value pairs. If you look 
 
 `post_id` is the ID of the post that the metadata is associated with. `meta_key` is the name of the metadata field, and `meta_value` is its value.
 
-## Adding post meta
+## Adding post metadata
 
-You can add post meta to a post using the `add_post_meta` [function](https://developer.wordpress.org/reference/functions/add_post_meta/). This function takes three parameters: the ID of the post, the name of the meta data, and the value of the meta data.
+You can add post meta to a post using the `add_post_meta` [function](https://developer.wordpress.org/reference/functions/add_post_meta/). This function takes three parameters: the ID of the post, the name of the metadata, and the value of the metadata.
 
 So lets say you wanted to add a post meta field to a post with the ID of 1, and you wanted to store the location where the post was written as `London`. 
 
@@ -82,7 +84,9 @@ If the post type is book, it will add the `isbn` meta field to the Custom Fields
 
 If you create or edit a book, with the Custom Fields panel enabled, you'll see the `isbn` field available to add metadata to the post.
 
-Another way to allow site administrators to add post meta is to use custom meta boxes. 
+## Custom Meta Boxes
+
+Another way to allow site administrators to add post meta is to use custom meta boxes.
 
 Working with custom meta boxes however also requires a good understanding of developing with security in mind, but for now you can read about them in the [Custom Meta Boxes](https://developer.wordpress.org/plugins/metadata/custom-meta-boxes/) page in the Plugin developer handbook.
 
@@ -90,7 +94,10 @@ You will learn how to work with meta boxes in the plugin developer learning path
 
 ## YouTube chapters
 
-0:00 What is post meta
-0:00 Adding post meta
-0:00 The Custom Fields panel
-0:00 Pre-populated field names for the Custom Fields panel
+0:00 Introduction
+0:23 What is post meta
+0:57 Adding post meta
+1:41 The Custom Fields panel
+2:55 Pre-populated field names for the Custom Fields panel
+4:22 Custom Meta Boxes
+

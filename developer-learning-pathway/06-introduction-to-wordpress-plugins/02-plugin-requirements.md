@@ -1,5 +1,7 @@
 # Plugin requirements
 
+## Introduction
+
 Now that you know what a plugin is, let's explore what you need to create one.
 
 ## Creating your first plugin
@@ -99,7 +101,8 @@ You can read more about this and other suggestions in the [Best Practices](https
 
 ## YouTube chapters
 
-0:00 Creating your first plugin
-0:00 How WordPress identifies and stores active plugins
-0:00 Plugin header fields
-0:00 Plugin best practices
+0:00 Introduction
+0:05 Creating your first plugin
+1:44 How WordPress identifies and stores active plugins
+3:29 Plugin header fields
+3:59 Plugin best practices

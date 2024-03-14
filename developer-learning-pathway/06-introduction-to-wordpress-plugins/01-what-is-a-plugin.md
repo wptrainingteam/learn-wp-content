@@ -1,5 +1,7 @@
 # Developing WordPress plugins
 
+## Introduction
+
 Welcome to the introduction to developing WordPress plugins.
 
 ## What is a plugin?
@@ -42,8 +44,9 @@ You can find the plugin developer handbook by visiting developer.wordpress.org a
 
 ## YouTube chapters
 
-0:00 What is a plugin
-0:00 Why use a plugin
-0:00 The WordPress plugin directory
-0:00 The structure of a WordPress plugin
-0:00 The plugin developer handbook
+0:00 Introduction
+0:04 What is a plugin
+0:23 Why use a plugin
+0:52 The WordPress plugin directory
+1:09 The structure of a WordPress plugin
+2:07 The plugin developer handbook

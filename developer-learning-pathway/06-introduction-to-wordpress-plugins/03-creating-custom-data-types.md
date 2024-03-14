@@ -1,5 +1,7 @@
 # Creating custom post types
 
+## Introduction
+
 One of the more common use cases for developing a custom plugin is to take advantage of the WordPress Post API to create custom post types.
 
 ## Building an online bookstore
@@ -177,8 +179,9 @@ It's also a good idea to read the full [register_post_type](https://developer.wo
 
 ## YouTube chapters
 
-0:00 Building an online bookstore
-0:00 Custom post types
-0:00 Implementing the book custom post type
-0:00 Custom Post types and performance
-0:00 Further reading
+0:00 Introduction
+0:09 Building an online bookstore
+0:54 Custom post types
+1:46 Implementing the book custom post type
+4:38 Custom Post types and performance
+5:18 Further reading

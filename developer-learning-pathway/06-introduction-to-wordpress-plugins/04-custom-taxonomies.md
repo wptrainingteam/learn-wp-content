@@ -1,8 +1,8 @@
 # Custom taxonomies
 
-In WordPress, taxonomies are a way to group things together. In a default WordPress install, there are two types of registered taxonomies: categories and tags.
-
 ## Introduction
+
+In WordPress, taxonomies are a way to group things together. In a default WordPress install, there are two types of registered taxonomies: categories and tags.
 
 When developing a plugin that registers a custom post type, you can also register custom taxonomies.
 
@@ -105,6 +105,6 @@ It's also a good idea to read the full [register_taxonomy](https://developer.wor
 ## YouTube chapters
 
 0:00 Introduction
-0:00 Why use custom taxonomies
-0:00 Registering a custom taxonomy
-0:00 Further reading
+0:32 Why use custom taxonomies
+1:04 Registering a custom taxonomy
+3:06 Further reading
