@@ -104,32 +104,6 @@ For example, you can update the `wp-json/wp/v2/posts` route to order by post tit
 wp-json/wp/v2/posts?_fields=author,id,excerpt,title,link&per_page=5&orderby=title&order=asc
 ```
 
-## Authentication
-
-By default, the WordPress REST API uses the same cookie based Authentication method that is used when logging into the WordPress dashboard. 
-
-As you can see from the earlier examples, the GET requests you made to the REST API were not authenticated, because that data is public.
-
-So for any REST API endpoints that are not public, or require an authentication user to view or modify, the authentication cookie needs to be present. This is how the block editor works, for example.
-
-There are a number of ways to authenticate requests, including [JSON Web Tokens](https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/) and [OAuth](https://wordpress.org/plugins/rest-api-oauth1/).
-
-Another way that's built into WordPress is [Application passwords](https://make.wordpress.org/core/2020/11/05/application-passwords-integration-guide/).
-
-Application passwords can be set on a per-user basis, and are used to authenticate requests to the WP REST API. This allows you to let users access the API without having to share the password they use to log in to the WordPress dashboard.
-
-To create an application password for your user, navigate to your user in the Users list, and click on the User to edit it. Scroll down to the bottom of the screen, under the Application Passwords section. 
-
-Give the new application password a name and click Add New Application Password.
-
-The password will be generated for you. Make sure to copy it and store it somewhere securely, as you won't be able to see it again. 
-
-In this screen you are also able to revoke the password, should it ever be leaked.
-
-Using an application password for your user is a great way to test out REST API requests. In a future lesson, you'll learn to use an external tool to test REST API routes and endpoints. 
-
-If you intend building something more complex, like a mobile app that connects to a WordPress REST API, you should rather consider using JSON Web Tokens or OAuth 1.0a.
-
 ## Further Reading
 
 The WordPress Developer Resources site has an entire section handbook to the [REST API](https://developer.wordpress.org/rest-api/) which includes sections on the key REST API concepts, frequently asked questions, using and extending the REST API, and more.
