@@ -6,7 +6,7 @@ While the WP REST API is commonly used to fetch data from WordPress, it can also
 
 The REST API also allows you to create, update, and delete various WordPress data types.
 
-In this lesson, you'll learn about the WP REST API schema, methods to authenticate a WP REST API request, tools to test WP REST API endpoints, as well as a couple of ways to add, edit or delete data via the WP REST API.
+In this lesson, you'll learn about the WP REST API schema, methods to authenticate a WP REST API request, tools to test WP REST API requests, as well as a couple of ways to add, edit or delete data via the WP REST API.
 
 If you skipped the previous lessons in this module, download the [Bookstore plugin](https://github.com/wptrainingteam/beginner-developer/raw/main/bookstore.1.0.zip) from the link in the repository readme, and install and activate the plugin on your local WordPress install.
 
@@ -24,7 +24,9 @@ You will notice that many of the endpoint fields match up with the fields that a
 
 By default, the WordPress REST API uses the same cookie based Authentication method that is used when logging into the WordPress dashboard.
 
-For any REST API endpoints that are not public, or require an authentication user to view or modify, the authentication cookie needs to be present. This is how the block editor works, for example.
+For any REST API endpoints that are not public, or require an authentication user to view or modify, the authentication cookie needs to be present. 
+
+This is how the block editor works, for example.
 
 There are a number of ways to authenticate requests, including [JSON Web Tokens](https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/) and [OAuth](https://wordpress.org/plugins/rest-api-oauth1/).
 
@@ -98,7 +100,7 @@ Using a tool like Postman to test REST API endpoints is a great way to learn how
 
 ## Creating a Book
 
-Let's use the WP REST API and the Backbone JavaScript client to create a new post. 
+Let's use the WP REST API and api-fetch to create a new post. 
 
 To do so, we'll need to pass the title and content fields to a new post model.
 
@@ -161,60 +163,30 @@ Inside the `submitBook` function, you'll need to get the title and content value
     const content = document.getElementById( 'bookstore-book-content' ).value;
 ```
 
-Next, you'll need to create a new book model object, using [the Backbone.js Post model](https://developer.wordpress.org/rest-api/using-the-rest-api/backbone-javascript-client/#model-examples).
-
-Because the `book` custom post type has support for the REST API, the `books` custom endpoint becomes available as a `Books` model.
-
-You will then need to pass the values for the title and content to the model object.
+Now you can create the request to the books endpoint using api-fetch, by setting the path to the `books` endpoint, setting the request method to `POST` and passing the `title` and `content` as a data object:
 
 ```js
-    const book = new wp.api.models.Books( {
-        title: title,
-        content: content
+    wp.apiFetch( {
+        path: '/wp/v2/books/',
+        method: 'POST',
+        data: {
+            title: title,
+            content: content
+        },
+    } ).then( ( result ) => {
+        alert( 'Book saved!' );
     } );
 ```
 
-Finally, you'll need to send the request to save the data, using the Posts model's `save` method. You can also add a `done` callback to handle the response once the post is saved:
+Open the custom admin page, enter a title and content, and click the Add button. You should see an alert that says "Book saved!".
 
-```js
-book.save().done( function ( book ) {
-    alert( 'Book saved!' );
-} );
-```
-
-You can perform the same functionality using the fetch api. 
-
-```js
-wp.apiFetch( {
-    path: '/wp/v2/books/',
-    method: 'POST',
-    data: {
-        title: title,
-        content: content
-    },
-} ).then( ( result ) => {
-    alert( 'Book saved!' );
-} );
-```
+Then, if you browse to the list of books, you'll see your new book listed.
 
 ## Updating and Deleting Posts
 
 You can also use the WP REST API to update and delete posts.
 
-When using the Backbone JavaScript client, you can use the same code as adding a post, but you'll need to include the post id when creating the Post model object, and include the new values for the relevant fields.
-
-```js
-    const book = new wp.api.models.Books( {
-        id: id,
-        title: newTitle,
-        content: newContent,
-    } );
-    book.save().done( function ( book ) {
-        alert( 'Book Updated!' );
-    } );
-```
-
-using the apiFetch method means updating the URL to include the id, and changing the method to POST.
+You can use the same api-fetch implementation for updating items as you did for adding items. You need to update the path to include the ID of the data entity being updated (in this case books), so that it updates that item, as well as the updated data object, with the new values for the fields you want to update. 
 
 ```js
     wp.apiFetch( {
@@ -229,16 +201,7 @@ using the apiFetch method means updating the URL to include the id, and changing
     } );
 ```
 
-Deleting a post using Backbone requires you to create the model object using the id, and then call the destroy method on the object.
-
-```js
-    const book = new wp.api.models.Books( { id: id } );
-    book.destroy().done( function ( book ) {
-        alert( 'Book deleted!' );
-    } );
-```
-
-The apiFetch method requires you to update the URL to include the id, and change the method to DELETE.
+Deleting a post only requires the path to be set to the URL of the item, and setting the method to `DELETE`.
 
 ```js
     wp.apiFetch( {
@@ -251,14 +214,12 @@ The apiFetch method requires you to update the URL to include the id, and change
 
 ## POSTing Block Markup
 
-During these examples, you may have noticed how the book content is displayed as a Classic Block. This is because you're not passing block markup to the Books model. You can pass block markup to the Books model, for example by wrapping the content in a `wp:paragraph` block tags, but this is beyond the scope of this tutorial.
+During these examples, you may have noticed how the book content is displayed as a Classic Block. 
+
+This is because you're not passing block markup to the Books model. You can pass block markup to the Books model, for example by wrapping the content in a `wp:paragraph` block tags, but this is beyond the scope of this tutorial.
 
 ```html
 <!-- wp:paragraph -->
 <p>Updated Post Content</p>
 <!-- /wp:paragraph -->
 ```
-
-## Further Reading
-
-For more information on the various ways you can interact with the REST API in WordPress, make sure to read the section on the Backbone JavaScript client in the [REST API Handbook](https://developer.wordpress.org/rest-api/using-the-rest-api/backbone-javascript-client/) and the `api-fetch` package in the [Block Editor Handbook](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/).

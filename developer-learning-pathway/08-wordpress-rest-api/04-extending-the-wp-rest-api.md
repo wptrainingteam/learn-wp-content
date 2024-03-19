@@ -10,7 +10,9 @@ In this lesson you will learn about two methods of adding fields to your REST AP
 
 You'll also learn about the pros and cons to both approaches.
 
-If you skipped the previous lessons in this module, download the [Bookstore plugin](https://github.com/wptrainingteam/beginner-developer/raw/main/bookstore.1.0.zip) from the link in the repository readme, and install and activate the plugin on your local WordPress install. Additionally, if you haven't done it already, download and install the Postman app for your operating system.
+If you skipped the previous lessons in this module, download the [Bookstore plugin](https://github.com/wptrainingteam/beginner-developer/raw/main/bookstore.1.0.zip) from the link in the repository readme, and install and activate the plugin on your local WordPress install. 
+
+Additionally, if you haven't done it already, download and install the Postman app for your operating system.
 
 ## Important note about modifying responses
 
@@ -18,9 +20,7 @@ Before we get started, it's important to note that modifying WP REST API respons
 
 If you need to retrieve a subset of data from a REST API request, the recommended method is to rather use the [_fields](https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_fields) global parameter, to limit the fields returned in the response.
 
-For example, you can use the fields parameter to limit the fields returned to just id, title, and expert, if those are the only fields you need for your application.
-
-[Show limiting fields in a GET request via Postman]
+For example, you can use the fields parameter to limit the fields returned to just id and title, if those are the only fields you need for your application.
 
 Adding fields to a REST API response is less risky, and so this tutorial only covers adding fields.
 
@@ -40,12 +40,12 @@ However, in order to use a custom field, you have to register it first. This is 
 
 ## Registering a custom field
 
-If you wanted to register a custom field called `location` on the post type, you would use the register_meta function like this:
+If you wanted to register a custom field called `location` on a post, you would use the `register_meta` function like this:
 
 ```php
     register_meta(
         'post',
-        'url',
+        'location',
         array(
             'single'       => true,
             'type'         => 'string',
@@ -63,7 +63,7 @@ add_action( 'init', 'wp_learn_register_meta' );
 function wp_learn_register_meta(){
     register_meta(
         'post',
-        'url',
+        'location',
         array(
             'single'       => true,
             'type'         => 'string',
@@ -76,7 +76,7 @@ function wp_learn_register_meta(){
 
 It's important to ensure that the `show_in_rest` property is set to true, otherwise the custom field will not be available in the REST API.
 
-This will enable the custom field to be added to the REST API schema for the post, and will also allow you to post data to the custom field using the REST API. This is handled by passing the custom field as a key value pair in the meta object of the request body.
+This will enable the custom field to be added to the REST API schema for a post, and will also allow you to post data to the custom field using the REST API. This is handled by passing the custom field as a key value pair in the `meta object` of the request body.
 
 ```json
 {
@@ -100,7 +100,7 @@ For example, let's say you wanted to register an isbn custom field only on the b
 ```php
     register_meta(
         'post',
-        'url',
+        'isbn',
         array(
             'single'         => true,
             'type'           => 'string',
@@ -115,7 +115,7 @@ You would now have `isbn` custom field available only the `book` custom post typ
 
 You can test this by adding a book via the REST API.
 
-In Postman, create or update the POST request to the book route, and include the meta object with the isbn field:
+In Postman, create or update the POST request to the book route, and include the `meta` object with the isbn field:
 
 ```
 https://example.com/wp-json/wp/v2/book
@@ -134,13 +134,13 @@ Then post the following in the request body:
 }
 ```
 
-If you then edit the book in the WordPress admin, you'll see the isbn field in the Custom Fields panel, if you have it enabled. 
+If you then edit the book in the WordPress admin, you'll see the `isbn` field value in the Custom Fields panel, if you have it enabled. 
 
 ## Adding Custom Fields as top level fields to API Responses
 
 The other way to add custom fields to the WP REST API is to add them as top level fields on the API responses.
 
-In the earlier example, the isbn was registered as a meta field, and is therefore available in the meta object of the REST API response. But what if you'd prefer to have it as a top level field, alongside the title, content, and excerpt?
+In the earlier example, the `isbn` was registered as a meta field, and is therefore available in the `meta` object of the REST API response. But what if you'd prefer to have it as a top level field, alongside the title, content, and excerpt?
 
 This can be achieved using the [register_rest_field](https://developer.wordpress.org/reference/functions/register_rest_field/) function. Let's look at how this would be implemented.
 
@@ -232,11 +232,13 @@ The schema argument is an array that describes the schema for the field. While i
 
 You can read more about how to define the schema for REST API resources and fields in the [WP REST API Handbook](https://developer.wordpress.org/rest-api/extending-the-rest-api/schema/).
 
-## Deciding between register_rest_field vs register_meta
+## To register_rest_field or not
 
-The main advantage of using the register_meta route is that you do not need to add any further code to enable storing or retrieving data from the custom fields, as long as you remember to fetch and save the data using the meta object in your application code. You enable the field to show in the REST API, and you can use it straight away. This is also the more performant option, as it does not add any additional code that needs to be executed.
+When deciding whether to only use register_meta, or to add the use of register_rest_field, you should consider the pros and cons of each approach.
 
-On the other hand, the main advantage of using the register_rest_field route is that the fields appear as top level fields in your REST API routes. The other advantage is that you can perform additional processing on the data before it is returned, or before it is saved. For example, you could perform some validation on the data before it is saved to the database. You could also add hooks to the get_callback and update_callback functions to either perform additional processing on the data, or to allow other developers to extend your custom fields. The downside is that you're adding a slight overhead to the API requests, as it adds more code that needs to be executed.
+The main advantage of using the register_meta only route is that you do not need to add any further code to enable storing or retrieving data from the custom fields, as long as you remember to fetch and save the data using the meta object in your application code. You enable the field to show in the REST API, and you can use it straight away. This is also the more performant option, as it does not add any additional code that needs to be executed.
+
+On the other hand, the advantage of using implementing the register_rest_field route is that you can perform additional processing on the data before it is returned, or before it is saved. For example, you could perform some validation on the data before it is saved to the database. You could also add hooks to the get_callback and update_callback functions to either perform additional processing on the data, or to allow other developers to extend your custom fields. The downside is that you're adding a slight overhead to the API requests, as it adds more code that needs to be executed.
 
 Ultimately, the route you choose should be decided on a case by case basis.
 

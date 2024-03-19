@@ -6,7 +6,7 @@ The WordPress REST API provides a uniform interface for interacting with the dat
 
 In this lesson, you'll learn how to use the WP REST API to fetch data from your WordPress site. 
 
-You'll discover three internal options for making REST API requests, and then use them to perform a GET request to retrieve some public custom post type data.
+You'll discover three internal options for making REST API requests, and then use them to perform a GET request to fetch some public custom post type data.
 
 ## The Bookstore plugin
 
@@ -34,7 +34,6 @@ You will notice that one of the arguments passed to the `register_post_type` fun
 		'public'       => true,
 		'has_archive'  => true,
 		'show_in_rest' => true,
-		'rest_base'    => 'books',
 		'supports'     => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' ),
 	);
 ```
@@ -82,11 +81,9 @@ function bookstore_render_booklist() {
 }
 ```
 
-You can copy this code, and paste it into the main plugin file. 
-
 If you browse to the dashboard, and click on the Books menu, you will see a new submenu page called Book List.
 
-Clicking on that link will take you to a page with the Load Books button, and a textarea.
+Clicking on that link will take you to a page with the "Load Books" button, and a textarea.
 
 Now you could add functionality to the `bookstore_render_booklist` function which fetches the book list via PHP and make the button trigger a page refresh. 
 
@@ -131,7 +128,7 @@ Once you're sure it's working, you can remove that line form the file.
 
 Since the REST API was added to WordPress it has included a [Backbone.js](https://backbonejs.org/) [REST API JavaScript Client](https://developer.wordpress.org/rest-api/using-the-rest-api/backbone-javascript-client/) for making direct requests to the WP REST API. 
 
-It provides an interface for using the WP REST API by providing Models and Collections for all endpoints exposed through the API.
+This provides an interface for using the WP REST API by providing Models and Collections for all endpoints exposed through the API.
 
 To ensure that your JavaScript code is able to use the REST API client, you need to add it as a dependency to your enqueued JavaScript.
 
@@ -184,7 +181,7 @@ You can specify a `books` argument in this callback function, to accept the resp
     );
 ```
 
-Now you can simply loop through the `books` object using `forEach` [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach), and access each book individually.
+Now you can loop through the `books` object using something like the `forEach` [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach), and access each book individually.
 
 ```
     allBooks.fetch().done(
@@ -230,6 +227,8 @@ if ( loadBooksByRestButton ) {
 }
 ```
 
+Refresh the admin page, and click the "Load Books" button to see the list of books appear in the textarea.
+
 ## Option 2: Using @wordpress/fetch-api
 
 Since the inclusion of the Block Editor in WordPress 5.0, the `@wordpress/fetch-api` [package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/) has also been made available to make REST API requests.
@@ -269,11 +268,13 @@ if ( fetchBooksByRestButton ) {
 }
 ```
 
-Notice how you pass the path to the books endpoint in an object to the `wp.apiFetch` function, and then chain the `then` method to handle the response. 
+Notice how you pass the path to the books endpoint in an object to the `wp.apiFetch` function. This is more flexbile than use the Backbone.js client, which requires you to use a specific collection to access the books.
 
-This is similar to use of the `done` method in the Backbone example, in that it returns a promise that waits for the request to the REST API to complete, and then returns the result.
+Additionally, you can use the `then` method to handle the response. This is similar to use of the `done` method in the Backbone example, in that it returns a promise that waits for the request to the REST API to complete, and then returns the result.
 
 You'll also notice that this code is using an arrow function syntax for the callback which receives the response, which is a more modern way of writing functions in JavaScript.
+
+Refresh the admin page, and click the "Fetch Books" button to see the list of books appear in the textarea.
 
 ## Option 3: Using @wordpress/core-data
 
@@ -292,7 +293,7 @@ cd path/to/local/site/wp-content/plugins
 npx @wordpress/create-block bookstore-block
 ```
 
-Then, inside the block's `edit.js` file, import the `useSelect` hook from the `@wordpress/data` package, as well as the store from the `@wordpress/core-data` package.
+Then, inside the block's `edit.js` file, import the `useSelect` hook from the `@wordpress/data` package, as well as the `store` from the `@wordpress/core-data` package.
 
 ```js
 import { useSelect } from '@wordpress/data';
@@ -307,31 +308,43 @@ Then you can use these to fetch the books from the REST API.
 			select( bookStore ).getEntityRecords( 'postType', 'book' ),
 		[]
 	);
-
-    if ( ! books ) {
-        <p { ...useBlockProps() }></p>
-    }
 ```
 
-`useSelect` is a hook that allows you to retrieving data from registered selectors. 
+`useSelect` is a hook that allows you to retrieve data from registered selectors. 
 
-`useSelect` accepts a callback function as it's first argument, where you make use of the `bookStore` store's `getEntityRecords` selector to retrieve the books from the REST API.
+`useSelect` accepts a callback function as it's first argument, where you make use of the `bookStore` store's `getEntityRecords` selector to retrieve the books from the REST API. Those books are then stored in the `books` variable.
 
-Finally, you can update the component to loop through the books object and output the book title and link.
+Finally, you can update the component to either return an empty paragraph if no books are returned, or loop through the books object and output the book title and link.
 
 ```js
-	return (
-    <div { ...useBlockProps() }>
-        { books.map( ( book ) => (
-            <p>
-                <a href={ book.link }>{book.title.rendered}</a>
-            </p>
-        ) ) }
-    </div>
-);
+    if ( ! books ) {
+        return (
+            <p { ...useBlockProps() }></p>
+        )
+    }
+
+    return (
+        <div { ...useBlockProps() }>
+            { books.map( ( book ) => (
+                <p>
+                    <a href={ book.link }>{book.title.rendered}</a>
+                </p>
+            ) ) }
+        </div>
+    );
 ```
 
 Now, run the block build step, activate the plugin, and add the bookstore block to a post or page.
+
+You will see the block output the book titles and links, fetched from the REST API.
+
+## Differences between options
+
+The Backbone client is the oldest of the three options, but it is also the most tightly integrated with the REST API. If you need to build admin dashboard pages using the wP REST API, it's a good choice, and far better than using the legacy admin-ajax.php endpoint.
+
+apiFetch is a great all round solution, because you can use it for admin dashboard pages, as well as blocks in the editor. It's also a more modern way to make requests to the REST API, and is more flexible than the Backbone client. Finally, it also allows you to fetch data from external REST APIs, not just the REST API of the current WordPress site. 
+
+core-data is best used in a block context, as it uses React functionality that's not available outside the context of the block editor.
 
 ## Further Reading
 
