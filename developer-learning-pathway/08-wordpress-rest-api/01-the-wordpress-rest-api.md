@@ -4,11 +4,11 @@
 
 When you're developing for WordPress, there are a number of APIs that you can use to interact with your site data. One of the most important of these is the REST API.
 
-This lesson will be an introduction to the WordPress REST API. 
+This lesson serves as an introduction to the WordPress REST API. 
 
 You will learn what the REST API is, as well as some key REST API concepts like routes, endpoints and global parameters, through a series of example requests you can perform in a browser. 
 
-You will also learn about something called application passwords which can be used to authenticate REST API requests, and where to go to find out more information about the REST API.
+You will also learn where to go to find out more information about the WP REST API.
 
 ## What is the WordPress REST API?
 
@@ -26,7 +26,7 @@ REST stands for [REpresentational State Transfer](https://en.wikipedia.org/wiki/
 
 At it's core, the WordPress REST API provides REST endpoints (URIs) which represent the posts, pages, taxonomies, and any other custom data types. Your code can send and receive data as JavaScript Object Notation (aka JSON) to these endpoints to fetch, modify, and create content on your site.
 
-Let's dive into some concepts of REST to understand them better.
+Let's dive into some concepts of the REST API to understand them better.
 
 ## Routes & Endpoints
 
@@ -38,11 +38,13 @@ When you submit a form, a POST request is made, which passes the submitted form 
 
 The mapping of an individual HTTP method to a route is known as an endpoint. 
 
+So you would have for example, a GET endpoint for fetching data, a POST endpoint for creating data, and a DELETE endpoint for deleting data, all using the same route.
+
 ## Local Development Testing
 
 One thing to note about testing REST API routes on a local WordPress installation is that you may need to enable a Permalink setting other than "Plain".
 
-This is because the REST API uses the same URL rewriting functionality as Permalinks to map the human-readable routes to the relevant internal request.
+This is because the REST API uses the same URL rewriting functionality as Permalinks to map the human-readable routes and endpoints to the relevant internal request.
 
 So if your local WordPress installation is using the default Plain permalink setting, change it to something like Post name.
 
@@ -50,15 +52,15 @@ So if your local WordPress installation is using the default Plain permalink set
 
 Let's look at some examples of routes and endpoints.
 
-If you open a browser, and go to the `/wp-json/` URI of a WordPress site, you will be making a GET request to that URI. 
+If you open a browser, and go to the `/wp-json/` URI of a WordPress site, you will be making a GET request to that URI, which returns a JSON response. 
 
 ```
 https://local.test/wp-json/
 ```
 
-The data returned is a JSON response showing what routes are available, and what endpoints are available within each route.
-
 By default, your browser will display the JSON data in its raw data format. To convert it to a more readable format, you can use a browser extension like [JSON Formatter](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) for Chrome, [Basic JSON Formatter](https://addons.mozilla.org/en-US/firefox/addon/basic-json-formatter/) for Firefox, or [JSON Peep](https://apps.apple.com/us/app/json-peep-for-safari/id1458969831?mt=12) for Safari.
+
+The data returned is a JSON response showing what routes are available, and what endpoints are available within each route.
 
 In this example `/wp-json/` is a route, and when that route receives a GET request it's handled by the endpoint which displays the data. This data is what is known as the index for the WordPress REST API.
 
@@ -74,7 +76,7 @@ Global parameters are implemented on REST API routes as query string parameters.
 
 Take a look at the `/wp-json/wp/v2/posts` route you looked at earlier, by requesting the route in a browser, thereby activating the GET endpoint. As you can see, the default is to return all available fields for a post.
 
-However, if you update the route by adding the `_fields` global parameter, and then specify the fields you want to return in the response as a comma delimited list.
+However, you can update the route by adding the `_fields` global parameter, and then specify the fields you want to return in the response as a comma delimited list.
 
 ```
 wp-json/wp/v2/posts?_fields=author,id,excerpt,title,link
@@ -106,5 +108,5 @@ wp-json/wp/v2/posts?_fields=author,id,excerpt,title,link&per_page=5&orderby=titl
 
 ## Further Reading
 
-The WordPress Developer Resources site has an entire section handbook to the [REST API](https://developer.wordpress.org/rest-api/) which includes sections on the key REST API concepts, frequently asked questions, using and extending the REST API, and more.
+The WordPress Developer Resources site has an entire section dedicated to the [REST API](https://developer.wordpress.org/rest-api/) which includes sections on the key REST API concepts, frequently asked questions, using and extending the REST API, and more.
 

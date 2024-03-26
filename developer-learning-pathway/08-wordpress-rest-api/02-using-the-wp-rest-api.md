@@ -48,11 +48,11 @@ For example, you can change the `rest_base` argument to change the route that th
 
 Given that you would expect to be able to fetch more than one book from the book route, it would be a good idea to change the rest_base to `books`.
 
-Doing this will allow you to make a GET request to the `wp-json/wp/v2/books` route, to retrieve all the books in the response.
+Doing this will allow you to make requests to the `wp-json/wp/v2/books` route, to access books via the REST API.
 
 ## Making REST API requests
 
-Let's say you want to add a page in your WordPress dashboard to fetches the list of books, and displays a list of book titles and permalinks a comma separated list.
+Let's say you want to add a page in your WordPress dashboard that fetches the books, and displays a list of book titles and permalinks a comma separated list.
 
 To start, you might add an admin submenu page to the Books menu, using the `admin_menu` hook, and the `add_submenu_page` function. 
 
@@ -68,7 +68,11 @@ function bookstore_add_booklist_submenu() {
 		'bookstore_render_booklist'
 	);
 }
+```
 
+Then you would create the `bookstore_render_booklist` callback function, which would output the HTML for the admin page.
+
+```php
 function bookstore_render_booklist() {
 	?>
 	<div class="wrap" id="bookstore-booklist-admin">
@@ -87,7 +91,7 @@ Clicking on that link will take you to a page with the "Load Books" button, and 
 
 Now you could add functionality to the `bookstore_render_booklist` function which fetches the book list via PHP and make the button trigger a page refresh. 
 
-However, for a smoother user experience, you'd like to use JavaScript and the REST API to fetch the book list asynchronously and populate the book list, without having to wait for a full page refresh.
+However, for a smoother user experience, you'd like to use JavaScript and the REST API to fetch the book data asynchronously and populate the book list, without having to wait for a full page refresh.
 
 ## Enqueuing the admin JavaScript
 
@@ -103,7 +107,7 @@ Then, add the following code to the main plugin file, to enqueue the JavaScript 
 add_action( 'admin_enqueue_scripts', 'bookstore_admin_enqueue_scripts' );
 function bookstore_admin_enqueue_scripts() {
 	wp_enqueue_script(
-		'bookstyle-script',
+		'bookstore-admin',
 		plugins_url() . '/bookstore/admin_bookstore.js',
 		array(),
 		'1.0.0',
@@ -112,9 +116,9 @@ function bookstore_admin_enqueue_scripts() {
 }
 ```
 
-Notice that this code not only enqueues the JavaScript file, but also specifies and empty dependencies array, a version number, and that it should be enqueued in the footer of the HTML page, by setting the last argument to `true`.
+Notice that this code not only enqueues the JavaScript file, but also specifies an empty dependencies array, a version number, and that it should be enqueued in the footer of the HTML page, by setting the last argument to `true`.
 
-You can read more about these arguments in the [wp_enqueue_script](https://developer.wordpress.org/reference/functions/wp_enqueue_script/) function reference.
+You can read more about these parameters in the [wp_enqueue_script](https://developer.wordpress.org/reference/functions/wp_enqueue_script/) function reference, under the Parameters section.
 
 You could test that it's enqueued correctly by adding a single alert to the `admin_bookstore.js` file, and refreshing the admin page.
 
@@ -227,7 +231,7 @@ if ( loadBooksByRestButton ) {
 }
 ```
 
-Refresh the admin page, and click the "Load Books" button to see the list of books appear in the textarea.
+Switch back to the custom Book List admin page, and click the "Load Books" button to see the list of books appear in the textarea.
 
 ## Option 2: Using @wordpress/fetch-api
 
@@ -247,6 +251,8 @@ To make use of the fetch API you can update your plugin's JavaScript dependencie
     );
 ```
 
+You can either remove the `wp-api` dependency, or add `wp-api-fetch` as an additional dependancy.
+
 Next, add a button to the Actions area of the form, to trigger the fetch request.
 
 ```html
@@ -260,7 +266,8 @@ const fetchBooksByRestButton = document.getElementById( 'bookstore-fetch-books' 
 if ( fetchBooksByRestButton ) {
     fetchBooksByRestButton.addEventListener( 'click', function () {
         wp.apiFetch( { path: '/wp/v2/books' } ).then( ( books ) => {
-            books.forEach( ( book ) => {
+            const textarea = document.getElementById( 'bookstore-booklist' );
+            books.map( ( book ) => {
                 textarea.value += book.title.rendered + ',' + book.link + ',\n'
             });
         } );
@@ -270,9 +277,11 @@ if ( fetchBooksByRestButton ) {
 
 Notice how you pass the path to the books endpoint in an object to the `wp.apiFetch` function. This is more flexbile than use the Backbone.js client, which requires you to use a specific collection to access the books.
 
-Additionally, you can use the `then` method to handle the response. This is similar to use of the `done` method in the Backbone example, in that it returns a promise that waits for the request to the REST API to complete, and then returns the result.
+You can chain a `then` method to handle the response. This is similar to use of the `done` method in the Backbone example, in that it returns a promise that waits for the request to the REST API to complete, and then returns the result to the callback function.
 
-You'll also notice that this code is using an arrow function syntax for the callback which receives the response, which is a more modern way of writing functions in JavaScript.
+Inside the callback function, you can access the books object, and loop through it using the `map` method, to append the book title and permalink to the textarea.
+
+You'll also notice that this code is using the arrow function syntax for the callback which receives the response, which is a more modern way of writing functions in JavaScript.
 
 Refresh the admin page, and click the "Fetch Books" button to see the list of books appear in the textarea.
 
@@ -282,7 +291,7 @@ If you're developing blocks, there is also a `core-data` [package](https://devel
 
 core-data is meant to simplify access to and manipulation of core WordPress entities. It registers its own store and provides a number of selectors which resolve data from the WordPress REST API automatically, along with dispatching action creators to manipulate data.
 
-core-data makes use of a number of React functionality, and so is best used in a block context.
+core-data makes use of a number of React functionalities, and so is best used in a block context.
 
 Let's look at how you can use the core-data module in a block to fetch the books from the REST API.
 
@@ -293,7 +302,9 @@ cd path/to/local/site/wp-content/plugins
 npx @wordpress/create-block bookstore-block
 ```
 
-Then, inside the block's `edit.js` file, import the `useSelect` hook from the `@wordpress/data` package, as well as the `store` from the `@wordpress/core-data` package.
+This will scaffold the new block, with some code for you to edit
+
+Inside the block's `edit.js` file, import the `useSelect` hook from the `@wordpress/data` package, as well as the `store` from the `@wordpress/core-data` package.
 
 ```js
 import { useSelect } from '@wordpress/data';
@@ -304,22 +315,22 @@ Then you can use these to fetch the books from the REST API.
 
 ```js
 	const books = useSelect(
-		select =>
-			select( bookStore ).getEntityRecords( 'postType', 'book' ),
-		[]
-	);
+        select =>
+            select( bookStore ).getEntityRecords( 'postType', 'book' ),
+        []
+    );
 ```
 
 `useSelect` is a hook that allows you to retrieve data from registered selectors. 
 
 `useSelect` accepts a callback function as it's first argument, where you make use of the `bookStore` store's `getEntityRecords` selector to retrieve the books from the REST API. Those books are then stored in the `books` variable.
 
-Finally, you can update the component to either return an empty paragraph if no books are returned, or loop through the books object and output the book title and link.
+Finally, you can update the code to either return an empty component if no books are returned, or loop through the books object and output the book title and link.
 
 ```js
     if ( ! books ) {
         return (
-            <p { ...useBlockProps() }></p>
+            <div { ...useBlockProps() }></div>
         )
     }
 
@@ -342,7 +353,7 @@ You will see the block output the book titles and links, fetched from the REST A
 
 The Backbone client is the oldest of the three options, but it is also the most tightly integrated with the REST API. If you need to build admin dashboard pages using the wP REST API, it's a good choice, and far better than using the legacy admin-ajax.php endpoint.
 
-apiFetch is a great all round solution, because you can use it for admin dashboard pages, as well as blocks in the editor. It's also a more modern way to make requests to the REST API, and is more flexible than the Backbone client. Finally, it also allows you to fetch data from external REST APIs, not just the REST API of the current WordPress site. 
+apiFetch is a great all round solution, because you can use it for admin dashboard pages, as well as blocks in the editor. It's also a more modern way to make requests to the REST API, and is more flexible than the Backbone client. 
 
 core-data is best used in a block context, as it uses React functionality that's not available outside the context of the block editor.
 

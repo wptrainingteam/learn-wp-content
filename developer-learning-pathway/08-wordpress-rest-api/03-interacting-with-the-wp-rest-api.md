@@ -8,7 +8,7 @@ The REST API also allows you to create, update, and delete various WordPress dat
 
 In this lesson, you'll learn about the WP REST API schema, methods to authenticate a WP REST API request, tools to test WP REST API requests, as well as a couple of ways to add, edit or delete data via the WP REST API.
 
-If you skipped the previous lessons in this module, download the [Bookstore plugin](https://github.com/wptrainingteam/beginner-developer/raw/main/bookstore.1.0.zip) from the link in the repository readme, and install and activate the plugin on your local WordPress install.
+If you skipped the previous lessons in this module, download version 1.0.1 of the [Bookstore plugin](https://github.com/wptrainingteam/beginner-developer/raw/main/bookstore.1.0.0.zip) from the link in the repository readme, and install and activate the plugin on your local WordPress install.
 
 ## WP REST API Schema
 
@@ -48,7 +48,9 @@ If you intend building something more complex, like a mobile app that connects t
 
 ### Postman
 
-There are a number of tools available to test REST API requests. For example, if you use PhpStorm, it has a built-in [HTTP client](https://www.jetbrains.com/help/phpstorm/http-client-in-product-code-editor.html), and if you use VS Code, there are extensions like https://marketplace.visualstudio.com/items?itemName=rohinivsenthil.postcode. There are also standalone tools like [Hoppscotch](https://hoppscotch.io/), and [Postman](https://www.postman.com/). You can even test your REST API endpoints using the [curl command](https://curl.se/) in your terminal.
+There are a number of tools available to test REST API requests. 
+
+For example, if you use PhpStorm, it has a built-in [HTTP client](https://www.jetbrains.com/help/phpstorm/http-client-in-product-code-editor.html), and if you use VS Code, there are extensions like https://marketplace.visualstudio.com/items?itemName=rohinivsenthil.postcode. There are also standalone tools like [Hoppscotch](https://hoppscotch.io/), and [Postman](https://www.postman.com/). You can even test your REST API endpoints using the [curl command](https://curl.se/) in your terminal.
 
 For the purposes of this lesson, you'll learn how to use Postman to test some REST API requests.
 
@@ -86,13 +88,13 @@ Go ahead and create one, by clicking on the Body tab in the request, and selecti
 }
 ``` 
 
-Hit send again, and the book will be created, returning the JSON response of the new post.
+Hit send again, and the book will be created, returning the JSON response of the new book.
 
-To be sure, go ahead and check the post in the WP dashboard, and you should see the book.
+To be sure, go ahead and check the book in the WP dashboard, and you should see the book.
 
-To update a post, you use the same request configuration to add a post, but you change the endpoint URL to include the post id. 
+To update a book, you use the same request configuration to add a book, but you change the endpoint URL to include the book id. 
 
-To delete a post, you use the same endpoint URL as updating a post, but you change the request method to DELETE, and don't send any data in the request body.
+To delete a book, you use the same endpoint URL as updating a book, but you change the request method to DELETE, and don't send any data in the request body.
 
 You'll also notice that deleting a post actually moves it to the trash, and doesn't permanently delete it. This matches the behavior of the WordPress dashboard.
 
@@ -100,9 +102,9 @@ Using a tool like Postman to test REST API endpoints is a great way to learn how
 
 ## Creating a Book
 
-Let's use the WP REST API and api-fetch to create a new post. 
+Let's use the WP REST API and api-fetch to create a new book. 
 
-To do so, we'll need to pass the title and content fields to a new post model.
+To do so, we'll need to pass the title and content fields as a POST request to the `books` endpoint.
 
 You already have a plugin that allows you to list books, so you can use that as a starting point.
 
@@ -140,7 +142,9 @@ if ( submitPostButton ) {
 }
 ```
 
-Now that you have the button click event listener added, you can add the code that will handle the creation of the book. To do this, it's a good idea to create a separate function to create the book, and call that function on the click event.
+Now that you have the button click event listener added, you can add the code that will handle the creation of the book.
+
+To do this, it's a good idea to create a separate function to create the book, and call that function on the click event.
 
 The first thing you'll need to do is create a submitBook function:
 
@@ -212,14 +216,6 @@ Deleting a post only requires the path to be set to the URL of the item, and set
     } );
 ```
 
-## POSTing Block Markup
+## Further Reading
 
-During these examples, you may have noticed how the book content is displayed as a Classic Block. 
-
-This is because you're not passing block markup to the Books model. You can pass block markup to the Books model, for example by wrapping the content in a `wp:paragraph` block tags, but this is beyond the scope of this tutorial.
-
-```html
-<!-- wp:paragraph -->
-<p>Updated Post Content</p>
-<!-- /wp:paragraph -->
-```
+For more information on creating, updating and deleting data using the WP REST API, check out the [Using the REST API](https://developer.wordpress.org/rest-api/using-the-rest-api/) of the [WP REST API Handbook](https://developer.wordpress.org/rest-api/) as well as the [api-fetch](https://developer.wordpress.org/block-editor/packages/packages-api-fetch/) package reference, in the Block Editor Handbook.
