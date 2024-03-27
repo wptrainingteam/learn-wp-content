@@ -8,13 +8,19 @@ In this lesson, you're going to learn how to develop with security in mind.
 
 You will learn the benefits of ensuring your code is secure, what steps to follow to secure your code, and where to find more information around developing with security in mind.
 
+## Disclaimer
+
+This lesson was created as an introduction to being security minded when developing plugins and themes. The code used in this lesson is very simplified. You should not use any of the code used in this tutorial in your plugins or themes.
+
+Please make sure to read the full documentation on Security in the WordPress Developer handbook at https://developer.wordpress.org/apis/security/ to ensure you follow the correct methods and procedures.
+
 ## What is developing with security in mind?
 
 Developing with security in mind is the process of ensuring your code not only works, but also does not introduce any security vulnerabilities. 
 
 If your plugin or theme code has security vulnerabilities, it could make any WordPress site that has your product installed open to potential attacks, and can lead to that site being compromised.
 
-When developing, it's important to develop a security mindset, and to think about how your code could be used maliciously.
+When writing code, it's important to develop a security mindset, and to think about how your code could be used maliciously.
 
 - Don't trust any data, whether it's user input, third party API data, or even data in your database. Always be checking to make sure it's valid and safe to use.
 - WordPress has a number of APIs that can help you with common tasks, such as sanitizing user input, validating data, and escaping output. Rely on using these APIs to help validate and sanitize your data instead of writing your own functions.
@@ -24,13 +30,13 @@ When developing, it's important to develop a security mindset, and to think abou
 
 Security should be a consideration at every stage of the development process.
 
-Generally, the largest number of security vulnerabilities that are found take place at the PHP layer, as that's executed on the server. 
+Generally, the largest number of security vulnerabilities that are found take place at the PHP layer, which is excuted on the server. 
 
-Therefore, this lesson will focus on the top most common preventive measures.
+Therefore, this lesson will focus on the top most common preventive measures in your PHP code.
 
 ## Sanitizing inputs
 
-One of the first steps to take when developing a plugin is to ensure that any user input is sanitized. This means that any data that is being passed to your code from the user, such as a form submission, or a URL parameter, is checked to make sure it's safe to use.
+One of the first steps to take when developing is to ensure that any user input is sanitized. This means that any data that is being passed from the user, such as a form submission, or a URL parameter, is checked to make sure it's safe to use.
 
 In this example code, the name and email fields are being posted from a form that a plugin generates, and then saved in a custom database table called `form_submissions`;
 
@@ -111,11 +117,13 @@ if ($id === 0){
 }
 ```
 
-To read more about the various ways to validate data in your WordPress plugin, check out the section on [Validating Data](https://developer.wordpress.org/apis/security/data-validation/) in the WordPress Developer Documentation.
+To read more about the various ways to validate data, check out the section on [Validating Data](https://developer.wordpress.org/apis/security/data-validation/) in the WordPress Developer Documentation.
 
 ## Escaping outputs
 
-Another aspect of security is to ensure that any information you output to the browser is safe, including any text, HTML or JavaScript code, or data from the database. Even if your code is not responsible for the source of the data being displayed, it is responsible for displaying it safely.
+Another aspect of security is to ensure that any information you output to the browser is safe, including any text, HTML or JavaScript code, or data from the database. 
+
+Even if your code is not responsible for the source of the data being displayed, it is responsible for displaying it safely.
 
 In this example, the code fetches the form submissions from the database, and then loops through the submissions and outputs the submission data in an admin screen in the WordPress dashboard:
 
@@ -163,9 +171,11 @@ To read more about the various ways to escape outputs, check out the section on 
 
 ## Preventing invalid requests
 
-Whenever a request is made to functionality that your plugin provides, it's important to check that the request is valid. This means checking that the request is coming from a trusted source.
+Whenever a request is made, it's important to check that the request is valid. This means checking that the request is coming from a trusted source.
 
-For example, this code adds a shortcode that renders a form, where users can submit their information. 
+For example, you might have a shortcode that renders a form, where users can submit their information. 
+
+The function to render the form might look something like this.
 
 ```php
 add_shortcode( 'wp_learn_form_shortcode', 'wp_learn_form_shortcode' );
@@ -194,7 +204,7 @@ function wp_learn_form_shortcode() {
 ?>
 ```
 
-When the user submits the form, the data is sent to the server. The data is then processed by the plugin, sanitized, and stored in the database.
+When the user submits the form, the data is sent to the server. The data is then processed, sanitized, and stored in the database.
 
 ```php
 add_action( 'wp', 'wp_learn_maybe_process_form' );

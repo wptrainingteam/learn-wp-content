@@ -4,11 +4,11 @@
 
 In the first lesson of this module, you learned about the main security principles that you should follow when developing a custom plugin or theme. 
 
-In this lesson, you're going to learn how to apply these principles when developing your WordPress plugins and themes, by fixing a badly coded form submission plugin.
+In this lesson, you're going to learn how to apply these principles when developing your WordPress plugins and themes, by fixing an insecurely coded form submission plugin.
 
 ## The badly coded form submission plugin
 
-To start, browse to the [badly coded form submission plugin](https://github.com/jonathanbossenger/wp-learn-plugin-security), and download and install the plugin to your local development environment.
+To start, download the [Learn Plugin Security plugin](https://github.com/wptrainingteam/beginner-developer/blob/main/wp-learn-plugin-security.1.0.0.zip), and install the plugin to your local development environment.
 
 Then, open the main plugin file in your code editor, and take a look at the code.
 
@@ -314,3 +314,7 @@ Note that we're doing two checks here, one against CSRF and once for access cont
 There's one additional security vulnerability in this plugin. Can you find it?
 
 It's a tough one to spot, but all instances of `wp_redirect` should be replaced with `wp_safe_redirect`. This is because the code is redirecting to a local url, and wp_safe_redirect checks whether the $location its using an allowed host, if it has an absolute path. This prevents the possibility of malicious redirects if the redirect $location is ever attacked.
+
+## Further reading
+
+To read more about fixing common vulnerabilities in WordPress code, make sure to bookmark the page on [Common Vulnerabilities](https://developer.wordpress.org/apis/security/common-vulnerabilities/) in the WordPress Developer Documentation on [Security](https://developer.wordpress.org/apis/security/), as well as the [example](https://developer.wordpress.org/apis/security/example/) using capability checks, data validation, secure input, secure output and nonces.
