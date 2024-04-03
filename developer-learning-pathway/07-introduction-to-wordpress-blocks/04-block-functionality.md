@@ -1,5 +1,7 @@
 # Block Functionality
 
+## Introduction
+
 After making any changes to your plugin file and block metadata, you can start adding the block's core functionality.
 
 This is usually a case of adding the block's functionality in the editor, via the Edit component, and adding how the block stores it's output, via the save function. 
@@ -149,3 +151,10 @@ Once the updated block has been built, add the block to a post, and preview it. 
 ## Additional resources
 
 To read more building your Edit and save functionality, take a look at the [Edit and Save reference guide](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/) in the Block Editor handbook. 
+
+## YouTube chapters
+
+0:00 Introduction
+0:21 Adding the block's Edit functionality
+4:28 Adding the block's save functionality
+6:41 Additional resources

@@ -1,5 +1,7 @@
 # Block supports and Block styles
 
+## Introduction
+
 One of the benefits of blocks is the ability to control the block's appearance on a per block level. 
 
 To do this, you can use something called block supports, as well as define the block's styles. 
@@ -92,3 +94,11 @@ You'll see that the block now has the border and border color that you defined i
 When you're developing your blocks, it's useful to think about what appearance elements you want users to be able to edit, vs what should always apply to the block. Then you can either add the relevant support or hard code any specific styles into the relevant style file. 
 
 For more information on Block Supports, check out the detailed [Supports](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/) page, in the Block Editor Handbook.
+
+## YouTube chapters
+
+0:00 Introduction
+0:16 Block supports
+0:45 Adding Block Supports
+1:30 Block styles
+5:13 Conclusion

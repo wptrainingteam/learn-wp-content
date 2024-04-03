@@ -1,5 +1,7 @@
 # Block Attributes
 
+## Introduction
+
 One of the benefits of building blocks is the ability to allow users to control the block's appearance and behavior via block attributes.
 
 Let's learn how to add attributes to a block, and how to add controls to your block to allow users to change those attributes.
@@ -204,7 +206,7 @@ To follow WordPress plugin development practices, one small update you might wan
 
 ## Adding a TextControl to the block sidebar
 
-With Settings panel in place, you can now add a `TextControl` component to allow the user to edit your attribute.
+With the Settings panel in place, you can now add a `TextControl` component to allow the user to edit your attribute.
 
 The `TextControl` component is a text input field that allows the user to enter a string. There are three properties you need to set on the `TextControl` component. The first two are the label and value:
 
@@ -271,3 +273,13 @@ Finally, if you preview the block, it uses the new value of the `startingYear` a
 ## Additional resources
 
 For further reading on these topics, make sure to check out the [Attributes](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-attributes/) guide in the BLock Editor Handbook.
+
+## YouTube chapters
+
+0:00 Introduction
+0:17 Adding attributes to a block
+1:46 Access the block's attributes
+4:30 Block recovery
+5:11 Adding a Settings panel to the block
+9:04 Adding a TextControl to the block sidebar
+12:05 Additional resources

@@ -1,5 +1,7 @@
 # Building your first block
 
+## Introduction
+
 Once you've scaffolded your block using `create-block`, you can start tweaking the code to meet your requirements. 
 
 Let's dive into what this might look like for the Copyright Date Block you scaffolded in the previous lesson.
@@ -148,3 +150,13 @@ You'll notice that the icon has changed, and the description is more specific to
 ## Additional resources
 
 You can read more the block metadata fields in the [Metadata in block.json](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/) section of the Block Editor Handbook, as well as the development platform and build processes in the [Development platform](https://developer.wordpress.org/block-editor/how-to-guides/platform/) and the [Working with Javascript for the Block Editor](https://developer.wordpress.org/block-editor/getting-started/fundamentals/javascript-in-the-block-editor/) pages.
+
+## YouTube chapters
+
+0:00 Introduction
+0:14 Clean up
+0:45 The main plugin file
+1:55 Block Metadata
+3:12 The block's main JavaScript file
+4:45 Your first build
+6:15 Additional resources

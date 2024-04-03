@@ -251,7 +251,7 @@ To make use of the fetch API you can update your plugin's JavaScript dependencie
     );
 ```
 
-You can either remove the `wp-api` dependency, or add `wp-api-fetch` as an additional dependancy.
+You can either remove the `wp-api` dependency, or add `wp-api-fetch` as an additional dependency. 
 
 Next, add a button to the Actions area of the form, to trigger the fetch request.
 

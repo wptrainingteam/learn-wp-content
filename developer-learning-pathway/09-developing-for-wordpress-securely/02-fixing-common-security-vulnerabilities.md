@@ -309,7 +309,7 @@ To fix this, we can use the WordPress Roles and Capabilities API to check that t
 
 Note that we're doing two checks here, one against CSRF and once for access control. In this example the order of execution is not super important, but in general, it's a good idea to check for CSRF first, and then check for access control.
 
-## Bonus round
+## Bonus round - Open Redirect
 
 There's one additional security vulnerability in this plugin. Can you find it?
 

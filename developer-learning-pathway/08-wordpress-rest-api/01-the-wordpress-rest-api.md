@@ -58,7 +58,11 @@ If you open a browser, and go to the `/wp-json/` URI of a WordPress site, you wi
 https://local.test/wp-json/
 ```
 
-By default, your browser will display the JSON data in its raw data format. To convert it to a more readable format, you can use a browser extension like [JSON Formatter](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) for Chrome, [Basic JSON Formatter](https://addons.mozilla.org/en-US/firefox/addon/basic-json-formatter/) for Firefox, or [JSON Peep](https://apps.apple.com/us/app/json-peep-for-safari/id1458969831?mt=12) for Safari.
+Some browsers have built-in support to "pretty print" a JSON response, which will display it in a more readable format. 
+
+If you're using Firefox to view a JSON response, it allows you to switch between different views, as well as inspect the request headers. 
+
+Depending on your requirements, there are also browser extensions like [JSON Formatter](https://chrome.google.com/webstore/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa) for Chrome or  [JSON Peep](https://apps.apple.com/us/app/json-peep-for-safari/id1458969831?mt=12) for Safari.
 
 The data returned is a JSON response showing what routes are available, and what endpoints are available within each route.
 

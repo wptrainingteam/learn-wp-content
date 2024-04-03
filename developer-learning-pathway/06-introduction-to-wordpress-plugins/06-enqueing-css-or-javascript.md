@@ -143,3 +143,11 @@ function bookstore_enqueue_scripts() {
 ```
 
 There are a number of other ways to make sure that your plugin stylesheet or script files are only loaded when needed. Doing this means that your plugin won't add any unnecessary overhead or loading times to any WordPress site it's installed on.
+
+## YouTube chapters
+
+0:00 Introduction
+0:42 Enqueuing CSS
+4:14 Enqueuing JavaScript
+5:51 Enqueuing on the admin dashboard
+6:11 Selective Enqueuing

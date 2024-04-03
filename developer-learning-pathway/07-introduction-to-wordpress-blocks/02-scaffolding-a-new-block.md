@@ -1,5 +1,7 @@
 # Scaffolding a new block
 
+## Introduction
+
 Once you have the necessary tools installed for block development, you can start developing your first block.
 
 In this lesson, you will learn about a tool called create-block, which will allow you to quickly scaffold your first block plugin. You will learn why you should use create-block, how to use it, and review the code that it generates.
@@ -166,3 +168,16 @@ The details of how this works is outside the scope of this lesson, but you can l
 ## Additional Resources
 
 To learn more about the `create-block` tool, as well as all the different options it offers, check out the [package reference](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/) for `create-block` in the Block Editor Handbook
+
+
+## YouTube chapters
+
+0:00 Introduction
+0:23 What is create-block?
+1:08 Why a plugin?
+1:44 What are we building?
+2:25 Using Create Block
+4:14 The scaffolded plugin
+7:51 The `src` directory
+9:57 The `build` directory
+11:09 Additional Resources

@@ -1,5 +1,7 @@
 # Static vs dynamic blocks
 
+## Introduction
+
 When developing WordPress blocks, you'll need to consider the functionality of your block, and whether it needs to change based on external factors.
 
 Fortunately, it is possible to create blocks that are either static or dynamic, depending on your requirements.
@@ -78,3 +80,11 @@ However, if you simulate the year change, say by changing the value of the varia
 ## Additional resources
 
 For more information on the difference between developing static vs dynamic blocks, you can read the [Static or Dynamic rendering of a block](https://developer.wordpress.org/block-editor/getting-started/fundamentals/static-dynamic-rendering/) section of the Fundamentals of Block Development.
+
+## YouTube chapters
+
+0:00 Introduction
+0:25 Static blocks
+0:50 Dynamic blocks
+1:27 Making the Copyright Date Block dynamic
+5:42 Additional resources

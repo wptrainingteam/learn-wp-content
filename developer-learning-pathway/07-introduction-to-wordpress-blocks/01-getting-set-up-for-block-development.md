@@ -1,5 +1,7 @@
 # Getting set up for block development
 
+## Introduction 
+
 WordPress' blocks are the default way in which a WordPress site stores and represents content.
 
 Let's take a quick look at what blocks are, how they work, and what you need to get started developing them.
@@ -172,3 +174,17 @@ Now that you have all the required tools, you can begin your block development j
 The WordPress Developer documentation has an entire section dedicated to the [Block Editor](https://developer.wordpress.org/block-editor/), which contains a wealth of information on blocks, block development, as well as the various packages available to block developers. 
 
 It's also a good idea to read the [Fundamentals of Block Development](https://developer.wordpress.org/block-editor/getting-started/fundamentals/) section to get a better understanding of the process. 
+
+## YouTube chapters
+
+0:00 Introduction
+0:13 WordPress blocks
+0:35 The structure of a block
+1:53 Getting set up
+2:07 All about the terminal
+2:42 Node.js and npm
+2:53 Installing Node.js.
+3:25 Installing NVM on MacOS and Linux
+3:52 Installing NVM on Windows
+6:33 NVM usage
+6:13 Additional resources
