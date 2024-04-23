@@ -35,7 +35,7 @@ Now switch back to the code view, and notice how the wp:paragraph tag contains s
 ```html
 <!-- wp:paragraph {"backgroundColor":"accent-5"} -->
 <p class="has-accent-5-background-color has-background">This is some content in a paragraph block.</p>
-<!-- /wp:paragraph -->```
+<!-- /wp:paragraph -->
 ```
 
 The `backgroundColor` property is added to the block wrapper in a special format called JSON. When this post is rendered on the front end, WordPress converts that to a CSS class to be applied to the block.

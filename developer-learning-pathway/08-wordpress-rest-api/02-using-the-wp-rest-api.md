@@ -1,4 +1,4 @@
-# Using the WP REST API
+# Using the WordPress REST API
 
 ## Introduction
 

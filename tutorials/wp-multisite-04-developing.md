@@ -12,8 +12,8 @@ Upon completion of this lesson the participant will be able to:
 2. A note on naming conventions
 3. Useful functions
 4. Useful hooks
-5. 
 5. Developing for sites in a network
+
 6. Developing themes and child themes
 7. Developing plugins
 8. Where to find multisite information
