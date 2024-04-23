@@ -76,4 +76,4 @@ Once they click signup, the site will be created and the user will be sent an em
 
 ## Further reading.
 
-For more details on managing your Multisite network, check out the [Network Admin](https://wordpress.org/documentation/article/network-admin/) and [Network Admin Settings](https://wordpress.org/documentation/article/network-admin-settings-screen/) pages in the WordPress developer documentation.
+For more details on managing your Multisite network, check out the [Network Admin](https://developer.wordpress.org/advanced-administration/multisite/admin/) and [Network Admin Settings](https://developer.wordpress.org/advanced-administration/multisite/admin/settings/) pages in the WordPress developer documentation.

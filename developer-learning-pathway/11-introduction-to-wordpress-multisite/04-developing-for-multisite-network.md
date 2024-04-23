@@ -1,8 +1,8 @@
-# The Differences Between Developing for Multisite vs Single Site
+# Developing for a Multisite Network
 
 ## Introduction
 
-When developing themes or plugins for a WordPress multisite network, there are a few things to consider that are slightly different from developing for a single site WordPress install.
+WordPress core contains some multisite specific functionality that controls certain aspects of the network, or subsites on the network.
 
 In this lesson, you'll learn about some multisite specific naming conventions to be aware of, and then dive into some useful multisite specific functions and hooks to be aware of.
 
@@ -83,6 +83,14 @@ The second is the [network_admin_notices](https://developer.wordpress.org/refere
 [signup_blogform](https://developer.wordpress.org/reference/hooks/signup_blogform/) is a filter that allows you to modify the signup form for new sites. You can use this to add additional fields to the signup form.
 
 [wp_initialize_site](https://developer.wordpress.org/reference/hooks/wp_initialize_site/) is an action that is fired when a new site is created. This is useful if you want to perform actions when a new site is created, for example if you wanted to assign a custom top level domain to a sub site.
+
+## Developing for sites in a network
+
+When you are rendering any content in the scope of a single site on the network, WordPress core is clever enough to know that you are working inside the scope of that site.
+
+This means that any functions that you use to retrieve information, such as get_bloginfo, get_option, get_posts, or get_post_meta, and any functions you might use to add or update information, like update_option, wp_insert_post or update_post_meta, will get, add or update the correct tables for the site that you are currently working with.
+
+Additionally, if you use functions like register_post_type or register_taxonomy, these will be registered for the current site only.
 
 ## Further reading
 

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-With the basics of managing a multisite network under your belt, it's time to dive into some more advanced site management tasks.
+With the basics of managing a multisite network under your belt, it's time to look at some more advanced site management tasks.
 
 Let's dive into the different possible site statuses, what happens when you delete a site, how to export a single site from a multisite network to its own install, and how to convert a multisite network install back to a single site install.
 
@@ -76,8 +76,6 @@ wp_blogmeta, wp_blogs, wp_registration_log, wp_signups, wp_site, wp_site_meta
 
 If everything went well, you should now have a working single site installation of your main site.
 
-## Summary
+## Further reading.
 
-That wraps up this tutorial on some advanced multisite management tasks.
-
-Happy coding!
+For a full list of all the Multisite management functionality, check out the [Multisite](https://developer.wordpress.org/advanced-administration/multisite/) section in the WordPress developer handbook under Advanced Administration.
