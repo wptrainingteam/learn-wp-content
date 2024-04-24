@@ -2,9 +2,9 @@
 
 ## Introduction
 
-A WordPress multisite network is a collection of WordPress sites that share a single WordPress installation. 
+A WordPress multisite network is a way to host multiple WordPress sites on a single WordPress installation. 
 
-In this lesson, you will learn more about WordPress multisite, why you would consider setting up a multisite network, as well as the steps to follow to create one.
+In this lesson, you will learn more about WordPress multisite, why you would consider setting up a multisite network, and the steps to follow to create one.
 
 ## What is a WordPress multisite network?
 
@@ -14,7 +14,7 @@ All sites on a multisite network use the same WordPress installation files and s
 
 Each individual site has separate directories for media uploads within the shared installation and separate tables in the database for site content.
 
-It is important to note that while they share the same core WordPress files the sites in a multisite network are separate from each other. They are not interconnected like things in other kinds of networks. If you plan on creating sites that are strongly interconnected, that share data, or share users, then a multisite network might not be the best solution.
+It is important to note that while they share the same core WordPress files the sites in a multisite network are separate from each other. They are not interconnected like other kinds of networks. If you plan on creating sites that are strongly interconnected, that share data, or share users, then a multisite network might not be the best solution.
 
 ## Why use a WordPress multisite network?
 
@@ -28,7 +28,7 @@ Here, each contributor team that works on the WordPress open source project has 
 
 ## Multisite network support
 
-The web host or local development environment you use will determine how you create a multisite network either locally, or on a live server. The two common options are either to offer a setting that you enable during the new site creation process, to create the new site as a multisite network, or to follow the manual steps to setting up a multisite network after WordPress is installed.
+The web host or local development environment you use will determine how you create a multisite network either locally, or on a live server. The two common options are either to offer a setting that you enable during the new installation process, to set up the new installation as a multisite network, or to follow the manual steps to setting up a multisite network after WordPress is installed.
 
 Web hosts and local development environments that use the Apache web server generally allow you to convert an existing WordPress install into a multisite network using the manual method. Those who use nginx generally require you to create a multisite network during the new site creation process. This is because by default nginx doesn't support the .htaccess file that is used to enable multisite manually.
 
