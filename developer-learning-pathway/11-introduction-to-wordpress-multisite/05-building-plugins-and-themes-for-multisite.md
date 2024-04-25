@@ -61,7 +61,9 @@ As discussed, most plugin functionality will work the same in a single site as w
 
 However, there are two things to consider when developing plugins for multisite.
 
-Plugins often have a settings page, which is usually accessible from the admin dashboard. This is fine for single site plugins, but on a multisite network, you need to consider where the settings page should be located. Should it be on the network admin dashboard, or on the individual site dashboard? If you need to have a settings page on the network admin dashboard, you can use the `network_admin_menu` hook to add a menu item to the network admin dashboard. If you need to have a settings page on the individual site dashboard, you can use the `admin_menu` hook to add a menu item to the individual site dashboard.
+Plugins often have a settings page, which is usually accessible from the admin dashboard. This is fine for single site plugins, but on a multisite network, you need to consider where the settings page should be located. Should it be on the network admin dashboard, or on the individual site dashboard? 
+
+If you need to have a settings page on the network admin dashboard, you can use the `network_admin_menu` hook to add a menu item to the network admin dashboard. If you need to have a settings page on the individual site dashboard, you can use the `admin_menu` hook to add a menu item to the individual site dashboard.
 
 Plugins might have to add custom tables to store custom data. If you use something like the `$wpdb->prefix` variable to prefix your table names, you'll end up with a table name that is prefixed with the site ID. So if you need to have a custom table for this functionality on a per-site basis, you need to plan for it.
 
@@ -152,5 +154,3 @@ In this way you allow your plugin to work on a multisite network, both when it's
 Besides the documentation on [Creating a network ](https://wordpress.org/documentation/article/create-a-network/) and things to [consider before creating a network](https://wordpress.org/documentation/article/before-you-create-a-network/), there's not a lot of developer focused documentation specific to developing for multisite.
 
 However, it is possible to view a list of all multisite related functionality by browsing to the [multisite package](https://developer.wordpress.org/reference/package/multisite/) section of the WordPress code reference.
-
-From there you can filter by classes, functions, hooks, and class methods.

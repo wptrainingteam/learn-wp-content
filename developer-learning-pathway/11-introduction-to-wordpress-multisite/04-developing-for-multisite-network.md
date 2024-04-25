@@ -2,9 +2,9 @@
 
 ## Introduction
 
-WordPress core contains some multisite specific functionality that controls certain aspects of the network, or subsites on the network.
+WordPress core includes a set of functions and hooks that control certain aspects of the network, or individual sites on the network.
 
-In this lesson, you'll learn about some multisite specific naming conventions to be aware of, and then dive into some useful multisite specific functions and hooks to be aware of.
+In this lesson, you'll learn about multisite specific function naming conventions to be aware of, and then dive into some useful multisite specific functions and hooks you can use. Finally, you'll learn about developing for individual sites in a network, as well as were to go for more information about multisite functions and hooks.
 
 ### Note on naming conventions
 
@@ -84,13 +84,13 @@ The second is the [network_admin_notices](https://developer.wordpress.org/refere
 
 [wp_initialize_site](https://developer.wordpress.org/reference/hooks/wp_initialize_site/) is an action that is fired when a new site is created. This is useful if you want to perform actions when a new site is created, for example if you wanted to assign a custom top level domain to a sub site.
 
-## Developing for sites in a network
+## Developing for individual sites in a network
 
 When you are rendering any content in the scope of a single site on the network, WordPress core is clever enough to know that you are working inside the scope of that site.
 
 This means that any functions that you use to retrieve information, such as get_bloginfo, get_option, get_posts, or get_post_meta, and any functions you might use to add or update information, like update_option, wp_insert_post or update_post_meta, will get, add or update the correct tables for the site that you are currently working with.
 
-Additionally, if you use functions like register_post_type or register_taxonomy, these will be registered for the current site only.
+Additionally, if you use functions like `register_post_type` or `register_taxonomy`, these will be registered for the current site only.
 
 ## Further reading
 
