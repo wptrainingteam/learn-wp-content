@@ -186,17 +186,17 @@ This uses the error_log function combined with the PHP print_r function to log t
 
 This array contains all the queries that have been run during the WordPress request lifecycle, and is only available if the SAVEQUERIES constant is enabled.
 
-## Using debugging plugins
+Using debugging plugins
 
 In addition to using the built-in debugging tools, there are also a few plugins that can help with debugging.
 
-### Query Monitor
+Query Monitor
 
 The first plugin is Query Monitor, which is a debugging plugin that adds a debug menu to the admin bar, and displays information about the current page request. 
 
 It includes information about the database queries that have been run, the current HTTP Request, the hooks and actions that have been run, loaded scripts and styles, and much more. 
 
-### Debug Bar
+Debug Bar
 
 The second plugin is Debug Bar, which also adds a debug menu to the admin bar, and displays debugging information about the current page request. It focuses mostly on the database queries that have been run, includes data on the WP Query object as well as the HTTP Request, and includes info on the Object cache.
 
