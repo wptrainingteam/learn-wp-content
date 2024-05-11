@@ -6,13 +6,13 @@ Sometimes, you may need a way to modify or extend an existing theme, without mak
 
 This is where child themes come in. 
 
-In this lesson, you'll learn what child themes are, why you should use them, and how to create and use them.
+In this lesson, you'll learn what child themes are, why you should use them, and how to create and use a child theme.
 
 ## What is a child theme?
 
 A child theme is an extension of its parent theme. 
 
-Using a child theme allows you to extend or modify any parent of the parent theme, without making any chances to the parent theme code.
+Using a child theme allows you to extend or modify any part of the parent theme, without making any chances to the parent theme code.
 
 To understand how this works, let's look at a simplified example. 
 
@@ -22,11 +22,11 @@ Install and activate any theme from the WordPress theme repository in your local
 
 In this example, the Twenty Twenty-Four default theme is installed and active. 
 
-Let's say you want to customise some part of the theme, say the footer layout and structure.
+Let's say you want to customise some part of the theme, for example the footer layout and structure.
 
 You'd prefer it if the site menus were on the left, and the Site Logo, Title, and Tagline where on the right. 
 
-You also want to change the footer credit to reference your compnay name, and update the URL
+You also want to change the footer credit to reference your company name, and update the URL
 
 One way you could do this is inside the Site Editor. 
 
@@ -113,4 +113,8 @@ If you navigate to the Themes page in the WordPress admin area, you'll see the n
 
 If you browse to the front end, you'll see the changes you made to the footer template part are applied.
 
+And finally, if you look in your code editor, you'll see the child theme files have been created.
+
 ## Further reading
+
+For more information on child themes, see the [Child themes page](https://developer.wordpress.org/themes/advanced-topics/child-themes/) under Advanced Topics in the Theme Developer Handbook.

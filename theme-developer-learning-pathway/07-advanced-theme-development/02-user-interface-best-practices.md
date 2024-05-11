@@ -4,13 +4,13 @@
 
 When designing a WordPress theme, it's important to consider the user interface of the theme.
 
-In this lesson, you'll learn more about user interface design, as well as some best practices for designing the user interface of your theme.
+In this lesson, you're going to learn about user interface design, as well as some best practices for designing the user interface of your theme.
 
-## What is User Interface (UI)?
+## What is User Interface Design?
 
-The User Interface (UI) of a website is the space where interactions between humans and your website occur. This is more commonly know as the web site front end.
+The User Interface (UI) of a website is the space where interactions between humans and your website occur. This is more commonly know as the website front end.
 
-The goal of good user interface design is to allow for effective interactions, also know as a good user experience, so that the website simultaneously provides good feedback that aids the users decision-making process.
+The goal of good user interface design is to allow for effective interactions, also known as a good user experience, so that the website provides good feedback that aids the users decision-making process.
 
 Bad user interface design can lead to a frustrating user experience, which means users leaving a site, and therefore a loss of potential customers.
 
@@ -26,7 +26,7 @@ If you are using the `custom_logo()` function in a classic theme, or the site lo
 
 If you are using any soft of custom header, you should ensure that the logo links to the homepage.
 
-Here is an example of how you can link the logo to the homepage:
+Here is an example of how you can link the logo to the homepage using the home_url() function:
 
 ```php
 <a href="<?php echo esc_url( home_url( '/' ) ); ?>">
@@ -53,6 +53,8 @@ Here is a better way to write the anchor text:
 ```php
 The best way to learn WordPress is to start using it. <a href="https://wordpress.org/download/">Download WordPress</a> to get started.
 ```
+
+The Download WordPress text is descriptive of what will happen when you click the link.
 
 ## Style Links with Underlines
 
@@ -110,21 +112,25 @@ By making your text large enough, you increase the usability of your site and ma
 
 ## Associate Labels with Inputs
 
-When working with elements that accept input, make sure to associate labels with inputs using the form attribute. This will allow the user to click the label and focus on the input field.
+When working with elements that accept input, make sure to associate labels with inputs using the for attribute. 
 
 ```html
 <label for="username">Username</label>
 <input type="text" id="username" name="login" />
 ```
 
+This will allow the user to click the label and focus on the input field.
+
 ## Placeholder Text
 
-Where possible, add placeholder text to input elements. Placeholder text shows the user an example of what to type. When a user puts their cursor in the field, the placeholder text will disappear, while the label remains.
+Where possible, add placeholder text to input elements. Placeholder text shows the user an example of what to type. 
 
 ```html
 <label for="name">Name</label>
 <input type="text" id="name" name="name" placeholder="John Smith" />
 ```
+
+When a user puts their cursor in the field, the placeholder text will disappear, while the label remains.
 
 Use placeholders to suggest the type of data a field requires, and not as a substitute for the field label.
 
@@ -132,9 +138,11 @@ Use placeholders to suggest the type of data a field requires, and not as a subs
 
 The web is filled with buttons that have unclear meanings. Remember the last time you used ‘OK’ or ‘submit’ on your login form? 
 
-Choosing better words to display on your buttons can make your website easier to use. Try the pattern [verb] [noun] — Create user, Delete File, Update Password, Send Message. 
+Choosing better words to display on your buttons can make your website easier to use. Try the pattern [verb] [noun]. For example Submit Form, instead of just Submit.
 
-Each describes what will happen when the user clicks the button.
+This describes what will happen when the user clicks the button.
+
+A great example of this is the comments form on the single post template, the use of Post Comment, instead of just Submit 
 
 ## Further Reading
 

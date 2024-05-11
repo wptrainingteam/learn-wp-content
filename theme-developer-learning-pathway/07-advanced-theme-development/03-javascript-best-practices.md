@@ -2,7 +2,9 @@
 
 ## Introduction
 
-JavaScript is a programming language that is used to add interactivity to web pages. Theme developers will often use JavaScript to provide interactivity, animation or other enhancements to their themes.
+JavaScript is a programming language that is used to add interactivity to web pages. 
+
+Theme developers will often use JavaScript to provide interactivity, animation or other enhancements to their themes.
 
 While using JavaScript can help to make your theme more engaging and interactive, it can also introduce potential issues if not used correctly.
 
@@ -22,11 +24,11 @@ However, this may conflict with plugins that enqueue the version bundled with Wo
 
 You can find a full list of the default Scripts and JavaScript Libraries included and registered by WordPress in the [wp_enqueue_scripts](https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-and-js-libraries-included-and-registered-by-wordpress) function reference.
 
-Make your theme compatible with the version of your favorite library included with WordPress.
+Make sire your theme compatible with the version of your favorite library included with WordPress.
 
 ## Writing JavaScript
 
-JavaScript is growing in popularity on the web developers, and over the years the language has improved to be able to a variety of tasks. This means that for more common tasks, you may not need to use a JavaScript library at all, and can just write plain JavaScript.
+JavaScript is growing in popularity on the web, and over the years the language has improved to be able to a variety of tasks. This means that for more common tasks, you may not need to use a JavaScript library at all, and can just write plain JavaScript.
 
 Here are some things to consider when writing your JavaScript:
 
@@ -71,13 +73,13 @@ For example, if you need to add a click event to a button, you should use the `a
 
 3. Use a coding standard. 
 
-Using a coding standard can help to ensure that your code is consistent and easy to read. WordPress has a https://developer.wordpress.org/coding-standards/wordpress-coding-standards/javascript/ that you can use to ensure that your code is consistent with the rest of the WordPress codebase.
+Using a coding standard can help to ensure that your code is consistent and easy to read. WordPress has a [JavaScript Coding Standard](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/javascript/) that you can use to ensure that your code is consistent with the rest of the WordPress codebase.
 
 4. Validate and Lint Your Code
 
 Use a linter to check your code for errors and potential issues. This can help to catch bugs early, and ensure that your code is consistent and easy to read.
 
-ESLint is a popular linter for JavaScript, and can be used to check your code for errors and potential issues. It possible to configure your theme to use EsLint to check your JavaScript code via the @wordpress/scripts package.
+ESLint is a popular linter for JavaScript, and can be used to check your code for errors and potential issues. It possible to configure your theme to use EsLint to check your JavaScript code via the @wordpress/scripts [package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/).
 
 5. Ensure your theme works without JavaScript
 
@@ -132,9 +134,14 @@ When enqueuing your theme's scripts, you should specify jQuery as a dependency, 
 ```php
 add_action( 'wp_enqueue_scripts', 'my_theme_scripts' );
 function my_theme_scripts() {
-    wp_enqueue_script( 'my-script', get_template_directory_uri() . '/js/my-script.js', array( 'jquery' ), '1.0', true );
+    wp_enqueue_script( 
+        'my-script', 
+        get_template_directory_uri() . '/js/my-script.js', 
+        array( 'jquery' ), 
+        '1.0', 
+        true 
+    );
 }
-
 ```
 
 This will ensure that jQuery is loaded before your script is loaded, and uses the version included with WordPress.

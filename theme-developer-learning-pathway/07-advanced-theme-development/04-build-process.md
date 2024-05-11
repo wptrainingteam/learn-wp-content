@@ -18,13 +18,13 @@ Depending on what technologies you use in your theme, you may need a build proce
 
 For example, if you choose to use Sass for your styling, you will need a build process to compile your Sass files into CSS files that can be read by the browser.
 
-If you chose to write your JavaScript using the more modern ES6 syntax, you will need a build process to transpile your JavaScript files into a format that all browsers can execute.
+If you chose to write your JavaScript using the more modern syntax, you will need a build process to transpile your JavaScript files into a format that all browsers can execute.
 
-Even if you don't use Sass or ES6, a build process can still be useful for optimizing your theme's assets, such as minifying your CSS and JavaScript files, and optimizing images.
+Even if you don't use these options, a build process can still be useful for optimizing your theme's assets, such as minifying your CSS and JavaScript files, and optimizing images.
 
 When creating a WordPress theme, you may find yourself in need of a build process to handle more complex projects. There are many systems to choose from, and you can use whatever you prefer. 
 
-But WordPress also offers the @wordpress/scripts package that you can be assured is continually updated and should cover most of your needs.
+But WordPress also offers the @wordpress/scripts [package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/) that you can be assured is continually updated and should cover most of your needs.
 
 ## Prerequisites
 
@@ -36,7 +36,9 @@ But to work with a build process, there are some other requirements:
  - A basic understanding of [webpack](https://webpack.js.org/concepts/) is also recommended.
  - Some familiarity with the [@wordpress/scripts package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/).
 
- - These are more advanced tools than what is normally required to build themes, but they are necessary if you want to work with the standard WordPress build process.
+These are more advanced tools than what is normally required to build themes, but they are necessary if you want to work with the standard WordPress build process.
+
+If you completed the introduction to block development module in the beginner developer learning pathway, you should already have all the knowledge you need. 
 
 ## Setting up your files and folders
 

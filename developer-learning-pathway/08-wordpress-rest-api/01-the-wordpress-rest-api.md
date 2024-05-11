@@ -1,6 +1,6 @@
 # The WordPress REST API
 
-## Introduction
+## Introduction (0:00)
 
 When you're developing for WordPress, there are a number of APIs that you can use to interact with your site data. One of the most important of these is the REST API.
 
@@ -10,7 +10,7 @@ You will learn what the REST API is, as well as some key REST API concepts like 
 
 You will also learn where to go to find out more information about the WP REST API.
 
-## What is the WordPress REST API?
+## What is the WordPress REST API? (0:37)
 
 The WordPress REST API provides an interface for applications to interact with a WordPress site. These applications could be WordPress plugins, themes, or custom applications that need to access WordPress site data.
 
@@ -18,7 +18,7 @@ One of the most well known implementations of the WordPress REST API is the Bloc
 
 If you open your browser's developer tools, and look at the Network tab, you can see the requests that are made to the WordPress REST API when you interact with the Block Editor.
 
-## What does REST API mean?
+## What does REST API mean? (1:12)
 
 API stands for Application Programming Interface. It's a set of functionality that allow applications to interact with each other. WordPress has many APIs, the REST API is just one of them.
 
@@ -28,7 +28,7 @@ At it's core, the WordPress REST API provides REST endpoints (URIs) which repres
 
 Let's dive into some concepts of the REST API to understand them better.
 
-## Routes & Endpoints
+## Routes & Endpoints (2:06)
 
 In the context of the WordPress REST API, a route is a URI which can be mapped to different HTTP methods.
 
@@ -40,7 +40,7 @@ The mapping of an individual HTTP method to a route is known as an endpoint.
 
 So you would have for example, a GET endpoint for fetching data, a POST endpoint for creating data, and a DELETE endpoint for deleting data, all using the same route.
 
-## Local Development Testing
+## Local Development Testing (2:56)
 
 One thing to note about testing REST API routes on a local WordPress installation is that you may need to enable a Permalink setting other than "Plain".
 
@@ -48,7 +48,7 @@ This is because the REST API uses the same URL rewriting functionality as Permal
 
 So if your local WordPress installation is using the default Plain permalink setting, change it to something like Post name.
 
-## Example Routes & Endpoints
+## Example Routes & Endpoints (3:28)
 
 Let's look at some examples of routes and endpoints.
 
@@ -72,7 +72,7 @@ By contrast, the `/wp-json/wp/v2/posts` route offers a GET endpoint which return
 
 Typically, the same route (in this case `/wp-json/wp/v2/posts`) will have different endpoints for different HTTP methods, including GET for fetching data, POST for creating data and DELETE for deleting data.
 
-## Global Parameters
+## Global Parameters (5:07)
 
 The WP REST API includes a number of global parameters which control how the API handles the request/response handling. These operate at a layer above the actual resources themselves, and are available on all resources.
 
@@ -88,8 +88,8 @@ wp-json/wp/v2/posts?_fields=author,id,excerpt,title,link
 
 If you make a second GET request, by refreshing the browser, only the fields you have requested to be returned in the response are available.
 
-## Pagination and Ordering
-
+## Pagination and Ordering (6:15)
+ 
 The WP REST API also supports pagination and ordering of results.
 
 Pagination is handled by the `per_page`, `page` and `offset` parameters.
@@ -110,7 +110,19 @@ For example, you can update the `wp-json/wp/v2/posts` route to order by post tit
 wp-json/wp/v2/posts?_fields=author,id,excerpt,title,link&per_page=5&orderby=title&order=asc
 ```
 
-## Further Reading
+## Further Reading (6:48)
 
 The WordPress Developer Resources site has an entire section dedicated to the [REST API](https://developer.wordpress.org/rest-api/) which includes sections on the key REST API concepts, frequently asked questions, using and extending the REST API, and more.
 
+
+## YouTube chapters
+
+0:00 Introduction
+0:37 What is the WordPress REST API?
+1:12 What does REST API mean?
+2:06 Routes & Endpoints
+2:56 Local Development Testing
+3:28 Example Routes & Endpoints
+5:07 Global Parameters
+6:15 Pagination and Ordering
+6:48 Further Reading

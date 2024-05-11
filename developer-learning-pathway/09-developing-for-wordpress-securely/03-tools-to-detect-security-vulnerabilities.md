@@ -1,6 +1,6 @@
 # Tools to detect security vulnerabilities
 
-## Introduction
+## Introduction (0:00)
 
 To assist you in developing secure WordPress plugins and themes, there are a number of tools available that can help you detect security vulnerabilities in your code. 
 
@@ -8,7 +8,7 @@ In this lesson, you'll learn about some tools available to test your code for se
 
 You will also learn where to find more information about critical security risks to web applications.
 
-## Plugins
+## Plugins (0:24)
 
 There are two plugins available in the WordPress.org repository that can help you validate your code.
 
@@ -30,7 +30,7 @@ Again, you select the theme to be checked, and click the Check it! button to run
 
 The results are displayed at the bottom of the page, with a list of issues that need to be addressed.
 
-## Command line
+## Command line (1:42)
 
 If you're looking for something that can be run from the command line, you can use [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer) with the [WordPress Coding Standards](https://github.com/WordPress/WordPress-Coding-Standards) rules. 
 
@@ -77,7 +77,7 @@ With this installed, you can run PHP_CodeSniffer against your code using the Wor
 vendor/bin/phpcs wp-learn-plugin-security.php --standard=WordPress
 ```
 
-## Code Editor
+## Code Editor (4:06)
 
 Depending on your code editor, there are a number of ways to check for vulnerabilities while you code.
 
@@ -91,10 +91,19 @@ SonarLint is available as a plugin for [Visual Studio Code](https://marketplace.
 
 When configured correctly, these extensions can highlight issues in your code as you write it, so you can fix them before you commit your code.
 
-## OWASP
+## OWASP (5:00)
 
 While not specifically a tool, it's also a good idea to familiarize yourself with the [Open Web Application Security Project (OWASP)](https://owasp.org/).
 
 OWASP is a nonprofit foundation that works to improve the security of software. They provide a number of resources, including the [OWASP Top 10](https://owasp.org/www-project-top-ten/), which is a list of the top 10 most critical security risks to web applications.
 
 Security is an ever-changing landscape, and vulnerabilities evolve over time. By following the [Open Web Application Security Project (OWASP) Top 10 list](https://owasp.org/www-project-top-ten/) you can stay up-to-date with the latest security risks and best practices.
+
+
+## YouTube chapters
+
+0:00 Introduction
+0:24 Plugins
+1:42 Command line
+4:06 Code Editor
+5:00 OWASP

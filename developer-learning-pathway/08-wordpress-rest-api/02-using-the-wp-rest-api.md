@@ -1,6 +1,6 @@
 # Using the WordPress REST API
 
-## Introduction
+## Introduction (0:00) 
 
 The WordPress REST API provides a uniform interface for interacting with the data in a WordPress site.
 
@@ -8,7 +8,7 @@ In this lesson, you'll learn how to use the WP REST API to fetch data from your 
 
 You'll discover three internal options for making REST API requests, and then use them to perform a GET request to fetch some public custom post type data.
 
-## The Bookstore plugin
+## The Bookstore plugin  (0:23)
 
 If you completed the Introduction to WordPress plugins module, you built a plugin that registers a custom post type called `book`. 
 
@@ -50,7 +50,7 @@ Given that you would expect to be able to fetch more than one book from the book
 
 Doing this will allow you to make requests to the `wp-json/wp/v2/books` route, to access books via the REST API.
 
-## Making REST API requests
+## Making REST API requests  (1:49)
 
 Let's say you want to add a page in your WordPress dashboard that fetches the books, and displays a list of book titles and permalinks a comma separated list.
 
@@ -93,7 +93,7 @@ Now you could add functionality to the `bookstore_render_booklist` function whic
 
 However, for a smoother user experience, you'd like to use JavaScript and the REST API to fetch the book data asynchronously and populate the book list, without having to wait for a full page refresh.
 
-## Enqueuing the admin JavaScript
+## Enqueuing the admin JavaScript (2:52)
 
 In the Introduction to WordPress plugins module, you learned how to enqueue a JavaScript file in your plugin. 
 
@@ -128,7 +128,7 @@ alert( 'Hello from the Book store admin' );
 
 Once you're sure it's working, you can remove that line form the file.
 
-## Option 1: Using the Backbone.js client
+## Option 1: Using the Backbone.js client  (5:20)
 
 Since the REST API was added to WordPress it has included a [Backbone.js](https://backbonejs.org/) [REST API JavaScript Client](https://developer.wordpress.org/rest-api/using-the-rest-api/backbone-javascript-client/) for making direct requests to the WP REST API. 
 
@@ -233,7 +233,7 @@ if ( loadBooksByRestButton ) {
 
 Switch back to the custom Book List admin page, and click the "Load Books" button to see the list of books appear in the textarea.
 
-## Option 2: Using @wordpress/fetch-api
+## Option 2: Using @wordpress/fetch-api  (10:21)
 
 Since the inclusion of the Block Editor in WordPress 5.0, the `@wordpress/fetch-api` [package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/) has also been made available to make REST API requests.
 
@@ -285,7 +285,7 @@ You'll also notice that this code is using the arrow function syntax for the cal
 
 Refresh the admin page, and click the "Fetch Books" button to see the list of books appear in the textarea.
 
-## Option 3: Using @wordpress/core-data
+## Option 3: Using @wordpress/core-data (13:22)
 
 If you're developing blocks, there is also a `core-data` [package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-core-data/) available, to access data from the REST API.
 
@@ -349,7 +349,7 @@ Now, run the block build step, activate the plugin, and add the bookstore block 
 
 You will see the block output the book titles and links, fetched from the REST API.
 
-## Differences between options
+## Differences between options (16:17)
 
 The Backbone client is the oldest of the three options, but it is also the most tightly integrated with the REST API. If you need to build admin dashboard pages using the wP REST API, it's a good choice, and far better than using the legacy admin-ajax.php endpoint.
 
@@ -360,3 +360,15 @@ core-data is best used in a block context, as it uses React functionality that's
 ## Further Reading
 
 For more information on the various ways you can use the REST API in WordPress, take a look at the section on the Backbone JavaScript client in the [REST API Handbook](https://developer.wordpress.org/rest-api/using-the-rest-api/backbone-javascript-client/), the `api-fetch` package in the [Block Editor Handbook](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/), and the `core-data` package in the [Block Editor Handbook](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-core-data/).
+
+
+## YouTube chapters
+
+0:00 Introduction
+0:23 The Bookstore plugin
+1:49 Making REST API requests
+2:52 Enqueuing the admin JavaScript
+5:20 Option 1: Using the Backbone.js client
+10:21 Option 2: Using @wordpress/fetch-api
+13:22 Option 3: Using @wordpress/core-data
+16:17 Differences between options

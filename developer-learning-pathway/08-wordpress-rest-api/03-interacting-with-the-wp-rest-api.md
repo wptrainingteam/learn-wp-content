@@ -1,6 +1,6 @@
 # Interacting with the WP REST API
 
-## Introduction
+## Introduction (0:00)
 
 While the WP REST API is commonly used to fetch data from WordPress, it can also be used to perform other actions.
 
@@ -10,7 +10,7 @@ In this lesson, you'll learn about the WP REST API schema, methods to authentica
 
 If you skipped the previous lessons in this module, download version 1.0.1 of the [Bookstore plugin](https://github.com/wptrainingteam/beginner-developer/raw/main/bookstore.1.0.0.zip) from the link in the repository readme, and install and activate the plugin on your local WordPress install.
 
-## WP REST API Schema
+## WP REST API Schema (0:45)
 
 When working with the REST API, it's useful to keep the [Endpoint Reference](https://developer.wordpress.org/rest-api/reference/) section of the WP REST API documentation handy. The Endpoint Reference lists all endpoints that ship with WordPress core.
 
@@ -20,7 +20,7 @@ If you've created a custom post type, like the books custom post type from the b
 
 You will notice that many of the endpoint fields match up with the fields that are available in the WordPress database table related to that data type. Some however, are slightly different. For example, the `title` field for the Post endpoint will match up to the `post_title` field in the posts table. It is important to remember that these differences exist, and to use the correct field name when interacting with the API.
 
-## Authentication
+## Authentication (1:45)
 
 By default, the WordPress REST API uses the same cookie based Authentication method that is used when logging into the WordPress dashboard.
 
@@ -46,7 +46,7 @@ Using an application password for your user is a great way to test out REST API 
 
 If you intend building something more complex, like a mobile app that connects to a WordPress REST API, you should rather consider using JSON Web Tokens or OAuth 1.0a.
 
-### Postman
+### Postman  (3:39)
 
 There are a number of tools available to test REST API requests. 
 
@@ -100,7 +100,7 @@ You'll also notice that deleting a post actually moves it to the trash, and does
 
 Using a tool like Postman to test REST API endpoints is a great way to learn how to use the WP REST API. It's also extremely useful for testing WP REST API requests, by ensuring that the data you intend to send is formatted correctly, and that the request is being made to the correct endpoint.
 
-## Creating a Book
+## Creating a Book (7:46)
 
 Let's use the WP REST API and api-fetch to create a new book. 
 
@@ -186,9 +186,9 @@ Open the custom admin page, enter a title and content, and click the Add button.
 
 Then, if you browse to the list of books, you'll see your new book listed.
 
-## Updating and Deleting Posts
+## Updating and Deleting Books (12:53)
 
-You can also use the WP REST API to update and delete posts.
+You can also use the WP REST API to update and delete books.
 
 You can use the same api-fetch implementation for updating items as you did for adding items. You need to update the path to include the ID of the data entity being updated (in this case books), so that it updates that item, as well as the updated data object, with the new values for the fields you want to update. 
 
@@ -216,6 +216,16 @@ Deleting a post only requires the path to be set to the URL of the item, and set
     } );
 ```
 
-## Further Reading
+## Further Reading  (13:25)
 
 For more information on creating, updating and deleting data using the WP REST API, check out the [Using the REST API](https://developer.wordpress.org/rest-api/using-the-rest-api/) of the [WP REST API Handbook](https://developer.wordpress.org/rest-api/) as well as the [api-fetch](https://developer.wordpress.org/block-editor/packages/packages-api-fetch/) package reference, in the Block Editor Handbook.
+
+
+## YouTube chapters
+
+0:00 Introduction
+0:45 WP REST API Schema
+1:45 Authentication
+7:46 Creating a Book
+12:53 Updating and Deleting Books
+13:25 Further Reading

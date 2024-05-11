@@ -1,12 +1,12 @@
 # The Commonly Used Internationalization Functions
 
-## Introduction
+## Introduction (0:00)
 
 In order to get started on internationalizing your code, you need to understand the functions that WordPress provides to help you with this process. 
 
 In this lesson, you will learn about the most commonly used internationalization functions in WordPress, and how to use them in your code.
 
-## How to internationalize your code
+## How to internationalize your code (0:18)
 
 Whenever you find yourself writing a string of text that will be displayed to the user, you should use the [WordPress i18n functions](https://developer.wordpress.org/apis/internationalization/internationalization-functions/) to make sure it can be translated. 
 
@@ -197,7 +197,7 @@ If you refresh the page, you won't immediately see any changes, and all function
 
 However, if someone wanted to, they could generate the English language file for the theme, based on all the internationalized text strings, to allow for translation.
 
-## Internationalization functions in block development
+## Internationalization functions in block development (7:45)
 
 If you are developing a block for the block editor, you can also use the JavaScript translation functions in your block's JavaScript to internationalize the text strings in your block. 
 
@@ -212,6 +212,13 @@ All you need to do to use it is to import the relevant functions from the `@word
 import { __ } from '@wordpress/i18n';
 ```
 
-## Further reading
+## Further reading (8:01)
 
 This lesson only covers a handful of the available internationalization functions. For more information on all the available functions, check out the [Internationalization](https://developer.wordpress.org/apis/internationalization/) section in the Common APIs handbook of the WordPress developer resources.
+
+## YouTube chapters
+
+0:00 Introduction
+0:18 How to internationalize your code
+7:45 Internationalization functions in block development
+8:01 Further reading

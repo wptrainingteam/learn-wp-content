@@ -6,7 +6,7 @@ In the first lesson of this module, you learned about the main security principl
 
 In this lesson, you're going to learn how to apply these principles when developing your WordPress plugins and themes, by fixing an insecurely coded form submission plugin.
 
-## The badly coded form submission plugin
+## The badly coded form submission plugin (0:19)
 
 To start, download the [Learn Plugin Security plugin](https://github.com/wptrainingteam/beginner-developer/blob/main/wp-learn-plugin-security.1.0.0.zip), and install the plugin to your local development environment.
 
@@ -27,7 +27,7 @@ The front end style CSS file is used when the user enters a class attribute for 
 
 When the shortcode is added to a post or page, it renders the form, and users can submit their details. when the form is submitted, it will redirect either to the success or error page, depending on whether the form submission was successful or not. Then in the dashboard, admins can view the form submissions, and delete the submission using Ajax.
 
-## SQL Injection
+## SQL Injection (2:26)
 
 The first common vulnerability we're going to look for is SQL injection.
 
@@ -114,7 +114,7 @@ function wp_learn_delete_form_submission() {
 
 Because this is an integer, we can use the PHP type casting functionality to make sure it's always cast as an integer.
 
-## Cross Site Scripting (XSS)
+## Cross Site Scripting (XSS) (3:47)
 
 The next common vulnerability we're going to look for is Cross Site Scripting (XSS).
 
@@ -184,7 +184,7 @@ You must use the most appropriate function to the content and context of what yo
 
 Finally, you cast the ID to an integer, as it is being used in a data attribute.
 
-## Cross-site Request Forgery (CSRF)
+## Cross-site Request Forgery (CSRF) (5:32)
 
 The next vulnerability to prevent is Cross-site request forgery. CSRF is when a nefarious party tricks a user into performing an unwanted action within a web application they are authenticated in.
 
@@ -293,7 +293,7 @@ You'll see that the string passed to `check_ajax_referer` is the same string we 
 
 If check_ajax_referrer fails, it will cause execution to stop, so we don't need to check the result of the function.
 
-## Broken Access Control
+## Broken Access Control  (8:36)
 
 There's one more vulnerability in this plugin, and it's a broken access control vulnerability. BAC is when a user is able to access a resource they should not be able to access. For example, a user might be able to access an admin function, even though they are not an administrator.
 
@@ -309,12 +309,23 @@ To fix this, we can use the WordPress Roles and Capabilities API to check that t
 
 Note that we're doing two checks here, one against CSRF and once for access control. In this example the order of execution is not super important, but in general, it's a good idea to check for CSRF first, and then check for access control.
 
-## Bonus round - Open Redirect
+## Bonus round - Open Redirect (9:51)
 
 There's one additional security vulnerability in this plugin. Can you find it?
 
 It's a tough one to spot, but all instances of `wp_redirect` should be replaced with `wp_safe_redirect`. This is because the code is redirecting to a local url, and wp_safe_redirect checks whether the $location its using an allowed host, if it has an absolute path. This prevents the possibility of malicious redirects if the redirect $location is ever attacked.
 
-## Further reading
+## Further reading (10:18)
 
 To read more about fixing common vulnerabilities in WordPress code, make sure to bookmark the page on [Common Vulnerabilities](https://developer.wordpress.org/apis/security/common-vulnerabilities/) in the WordPress Developer Documentation on [Security](https://developer.wordpress.org/apis/security/), as well as the [example](https://developer.wordpress.org/apis/security/example/) using capability checks, data validation, secure input, secure output and nonces.
+
+## YouTube chapters
+
+0:00 Introduction
+0:19 The badly coded form submission plugin
+2:26 SQL Injection
+XSS Cross Site Scripting
+CSRF Cross-site Request Forgery
+8:36 Broken Access Control
+9:51 Bonus round - Open Redirect
+10:18 Further reading

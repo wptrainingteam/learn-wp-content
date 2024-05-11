@@ -1,6 +1,6 @@
 # Securely developing plugins and themes
 
-## Introduction
+## Introduction (0:00)
 
 So far, you have become familiar with the basics of developing plugins and themes for WordPress. Now would be a good time to also consider the security implications of writing code. 
 
@@ -8,13 +8,13 @@ In this lesson, you're going to learn how to develop with security in mind.
 
 You will learn the benefits of ensuring your code is secure, what steps to follow to secure your code, and where to find more information around developing with security in mind.
 
-## Disclaimer
+## Disclaimer (0:25)
 
 This lesson was created as an introduction to being security minded when developing plugins and themes. The code used in this lesson is very simplified. You should not use any of the code used in this tutorial in your plugins or themes.
 
 Please make sure to read the full documentation on Security in the WordPress Developer handbook at https://developer.wordpress.org/apis/security/ to ensure you follow the correct methods and procedures.
 
-## What is developing with security in mind?
+## What is developing with security in mind? (1:04)
 
 Developing with security in mind is the process of ensuring your code not only works, but also does not introduce any security vulnerabilities. 
 
@@ -26,7 +26,7 @@ When writing code, it's important to develop a security mindset, and to think ab
 - WordPress has a number of APIs that can help you with common tasks, such as sanitizing user input, validating data, and escaping output. Rely on using these APIs to help validate and sanitize your data instead of writing your own functions.
 - Keep up to date with common vulnerabilities and keep your code up to date to prevent them.
 
-## Where does security fit in the development process?
+## Where does security fit in the development process? (2:12) 
 
 Security should be a consideration at every stage of the development process.
 
@@ -34,7 +34,7 @@ Generally, the largest number of security vulnerabilities that are found take pl
 
 Therefore, this lesson will focus on the top most common preventive measures in your PHP code.
 
-## Sanitizing inputs
+## Sanitizing inputs (2:33)
 
 One of the first steps to take when developing is to ensure that any user input is sanitized. This means that any data that is being passed from the user, such as a form submission, or a URL parameter, is checked to make sure it's safe to use.
 
@@ -71,7 +71,7 @@ Notice that the code follows a key principle of sanitizing data, in that you do 
 
 To read more about the available sanization functions available to WordPress developers, check out the [Sanitizing Data](https://developer.wordpress.org/apis/security/sanitizing/) page in the WordPress Developer Documentation.
 
-## Validating Data
+## Validating Data (4:06)
 
 Validating data is the process of testing it against a predefined pattern (or patterns) with a definitive result, either valid or invalid.
 
@@ -119,7 +119,7 @@ if ($id === 0){
 
 To read more about the various ways to validate data, check out the section on [Validating Data](https://developer.wordpress.org/apis/security/data-validation/) in the WordPress Developer Documentation.
 
-## Escaping outputs
+## Escaping outputs (6:18)
 
 Another aspect of security is to ensure that any information you output to the browser is safe, including any text, HTML or JavaScript code, or data from the database. 
 
@@ -169,7 +169,7 @@ Notice that this code follows a key principle of escaping data, in that you esca
 
 To read more about the various ways to escape outputs, check out the section on [Escaping Data](https://developer.wordpress.org/apis/security/escaping/) in the WordPress Developer Documentation.
 
-## Preventing invalid requests
+## Preventing invalid requests (7:50)
 
 Whenever a request is made, it's important to check that the request is valid. This means checking that the request is coming from a trusted source.
 
@@ -256,7 +256,7 @@ Any time your code makes a web request, be it via redirection to a new URL, POST
 
 To read more about how to use nonces in your plugins, check out the section on [Nonces](https://developer.wordpress.org/apis/security/nonces/) in the WordPress Developer Documentation.
 
-## Preventing unauthenticated users
+## Preventing unauthenticated users (11:36)
 
 Depending on your code's functionality, it's a good idea to restrict certain features only to users with a specific permission level. For example, you may have a function that deletes data from the database.
 
@@ -294,6 +294,19 @@ function wp_learn_delete_form_submission() {
 
 The WordPress Developer Documentation has a detailed section on [User Roles and Capabilities](https://developer.wordpress.org/apis/security/user-roles-and-capabilities/), which includes a list of the default capabilities, and how to create custom ones.
 
-## Further reading
+## Further reading (13:17)
 
 To prepare yourself to think about developing with security in mind, make sure to read the entry in the WordPress Developer Documentation on [Security](https://developer.wordpress.org/apis/security/), as it includes all the examples in this lesson, as well as additional information on security best practices, common vulnerabilities, and more example code.
+
+## YouTube chapters
+
+0:00 Introduction
+0:25 Disclaimer
+1:04 What is developing with security in mind?
+2:12 Where does security fit in the development process?
+2:33 Sanitizing inputs
+4:06 Validating Data
+6:18 Escaping outputs
+7:50 Preventing invalid requests
+11:36 Preventing unauthenticated users
+13:17 Further reading

@@ -12,13 +12,17 @@ In this lesson, you will learn how to allow plugins to hook into your theme, by 
 
 If you are developing a block theme, you should not have to worry about implementing these template tags. 
 
-The blocks that implement the functionality described in this lesson already support the relevant hooks. Using these template tags is only necessary if you are developing a classic theme.
+The blocks that implement the functionality described in this lesson already support the relevant hooks. 
+
+Using these template tags is only necessary if you are developing a classic theme, or custom functionality outside of the core blocks.
 
 ## Template tags
 
 Most hooks are executed internally by WordPress, so your theme does not need special tags for them to work. 
 
-However, a few hooks need to be supported in specific theme templates. These hooks are fired by specific template tags:
+However, a few hooks need to be supported in specific theme templates. 
+
+These hooks are fired by specific template tags:
 
 wp_head() fires the wp_head action, which is used by plugins to add code to the <head> section of your theme. 
 

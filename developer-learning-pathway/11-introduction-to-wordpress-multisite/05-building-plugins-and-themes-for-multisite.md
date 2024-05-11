@@ -1,12 +1,12 @@
 # Building plugins and themes that support multisite
 
-## Introduction
+## Introduction (0:00)
 
 When developing themes or plugins for a WordPress multisite network, there are a few things to consider that are slightly different from developing for a single site WordPress install.
 
 In this lesson, you'll discover some differences to consider, and how to ensure your plugins and themes are supported for multisite.
 
-## Developing themes and child themes
+## Developing themes and child themes (0:18)
 
 Generally themes and child themes work exactly the same on a multisite network as they do on a single site. Once a theme or child theme is network activated, it can be activated on any single site on the network.
 
@@ -55,7 +55,7 @@ if ( ! function_exists( 'tt3c_get_site_name' ) ) {
 
 All of this is possible from just one `functions.php` file inside of a single child theme.
 
-## Developing plugins
+## Developing plugins (5:04)
 
 As discussed, most plugin functionality will work the same in a single site as well as a multisite. Functions like `register_post_type` or `get_posts` will function in the same way, just in the scope of the specific site in question.
 
@@ -149,8 +149,14 @@ Test that out by creating a new site. It should create the new table for that si
 
 In this way you allow your plugin to work on a multisite network, both when it's activated for the first time on the network, taking into account any existing sites, but also future proofing for any new sites.
 
-### Where to find more information
+### Where to find more information (13:49)
 
 Besides the documentation on [Creating a network ](https://wordpress.org/documentation/article/create-a-network/) and things to [consider before creating a network](https://wordpress.org/documentation/article/before-you-create-a-network/), there's not a lot of developer focused documentation specific to developing for multisite.
 
 However, it is possible to view a list of all multisite related functionality by browsing to the [multisite package](https://developer.wordpress.org/reference/package/multisite/) section of the WordPress code reference.
+
+## YouTube chapters
+
+0:00 Introduction
+0:18 Developing themes and child themes
+5:04 Developing plugins

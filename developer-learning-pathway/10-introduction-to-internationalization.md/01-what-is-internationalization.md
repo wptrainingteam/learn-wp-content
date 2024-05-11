@@ -1,12 +1,12 @@
 # What is Internationalization?
 
-## Introduction
+## Introduction (0:00)
 
 Internationalization is the process of developing software in a way that it can easily be translated into other languages without any changes to the source code.
 
 Let's learn what internationalization is in the context of WordPress, why it is important, and learn where to find more information on how to implement it in your WordPress development.
 
-## What is Internationalization?
+## What is Internationalization? (0:21)
 
 WordPress is used all over the world, by people who speak many languages. 
 
@@ -58,7 +58,7 @@ The process of translating and adapting the Internationalized text strings to a 
 
 While localization is outside the scope of this lesson, you can read more about it [in the Localization section](https://developer.wordpress.org/apis/internationalization/localization/) of the Common APIs handbook in the WordPress developer resources.
 
-## What Internationalization is not
+## What Internationalization is not (2:37)
 
 Internationalization is not the same as making sure your content is available in multiple languages on the front end of your website. 
 
@@ -68,6 +68,14 @@ Because this content is stored in the database, it's better to have a fully tran
 
 This can be achieved using plugins like [TranslatePress](https://wordpress.org/plugins/translatepress-multilingual/), [Polylang](https://wordpress.org/plugins/polylang/), or [WeGlot](https://wordpress.org/plugins/weglot). 
 
-## Where to find more information
+## Where to find more information (3:07)
 
 The WordPress developer resources have a great section on [Internationalization](https://developer.wordpress.org/apis/internationalization/) in the Common APIs handbook. It includes an overview of the process, as well as a page which lists the [functions that are commonly used](https://developer.wordpress.org/apis/internationalization/internationalization-functions/) in WordPress for Internationalization. It also contains a section on [Internationalization Guidelines](https://developer.wordpress.org/apis/internationalization/internationalization-guidelines/), which is a must-read for any developer who is looking to make their WordPress plugin or theme translatable.
+
+
+## YouTube chapters
+
+0:00 Introduction
+0:21 What is Internationalization?
+2:37 What Internationalization is not
+3:07 Where to find more information

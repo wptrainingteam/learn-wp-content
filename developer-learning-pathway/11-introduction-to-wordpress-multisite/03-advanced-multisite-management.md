@@ -1,12 +1,12 @@
-# Advanced Multisite Management
+# Advanced multisite management
 
-## Introduction
+## Introduction (0:00)
 
 With the basics of managing a multisite network under your belt, it's time to look at some more advanced multisite management tasks.
 
 Let's dive into the different possible site statuses, what happens when you delete a site, how to export a single site from a multisite network to its own install, and how to convert a multisite network install back to a single site install.
 
-## Site Status
+## Site Status (0:25)
 
 There are some site status options that are available to a Network Admin, that are useful to know about.
 
@@ -16,11 +16,11 @@ Archiving a site will update the site status to archived and show an archived me
 
 Marking a site as Spam will update the site status to spam and show the same message as archiving, but no additional hooks are fired.
 
-## Deleting a site from the network
+## Deleting a site from the network (1:21)
 
 Deleting a site from the network will remove all content associated with the site, including posts, pages, comments, and any other custom content types. It also removes any tables in the database that were used to house the site's content. Unlike when you trash a post or page, once you delete a site, you cannot undo this action.
 
-## Export a site to a single site install
+## Export a site to a single site install (1:42)
 
 Under certain circumstances, you might want to extract one of the sub sites to its own single site WordPress install. This is possible, but requires some manual steps. There are a few ways to do this, this is just one possibility.
 
@@ -48,13 +48,13 @@ Lastly, test everything out to make sure it's working as expected.
 
 An alternative to the WordPress data export option is to manually copy the database tables for the sub site to the new site. However, this might lead to further issues if the content isn't associated with the correct user.
 
-### Considerations
+### Considerations (4:16)
 
 If you have any plugins that create custom database tables, you might need to manually copy these tables over to the new installation.
 
 In that case, it might be easier to rely on paid third-party backup solutions that have multisite extensions and will handle this for you.
 
-## Convert a Multisite back to a single site install
+## Convert a Multisite back to a single site install (4:35)
 
 It's also possible to convert a multisite back to a single site install. This is useful if you no longer need the multisite functionality, but want to retain the original site.
 
@@ -76,6 +76,15 @@ wp_blogmeta, wp_blogs, wp_registration_log, wp_signups, wp_site, wp_site_meta
 
 If everything went well, you should now have a working single site installation of your main site.
 
-## Further reading.
+## Further reading. (6:21)
 
 For a full list of all the Multisite management functionality, check out the [Multisite](https://developer.wordpress.org/advanced-administration/multisite/) section in the WordPress developer handbook under Advanced Administration.
+
+## YouTube chapters
+
+0:00 Introduction
+0:25 Site Status
+1:21 Deleting a site from the network
+1:42 Export a site to a single site install
+4:35 Convert a Multisite back to a single site install
+6:21 Further reading.

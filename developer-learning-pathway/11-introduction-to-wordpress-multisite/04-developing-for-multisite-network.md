@@ -1,12 +1,12 @@
-# Developing for a Multisite Network
+# Developing for a multisite network
 
-## Introduction
+## Introduction (0:00)
 
 WordPress core includes a set of functions and hooks that control certain aspects of the network, or individual sites on the network.
 
 In this lesson, you'll learn about multisite specific function naming conventions to be aware of, and then dive into some useful multisite specific functions and hooks you can use. Finally, you'll learn about developing for individual sites in a network, as well as were to go for more information about multisite functions and hooks.
 
-### Note on naming conventions
+### Note on naming conventions (0:30)
 
 There are a couple of different naming conventions used in the WordPress codebase when it comes to multisite.
 
@@ -14,7 +14,7 @@ WordPress multisite was originally known as [WordPress MU](https://codex.wordpre
 
 Additionally, some functions are named based on the old terminology which described multiple “blogs” on a “site”. This has since been updated to describe multiple “sites” on a “network” instead, but some old terminology still lives on in some function names.
 
-## Useful functions
+## Useful functions (1:08)
 
 When you're developing a product to support a multisite network, there are a some of useful internal functions worth knowing.
 
@@ -72,7 +72,7 @@ function update_option_on_all_sites( $option_name, $option_value ) {
 
 When developing multsite plugins, there is the [is_network_only_plugin](https://developer.wordpress.org/reference/functions/is_network_only_plugin/) function. This is a plugin specific function that checks for the “Network: true” in the plugin header to see if this should be activated only as a network wide plugin. This is useful if you want to restrict a plugin to only be activated on a network, and not on individual sites.
 
-## Useful hooks
+## Useful hooks (5:24)
 
 There are also a couple of useful hooks that you can use when developing for multisite.
 
@@ -84,7 +84,7 @@ The second is the [network_admin_notices](https://developer.wordpress.org/refere
 
 [wp_initialize_site](https://developer.wordpress.org/reference/hooks/wp_initialize_site/) is an action that is fired when a new site is created. This is useful if you want to perform actions when a new site is created, for example if you wanted to assign a custom top level domain to a sub site.
 
-## Developing for individual sites in a network
+## Developing for individual sites in a network (6:18)
 
 When you are rendering any content in the scope of a single site on the network, WordPress core is clever enough to know that you are working inside the scope of that site.
 
@@ -92,6 +92,14 @@ This means that any functions that you use to retrieve information, such as get_
 
 Additionally, if you use functions like `register_post_type` or `register_taxonomy`, these will be registered for the current site only.
 
-## Further reading
+## Further reading (7:00)
 
 For a full list of all WordPress multisite related functions and hooks, check out the [Multisite Package Category](https://developer.wordpress.org/reference/package/multisite/) in the WordPress developer reference
+
+## YouTube chapters
+
+0:00 Introduction
+1:08 Useful functions
+5:24 Useful hooks
+6:18 Developing for individual sites in a network
+7:00 Further reading

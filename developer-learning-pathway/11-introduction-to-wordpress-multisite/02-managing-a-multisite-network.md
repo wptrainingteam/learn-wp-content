@@ -1,6 +1,6 @@
-# Managing a WordPress Multisite Network
+# Managing a WordPress multisite network
 
-## Introduction
+## Introduction (0:00)
 
 Managing a WordPress Multisite network is slightly different from managing a single site WordPress install. 
 
@@ -8,11 +8,11 @@ In this lesson, you're going to learn how to manage a WordPress multisite networ
 
 You will learn about the Network Admin dashboard, and the options available in the Network Settings page, as well as different ways to create and manage sub-sites on the network.
 
-## The Network Admin dashboard
+## The Network Admin dashboard (0:23)
 
 Once you have enabled your multisite network, your Admin user will change to a Super Admin, and will have access to the Network Admin dashboard. Here, you can manage sites, users, themes, plugins and settings for the network.
 
-## The Network Settings page
+## The Network Settings page (0:52)
 
 The Network Settings page is where you manage your multisite network.
 
@@ -32,9 +32,7 @@ Language Settings allows you to control the default language for new sites on th
 
 Finally, the Menu Settings allows you to control which menus are available to site admins.
 
-## Creating and Managing Sub-sites
-
-### Create a site
+## Create a site  (1:54)
 
 One of the first things that you might want to do is create a sub-site. To do this, go to the Sites page, and click the "Add New" button. You'll be asked to enter the site address (either a subdomain or a subdirectory), the site title, site language, and the site admin email address. If you use an email address of an already existing user, that user will be added as the site admin. Otherwise a new user will be created, and made admin of the new site
 
@@ -48,7 +46,7 @@ The Themes tab allows you to activate a theme for the site. The themes available
 
 The Settings tab contains all the rest of the site settings that you can manage.
 
-### Assign a TLD to a site
+## Assign a top-level domain to a site  (3:27)
 
 It is also possible to set a top-level or apex domain for a site on the network. This is useful if you or the site admin wants to use a different domain for a site on the network.
 
@@ -60,7 +58,7 @@ Then, in the Network Admin, edit to the site in question, and change the Site Ad
 
 Now, when you browse to that domain, you will be redirected to the associated site on the network.
 
-### Allow users to register their own sites
+## Allow users to register their own sites (4:08)
 
 Depending on how you plan to use your multisite network, you might want users to be able to register their own subsites. To do this, go to the Network Settings page, and enable the "Both sites and user accounts can be registered" option.
 
@@ -74,6 +72,17 @@ If they choose to create a site, they will need to set the site name and title.
 
 Once they click signup, the site will be created and the user will be sent an email to activate the new site, after which they will be able to log in to the subsite.
 
-## Further reading.
+## Further reading. (5:11)
 
 For more details on managing your Multisite network, check out the [Network Admin](https://developer.wordpress.org/advanced-administration/multisite/admin/) and [Network Admin Settings](https://developer.wordpress.org/advanced-administration/multisite/admin/settings/) pages in the WordPress developer documentation.
+
+
+## YouTube chapters
+
+0:00 Introduction
+0:23 The Network Admin dashboard
+0:52 The Network Settings page
+1:54 Create a site
+3:27 Assign a top-level domain to a site
+4:08 Allow users to register their own sites
+5:11 Further reading.

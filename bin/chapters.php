@@ -14,10 +14,21 @@ foreach (glob('*.md') as $file) {
 			if (substr_count($line, '#') !== 2) {
 				continue;
 			}
+
+			// check if the line contains a ( and a ) and extract the text between them
+			if ( strpos( $line, '(' ) === false || strpos( $line, ')' ) === false ) {
+				$marker = '0:00';
+			} else {
+				// fetch the chapter marker from the line, inside the (...)
+				// e.g. ## Introduction (0:00)
+				$marker = substr( $line, strpos( $line, '(' ) + 1, strpos( $line, ')' ) - strpos( $line, '(' ) - 1 );
+			}
+			// remove the marker from the line
+			$line = substr( $line, 0, strpos( $line, '(' ) );
 			// remove all hashes and any leading/trailing whitespace
 			$line = trim(str_replace('#', '', $line));
 			// store the heading in the headings array
-			$headings[] = '0:00 ' . $line;
+			$headings[] = $marker . ' ' . $line;
 		}
 	}
 	// write the headings to the bottom of the markdown file, with a heading of "YouTube chapters"
