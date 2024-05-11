@@ -2,6 +2,8 @@
 
 ## Introduction (0:00) 
 
+https://youtu.be/SdwFRdcAlH0
+
 The WordPress REST API provides a uniform interface for interacting with the data in a WordPress site.
 
 In this lesson, you'll learn how to use the WP REST API to fetch data from your WordPress site. 

@@ -2,6 +2,8 @@
 
 ## Introduction (0:00)
 
+https://youtu.be/asAEykTSTL4
+
 So far, you have become familiar with the basics of developing plugins and themes for WordPress. Now would be a good time to also consider the security implications of writing code. 
 
 In this lesson, you're going to learn how to develop with security in mind. 

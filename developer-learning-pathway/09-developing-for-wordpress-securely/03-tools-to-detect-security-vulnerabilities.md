@@ -2,6 +2,8 @@
 
 ## Introduction (0:00)
 
+https://youtu.be/xq79225wAvU
+
 To assist you in developing secure WordPress plugins and themes, there are a number of tools available that can help you detect security vulnerabilities in your code. 
 
 In this lesson, you'll learn about some tools available to test your code for security vulnerabilities, and a brief introduction on how to use them.
@@ -58,7 +60,7 @@ Once you have Composer installed, you run the following command in your terminal
 
 ```bash
 composer init
-``
+```
 
 Follow the in terminal instructions to create a new Composer project. 
 

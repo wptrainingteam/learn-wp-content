@@ -2,6 +2,8 @@
 
 ## Introduction (0:00)
 
+https://youtu.be/vJRHeQIqRV4
+
 The WordPress REST API provides an interface for fetching, adding, updating and deleting data from a WordPress site in a uniform way.
 
 While the schema for the data types that are available in the REST API is quite extensive, there may be times when you need to store additional data that is not part of the core schema. 

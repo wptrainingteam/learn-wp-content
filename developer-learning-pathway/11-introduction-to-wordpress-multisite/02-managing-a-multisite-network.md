@@ -2,6 +2,8 @@
 
 ## Introduction (0:00)
 
+https://youtu.be/LiYSx4gH0EQ
+
 Managing a WordPress Multisite network is slightly different from managing a single site WordPress install. 
 
 In this lesson, you're going to learn how to manage a WordPress multisite network.

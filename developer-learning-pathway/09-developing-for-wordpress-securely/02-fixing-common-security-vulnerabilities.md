@@ -2,6 +2,8 @@
 
 ## Introduction
 
+https://youtu.be/pzP3xGLpcDo
+
 In the first lesson of this module, you learned about the main security principles that you should follow when developing a custom plugin or theme. 
 
 In this lesson, you're going to learn how to apply these principles when developing your WordPress plugins and themes, by fixing an insecurely coded form submission plugin.

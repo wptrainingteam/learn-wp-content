@@ -2,11 +2,13 @@
 
 ## Introduction (0:00)
 
+https://youtu.be/9bqDHKfvTA8
+
 WordPress core includes a set of functions and hooks that control certain aspects of the network, or individual sites on the network.
 
 In this lesson, you'll learn about multisite specific function naming conventions to be aware of, and then dive into some useful multisite specific functions and hooks you can use. Finally, you'll learn about developing for individual sites in a network, as well as were to go for more information about multisite functions and hooks.
 
-### Note on naming conventions (0:30)
+## Note on naming conventions (0:30)
 
 There are a couple of different naming conventions used in the WordPress codebase when it comes to multisite.
 
@@ -94,7 +96,7 @@ Additionally, if you use functions like `register_post_type` or `register_taxono
 
 ## Further reading (7:00)
 
-For a full list of all WordPress multisite related functions and hooks, check out the [Multisite Package Category](https://developer.wordpress.org/reference/package/multisite/) in the WordPress developer reference
+For a full list of all WordPress multisite related functions and hooks, check out the [Multisite Package Category](https://developer.wordpress.org/reference/package/multisite/) in the WordPress developer reference.
 
 ## YouTube chapters
 

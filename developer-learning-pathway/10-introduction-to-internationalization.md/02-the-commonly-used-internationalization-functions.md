@@ -1,6 +1,8 @@
-# The Commonly Used Internationalization Functions
+# The commonly used Internationalization functions
 
 ## Introduction (0:00)
+
+https://youtu.be/xi6FcmHTy1I
 
 In order to get started on internationalizing your code, you need to understand the functions that WordPress provides to help you with this process. 
 

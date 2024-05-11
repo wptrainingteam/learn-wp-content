@@ -2,6 +2,8 @@
 
 ## Introduction (0:00)
 
+https://youtu.be/URBsinfSWyk
+
 While the WP REST API is commonly used to fetch data from WordPress, it can also be used to perform other actions.
 
 The REST API also allows you to create, update, and delete various WordPress data types.
