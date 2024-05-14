@@ -10,7 +10,7 @@ While using JavaScript can help to make your theme more engaging and interactive
 
 In this lesson, you'll learn about some best practices for using JavaScript in your WordPress theme
 
-You will learn about using third-party JavaScript libraries, some best practices to follow when writing JavaScript, whether you should use jQuery, and where to find more information.
+You will learn about using third-party JavaScript libraries, some best practices to follow when writing JavaScript, whether or not you should use jQuery, and where to find more information.
 
 ## JavaScript libraries
 
@@ -24,7 +24,7 @@ However, this may conflict with plugins that enqueue the version bundled with Wo
 
 You can find a full list of the default Scripts and JavaScript Libraries included and registered by WordPress in the [wp_enqueue_scripts](https://developer.wordpress.org/reference/functions/wp_enqueue_script/#default-scripts-and-js-libraries-included-and-registered-by-wordpress) function reference.
 
-Make sire your theme compatible with the version of your favorite library included with WordPress.
+Make sure your theme is compatible with the version of your favorite library included with WordPress.
 
 ## Writing JavaScript
 
@@ -79,11 +79,11 @@ Using a coding standard can help to ensure that your code is consistent and easy
 
 Use a linter to check your code for errors and potential issues. This can help to catch bugs early, and ensure that your code is consistent and easy to read.
 
-ESLint is a popular linter for JavaScript, and can be used to check your code for errors and potential issues. It possible to configure your theme to use EsLint to check your JavaScript code via the @wordpress/scripts [package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/).
+[ESLint](https://eslint.org/) is a popular linter for JavaScript, and can be used to check your code for errors and potential issues. It possible to configure your theme to use EsLint to check your JavaScript code via the @wordpress/scripts [package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/).
 
 5. Ensure your theme works without JavaScript
 
-Ensure your site still works without JavaScript first – then add JavaScript to provide additional capabilities. This is a form of [Progressive Enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement), which is a strategy that puts emphasis on web content first, allowing everyone to access the basic content and functionality of a web page.
+Ensure your site theme works without JavaScript first – then add JavaScript to provide additional capabilities. This is a form of [Progressive Enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement), which is a strategy that puts emphasis on web content first, allowing everyone to access the basic content and functionality of a web page.
 
 6. Asset loading
 
@@ -93,7 +93,7 @@ Use [Lazy loading](https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy
 
 jQuery is a JavaScript library that saw an increased use in the early days of web development. However, with the improvements in JavaScript, it is often no longer necessary to use jQuery for many common tasks.
 
-Don’t use jQuery if you don’t need to — [You might not need jQuery](https://youmightnotneedjquery.com/) is a great site that shows you how to do some common tasks with plain JavaScript.
+Don’t use jQuery if you don’t need to — [You might not need jQuery](https://youmightnotneedjquery.com/) is a great site that shows you how to do many of these common tasks with plain JavaScript.
 
 For example, if you need to select an element by its ID, you can use the `document.getElementById()` method in plain JavaScript.
 

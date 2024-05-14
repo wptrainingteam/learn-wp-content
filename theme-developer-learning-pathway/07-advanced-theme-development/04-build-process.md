@@ -186,6 +186,8 @@ module.exports = {
 };
 ```
 
+The custom webpack config can be found in the [Configuring webpack section](https://developer.wordpress.org/themes/advanced-topics/build-process/#configuring-webpack) of the [Build process](https://developer.wordpress.org/themes/advanced-topics/build-process/) page under the Advanced Topics section of the WordPress Developer Handbook.
+
 This configuration file sets up the entry points for your custom JavaScript and Sass files, and tells webpack where to find them.
 
 It also configures the webpack-remove-empty-scripts, so that there are no leftover JavaScript files mapped to your CSS.
