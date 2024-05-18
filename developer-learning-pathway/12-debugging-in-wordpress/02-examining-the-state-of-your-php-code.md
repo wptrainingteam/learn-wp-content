@@ -126,3 +126,10 @@ For more information on the functions mentioned in this lesson, check out the fo
 - [PHP error_log() function](https://www.php.net/manual/en/function.error-log.php)
 - [PHP print_r() function](https://www.php.net/manual/en/function.print-r.php)
 - [PHP var_dump() function](https://www.php.net/manual/en/function.var-dump.php)
+
+## YouTube chapters
+
+ Using `error_log
+ Using `print_r
+ Using `var_dump
+0:00 
