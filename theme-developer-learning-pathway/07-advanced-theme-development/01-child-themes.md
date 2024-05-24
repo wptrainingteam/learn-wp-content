@@ -77,6 +77,8 @@ Child themes are slightly different to parent themes in that they have a special
 
 This header field is the `Template` field. The value of this field must match the folder name (or slug) of the parent theme, relative to the `wp-content/themes` directory.
 
+This is also sometimes referred to as the theme's slug. 
+
 Therefore, in this example, this theme is a child theme of Twenty Twenty-Four, because it has the Template field defined as `twentytwentyfour`.
 
 What you can do now is select which specific parts of the parent theme you want to modify. 
@@ -88,6 +90,8 @@ One way to generate the child theme footer, is to make the changes you need to t
 Then, switch to the Code Editor view, copy the code, and paste it into the child theme `footer.html` file.
 
 With the child theme active, the changes you made to the `footer.html` file in the child theme will be applied, and the footer will be displayed as you want it to be.
+
+It's worth noting that a child theme can extend practically every part of it's parent theme, not just templates. You can extend template parts, patterns, styles, even custom theme functionality via a child theme.
 
 ## Using Create Block Theme
 
@@ -117,4 +121,4 @@ And finally, if you look in your code editor, you'll see the child theme files h
 
 ## Further reading
 
-For more information on child themes, see the [Child themes page](https://developer.wordpress.org/themes/advanced-topics/child-themes/) under Advanced Topics in the Theme Developer Handbook.
+For more information on child themes, see the [Child themes page](https://developer.wordpress.org/themes/advanced-topics/child-themes/) under Advanced Topics in the Theme Developer Handbook. You can also read more about the child theme specific header fields in the [Child theme header fields](https://developer.wordpress.org/themes/core-concepts/main-stylesheet/#child-theme-header-fields) section under the Theme developer handbook's chapter on Core Concepts.

@@ -12,7 +12,7 @@ The User Interface (UI) of a website is the space where interactions between hum
 
 The goal of good user interface design is to allow for effective interactions, also known as a good user experience, so that the website provides good feedback that aids the users decision-making process.
 
-Bad user interface design can lead to a frustrating user experience, which means users leaving a site, and therefore a loss of potential customers.
+Bad user interface design can lead to a frustrating user experience and a potential loss of site visitors, which is not a great outcome for a user of your theme.
 
 When designing a theme, it's important to ensure that the elements of the theme provide a good user experience.
 
@@ -115,24 +115,28 @@ By making your text large enough, you increase the usability of your site and ma
 When working with elements that accept input, make sure to associate labels with inputs using the for attribute. 
 
 ```html
-<label for="username">Username</label>
-<input type="text" id="username" name="login" />
+<label for="name">Name</label>
+<input type="text" id="name" name="name" placeholder="John Smith" />
 ```
 
 This will allow the user to click the label and focus on the input field.
 
 ## Placeholder Text
 
-Where possible, add placeholder text to input elements. Placeholder text shows the user an example of what to type. 
+Developers will often use placeholders on input elements to show the user an example of what to type. 
 
 ```html
 <label for="name">Name</label>
 <input type="text" id="name" name="name" placeholder="John Smith" />
 ```
 
-When a user puts their cursor in the field, the placeholder text will disappear, while the label remains.
+When a user puts their cursor in the field and starts typing, the placeholder text will disappear.
 
-Use placeholders to suggest the type of data a field requires, and not as a substitute for the field label.
+However, when done incorrectly, placeholders can be a user experience and accessibility nightmare. 
+
+So make sure to use placeholders correctly, or not at all.
+
+If you do decide to use a placeholder, make sure that it suggests the type of data a field requires, and not as a substitute for the field label.
 
 ## Descriptive Buttons
 

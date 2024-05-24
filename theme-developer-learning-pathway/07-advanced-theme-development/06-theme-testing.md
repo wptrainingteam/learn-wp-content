@@ -7,7 +7,7 @@ Before releasing your theme to the public, you should test it thoroughly to ensu
 Let's look at some things you should do before releasing your theme, including:
 
 - Testing your theme in a local development environment
-- Using Theme Test Data to ensure your theme can handle a variety of content
+- Using the Theme Test Data to ensure your theme can handle a variety of content
 - Useful plugins for debugging and testing
 - Tools for Accessibility and Performance testing
 
@@ -17,15 +17,17 @@ All the lessons in the Learn WordPress developer pathways have recommended the u
 
 However, it is possible to develop a block theme using a live web server, especially if you're using Create Block Theme.
 
-It's therefore a good idea to also test your theme in a local development environment. One of the benefits of this is that you can enable the WordPress debugging options, and see if your theme generates any errors or warnings.
+It's therefore a good idea to also test your theme in a local development environment. 
 
-If you already have a local development environment set up, you can use that. If not, take a look at the [Local Development Environments](https://learn.wordpress.org/lesson/local-development-environment/) lesson for some options.
+One of the benefits of this is that you can enable the WordPress debugging options, and see if your theme generates any errors or warnings.
+
+If you don't already have a local development environment take a look at the [Local Development Environments](https://learn.wordpress.org/lesson/local-development-environment/) lesson for some options.
 
 ## Using Theme Test Data
 
-Part of testing your theme includes ensuring that it can handle a variety of content. 
+Part of testing your theme includes ensuring that it can handle a variety of content. By default, a new WordPress install only has a single sample page, post, and comment.
 
-Instead of manually creating different types of content, you can download and install the WordPress project Theme Unit Test Data. 
+Instead of manually creating different types of content, you can download and install the WordPress project's [Theme Test Data](https://github.com/WordPress/theme-test-data/tree/master). 
 
 This test data includes a set of posts, pages, and other content that you can use to test your theme.
 
@@ -73,13 +75,15 @@ Using the browser developer tools also allows you to use the responsive design m
 
 Ensuring that your theme is accessible is a key aspect of responsible theme development.
 
-You should strive to make sure your theme meets the [WordPress Accessibility Guidelines](https://make.wordpress.org/accessibility/handbook/). This includes aspects like keyboard navigation, screen reader compatibility, and proper use of ARIA roles.
+You should strive to make sure your theme meets the [WordPress Accessibility Guidelines](https://wordpress.org/about/accessibility/). This includes aspects like keyboard navigation, screen reader compatibility, and proper use of ARIA roles.
 
 If you haven't already, check out the module on Theme Accessibility to learn more about the importance of making your theme accessible, common accessibility issues, and how to avoid them.
 
 You should also test your theme to ensure that it's not loading unnecessary resources, and that it's optimized for performance.
 
-To do this, you'll need to install your theme on a live website, and use tools like [Google Lighthouse](https://developers.google.com/web/tools/lighthouse), [PageSpeed Insights](https://pagespeed.web.dev/), or [GTmetrix](https://gtmetrix.com/) to test your theme's performance. Be sure to not only test the homepage, but also other templates for things like pages and posts.
+To test this, you can use tools like [Google Lighthouse](https://developers.google.com/web/tools/lighthouse), which can be run from ChromeDevTools, from the command line, or as a Node module.
+
+You can also install your theme on a live website, and use tools like [PageSpeed Insights](https://pagespeed.web.dev/), or [GTmetrix](https://gtmetrix.com/) to test your theme's performance. Be sure to not only test the homepage, but also other templates for things like pages and posts.
 
 ## Further reading
 

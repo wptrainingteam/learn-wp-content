@@ -14,7 +14,7 @@ These laws require companies and site owners to be transparent about how they co
 
 They also give individuals more access and choice when it comes to how their own personal data is collected, used, and shared.
 
-In version 4.9.6, WordPress introduced a various privacy related features, primarily to help site owners comply with the European Union's General Data Protection Regulation (GDPR).
+In [version 4.9.6](https://wordpress.org/news/2018/05/wordpress-4-9-6-privacy-and-maintenance-release/), WordPress introduced a various privacy related features, primarily to help site owners comply with the European Union's General Data Protection Regulation (GDPR).
 
 The main features introduced in WordPress 4.9.6 included an option to set a Privacy Policy page, a way for users interacting with a site via comments to exclude their personal information from being captured, and tools that site admins can use to better handle user's personal information.
 
@@ -34,9 +34,9 @@ There are a couple of ways to add a Privacy Policy link to a theme.
 
 You can use the following PHP functions:
 
- - get_privacy_policy_url(): Retrieves the URL to the Privacy Policy page.
- - the_privacy_policy_link(): Displays the Privacy Policy page link with formatting, when applicable.
- - get_the_privacy_policy_link(): Returns the Privacy Policy page link with formatting, when applicable.
+ - [get_privacy_policy_url](https://developer.wordpress.org/reference/functions/get_privacy_policy_url/)(): Retrieves the URL to the Privacy Policy page.
+ - [the_privacy_policy_link](https://developer.wordpress.org/reference/functions/the_privacy_policy_link/)(): Displays the Privacy Policy page link with formatting, when applicable.
+ - https://developer.wordpress.org/reference/functions/get_the_privacy_policy_link/(): Returns the Privacy Policy page link with formatting, when applicable.
 
 For example, the following code would display a Privacy Policy link in a div:
 
@@ -65,7 +65,9 @@ You could then include this pattern in your theme's available block patterns for
 
 ## Comment data
 
-WordPress posts allow visitors to leave comments. This functionality is handled by the Comment Form block in block themes, and the `comment_form()` function in classic themes.
+WordPress posts allow visitors to leave comments. 
+
+This functionality is handled by the Comment Form block in block themes, and the `comment_form()` [function](https://developer.wordpress.org/reference/functions/comment_form/) in classic themes.
 
 When a visitor who does not have a specific account on the site comments on a post, they are asked for their name, email, and website. 
 
@@ -86,4 +88,4 @@ However, as a theme developer, it is important that you test your theme to ensur
 
 ## Further reading
 
-For more information on user privacy and how themes can impact it, check out the [Privacy](https://developer.wordpress.org/themes/advanced-topics/user-privacy/) page under Advanced Topics in the Theme Developer Handbook.
+For more information on user privacy and how themes can impact it, check out the [Privacy](https://developer.wordpress.org/themes/advanced-topics/privacy/) page under Advanced Topics in the Theme Developer Handbook.

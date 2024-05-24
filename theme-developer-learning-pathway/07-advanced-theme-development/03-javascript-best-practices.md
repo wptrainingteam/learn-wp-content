@@ -110,14 +110,14 @@ Another good example is if you need to make an AJAX request, you can use the `fe
 ```js
 // jQuery
 $.ajax({
-  url: 'https://example.com//wp/v2/posts',
+  url: 'https://example.com/wp-json/wp/v2/posts',
   success: function( data ) {
 	  console.log( data );
   }
 });
 
 // Plain JavaScript
-fetch('https://example.com//wp/v2/posts')
+fetch('https://example.com/wp-json/wp/v2/posts')
   .then(data => console.log(data));
 
 
