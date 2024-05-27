@@ -2,7 +2,7 @@
 
 ## Introduction
 
-If you watched [the lesson What is accessibility, and why it's important](https://docs.google.com/document/d/1XpGTn5MviVYzND08eLpF__k0_nDJBeGzxuFIuR9F6fQ/edit), you know that digital accessibility is a broad term that means ensuring that as many people as possible can use the web.
+If you watched [the lesson What is accessibility, and why it's important](#), you know that digital accessibility is a broad term that means ensuring that as many people as possible can use the web.
 
 There are legal and business implications, but more importantly, accessibility guidelines guarantee a better browsing experience for everyone.
 
@@ -24,65 +24,60 @@ You can use the code below if you prefer.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample HTML Page</title>
+    <title>My website</title>
 </head>
 <body>
 
 <header>
-    <div class="container">
-        <h1>Welcome to My Website</h1>
-    </div>
-</header>
-
-<nav>
-    <div class="container">
+    <h1>Welcome to My Website</h1>
+    <nav>
         <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
+            <li><a href="#home">Home</a>
+            <li><a href="#about">About</a>
+            <li><a href="#services">Services</a>
             <li><a href="#contact">Contact</a></li>
         </ul>
-    </div>
-</nav>
+    </nav>
+</header>
 
 <main>
-    <div class="container">
-        <section id="home">
-            <h2>Home</h2>
-            <p>This is the home section where introductory content can be found.</p>
-            <button>Click Me!</button>
-        </section>
+    <article id="home">
+        <h2>Home</h2>
+        <p>This is the home section where introductory content can be found.</p>
+        <form name="Just a button">
+			<button type="button">Click Me!</button>
+		</form>
+    </article>
 
-        <section id="about">
-            <h2>About</h2>
-            <p>This section contains information about the website or the person/company behind it.</p>
-            <a href="https://example.com" target="_blank">Learn more</a>
-        </section>
+    <article id="about">
+        <h2>About</h2>
+        <p>This section contains information about the website or the person/company behind it.<p><a href="https://example.com">Visit their full profile</a></p>
+    </article>
 
-        <section id="services">
-            <h2>Services</h2>
-            <p>Details about the services offered can be found here.</p>
-        </section>
+    <article id="services">
+        <h2>Services</h2>
+        <p>Details about the services offered can be found here.</p>
+    </article>
 
-        <section id="contact">
-            <h2>Contact</h2>
-            <form action="#" method="post">
-                <label for="name">Name:</label><br>
-                <input type="text" id="name" name="name"><br><br>
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email"><br><br>
-                <label for="message">Message:</label><br>
-                <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
-                <input type="submit" value="Submit">
+    <article id="contact">
+        <h2>Contact</h2>
+            <form action="#" method="post" name="contact" autocomplete="on">
+				<fieldset>
+					<legend>Let's chat</legend>
+					<div><label for="name">Name:</label></div>
+					<div><input type="text" id="name"></div>
+					<div><label for="email">Email:</label></div>
+					<div><input type="email" id="email"></div>
+					<div><label for="message">Message:</label></div>
+					<div><textarea id="message" rows="4" cols="50" spellcheck="true"></textarea></div>
+					<div><input type="submit" value="Submit"></div>
+				</fieldset>
             </form>
-        </section>
-    </div>
+        </article>
 </main>
 
 <footer>
-    <div class="container">
-        <p>&copy; 2024 My Website</p>
-    </div>
+    <p>&copy; 2024 My Website</p>
 </footer>
 
 </body>
@@ -103,24 +98,20 @@ Instead of wrapping everything with a `<div>` element, take advantage of the sem
 
 It’ll save you from hacks designed to reinvent the wheel as a rectangle.
 
-So for example, installed of just defining divs with classes:
+So for example, instead of just defining divs with classes:
 
 ```html
 <div class="header">
-    <div class="container">
-        <h1>Welcome to My Website</h1>
-    </div>
+    <h1>Welcome to My Website</h1>
 </div>
 
-<div class="main">
-    <div class="container">
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </div>
+<div class="nav">
+    <ul>
+        <li><a href="#home">Home</a>
+        <li><a href="#about">About</a>
+        <li><a href="#services">Services</a>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
 </div>
 ```
 
@@ -128,20 +119,16 @@ You can use landmarks for relevant sections.
 
 ```html
 <header>
-    <div class="container">
-        <h1>Welcome to My Website</h1>
-    </div>
+    <h1>Welcome to My Website</h1>
 </header>
 
 <nav>
-    <div class="container">
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </div>
+    <ul>
+        <li><a href="#home">Home</a>
+        <li><a href="#about">About</a>
+        <li><a href="#services">Services</a>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
 </nav>
 ```
 
@@ -171,7 +158,7 @@ If you're designing any forms in your theme, follow these guidelines:
 
 * Wrap the form in a `form` element. 
 * Use the `search` element for any search fields.
-* On `input` fields, always set the appropriate type and matching attributes. For example, defining an input type of "tel", will display a numeric keypad on mobile devices.
+* On `input` fields, always set the appropriate type and matching attributes. For example, defining an input type of `tel`, will display a numeric keypad on mobile devices.
   * `<input type="tel" name="phone" id="phone" required>`
 * When desinging login forms, you can use the `autocomplete` attribute to help password managers fill out the form.
   * `<input type="password" autocomplete="current-password">`
@@ -185,7 +172,7 @@ Be sure to create an accessible color palette with sufficient contrast.
 * When editing templates, WordPress alerts you when the text and background color combination you set fails to do that.
 * Don't use color alone to convey information. Links, for example, should be marked by more than color, and the same goes for focus states. When in doubt, look at the default HTML link and focus styles, and follow those. 
 
-## Typography (https://www.freecodecamp.org/news/css-unit-guide/)
+## Typography (https://developer.mozilla.org/en-US/docs/Web/CSS/length)
 
 * Set proper font sizes using relative units like `rem`, try to avoid using `px`.
 * Use adequate line spacing based on the font size.
