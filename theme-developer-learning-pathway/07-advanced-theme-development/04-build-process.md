@@ -2,6 +2,8 @@
 
 ## Introduction
 
+https://youtu.be/Qzg3IxcpEDk
+
 When developing a WordPress theme, it's useful to consider whether you will need a build process to help you manage your theme's assets and optimize your theme for performance.
 
 In this lesson, you'll learn more about build processes, why you should use them, and how to set up a basic build process using the @wordpress/scripts package.
@@ -276,4 +278,4 @@ The process is similar for any stylesheets you want to enqueue.
 
 ## Further reading
 
-For the full guide on how to set up the build process using the @wordpress/scripts package, you can refer to the [Build process](https://developer.wordpress.org/themes/advanced-topics/build-process/) page under the Advanced Topics section of the WordPress Developer Handbook..
+For the full guide on how to set up the build process using the @wordpress/scripts package, you can refer to the [Build process](https://developer.wordpress.org/themes/advanced-topics/build-process/) page under the Advanced Topics section of the WordPress Developer Handbook.

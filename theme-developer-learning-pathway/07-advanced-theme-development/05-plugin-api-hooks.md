@@ -2,6 +2,8 @@
 
 ## Introduction
 
+https://youtu.be/QNQrsOGeHRY
+
 WordPress provides a number of hooks that allow plugins to "hook into" the functionality of WordPress. 
 
 Your theme should support these hooks, to allow plugins developers to extend your theme.
@@ -24,22 +26,22 @@ However, a few hooks need to be supported in specific theme templates.
 
 These hooks are fired by specific template tags:
 
-wp_head() fires the wp_head action, which is used by plugins to add code to the <head> section of your theme. 
+`wp_head()` fires the `wp_head` action, which is used by plugins to add code to the `<head>` section of your theme. 
 
-This tag should always at the end of the <head> element of a theme’s header.php template file.
+This tag should always at the end of the `<head>` element of a theme’s `header.php` template file.
 
-wp_body_open() fires the wp_body_open action, which is used by plugins to add code to the <body> element of your theme.
+`wp_body_open()` fires the `wp_body_open` action, which is used by plugins to add code to the `<body>` element of your theme.
 
-This tag goes at the begining of the <body> element of a theme’s header.php template file.
+This tag goes at the beginning of the `<body>` element of a theme’s `header.php` template file.
 
-wp_footer() fires the wp_footer action, which is used by plugins to add code to the footer of your theme.
+`wp_footer()` fires the `wp_footer` action, which is used by plugins to add code to the footer of your theme.
 
-This tag should be in the theme's footer.php file, just before the closing </body> tag.
+This tag should be in the theme's `footer.php` file, just before the closing `</body>` tag.
 
-wp_meta() fires the wp_meta action. This action can have several purposes, depending on how you use it, but one purpose might have been to allow for theme switching.
+`wp_meta()` fires the `wp_meta` action. This action can have several purposes, depending on how you use it, but one purpose might have been to allow for theme switching.
 
-This tag typically goes in the <li>Meta</li> section of a Theme’s menu or sidebar.
+This tag typically goes in the `<li>Meta</li>` section of a Theme’s menu or sidebar.
 
-comment_form() is used to display the comment form at the end of posts
+`comment_form()` is used to display the comment form at the end of posts
 
-This tag goes in the comments.php template file, directly before the file’s closing </div> tag.
+This tag goes in the `comments.php` template file, directly before the file’s closing `</div>` tag.

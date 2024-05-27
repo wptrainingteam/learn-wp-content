@@ -1,6 +1,6 @@
 # Best practices for developing an accessible theme
 
-## Intro
+## Introduction
 
 If you watched [the lesson What is accessibility, and why it's important](https://docs.google.com/document/d/1XpGTn5MviVYzND08eLpF__k0_nDJBeGzxuFIuR9F6fQ/edit), you know that digital accessibility is a broad term that means ensuring that as many people as possible can use the web.
 
@@ -8,14 +8,9 @@ There are legal and business implications, but more importantly, accessibility g
 
 The easiest way to deliver accessible themes, plugins, or sites is to think about it from the outset. Include it in the planning phase and educate coworkers (and clients). This way, you won’t only spot the errors early on, you’ll actually prevent many.
 
-In this lesson, you’ll learn:
- 
-* How to use HTML and CSS to build accessible themes
-* What WordPress does to help
-* Which WordPress plugins and other developer tools to use for automated accessibility tests
-* And how to run manual accessibility tests
+In this lesson, you’ll learn about the fundamentals of accessible HTML, and how to apply them to your WordPress themes.
 
-## The fundamentals of web making
+## The fundamentals
 
 HTML is as powerful as it is accessible. 
 
@@ -104,9 +99,11 @@ Let’s explore some techniques and best practices that developers and designers
 
 ## Semantic HTML
 
-Instead of wrapping everything with a `<div>` element, take advantage of the semantically meaningful elements of HTML. It’ll save you from hacks designed to reinvent the wheel as a rectangle.
+Instead of wrapping everything with a `<div>` element, take advantage of the semantically meaningful elements of HTML. 
 
-Instead of this
+It’ll save you from hacks designed to reinvent the wheel as a rectangle.
+
+So for example, installed of just defining divs with classes:
 
 ```html
 <div class="header">
@@ -127,7 +124,7 @@ Instead of this
 </div>
 ```
 
-Use this
+You can use landmarks for relevant sections.
 
 ```html
 <header>
@@ -148,77 +145,69 @@ Use this
 </nav>
 ```
 
-You can do it when building inside the Site Editor, too. To define Group, Row, and Stack blocks as _content sectioning elements_, select the block, and click **Settings** > **Advanced**. Scroll down, and set the **HTML ELEMENT** to `header`, `main`, `section`, `article`, `aside`, or `footer`, according to the block’s functionality and position.
+If you're designing or building your theme inside the Site Editor, it's also possible to set landmarks there. 
 
-Always use headings in the right order, starting from `H2` and continuing in a descending sequence up to `H6`. 
+To define Group, Row, and Stack blocks as _content sectioning elements_, select the block, and click **Settings** > **Advanced**. 
 
-In the WordPress editor, click on **Document Overview > Outline** to check whether you skipped a level.
+Scroll down, and set the **HTML ELEMENT** to `header`, `main`, `section`, `article`, `aside`, or `footer`, according to the block’s functionality and position.
+
+## Headings
+
+When adding headings to templates always use headings in the right order, starting from `H2` and continuing in a descending sequence up to `H6`. 
+
+In the Site editor, click on **Document Overview > Outline** to check whether you skipped a level, or if everything is correctly set.
 
 ## Buttons versus links
 
+When designing user actions, consider the following:
+
 * If you want visitors to perform an action use a `button` element.
 * When you want them to navigate to another page, use the `anchor` element (`<a>`).
-* If the link should resemble a button, say, for a call-to-action on a landing page, style it with CSS.
+* If the link should resemble a button, say, for a call-to-action on a landing page, then style it with CSS.
 
 ## Forms
 
-* Wrap the form in a `form` element. Use the `search` element for search fields.
-* Pick an appropriate `input` type and set the matching attributes.
-    * `<input type="tel">`, for example, displays a numeric keypad on mobile devices.
-    * `<input type="password" autocomplete="current-password">`, for example, allows password managers to automatically fill it out.
-* Don’t rely on placeholder text—provide accessible labels.
-* Don’t remove focus rings entirely. Use `:focus-visible` instead.
+If you're designing any forms in your theme, follow these guidelines:
+
+* Wrap the form in a `form` element. 
+* Use the `search` element for any search fields.
+* On `input` fields, always set the appropriate type and matching attributes. For example, defining an input type of "tel", will display a numeric keypad on mobile devices.
+  * `<input type="tel" name="phone" id="phone" required>`
+* When desinging login forms, you can use the `autocomplete` attribute to help password managers fill out the form.
+  * `<input type="password" autocomplete="current-password">`
+* Don’t rely on placeholder text to indicate to the user what the input field is for, always provide accessible labels.
+* By default, most browsers will display a focus ring on elements if the element has focus. If you want to change the display of these focus rings, use the `:focus-visible` pseudo class, and don't remove focus rings entirely.
 
 ## Colors
 
-* Create an accessible color palette with sufficient contrast. WordPress alerts you when the text and background color combination you set fails to do that.
-* Don't use color alone to convey information. Links, for example, should be marked by more than color. The same goes for focus states.
+Be sure to create an accessible color palette with sufficient contrast. 
 
-## Typography
+* When editing templates, WordPress alerts you when the text and background color combination you set fails to do that.
+* Don't use color alone to convey information. Links, for example, should be marked by more than color, and the same goes for focus states. When in doubt, look at the default HTML link and focus styles, and follow those. 
 
-* Set proper font sizes using relative units—avoid pixels (`px`).
+## Typography (https://www.freecodecamp.org/news/css-unit-guide/)
+
+* Set proper font sizes using relative units like `rem`, try to avoid using `px`.
 * Use adequate line spacing based on the font size.
-* Limit the content width to 50–70 characters; `ch` is perfect for that.
+* Limit the content width to between 50 and 70 characters; the character or `ch` unit is perfect for that.
 
 ## Respect user preferences
 
-A cornerstone of responsive design, [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries) help create a better user experience. Some media query types—like `prefers-color-scheme` or `prefers-reduced-motion` are explicitly accessibility-driven, but there’s also the `pointer`, `hover`, or `scripting` that adjusts components’ behavior to the user’s device.
+A cornerstone of responsive design, [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries) help create a better user experience. 
 
-## The ARIA workaround
+Some media query types—like `prefers-color-scheme` or `prefers-reduced-motion` are explicitly accessibility-driven, but there’s also the `pointer`, `hover`, or `scripting` that adjusts components’ behavior to the user’s device.
 
-Short for _Accessible Rich Internet Applications_ framework, the first rule of ARIA is don’t use it. HTML does it better. Misused `aria` attributes make things **less** accessible, so avoid them unless you don’t have control over the HTML or need to handle dynamically generated content.
+## To ARIA or not to ARIA
 
-For more information, visit MDN’s[ WAI-ARIA basics](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/WAI-ARIA_basics) section.
+ARIA is short for _Accessible Rich Internet Applications_ framework, and it is often cited as a quick way to make HTML content more accessible to screen readers.
 
-## Test, fix, repeat
+However, the most important rule of ARIA is that you should only use it when you absolutely need to. Ideally, you should always use HTML features to provide the semantics required by screen readers to tell users what is going on.
 
-Testing early and repeatedly helps you detect potential violations in new components or pages before they launch.
+Misused `aria` attributes make things **less** accessible, so avoid them unless you don’t have control over the HTML or need to handle dynamically generated content.
 
-## Automated tests
+For more information, visit MDN’s [WAI-ARIA basics](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/WAI-ARIA_basics) section.
 
-Chromium-based browsers come with [Google Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) built into DevTools. Firefox has the [Accessibility Inspector](https://firefox-source-docs.mozilla.org/devtools-user/accessibility_inspector/index.html#accessibility-inspector), and Safari offers [Audit](https://webkit.org/blog/8935/audits-in-web-inspector/).
-
-WebAIM’s [Wave](https://wave.webaim.org/extension/) is a browser extension available for Firefox and Chromium-based.
-
-Lighthouse is also available as a standalone webpage and an NPM package.
-
-Deque Systems’ axe is a [set of accessibility testing tools](https://www.deque.com/axe/): a browser extension, Figma plugin, VS Code extension, code linter, and more.
-
-[Pa11y](https://pa11y.org) is a free open-source alternative for developers.
-
-## WordPress plugins
-
-[Sa11y](https://wordpress.org/plugins/sa11y/), [WP Tota11y](https://wordpress.org/plugins/wp-tota11y/), and [Editoria11y](https://wordpress.org/plugins/editoria11y-accessibility-checker/) are variations of the now-deprecated JavaScript library [Tota11y](https://github.com/Khan/tota11y). The former is also available as an NPM package, and the other two are wrappers for WordPress. Each has a slightly different approach to accessibility checks; test which one fits your needs.
-
-Finally, there’s [Accessibility Checker](https://wordpress.org/plugins/accessibility-checker/) that works in the Post Editor and the front end, surfacing errors, and providing detailed explanations (including the relevant code snippet) and potential fixes. As robust as it is, Accessibility Checker currently only works reliably on production sites.
-
-## Manual testing
-
-1. Try browsing your website with a **keyboard**—no mouse. Use the `tab` key to navigate between links, buttons, and form fields. Press `enter` or `space` to activate these interactive elements.
-2. Change the **color scheme** (via the browser’s DevTools) to ensure things look well in dark mode or high contrast mode.
-3. Finally, navigate around the site using your device’s built-in **voice control** feature or a dedicated **screen reader** software. This is the preferred—sometimes only—way many visually impaired people use the web.
-
-## Outro
+## Summary and further reading
 
 Accessibility is forever a work in progress. Even one small improvement can make a big difference for your site visitors, and it has zero negative effects. It will never make their experience worse.
 

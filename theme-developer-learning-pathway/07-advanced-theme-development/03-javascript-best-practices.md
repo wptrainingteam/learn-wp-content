@@ -2,6 +2,8 @@
 
 ## Introduction
 
+https://youtu.be/pWCjts2mnxA
+
 JavaScript is a programming language that is used to add interactivity to web pages. 
 
 Theme developers will often use JavaScript to provide interactivity, animation or other enhancements to their themes.
