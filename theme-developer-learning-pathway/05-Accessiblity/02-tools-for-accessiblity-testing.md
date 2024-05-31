@@ -1,4 +1,4 @@
-# Tools for Accessibility Testing
+# Tools for Accessibility testing
 
 ## Introduction
 
@@ -11,6 +11,8 @@ This lesson will introduce you to some tools and techniques for testing your the
 ## Test, fix, repeat
 
 Testing early and repeatedly helps you detect potential violations in new components or pages before they launch.
+
+Let's look at some ways to test your theme. 
 
 ## Automated tests
 

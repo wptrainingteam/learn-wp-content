@@ -92,7 +92,7 @@ The key is to be mindful of accessibility while you code and design.
 
 Let’s explore some techniques and best practices that developers and designers can adopt when creating custom Blocks, Templates, and Patterns.
 
-## Semantic HTML
+## Landmarks
 
 Instead of wrapping everything with a `<div>` element, take advantage of the semantically meaningful elements of HTML. 
 
