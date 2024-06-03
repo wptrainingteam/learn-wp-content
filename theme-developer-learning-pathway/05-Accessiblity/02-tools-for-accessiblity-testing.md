@@ -16,11 +16,12 @@ Let's look at some ways to test your theme.
 
 ## Automated tests
 
-Chromium-based browsers come with [Google Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) built into DevTools. Firefox has the [Accessibility Inspector](https://firefox-source-docs.mozilla.org/devtools-user/accessibility_inspector/index.html#accessibility-inspector), and Safari offers [Audit](https://webkit.org/blog/8935/audits-in-web-inspector/).
+Chromium-based browsers come with [Google Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) built into DevTools.
+Lighthouse is also available as a standalone webpage and an NPM package.
+
+Firefox has the [Accessibility Inspector](https://firefox-source-docs.mozilla.org/devtools-user/accessibility_inspector/index.html#accessibility-inspector), and Safari offers [Audit](https://webkit.org/blog/8935/audits-in-web-inspector/).
 
 WebAIM’s [Wave](https://wave.webaim.org/extension/) is a browser extension available for Firefox and Chromium-based.
-
-Lighthouse is also available as a standalone webpage and an NPM package.
 
 Deque Systems’ axe is a [set of accessibility testing tools](https://www.deque.com/axe/): a browser extension, Figma plugin, VS Code extension, code linter, and more.
 
@@ -34,7 +35,9 @@ Finally, there’s [Accessibility Checker](https://wordpress.org/plugins/accessi
 
 ## Manual testing
 
-1. Try browsing your website with a **keyboard**—no mouse. Use the `tab` key to navigate between links, buttons, and form fields. Press `enter` or `space` to activate these interactive elements.
+Additionally, there are some manual tests you can perform.
+
+1. Try navigating your theme with a **keyboard**—no mouse. Use the `tab` key to navigate between links, buttons, and form fields. Press `enter` or `space` to activate these interactive elements.
 2. Change the **color scheme** (via the browser’s DevTools) to ensure things look well in dark mode or high contrast mode.
 3. Finally, navigate around the site using your device’s built-in **voice control** feature or a dedicated **screen reader** software. This is the preferred—sometimes only—way, as many visually impaired people use the web.
 

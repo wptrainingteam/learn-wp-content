@@ -92,13 +92,17 @@ The key is to be mindful of accessibility while you code and design.
 
 Let’s explore some techniques and best practices that developers and designers can adopt when creating custom Blocks, Templates, and Patterns.
 
-## Landmarks
+## Semantic HTML
 
-Instead of wrapping everything with a `<div>` element, take advantage of the semantically meaningful elements of HTML. 
+Instead of wrapping everything with a `<div>` element, take advantage of the semantically meaningful elements of HTML.
 
 It’ll save you from hacks designed to reinvent the wheel as a rectangle.
 
-So for example, instead of just defining divs with classes:
+## Landmarks
+
+Landmarks are a way to define the structure of a page. They help screen readers navigate the content more easily.
+
+For example, instead of just defining a bunch of divs with classes:
 
 ```html
 <div class="header">
@@ -134,7 +138,7 @@ You can use landmarks for relevant sections.
 
 If you're designing or building your theme inside the Site Editor, it's also possible to set landmarks there. 
 
-To define Group, Row, and Stack blocks as _content sectioning elements_, select the block, and click **Settings** > **Advanced**. 
+To define Group, Row, and Stack blocks as _content sectioning elements_, select the block, open the block **Settings** and expand the **Advanced** section. 
 
 Scroll down, and set the **HTML ELEMENT** to `header`, `main`, `section`, `article`, `aside`, or `footer`, according to the block’s functionality and position.
 
@@ -146,7 +150,7 @@ In the Site editor, click on **Document Overview > Outline** to check whether yo
 
 ## Buttons versus links
 
-When designing user actions, consider the following:
+When designing user actions, consider the following as it relates to using buttons or links:
 
 * If you want visitors to perform an action use a `button` element.
 * When you want them to navigate to another page, use the `anchor` element (`<a>`).
@@ -156,28 +160,38 @@ When designing user actions, consider the following:
 
 If you're designing any forms in your theme, follow these guidelines:
 
-* Wrap the form in a `form` element. 
-* Use the `search` element for any search fields.
-* On `input` fields, always set the appropriate type and matching attributes. For example, defining an input type of `tel`, will display a numeric keypad on mobile devices.
-  * `<input type="tel" name="phone" id="phone" required>`
-* When desinging login forms, you can use the `autocomplete` attribute to help password managers fill out the form.
-  * `<input type="password" autocomplete="current-password">`
-* Don’t rely on placeholder text to indicate to the user what the input field is for, always provide accessible labels.
-* By default, most browsers will display a focus ring on elements if the element has focus. If you want to change the display of these focus rings, use the `:focus-visible` pseudo class, and don't remove focus rings entirely.
+Always wrap the form in a `form` element.
+
+On `input` fields, always set the appropriate type and matching attributes. For example, defining an input type of `tel`, will display a numeric keypad on mobile devices.
+ 
+`<input type="tel" name="phone" id="phone" required>`
+
+Don’t rely on placeholder text to indicate to the user what the input field is for, always provide accessible labels.
+
+Use the `search` element for any search forms.
+
+When designing login forms, you can use the `autocomplete` attribute to help password managers fill out the form.
+ 
+`<input type="password" autocomplete="current-password">`
+
+By default, most browsers will display a focus ring on elements if the element has focus. If you want to change the display of these focus rings, use the `:focus-visible` pseudo class, and don't remove focus rings entirely.
 
 ## Colors
 
 Be sure to create an accessible color palette with sufficient contrast. 
 
-* When editing templates, WordPress alerts you when the text and background color combination you set fails to do that.
-* Don't use color alone to convey information. Links, for example, should be marked by more than color, and the same goes for focus states. When in doubt, look at the default HTML link and focus styles, and follow those. 
+When editing templates, WordPress alerts you when the text and background color combination you set fails to do that.
+
+Don't use color alone to convey information. Links, for example, should be marked by more than color, and the same goes for focus states. When in doubt, look at the default HTML link and focus styles, and follow those. 
 
 ## Typography (https://developer.mozilla.org/en-US/docs/Web/CSS/length)
 
-* Set proper font sizes using relative units like `rem`, try to avoid using `px`.
-* Use adequate line spacing based on the font size.
-* Limit the content width to between 50 and 70 characters; the character or `ch` unit is perfect for that.
+Set proper font sizes using relative units like `rem`, try to avoid using `px`.
 
+Limit the content width to between 50 and 70 characters; the character or `ch` unit is perfect for that.
+
+Use adequate line spacing based on the font size.
+ 
 ## Respect user preferences
 
 A cornerstone of responsive design, [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries) help create a better user experience. 
@@ -192,7 +206,7 @@ However, the most important rule of ARIA is that you should only use it when you
 
 Misused `aria` attributes make things **less** accessible, so avoid them unless you don’t have control over the HTML or need to handle dynamically generated content.
 
-For more information, visit MDN’s [WAI-ARIA basics](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/WAI-ARIA_basics) section.
+For more information on this, make sure to visit MDN’s [WAI-ARIA basics](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/WAI-ARIA_basics) section.
 
 ## Summary and further reading
 

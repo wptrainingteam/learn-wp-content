@@ -1,6 +1,6 @@
 # Examining the state of your JavaScript
 
-When you're debugging JavaScript, it can be helpful to examine the state of your code at various points to see what's happening. 
+When you're developing in JavaScript, it can be helpful to debug your code at various points to see what's happening. 
 
 Let's look at some ways you can examine the state of your JavaScript code.
 
@@ -8,28 +8,28 @@ Let's look at some ways you can examine the state of your JavaScript code.
 
 One of the main differences between debugging PHP and JavaScript is that PHP is a server-side language, so you can log messages to a file on the server. 
 
-JavaScript, on the other hand, is a client-side language, so you can't log messages to a file in the same way.
+JavaScript, on the other hand, is a client-side language, so you can't easily log messages to a file in the same way.
 
-Fortunately there are other ways to examine the state of your JavaScript code, such as using the browser's developer tools, specifically the Console tab.
+Fortunately there are ways to examine the state of your JavaScript code using the browser's Developer Tools, specifically the Console tab.
 
 ## Opening the browser's developer tools
 
-Most modern browsers come with built-in developer tools that allow you to inspect and debug the elements of a web page. 
+Most modern browsers come with built-in Developer Tools that allow you to inspect and debug the elements of a web page. 
 
-Depending on the browser you're using and the operating system you're on, you can usually open the developer tools by pressing specific keys, like `F12`,  `Ctrl+Shift+I` or `Cmd+Option+I`.
+Depending on the browser you're using and the operating system you're on, you can usually open the Developer Tools by pressing specific keys, like `F12`,  `Ctrl+Shift+I` or `Cmd+Option+I`.
 
-If you're not sure how to open the developer tools in your browser, you can find handy instructions on the MDN Web Docs site under [Guides > Common questions > Tools and setup
+If you're not sure how to open the Developer Tools in your browser, you can find handy instructions on the MDN Web Docs site under [Guides > Common questions > Tools and setup
 What are browser developer tools?](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Tools_and_setup/What_are_browser_developer_tools).
 
 [Note: take the user through this navigation journey to where the page exists]
 
-Once you have developer tools open, switch to the Console tab, which is where any errors on the page are logged. 
+Once you have Developer Tools open, switch to the Console tab, which is where any errors on the page are logged. 
 
 It is also where you can log messages from your JavaScript code to help you debug it.
 
 ## The console object
 
-The console object is what allows you to log messages to the browser's console. It has several methods you can use to log different types of messages.
+The [console](https://developer.mozilla.org/en-US/docs/Web/API/console) object is what allows you to log messages to the browser's console. It has several methods you can use to log different types of messages.
 
 Here are a few of the most commonly used methods:
 
