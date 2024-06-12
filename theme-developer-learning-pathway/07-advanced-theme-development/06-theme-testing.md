@@ -1,4 +1,4 @@
-# Testing your theme
+# _Testing your theme_
 
 ## Introduction
 
