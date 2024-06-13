@@ -1,12 +1,14 @@
 # Themes and user privacy
 
-## Introduction
+## Introduction (0:00)
+
+https://youtu.be/fsWaaC4ajFI
 
 As the internet has evolved, so have the ways in which user privacy is protected.
 
 In this lesson, you'll discover how themes can impact user privacy, and what you can do to ensure that your theme respects this privacy.
 
-## Internet privacy
+## Internet privacy (0:16)
 
 Various laws and regulations around the world govern how websites can collect and use personal data. 
 
@@ -20,7 +22,7 @@ The main features introduced in WordPress 4.9.6 included an option to set a Priv
 
 Of these features, the Privacy Policy page and the comment data handling are the most relevant to theme developers.
 
-## Privacy Policy page
+## Privacy Policy page (1:22)
 
 The Privacy Policy page feature allows site owners to create a Privacy Policy page that explains how their site collects, uses, and shares personal data. This page is automatically created in draft status on new WordPress installs.
 
@@ -34,9 +36,9 @@ There are a couple of ways to add a Privacy Policy link to a theme.
 
 You can use the following PHP functions:
 
- - [get_privacy_policy_url](https://developer.wordpress.org/reference/functions/get_privacy_policy_url/)(): Retrieves the URL to the Privacy Policy page.
- - [the_privacy_policy_link](https://developer.wordpress.org/reference/functions/the_privacy_policy_link/)(): Displays the Privacy Policy page link with formatting, when applicable.
- - https://developer.wordpress.org/reference/functions/get_the_privacy_policy_link/(): Returns the Privacy Policy page link with formatting, when applicable.
+ - [get_privacy_policy_url()](https://developer.wordpress.org/reference/functions/get_privacy_policy_url/): Retrieves the URL to the Privacy Policy page.
+ - [the_privacy_policy_link()](https://developer.wordpress.org/reference/functions/the_privacy_policy_link/): Displays the Privacy Policy page link with formatting, when applicable.
+ - [get_the_privacy_policy_link()](https://developer.wordpress.org/reference/functions/get_the_privacy_policy_link/): Returns the Privacy Policy page link with formatting, when applicable.
 
 For example, the following code would display a Privacy Policy link in a div:
 
@@ -63,7 +65,7 @@ However, you could create a custom pattern that includes a link to the Privacy P
 
 You could then include this pattern in your theme's available block patterns for site admins to add if needed.
 
-## Comment data
+## Comment data (2:57)
 
 WordPress posts allow visitors to leave comments. 
 
@@ -86,6 +88,14 @@ Fortunately, this new checkbox field is automatically added to comment forms dis
 
 However, as a theme developer, it is important that you test your theme to ensure that this checkbox is displayed correctly anywhere the comments form is displayed, and that it functions as expected.
 
-## Further reading
+## Further reading  (4:31)
 
 For more information on user privacy and how themes can impact it, check out the [Privacy](https://developer.wordpress.org/themes/advanced-topics/privacy/) page under Advanced Topics in the Theme Developer Handbook.
+
+## Youtube Chapters
+
+00:00 Introduction
+00:16 Internet privacy
+01:22 Privacy Policy page
+02:57 Comment data
+04:31 Further reading

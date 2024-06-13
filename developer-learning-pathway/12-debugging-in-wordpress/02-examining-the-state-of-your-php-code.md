@@ -1,10 +1,12 @@
 # Examining the state of your PHP code 
 
+https://youtu.be/ThyDq0misbk
+
 When you're debugging PHP code, it can be helpful to examine the state of your code at a specific point in time. This can help you understand what's happening in your code and identify any issues that may be causing problems.
 
 Let's look at some ways you can examine the state of your PHP code using built-in PHP functions.
 
-## Using `error_log()` to log messages
+## Using `error_log()` to log messages (0:20)
 
 As discussed in the lesson on the built-in WordPress debugging options, you can use the `error_log()` function to log messages to the WordPress `debug.log` file. 
 
@@ -24,7 +26,7 @@ The benefit of using `error_log()` is that it allows you to log messages to a fi
 
 It's also sometimes quicker to be able to see the output in a log file, rather than having to search through a long list of output on the screen.
 
-## Using `print_r()`
+## Using `print_r()` (1:30)
 
 Another useful function for examining the state of your PHP code is `print_r()`. This function outputs the value of a variable, array, or object in a human-readable format, so you can see what it contains.
 
@@ -68,7 +70,7 @@ error_log( print_r( $some_array, true ) );
 
 This will log the output of the `print_r` call to the `debug.log` file, so you can see what `$some_array` contains at that point in your code.
 
-## Using `var_dump()`
+## Using `var_dump()` (2:27)
 
 The `var_dump()` function is another useful function for examining the state of your PHP code. This function outputs the value of a variable, array, or object in a human-readable format, along with additional information about the variable type and length.
 
@@ -119,7 +121,7 @@ function log_var_dump( $variable ) {
 }
 ```
 
-## Further reading
+## Further reading (3:33)
 
 For more information on the functions mentioned in this lesson, check out the following pages in the PHP documentation:
 
@@ -129,7 +131,8 @@ For more information on the functions mentioned in this lesson, check out the fo
 
 ## YouTube chapters
 
- Using `error_log
- Using `print_r
- Using `var_dump
-0:00 
+0:00 Introduction
+0:20 Using error_log()
+1:30 Using print_r()
+2:27 Using var_dump()
+3:33 Further reading

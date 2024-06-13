@@ -1,6 +1,8 @@
 # Testing your theme
 
-## Introduction
+## Introduction (0:00)
+
+https://youtu.be/JUKag5vy_uk
 
 Before releasing your theme to the public, you should test it thoroughly to ensure that it works as expected.
 
@@ -11,7 +13,7 @@ Let's look at some things you should do before releasing your theme, including:
 - Useful plugins for debugging and testing
 - Tools for Accessibility and Performance testing
 
-## Testing your theme in a local development environment
+## Testing your theme in a local development environment (0:29)
 
 All the lessons in the Learn WordPress developer pathways have recommended the use of a local development environment. 
 
@@ -23,7 +25,7 @@ One of the benefits of this is that you can enable the WordPress debugging optio
 
 If you don't already have a local development environment take a look at the [Local Development Environments](https://learn.wordpress.org/lesson/local-development-environment/) lesson for some options.
 
-## Using Theme Test Data
+## Using Theme Test Data (1:15)
 
 Part of testing your theme includes ensuring that it can handle a variety of content. By default, a new WordPress install only has a single sample page, post, and comment.
 
@@ -45,7 +47,7 @@ Once the import is complete, you should see a variety of content on your site, i
 
 You can then test your theme with this content to ensure that it displays correctly.
 
-## Useful plugins for debugging and testing 
+## Useful plugins for debugging and testing (3:18)
 
 There are several community plugins that you can use during theme development to help you test and debug your theme.
 
@@ -61,7 +63,7 @@ Following these guidelines is a requirement for submitting a theme to the WordPr
 
 Even if you don't plan to distribute your theme through the theme directory, it's still a good baseline test of your theme's structure and code.
 
-## Cross browser testing
+## Cross browser testing (3:58)
 
 For effective cross-browser compatibility testing of block themes, it is important test your theme across all major browsers, including Firefox, Chrome, Safari, and Edge.
 
@@ -71,7 +73,7 @@ Additionally, most modern browsers have developer tools that allow you to inspec
 
 Using the browser developer tools also allows you to use the responsive design mode, which offers you the option of testing your theme on different devices and screen sizes.
 
-## Tools for Accessibility and Performance testing
+## Tools for Accessibility and Performance testing (4:52)
 
 Ensuring that your theme is accessible is a key aspect of responsible theme development.
 
@@ -85,6 +87,16 @@ To test this, you can use tools like [Google Lighthouse](https://developers.goog
 
 You can also install your theme on a live website, and use tools like [PageSpeed Insights](https://pagespeed.web.dev/), or [GTmetrix](https://gtmetrix.com/) to test your theme's performance. Be sure to not only test the homepage, but also other templates for things like pages and posts.
 
-## Further reading
+## Further reading (6:00)
 
 For more information on testing your theme, including all the tips and tools mentioned in this lesson, check out the [Testing](https://developer.wordpress.org/themes/advanced-topics/testing/) page under Advanced Topics in the Theme Developer Handbook.
+
+## YouTube Chapters
+
+00:00 Introduction
+00:29 Testing your theme in a local development environment
+01:15 Using Theme Test Data
+03:18 Useful plugins for debugging and testing
+03:58 Cross browser testing
+04:52 Tools for Accessibility and Performance testing
+06:00 Further reading

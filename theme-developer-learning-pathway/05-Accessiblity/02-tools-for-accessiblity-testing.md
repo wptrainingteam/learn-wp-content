@@ -29,7 +29,7 @@ Deque Systems’ axe is a [set of accessibility testing tools](https://www.deque
 
 ## WordPress plugins
 
-[Sa11y](https://wordpress.org/plugins/sa11y/), [WP Tota11y](https://wordpress.org/plugins/wp-tota11y/), and [Editoria11y](https://wordpress.org/plugins/editoria11y-accessibility-checker/) are variations of the now-deprecated JavaScript library [Tota11y](https://github.com/Khan/tota11y). The former is also available as an NPM package, and the other two are wrappers for WordPress. Each has a slightly different approach to accessibility checks; test which one fits your needs.
+[Sa11y](https://wordpress.org/plugins/sa11y/), [WP Tota11y](https://wordpress.org/plugins/wp-tota11y/), and [Editoria11y](https://wordpress.org/plugins/editoria11y-accessibility-checker/) are plugins you can install to test for accessibility issues on a WordPress site. Each has a slightly different approach to accessibility checks; so test them all to see which one fits your needs.
 
 Finally, there’s [Accessibility Checker](https://wordpress.org/plugins/accessibility-checker/) that works in the Post Editor and the front end, surfacing errors, and providing detailed explanations (including the relevant code snippet) and potential fixes. As robust as it is, Accessibility Checker currently only works reliably on production sites.
 

@@ -174,7 +174,9 @@ When designing login forms, you can use the `autocomplete` attribute to help pas
  
 `<input type="password" autocomplete="current-password">`
 
-By default, most browsers will display a focus ring on elements if the element has focus. If you want to change the display of these focus rings, use the `:focus-visible` pseudo class, and don't remove focus rings entirely.
+By default, most browsers will display a focus ring on elements if the element has focus. 
+
+If you want to change the display of these focus rings, use the `:focus-visible` pseudo class, and don't remove focus rings entirely.
 
 ## Colors
 

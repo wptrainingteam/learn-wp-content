@@ -183,8 +183,6 @@ This array contains all the queries that have been run during the WordPress requ
 
 For more information on debugging in WordPress, check out the [Debugging in WordPress](https://developer.wordpress.org/advanced-administration/debug/) section in the Advanced Administration area of the WordPress developer documentation.
 
-
-
 ## YouTube chapters
 
 0:00 Introduction
