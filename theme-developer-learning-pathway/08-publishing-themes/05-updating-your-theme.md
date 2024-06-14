@@ -4,18 +4,18 @@ Once your theme is live on the WordPress.org theme directory, you may need to up
 
 There are two ways to update your theme on WordPress.org, uploading a new zip file, or using Subversion (SVN).
 
-Let's look at both methods, and the pros and cons of each approach.
+Let's look at both methods.
 
 ## Uploading a new zip file
 
 The most straightforward way to update your theme is to upload a new zip file to the WordPress.org theme directory.
 
-Once you've made any changes to your theme files, you'll need to update the version number in the style.css file. 
+Once you've made any changes to your theme files, you'll need to update the version number in the `style.css` file. 
 
 ```css
 /*
  * Theme Name: Twenty Twenty-Four
- * Version: 1.0.1
+ * Version: 1.2
  */
 ```
 
@@ -29,7 +29,7 @@ Finally, browse to https://wordpress.org/themes/upload/, and follow the same pro
 
 An alternative to the zip upload method is to use Subversion (also known as SVN) to update your theme.
 
-Subversion is a version control system Similar to Git that allows you to manage changes to your code.
+[Subversion](https://subversion.apache.org/) is a version control system similar to Git that allows you to manage changes to your code.
 
 When the WordPress [plugin repository was first created](https://wordpress.org/news/2005/01/the-wordpress-plugin-repository/), Subversion was used to allow developers to manage updates to plugins and themes. 
 
@@ -39,9 +39,23 @@ It therefore made sense to use the same system for the WordPress theme directory
 
 To use Subversion to update your theme, you install Subversion on your local machine, and then use it to commit your changes to the WordPress.org theme directory.
 
+One of the benefits of using Subversion is that it allows you to keep track of changes to your theme over time, and easily roll back to a previous version if needed.
+
+You can find the Subversion Repository URL on your theme's page in the directory, under Browse the code.
+
+For example, the URL for the Twenty Twenty-Four theme is:
+
+```
+https://themes.svn.wordpress.org/twentytwentyfour/
+```
+
 ## macOS and Linux
 
-For macOS users, you can install Subversion using [Homebrew](https://brew.sh/). You will need to install [Homebrew](https://brew.sh/) first if you haven't already, and then run the following command:
+For macOS users, you can install Subversion using [Homebrew](https://brew.sh/). 
+
+You will need to install [Homebrew](https://brew.sh/) first if you haven't already
+
+Once Homebrew is installed you then run the following command in your terminal to install Subversion:
 
 ```bash
 brew install subversion
@@ -50,18 +64,12 @@ brew install subversion
 Linux users can install Subversion using their package manager. For example, on Ubuntu, you can run:
 
 ```bash
-sudo apt-get install subversion
+sudo apt install subversion
 ```
 
-Once you have Subversion installed, you can use it check out the theme repository on WordPress.org. You can find the Subversion Repository URL on your theme's page in the directory.
+Once you have Subversion installed, you can use it check out the theme repository from WordPress.org. 
 
-For example, the URL for the Twenty Twenty-Four theme is:
-
-```
-https://themes.svn.wordpress.org/twentytwentyfour/
-```
-
-Then, in your terminal, navigate to the directory where you want to store your theme files, and run the `svn co` (or checkout) command:
+In your terminal, navigate to the directory where you want to store your theme's files, and run the `svn co` (or checkout) command:
 
 ```bash
 svn co https://themes.svn.wordpress.org/twentytwentyfour/
@@ -69,7 +77,18 @@ svn co https://themes.svn.wordpress.org/twentytwentyfour/
 
 This will download the theme files to your local machine from the Subversion Repository.
 
-The next step is to create a copy of the most recent version of the theme, to create the updated version. You can use the `svn cp` (or copy) command:
+The next step is to create a copy of the most recent version of the theme, to create the updated version.
+
+First, navigate to the directory for your theme
+
+```bash
+cd twentytwentyfour
+```
+
+Then, create a copy of the most recent version of the theme, using the `svn cp` (or copy) command::
+
+```bash
+```
 
 ```bash
 svn cp 1.1 1.2
