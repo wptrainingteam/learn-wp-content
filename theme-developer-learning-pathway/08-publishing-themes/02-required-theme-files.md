@@ -10,7 +10,7 @@ In the lesson on theme structure, you learned that the only two files required f
 
 However, when you submit your theme to the WordPress.org theme directory, there are additional files that are required.
 
-You will also need to include a theme.json file, and a readme.txt file.
+You will also need to include a `theme.json file`, and a `readme.txt` file.
 
 Additionally, you will also need a screenshot file.
 
@@ -39,13 +39,13 @@ If you don't have a `theme.json` file, you can use this template to create one i
 
 ## `readme.txt`
 
-Originally created for plugins, the `readme.txt` file is used by both plugins and themes to provide more information about them. 
+Originally required for plugins, the `readme.txt` file is used by both plugins and themes to provide more information about them. 
 
 For themes, the information from the `readme.txt` is displayed on the theme's page in the WordPress.org theme directory.
 
 This file should include information about the theme, such as the theme name, description, version number, author, and other details.
 
-The [WordPress readme file standard](WordPress plugin readme file standard.) contains the details of the type of information that you use in your `readme.txt` file.
+The [WordPress readme file standard](https://wordpress.org/plugins/readme.txt) contains the details of the type of information that you can use in your `readme.txt` file.
 
 There is also a [readme validator](https://wordpress.org/plugins/developers/readme-validator/) that you can use to check if your `readme.txt` file is formatted correctly.
 
@@ -61,7 +61,7 @@ If you use Create Block Theme to create your theme, a default screenshot file is
 
 If you are submitting a classic theme, the required files are slightly different.
 
-As covered in the Introduction to Classic themes lesson, the only required files for a classic theme to work inside a WordPress site, are the `style.css` and `index.php` files.
+As covered in the "Introduction to Classic themes" lesson, the only required files for a classic theme to work inside a WordPress site, are the `style.css` and `index.php` files.
 
 However, when submitting a classic theme to the WordPress.org theme directory, you will also need to include a `comments.php` file.
 

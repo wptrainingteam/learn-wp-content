@@ -4,15 +4,15 @@ Once you've developed your theme, you're probably going to look at ways to publi
 
 One of the most popular ways to do this is to submit your theme to the WordPress.org theme directory. 
 
-Let's dive into what the WordPress.org theme directory is, and why you might consider publishing your theme there.
+Let's dive into what the WordPress.org theme directory is, why you might consider publishing your theme there, and learn about the process of submitting your theme to the theme directory.
 
 ## What is the WordPress.org theme directory?
 
-The WordPress.org theme directory is a repository of free, GPL licensed themes that have been reviewed and approved by the WordPress theme review team.
+The WordPress.org [theme directory](https://wordpress.org/themes/) is a repository of free, GPL licensed themes that have been reviewed and approved by the WordPress theme review team.
 
 One of the benefits of publishing your theme in the WordPress.org theme directory is that it gives you access to a large audience of WordPress users.
 
-Folks can either download the theme from the WordPress.org theme directory, or install it directly from the Themes page in their WordPress dashboard.
+Folks can either download the theme from the online theme directory, or install it directly from the Themes page in their WordPress dashboard.
 
 ## Why publish your theme in the WordPress.org theme directory?
 
@@ -38,10 +38,6 @@ You are able to see how many users are actively using your theme, as well as how
 
 Users can rate and review your theme, which you can use to help add features and improvements, and grow your user base.
 
-**Search Engine Optimization**: 
-
-Being listed in the directory enhances your theme’s findability via search engines, thanks to WordPress.org’s strong SEO.
-
 ## How to submit your theme to the WordPress.org theme directory
 
 There are a series of steps you need to follow to submit your theme to the WordPress.org theme directory. Here's a high level overview of the process:
@@ -56,29 +52,8 @@ Step 4: Prepare documentation - Create documentation details the theme’s featu
 
 Step 5: Submission and review process - Submit your theme to the WordPress.org theme directory, and wait for the theme review team to review your theme. This process can take a few weeks, depending on the volume of themes being submitted.
 
-## The WordPress theme review guidelines
+You will learn about these steps in more detail in future lessons of this module.
 
-The WordPress [theme review guidelines](https://make.wordpress.org/themes/handbook/review/required/) are a set of requirements that you need to follow when submitting your theme to the WordPress.org theme directory.
+## Summary
 
-These guidelines cover a wide range of topics, including:
-
-1. Licensing & copyright
-2. Privacy
-3. Accessibility
-4. Code requirements
-5. Functionality and Features
-6. Plugins
-7. Naming, spelling, and trademarks
-8. Language and internationalization
-9. File requirements
-10. Classic theme requirements
-11. Block theme requirements
-12. Theme settings pages and onboarding
-13. Upsells, credits, links, and spam
-14. Theme author and theme upload restrictions
-
-It's important to read through these guidelines and make sure your theme meets them before submitting it to the WordPress.org theme directory.
-
-During the submission process, a theme that contains 3 or more distinct issues according to these guidelines may be closed as not-approved. 
-
-It is possible to resubmit your theme after fixing the issues, but it's going to delay the process.
+The WordPress.org theme directory is one of the best places to publsh your theme. It gives you access to a large audience of WordPress users, and provides you with useful features to support and improve your theme.

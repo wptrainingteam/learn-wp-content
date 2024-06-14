@@ -10,7 +10,7 @@ The process of uploading your theme for review requires you to upload a zip file
 
 There are a number of ways to achieve this, from using the terminal to using your operating system's file manager.
 
-For example, if you're using a Unix-based operating system, you can use the `zip` command to create a zip file of your theme:
+For example, if you're using a Unix-based operating system, you can use the `zip` command in the terminal to create a zip file of your theme:
 
 ```bash
 zip -vr new-theme.zip new-theme/
@@ -34,13 +34,15 @@ It's therefore a good idea to choose a theme name that is unique, and that refle
 
 Once you have the zip archive ready, you can upload it to the WordPress.org theme directory.
 
-Browse to https://wordpress.org/themes/upload/. 
+To do this, browse to https://wordpress.org/themes/upload/. 
 
 You will be required to log in with your WordPress.org account. If you don't already have a WordPress.org account, you can create one by clicking on the **Create an account** link, and completing the required information.
 
 Once you're logged in, you can upload your theme by clicking on the **Choose File** button, and selecting the zip archive of your theme.
 
 You will also be required to confirm that you have permission to upload the theme, that it complies with the theme review guidelines, and that it is GPL compatible.
+
+Once you've chceked all those boxes, click the **Upload** button to upload the theme for review.
 
 ## Theme review process
 
@@ -54,7 +56,7 @@ A new trac ticket is opened, and the theme details are added to the ticket. The 
 
 If a theme ticket has no update from the theme reviewer within the first 48 hours after assignment, you can request that the theme is returned to the new queue, and a new reviewer is assigned.
 
-Any communication between the theme reviewer and the theme author will take place in the trac ticket, and the theme author will be notified of any issues that need to be addressed.
+Any communication between the theme reviewer and the theme author will take place in comments in the trac ticket, and the theme author will be notified of any issues that need to be addressed.
 
 Trac automatically sends an email to the theme author when the ticket is updated, so it's important to keep an eye on your email for any updates. This will be the email you used when you registered your WordPress.org account.
 
@@ -66,4 +68,4 @@ If the theme passes the final review, it is marked as live, and the theme will s
 
 ## Further reading
 
-You can read more about the theme review process in the [WordPress theme review handbook](https://make.wordpress.org/themes/handbook/review/).
+You can read more about the theme review process in the [WordPress theme review team handbook](https://make.wordpress.org/themes/handbook/review/).
