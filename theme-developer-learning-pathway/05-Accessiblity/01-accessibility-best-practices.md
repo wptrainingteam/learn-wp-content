@@ -1,6 +1,8 @@
 # Best practices for developing an accessible theme
 
-## Introduction
+## Introduction (0:00)
+
+https://youtu.be/zf1Y8s3a-Bk
 
 If you watched [the lesson What is accessibility, and why it's important](#), you know that digital accessibility is a broad term that means ensuring that as many people as possible can use the web.
 
@@ -10,7 +12,7 @@ The easiest way to deliver accessible themes, plugins, or sites is to think abou
 
 In this lesson, you’ll learn about the fundamentals of accessible HTML, and how to apply them to your WordPress themes.
 
-## The fundamentals
+## The fundamentals (0:46)
 
 HTML is as powerful as it is accessible. 
 
@@ -92,13 +94,13 @@ The key is to be mindful of accessibility while you code and design.
 
 Let’s explore some techniques and best practices that developers and designers can adopt when creating custom Blocks, Templates, and Patterns.
 
-## Semantic HTML
+## Semantic HTML (1:36)
 
 Instead of wrapping everything with a `<div>` element, take advantage of the semantically meaningful elements of HTML.
 
 It’ll save you from hacks designed to reinvent the wheel as a rectangle.
 
-## Landmarks
+## Landmarks (1:51)
 
 Landmarks are a way to define the structure of a page. They help screen readers navigate the content more easily.
 
@@ -142,13 +144,13 @@ To define Group, Row, and Stack blocks as _content sectioning elements_, select 
 
 Scroll down, and set the **HTML ELEMENT** to `header`, `main`, `section`, `article`, `aside`, or `footer`, according to the block’s functionality and position.
 
-## Headings
+## Headings (2:43)
 
 When adding headings to templates always use headings in the right order, starting from `H2` and continuing in a descending sequence up to `H6`. 
 
 In the Site editor, click on **Document Overview > Outline** to check whether you skipped a level, or if everything is correctly set.
 
-## Buttons versus links
+## Buttons versus links (3:02)
 
 When designing user actions, consider the following as it relates to using buttons or links:
 
@@ -156,7 +158,7 @@ When designing user actions, consider the following as it relates to using butto
 * When you want them to navigate to another page, use the `anchor` element (`<a>`).
 * If the link should resemble a button, say, for a call-to-action on a landing page, then style it with CSS.
 
-## Forms
+## Forms (3:34)
 
 If you're designing any forms in your theme, follow these guidelines:
 
@@ -178,7 +180,7 @@ By default, most browsers will display a focus ring on elements if the element h
 
 If you want to change the display of these focus rings, use the `:focus-visible` pseudo class, and don't remove focus rings entirely.
 
-## Colors
+## Colors (4:24)
 
 Be sure to create an accessible color palette with sufficient contrast. 
 
@@ -186,7 +188,7 @@ When editing templates, WordPress alerts you when the text and background color 
 
 Don't use color alone to convey information. Links, for example, should be marked by more than color, and the same goes for focus states. When in doubt, look at the default HTML link and focus styles, and follow those. 
 
-## Typography (https://developer.mozilla.org/en-US/docs/Web/CSS/length)
+## Typography (https://developer.mozilla.org/en-US/docs/Web/CSS/length) (5:03)
 
 Set proper font sizes using relative units like `rem`, try to avoid using `px`.
 
@@ -194,13 +196,13 @@ Limit the content width to between 50 and 70 characters; the character or `ch` u
 
 Use adequate line spacing based on the font size.
  
-## Respect user preferences
+## Respect user preferences (5:28)
 
 A cornerstone of responsive design, [media queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries) help create a better user experience. 
 
 Some media query types—like `prefers-color-scheme` or `prefers-reduced-motion` are explicitly accessibility-driven, but there’s also the `pointer`, `hover`, or `scripting` that adjusts components’ behavior to the user’s device.
 
-## To ARIA or not to ARIA
+## The ARIA workaround (5:51)
 
 ARIA is short for _Accessible Rich Internet Applications_ framework, and it is often cited as a quick way to make HTML content more accessible to screen readers.
 
@@ -210,8 +212,24 @@ Misused `aria` attributes make things **less** accessible, so avoid them unless 
 
 For more information on this, make sure to visit MDN’s [WAI-ARIA basics](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/WAI-ARIA_basics) section.
 
-## Summary and further reading
+## Summary and further reading (6:36)
 
 Accessibility is forever a work in progress. Even one small improvement can make a big difference for your site visitors, and it has zero negative effects. It will never make their experience worse.
 
 To learn more, visit the W3C Web Accessibility Initiative’s (WAI) [Tutorials](https://www.w3.org/WAI/tutorials/) section.
+
+
+## YouTube chapters
+
+0:00 Introduction
+0:46 The fundamentals
+1:36 Semantic HTML
+1:51 Landmarks
+2:43 Headings
+3:02 Buttons versus links
+3:34 Forms
+4:24 Colors
+5:03 Typography
+5:28 Respect user preferences
+5:51 The ARIA workaround
+6:36 Summary and further reading
