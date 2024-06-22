@@ -1,10 +1,14 @@
 # Examining the state of your JavaScript
 
+## Introduction (0:00)
+
+https://youtu.be/4tMt--evXUk
+
 When you're developing in JavaScript, it can be helpful to debug your code at various points to see what's happening. 
 
 Let's look at some ways you can examine the state of your JavaScript code.
 
-## Server side vs client side
+## Server side vs client side (0:10)
 
 One of the main differences between debugging PHP and JavaScript is that PHP is a server-side language, so you can log messages to a file on the server. 
 
@@ -12,7 +16,7 @@ JavaScript, on the other hand, is a client-side language, so you can't easily lo
 
 Fortunately there are ways to examine the state of your JavaScript code using the browser's Developer Tools, specifically the Console tab.
 
-## Opening the browser's developer tools
+## Opening the browser's developer tools (0:35)
 
 Most modern browsers come with built-in Developer Tools that allow you to inspect and debug the elements of a web page. 
 
@@ -27,7 +31,7 @@ Once you have Developer Tools open, switch to the Console tab, which is where an
 
 It is also where you can log messages from your JavaScript code to help you debug it.
 
-## The console object
+## The console object (1:20)
 
 The [console](https://developer.mozilla.org/en-US/docs/Web/API/console) object is what allows you to log messages to the browser's console. It has several methods you can use to log different types of messages.
 
@@ -86,6 +90,14 @@ One of the most underused methods is `console.table()`, which logs an array or o
 
 This is especially useful when you have an array of objects, and you want to see the data in a more readable format.
 
-## Further reading
+## Further reading (2:46)
 
 To read more about the browser's console object and its methods, make sure to visit the [MDN Web Docs page](https://developer.mozilla.org/en-US/docs/Web/API/Console). It contains a full list of all the console methods, as well as useful examples.
+
+## YouTube chapters
+
+0:00 Introduction
+0:10 Server side vs client side
+0:35 Opening the browser's developer tools
+1:20 The console object
+2:46 Further reading

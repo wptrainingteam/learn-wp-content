@@ -192,3 +192,14 @@ For more information on debugging in WordPress, check out the [Debugging in Word
 04:26 Debugging with error_log
 04:51 Using the SAVEQUERIES constant
 05:25 Further reading
+
+## YouTube chapters
+
+0:00 Introduction
+0:27 What is debugging?
+1:12 Debugging PHP
+2:22 Enabling debugging
+04:26 Debugging with error_log
+04:51 Using the SAVEQUERIES constant
+05:25 Further reading
+0:00 

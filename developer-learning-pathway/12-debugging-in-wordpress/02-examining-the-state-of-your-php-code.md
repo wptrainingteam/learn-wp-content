@@ -136,3 +136,11 @@ For more information on the functions mentioned in this lesson, check out the fo
 1:30 Using print_r()
 2:27 Using var_dump()
 3:33 Further reading
+
+## YouTube chapters
+
+ Using `error_log
+ Using `print_r
+ Using `var_dump
+3:33 Further reading
+0:00 
