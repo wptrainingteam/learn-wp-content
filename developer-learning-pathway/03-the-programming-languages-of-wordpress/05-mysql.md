@@ -26,7 +26,7 @@ To create a table in a database, you would use the `CREATE TABLE` statement. Thi
 
 For example, to create a table called `colors` with the columns `id`, `type`, and `value` you could use the following SQL statement:
 
-```
+```sql
 CREATE TABLE colors (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     type VARCHAR(30) NOT NULL,
@@ -42,7 +42,7 @@ Now, if you wanted to add a row to the table, you would use the `INSERT` stateme
 
 For example, to add a row to the `colours` table, you would use the following SQL statement:
 
-```
+```sql
 INSERT INTO colors (type, value) VALUES ('header', 'red');
 ```
 
@@ -54,7 +54,7 @@ If you wanted to read a row from the table, you would use the `SELECT` statement
 
 For example, to read the row with the `type` of `header` from the `colors` table, you would use the following SQL statement:
 
-```
+```sql
 SELECT * FROM colors WHERE type = 'header';
 ```
 
@@ -62,7 +62,7 @@ This will return all the requested rows.
 
 If you just wanted the value of the `value` column, you would use the following SQL statement:
 
-```
+```sql
 SELECT value FROM colors WHERE type = 'header';
 ```
 
@@ -74,7 +74,7 @@ If you wanted to update a row in the table, you would use the `UPDATE` statement
 
 For example, to update the value of the `value` column in the `colours` table, you could use the following SQL statement:
 
-```
+```sql
 UPDATE colors SET value = 'blue' WHERE type = 'header';
 ```
 
@@ -86,7 +86,7 @@ If you wanted to delete a row from the table, you would use the `DELETE` stateme
 
 For example, to delete the row with the `type` of `header` from the `colors` table, you would use the following SQL statement:
 
-```
+```sql
 DELETE FROM colors WHERE type = 'header'
 ```
 

@@ -12,7 +12,7 @@ JavaScript is a client side scripting language, which means that it is interpret
 
 To see a simple example of what JavaScript can do, let's look at the HTML page from the previous lessons, and add a button which uses JavaScript change the color of the heading element:
 
-```
+```html
 <html lang="en">
     <head>
         <title>My HTML document</title>
@@ -50,7 +50,7 @@ You will also notice that if you refresh the page, the heading reverts back to i
 
 Like CSS, it is possible to add JavaScript to a document using an external file. This is the preferred way to add JavaScript to a document.
 
-```
+```html
 <html lang="en">
     <head>
         <title>My HTML document</title>
@@ -68,7 +68,7 @@ Like CSS, it is possible to add JavaScript to a document using an external file.
 
 Then you would move the JavaScript from the `<script>` element in the document to the `script.js` file.
 
-```
+```javascript
 const button = document.querySelector('button');
 const heading = document.querySelector('h1');
         

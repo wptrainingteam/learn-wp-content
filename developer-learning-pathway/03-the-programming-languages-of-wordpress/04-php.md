@@ -16,7 +16,7 @@ PHP is a server side scripting language, which means that it is interpreted by t
 
 To see a simple example of what PHP can do, let's take at the HTML page from the previous lessons, but use PHP to change the color of the heading element:
 
-```
+```html
 <?php
 if ( isset( $_GET['color'] ) ) {
 	$color = $_GET['color'];

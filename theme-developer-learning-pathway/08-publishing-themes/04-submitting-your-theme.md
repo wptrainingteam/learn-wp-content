@@ -22,11 +22,11 @@ Make sure not to include any files that are not part of the theme, such as versi
 
 ## A note on the theme name
 
-It's important to note that the theme name as it's registered on the WordPress.org theme directory, sometimes also called the theme slug, is determined by the name of the directory name of your theme when you create it.
+It's important to note that the theme name as it's registered on the WordPress.org theme directory, sometimes also called the theme slug, is determined by the name of the folder of your theme when you create it on your local computer.
 
-So, for example, for the "Twenty Twenty-Four" theme, the directory name `twentytwentyfour`.
+So, for example, for the "Twenty Twenty-Four" theme, the folder name is `twentytwentyfour`. When you create the zip file, the theme folder with all the theme files are archived inside the zip file.
 
-When a new theme is submitted, the theme name is automatically generated from the directory name. This name is then used everywhere in the theme directory, from the theme URL, to the location of the theme's code repository on WordPress.org.
+When a new theme is submitted, the theme name is automatically generated from that folder name. This name is then used everywhere in the theme directory, from the theme URL, to the location of the theme's code repository on WordPress.org.
 
 It's therefore a good idea to choose a theme name that is unique, and that reflects the title of your theme.
 

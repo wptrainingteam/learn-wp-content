@@ -14,7 +14,7 @@ CSS is used to define the colors, fonts, and layout of a web page.
 
 Let's take a look at the HTML document from the HTML lesson:
 
-```
+```html
 <html lang="en">
     <head>
         <title>My HTML document</title>
@@ -31,7 +31,7 @@ In the above example, the HTML document is unstyled. It is displayed in the brow
 
 For example, you can change the color of the heading element to red, and change the font size of the paragraph element to 20 pixels.
 
-```
+```html
 <html lang="en">
     <head>
         <title>My HTML document</title>
@@ -48,7 +48,7 @@ Adding CSS to elements using the `style` attribute is known as inline styles, bu
 
 Instead, you can use a `<style>` element to add CSS to the document.
 
-```
+```html
 <html lang="en">
     <head>
         <title>My HTML document</title>
@@ -71,7 +71,7 @@ Instead, you can use a `<style>` element to add CSS to the document.
 
 It's also possible to add CSS to a document using an external stylesheet. This is the preferred way to add CSS to a document.
 
-``` 
+```html
 <html lang="en">
     <head>
         <title>My HTML document</title>
@@ -87,7 +87,7 @@ It's also possible to add CSS to a document using an external stylesheet. This i
 
 In the above example, the `style.css` file would contain the following CSS:
 
-```
+```css
 h1 {
     color: red;
 }
@@ -100,7 +100,7 @@ In these examples, the CSS has been targeting specific elements. But it's also p
 
 For example, you can target the `class` attribute of the body element, and add a border to it.
 
-```
+```css
 .main {
     border: 5px solid black; 
 }

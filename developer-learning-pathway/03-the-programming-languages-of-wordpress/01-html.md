@@ -20,7 +20,7 @@ An HTML element usually has a start tag, an end tag, and content in between the 
 
 Here's an example of an HTML document:
 
-```
+```html
 <html lang="en">
     <head>
         <title>My HTML document</title>
