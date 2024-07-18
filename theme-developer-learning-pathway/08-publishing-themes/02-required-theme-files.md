@@ -1,10 +1,14 @@
 # Required theme files
 
+https://youtu.be/vhWis5HiUdY
+
+## Introduction (0:00)
+
 When you submit your theme to the WordPress.org theme directory, there are a set of required theme files that you need to include in your theme.
 
 Let's look at what these files are, and why they are important.
 
-## Block themes
+## Block themes (0:15)
 
 In the lesson on theme structure, you learned that the only two files required for a valid block theme are the `style.css` and `index.html` files.
 

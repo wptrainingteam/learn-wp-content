@@ -1,5 +1,9 @@
 # Submitting your theme to WordPress.org
 
+https://youtu.be/vSNFU1usCOw
+
+## Introduction
+
 When you've made sure your theme includes all the required files, passes the theme review guidelines, and you've thoroughly tested your theme, you're ready to submit your theme to the WordPress.org theme directory.
 
 Let's dive into what this process looks like.

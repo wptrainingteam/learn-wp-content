@@ -1,5 +1,9 @@
 # Preparing your theme for submission
 
+https://youtu.be/U-Aba8l7nwU
+
+## Introduction
+
 Once you have finished developing your theme, you need to prepare it for submission to the WordPress.org theme repository. 
 
 In this lesson, you'll learn how to prepare your theme for submission, including how to test your theme, check and follow the theme review guidelines, and prepare documentation for your theme.

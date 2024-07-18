@@ -1,5 +1,9 @@
 # Updating your theme
 
+https://youtu.be/uU1IFfpqy8s
+
+## Introduction
+
 Once your theme is live on the WordPress.org theme directory, you may need to update it from time to time. This could be to fix bugs, add new features, or generally improve it.
 
 There are two ways to update your theme on WordPress.org, uploading a new zip file, or using Subversion (SVN).

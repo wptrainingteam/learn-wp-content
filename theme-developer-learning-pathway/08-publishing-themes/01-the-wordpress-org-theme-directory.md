@@ -1,12 +1,16 @@
 # The WordPress.org theme directory
 
+https://www.youtube.com/watch?v=gx_XyBoJV-A
+
+## Introduction (0:00)
+
 Once you've developed your theme, you're probably going to look at ways to publish it, so that WordPress users can install and use it.
 
 One of the most popular ways to do this is to submit your theme to the WordPress.org theme directory. 
 
 Let's dive into what the WordPress.org theme directory is, why you might consider publishing your theme there, and learn about the process of submitting your theme to the theme directory.
 
-## What is the WordPress.org theme directory?
+## What is the WordPress.org theme directory? (0:25)
 
 The WordPress.org [theme directory](https://wordpress.org/themes/) is a repository of free, GPL licensed themes that have been reviewed and approved by the WordPress theme review team.
 
@@ -14,7 +18,7 @@ One of the benefits of publishing your theme in the WordPress.org theme director
 
 Folks can either download the theme from the online theme directory, or install it directly from the Themes page in their WordPress dashboard.
 
-## Why publish your theme in the WordPress.org theme directory?
+## Why publish your theme in the WordPress.org theme directory? (0:53)
 
 Besides the fact that WordPress users can search for and install your theme right from their WordPress dashboard, there are additional features you have access to when you publish your theme in the WordPress.org theme directory, including:
 
@@ -38,7 +42,7 @@ You are able to see how many users are actively using your theme, as well as how
 
 Users can rate and review your theme, which you can use to help add features and improvements, and grow your user base.
 
-## How to submit your theme to the WordPress.org theme directory
+## How to submit your theme to the WordPress.org theme directory (2:00)
 
 There are a series of steps you need to follow to submit your theme to the WordPress.org theme directory. Here's a high level overview of the process:
 
@@ -54,6 +58,6 @@ Step 5: Submission and review process - Submit your theme to the WordPress.org t
 
 You will learn about these steps in more detail in future lessons of this module.
 
-## Summary
+## Summary (3:16)
 
 The WordPress.org theme directory is one of the best places to publsh your theme. It gives you access to a large audience of WordPress users, and provides you with useful features to support and improve your theme.
