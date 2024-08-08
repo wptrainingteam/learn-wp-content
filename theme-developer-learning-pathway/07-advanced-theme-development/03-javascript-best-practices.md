@@ -1,6 +1,6 @@
 # JavaScript Best Practices
 
-## Introduction
+## Introduction (0:00)
 
 https://youtu.be/pWCjts2mnxA
 
@@ -14,7 +14,7 @@ In this lesson, you'll learn about some best practices for using JavaScript in y
 
 You will learn about using third-party JavaScript libraries, some best practices to follow when writing JavaScript, whether or not you should use jQuery, and where to find more information.
 
-## JavaScript libraries
+## JavaScript libraries (0:43)
 
 If you need to use any third-party JavaScript libraries in your theme, make sure to check whether it's already available via the WordPress install.
 
@@ -28,7 +28,7 @@ You can find a full list of the default Scripts and JavaScript Libraries include
 
 Make sure your theme is compatible with the version of your favorite library included with WordPress.
 
-## Writing JavaScript
+## Writing JavaScript (1:33)
 
 JavaScript is growing in popularity on the web, and over the years the language has improved to be able to a variety of tasks. This means that for more common tasks, you may not need to use a JavaScript library at all, and can just write plain JavaScript.
 
@@ -91,8 +91,8 @@ Ensure your site theme works without JavaScript first – then add JavaScript to
 
 Use [Lazy loading](https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading) for assets that aren’t immediately required. To do this, identify resources that are not critical for the content and load these only when needed.
 
-## jQuery
-
+## jQuery (4:31)
+ 
 jQuery is a JavaScript library that saw an increased use in the early days of web development. However, with the improvements in JavaScript, it is often no longer necessary to use jQuery for many common tasks.
 
 Don’t use jQuery if you don’t need to — [You might not need jQuery](https://youmightnotneedjquery.com/) is a great site that shows you how to do many of these common tasks with plain JavaScript.
@@ -158,6 +158,14 @@ Because the copy of jQuery included in WordPress loads in [noConflict()](https:/
 
 This prevents the use of the `$` variable by other JavaScript libraries from conflicting with your jQuery code.
 
-## Further reading
+## Further reading (5:53)
 
 For these, and other JavaScript best practices when developing themes, make sure to read the [JavaScript Best Practices Handbook](https://developer.wordpress.org/themes/advanced-topics/javascript-best-practices) page under the Advanced Topics section of the WordPress Developer Handbook.
+
+## YouTube chapters
+
+0:00 Introduction
+0:43 JavaScript libraries
+1:33 Writing JavaScript
+4:31 jQuery
+5:53 Further reading

@@ -2,7 +2,7 @@
 
 https://youtu.be/uU1IFfpqy8s
 
-## Introduction
+## Introduction (0:00)
 
 Once your theme is live on the WordPress.org theme directory, you may need to update it from time to time. This could be to fix bugs, add new features, or generally improve it.
 
@@ -10,7 +10,7 @@ There are two ways to update your theme on WordPress.org, uploading a new zip fi
 
 Let's look at both methods.
 
-## Uploading a new zip file
+## Uploading a new zip file (0:24)
 
 The most straightforward way to update your theme is to upload a new zip file to the WordPress.org theme directory.
 
@@ -29,7 +29,7 @@ You then create a new zip file of your theme directory, using whatever method yo
 
 Finally, browse to https://wordpress.org/themes/upload/, and follow the same process to upload the zip file.
 
-## Using Subversion (SVN)
+## Using Subversion (SVN) (1:02)
 
 An alternative to the zip upload method is to use Subversion (also known as SVN) to update your theme.
 
@@ -53,7 +53,7 @@ For example, the URL for the Twenty Twenty-Four theme is:
 https://themes.svn.wordpress.org/twentytwentyfour/
 ```
 
-## macOS and Linux
+## macOS and Linux (2:19)
 
 For macOS users, you can install Subversion using [Homebrew](https://brew.sh/). 
 
@@ -110,7 +110,7 @@ svn commit -m “Fix typo on readme.txt”
 
 During the commit process, you will be asked for your username and password. This is the same username and password you use to log in to the WordPress.org theme directory.
 
-## Windows
+## Windows (4:34)
 
 For Windows users, you can download and install [TortoiseSVN](https://tortoisesvn.net/), which provide a graphical interface for managing your Subversion repositories.
 
@@ -132,8 +132,18 @@ This will open a dialog box where you can enter a commit message, select all the
 
 As with macOS and Linux, you will be asked for your username and password during the commit process. This is the same username and password you use to log in to the WordPress.org theme directory.
 
-## After a successful commit
+## After a successful commit (6:44)
 
 After a successful commit, you will receive an email from WordPress.org to confirm that the new version of your theme has been uploaded. 
 
 It may take some time to reflect on the WordPress.org directory, but the updated version is usually available within a few hours.
+
+
+## YouTube chapters
+
+0:00 Introduction
+0:24 Uploading a new zip file
+SVN Using Subversion
+2:19 macOS and Linux
+4:34 Windows
+6:44 After a successful commit

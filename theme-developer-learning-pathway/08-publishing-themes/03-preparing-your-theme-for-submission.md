@@ -2,13 +2,13 @@
 
 https://youtu.be/U-Aba8l7nwU
 
-## Introduction
+## Introduction (0:00)
 
 Once you have finished developing your theme, you need to prepare it for submission to the WordPress.org theme repository. 
 
 In this lesson, you'll learn how to prepare your theme for submission, including how to test your theme, check and follow the theme review guidelines, and prepare documentation for your theme.
 
-## Testing your theme
+## Testing your theme (0:20)
 
 Before submitting your theme to the WordPress.org theme directory, you should test it thoroughly to ensure that it works as expected.
 
@@ -22,7 +22,7 @@ To do this, you can install the [WordPress Beta Tester](https://wordpress.org/pl
 
 Once you're sure you've tested your theme thoroughly, you can move on to the next step.
 
-## Theme review guidelines
+## Theme review guidelines (1:12)
 
 The WordPress [theme review guidelines](https://make.wordpress.org/themes/handbook/review/required/) are a set of requirements that you need to follow when submitting your theme to the WordPress.org theme directory.
 
@@ -53,7 +53,7 @@ During the submission process, a theme that contains 3 or more distinct issues a
 
 It is possible to resubmit your theme after fixing the issues, but it's going to delay the process.
 
-## Preparing documentation
+## Preparing documentation (2:37)
 
 The final step in preparing your theme for submission is to create documentation that details the theme's features, customization options, and any unique aspects of the theme.
 
@@ -69,6 +69,13 @@ They will then link to this page using the theme's `Theme URI` field in the `sty
 
 This link will display on the theme's page in the WordPress.org theme directory and in the WordPress admin, and users can click on it to access the theme documentation.
 
-# Conclusion
+# Conclusion (3:41)
 
 Once you've tested your theme, checked it against the theme review guidelines, and prepared your documentation, you're ready to submit your theme to the WordPress.org theme directory.
+
+## YouTube chapters
+
+0:00 Introduction
+0:20 Testing your theme
+1:12 Theme review guidelines
+2:37 Preparing documentation

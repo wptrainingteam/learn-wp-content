@@ -1,6 +1,6 @@
 # Child themes
 
-## Introduction
+## Introduction (0:00)
 
 https://youtu.be/XTzWivuH10I
 
@@ -10,7 +10,7 @@ This is where child themes come in.
 
 In this lesson, you'll learn what child themes are, why you should use them, and how to create and use a child theme.
 
-## What is a child theme?
+## What is a child theme? (0:21)
 
 A child theme is an extension of its parent theme. 
 
@@ -18,7 +18,7 @@ Using a child theme allows you to extend or modify any part of the parent theme,
 
 To understand how this works, let's look at a simplified example. 
 
-## Why use a child theme?
+## Why use a child theme? (0:40)
 
 Install and activate any theme from the WordPress theme repository in your local WordPress environment. 
 
@@ -48,7 +48,7 @@ By creating a child theme, which includes only the specific changes you need, yo
 
 If there are any future updates to the parent theme, in this case, Twenty Twenty-Four, the modifications in the child theme will still be applied, and the changes will remain. 
 
-## Creating a child theme
+## Creating a child theme (3:07)
 
 To understand how child themes work, it would be a good idea to create your first child theme. 
 
@@ -71,7 +71,9 @@ Now activate the child theme. Then browse to the front end of the site.
 
 You''l notice that the site looks exactly the same as it did before. This is because the all the theme elements are inherited from the parent theme.
 
-## How child themes work
+## How child themes work (4:35)
+
+When you create a child theme, you're telling WordPress that this theme is a child of another theme.
 
 All WordPress themes — unless they are specifically a child theme — are technically parent themes.
 
@@ -95,7 +97,7 @@ With the child theme active, the changes you made to the `footer.html` file in t
 
 It's worth noting that a child theme can extend practically every part of it's parent theme, not just templates. You can extend template parts, patterns, styles, even custom theme functionality via a child theme.
 
-## Using Create Block Theme
+## Using Create Block Theme (6:59)
 
 While it's possible to create a child theme manually, you can also use the Create Block Theme plugin to create a child theme, based on changes you've made in the Site Editor.
 
@@ -121,6 +123,16 @@ If you browse to the front end, you'll see the changes you made to the footer te
 
 And finally, if you look in your code editor, you'll see the child theme files have been created.
 
-## Further reading
+## Further reading (9:48)
 
 For more information on child themes, see the [Child themes page](https://developer.wordpress.org/themes/advanced-topics/child-themes/) under Advanced Topics in the Theme Developer Handbook. You can also read more about the child theme specific header fields in the [Child theme header fields](https://developer.wordpress.org/themes/core-concepts/main-stylesheet/#child-theme-header-fields) section under the Theme developer handbook's chapter on Core Concepts.
+
+## YouTube chapters
+
+0:00 Introduction
+0:21 What is a child theme?
+0:40 Why use a child theme?
+3:07 Creating a child theme
+4:35 How child themes work
+6:59 Using Create Block Theme
+9:48 Further reading

@@ -8,7 +8,7 @@ When you submit your theme to the WordPress.org theme directory, there are a set
 
 Let's look at what these files are, and why they are important.
 
-## Block themes (0:15)
+## Block themes (0:13)
 
 In the lesson on theme structure, you learned that the only two files required for a valid block theme are the `style.css` and `index.html` files.
 
@@ -20,7 +20,7 @@ Additionally, you will also need a screenshot file.
 
 Let's look at each of these files in more detail.
 
-## `theme.json`
+## `theme.json` (0:54)
 
 The `theme.json` file is used to define the global styles and settings for your theme.
 
@@ -41,7 +41,7 @@ If you don't have a `theme.json` file, you can use this template to create one i
 }
 ```
 
-## `readme.txt`
+## `readme.txt` (1:22)
 
 Originally required for plugins, the `readme.txt` file is used by both plugins and themes to provide more information about them. 
 
@@ -53,7 +53,7 @@ The [WordPress readme file standard](https://wordpress.org/plugins/readme.txt) c
 
 There is also a [readme validator](https://wordpress.org/plugins/developers/readme-validator/) that you can use to check if your `readme.txt` file is formatted correctly.
 
-## Screenshot
+## Screenshot (2:03)
 
 The screenshot file is used to display a preview of your theme in the WordPress.org theme directory, as well as in the theme directory page in the WordPress admin area.
 
@@ -61,7 +61,7 @@ This file should be a PNG or JPG image, and should be no bigger than 1200 x 900 
 
 If you use Create Block Theme to create your theme, a default screenshot file is automatically generated for you, but it's best to replace this with a custom screenshot that showcases your theme.
 
-## Classic themes
+## Classic themes  (2:33)
 
 If you are submitting a classic theme, the required files are slightly different.
 
@@ -73,6 +73,17 @@ In a classic theme, this is the file which contains the comment template include
 
 As with block themes, you will also need to include the `readme.txt` file, and the screenshot file.
 
-## Further reading
+## Further reading (3:15)
 
 For more information on the required theme files, you can refer to the Required files and Optional files sections of the [Theme structure](https://developer.wordpress.org/themes/core-concepts/theme-structure/#required-files) chapter in the WordPress theme developer handbook.
+
+
+## YouTube chapters
+
+0:00 Introduction
+0:13 Block themes
+0:54 theme.json
+1:22 readme.txt
+2:03 Screenshot
+2:33 Classic themes
+3:15 Further reading

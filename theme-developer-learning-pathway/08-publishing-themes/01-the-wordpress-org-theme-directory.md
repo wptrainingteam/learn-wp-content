@@ -61,3 +61,11 @@ You will learn about these steps in more detail in future lessons of this module
 ## Summary (3:16)
 
 The WordPress.org theme directory is one of the best places to publsh your theme. It gives you access to a large audience of WordPress users, and provides you with useful features to support and improve your theme.
+
+## YouTube chapters
+
+0:00 Introduction
+0:25 What is the WordPress.org theme directory?
+0:53 Why publish your theme in the WordPress.org theme directory?
+2:00 How to submit your theme to the WordPress.org theme directory
+3:16 Summary

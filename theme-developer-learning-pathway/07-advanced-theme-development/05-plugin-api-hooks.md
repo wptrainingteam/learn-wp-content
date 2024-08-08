@@ -1,6 +1,6 @@
 # Plugin API Hooks
 
-## Introduction
+## Introduction (0:00)
 
 https://youtu.be/QNQrsOGeHRY
 
@@ -10,7 +10,7 @@ Your theme should support these hooks, to allow plugins developers to extend you
 
 In this lesson, you will learn how to allow plugins to hook into your theme, by implementing the specific template tags.
 
-## A note on block themes.
+## A note on block themes (0:19)
 
 If you are developing a block theme, you should not have to worry about implementing these template tags. 
 
@@ -18,7 +18,7 @@ The blocks that implement the functionality described in this lesson already sup
 
 Using these template tags is only necessary if you are developing a classic theme, or custom functionality outside of the core blocks.
 
-## Template tags
+## Template tags (0:40)
 
 Most hooks are executed internally by WordPress, so your theme does not need special tags for them to work. 
 
@@ -45,3 +45,9 @@ This tag typically goes in the `<li>Meta</li>` section of a Theme’s menu or si
 `comment_form()` is used to display the comment form at the end of posts
 
 This tag goes in the `comments.php` template file, directly before the file’s closing `</div>` tag.
+
+## YouTube chapters
+
+0:00 Introduction
+0:19 A note on block themes
+0:40 Template tags

@@ -1,6 +1,6 @@
 # Build Process
 
-## Introduction
+## Introduction (0:00)
 
 https://youtu.be/Qzg3IxcpEDk
 
@@ -8,13 +8,13 @@ When developing a WordPress theme, it's useful to consider whether you will need
 
 In this lesson, you'll learn more about build processes, why you should use them, and how to set up a basic build process using the @wordpress/scripts package.
 
-## What is a build process?
+## What is a build process? (0:23)
 
 A build process is a method of converting source code files into a final build/production version that can be read by the computer. 
 
 In particular, themes will most often be minifying or converting source code into CSS or JavaScript so that they can be read by the browser.
-
-## Why use a build process?
+ 
+## Why use a build process? (0:43)
 
 Depending on what technologies you use in your theme, you may need a build process to help you manage your theme's assets and optimize your theme for performance.
 
@@ -28,7 +28,7 @@ When creating a WordPress theme, you may find yourself in need of a build proces
 
 But WordPress also offers the @wordpress/scripts [package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/) that you can be assured is continually updated and should cover most of your needs.
 
-## Prerequisites
+## Prerequisites (1:47)
 
 Most of WordPress theme development doesn't require any additional software. You just need a code editor, a local development environment, and a WordPress installation. 
 
@@ -42,7 +42,7 @@ These are more advanced tools than what is normally required to build themes, bu
 
 If you completed the introduction to block development module in the beginner developer learning pathway, you should already have all the knowledge you need. 
 
-## Setting up your files and folders
+## Setting up your files and folders (2:36)
 
 The @wordpress/scripts package was originally created for block development. Over time, it has evolved to also work with themes. 
 
@@ -62,7 +62,7 @@ my-theme/
 
 Your development JavaScript and Sass files reside in the resources/js and resources/scss folders, respectively. when the build process runs, you want them to be output to the public/js and public/css folders.
 
-## Setting up your package.json file
+## Setting up your package.json file (3:17)
 
 Your first step, if you haven't done this already, is to initialise the npm project. This will create a package.json file in the root of your theme.
 
@@ -147,7 +147,7 @@ In this case it will look for files in the resources folder and output them to t
 
 If you have a different folder structure, you can adjust the `--webpack-src-dir` and `--output-path` parameters to match your setup.
 
-## Configuring webpack
+## Configuring webpack (5:17)
 
 The @wordpress/scripts package is built on top of webpack. If you were building a block, everything would already be in place for you. 
 
@@ -194,7 +194,7 @@ This configuration file sets up the entry points for your custom JavaScript and 
 
 It also configures the webpack-remove-empty-scripts, so that there are no leftover JavaScript files mapped to your CSS.
 
-## Running the build process
+## Running the build process (6:18)
 
 With everything set up, you can now run the build process.
 
@@ -212,7 +212,7 @@ To build your theme for production, run the following command in your terminal:
 npm run build
 ```
 
-## Loading scripts and styles
+## Loading scripts and styles (7:02)
 
 You have already learned how to enqueue scripts and styles in your theme in the lesson on including assets.
 
@@ -276,6 +276,19 @@ function themeslug_editor_assets() {
 
 The process is similar for any stylesheets you want to enqueue.
 
-## Further reading
+## Further reading (8:22)
 
 For the full guide on how to set up the build process using the @wordpress/scripts package, you can refer to the [Build process](https://developer.wordpress.org/themes/advanced-topics/build-process/) page under the Advanced Topics section of the WordPress Developer Handbook.
+
+## YouTube chapters
+
+0:00 Introduction
+0:23 What is a build process?
+0:43 Why use a build process?
+1:47 Prerequisites
+2:36 Setting up your files and folders
+3:17 Setting up your package.json file
+5:17 Configuring webpack
+6:18 Running the build process
+7:02 Loading scripts and styles
+8:22 Further reading

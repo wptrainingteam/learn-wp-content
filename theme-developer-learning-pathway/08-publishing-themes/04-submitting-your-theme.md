@@ -2,13 +2,13 @@
 
 https://youtu.be/vSNFU1usCOw
 
-## Introduction
+## Introduction (0:00)
 
 When you've made sure your theme includes all the required files, passes the theme review guidelines, and you've thoroughly tested your theme, you're ready to submit your theme to the WordPress.org theme directory.
 
 Let's dive into what this process looks like.
 
-## Archive your theme
+## Archive your theme (0:17)
 
 The process of uploading your theme for review requires you to upload a zip file of the entire local theme directory.
 
@@ -24,7 +24,7 @@ The zip file should contain the theme files inside the theme directory.
 
 Make sure not to include any files that are not part of the theme, such as version control files, package dependency files, or any other files that are not required for the theme to function.
 
-## A note on the theme name
+## A note on the theme name (0:57)
 
 It's important to note that the theme name as it's registered on the WordPress.org theme directory, sometimes also called the theme slug, is determined by the name of the folder of your theme when you create it on your local computer.
 
@@ -36,7 +36,7 @@ This name is then used everywhere in the theme directory, from the theme URL, to
 
 It's therefore a good idea to choose a theme name that is unique, and that reflects the title of your theme.
 
-## Upload your theme
+## Upload your theme (1:49)
 
 Once you have the zip archive ready, you can upload it to the WordPress.org theme directory.
 
@@ -50,7 +50,7 @@ You will also be required to confirm that you have permission to upload the them
 
 Once you've chceked all those boxes, click the **Upload** button to upload the theme for review.
 
-## Theme review process
+## Theme review process (2:48)
 
 Once the theme is uploaded, a number of actions take place automatically.
 
@@ -72,6 +72,15 @@ Once a theme passes all required checks, the reviewer marks the theme as approve
 
 If the theme passes the final review, it is marked as live, and the theme will show up in WordPress.org theme directory.
 
-## Further reading
+## Further reading (4:40)
 
 You can read more about the theme review process in the [WordPress theme review team handbook](https://make.wordpress.org/themes/handbook/review/).
+
+## YouTube chapters
+
+0:00 Introduction
+0:17 Archive your theme
+0:57 A note on the theme name
+1:49 Upload your theme
+2:48 Theme review process
+4:40 Further reading

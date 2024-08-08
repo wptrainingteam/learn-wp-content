@@ -1,6 +1,6 @@
 # User Interface Best Practices
 
-## Introduction
+## Introduction (0:00)
 
 https://youtu.be/iWi4qqtz7Bs
 
@@ -8,7 +8,7 @@ When designing a WordPress theme, it's important to consider the user interface 
 
 In this lesson, you're going to learn about user interface design, as well as some best practices for designing the user interface of your theme.
 
-## What is User Interface Design?
+## What is User Interface Design? (0:17)
 
 The User Interface (UI) of a website is the space where interactions between humans and your website occur. This is more commonly know as the website front end.
 
@@ -20,7 +20,7 @@ When designing a theme, it's important to ensure that the elements of the theme 
 
 Let's dive into some best practices for designing the user interface of your WordPress theme.
 
-## Logo Homepage Link
+## Logo Homepage Link (1:08)
 
 The logo of your theme should link to the homepage of your site.
 
@@ -36,7 +36,7 @@ Here is an example of how you can link the logo to the homepage using the home_u
 </a>
 ```
 
-## Descriptive Anchor Text
+## Descriptive Anchor Text (1:41)
 
 When creating links to things that appear in your theme, make sure to use descriptive anchor text.
 
@@ -58,13 +58,13 @@ The best way to learn WordPress is to start using it. <a href="https://wordpress
 
 The Download WordPress text is descriptive of what will happen when you click the link.
 
-## Style Links with Underlines
+## Style Links with Underlines (2:26)
 
 While on the topic of links, good theme design means retaining the default link style displaying with underlines. 
 
 Some designers use CSS to disable underlines for links. However, doing so causes usability and accessibility problems, as it makes it more difficult to identify hyperlinks from the surrounding text.
 
-## Different Link Colors
+## Different Link Colors (2:47)
 
 The use of color on links is a visual cue that text is clickable. 
 
@@ -94,7 +94,7 @@ Focus is an undirected activity, where the user needs to discover where their fo
 
 Notice how the menu links in the Twenty Twenty-Four theme add the underline style when hovering over them with the mouse, but have a border when focus changes via the keyboard.
 
-## Color Contrast
+## Color Contrast (4:35)
 
 Color contrast refers to the difference between two colors on screen. 
 
@@ -106,13 +106,13 @@ You can enter the background color and foreground color to see if the contrast r
 
 The WCAG 2.0 requires a ratio of 4.5:1 on normal text to be [AA compliant](https://www.w3.org/WAI/WCAG22/quickref/?versions=2.0#qr-visual-audio-contrast-contrast).
 
-## Sufficient Font Size
+## Sufficient Font Size (5:27)
 
 Make your text easy to read. 
 
 By making your text large enough, you increase the usability of your site and make the content easier to understand. 14px is the smallest text should be.
 
-## Associate Labels with Inputs
+## Associate Labels with Inputs (5:41)
 
 When working with elements that accept input, make sure to associate labels with inputs using the for attribute. 
 
@@ -123,8 +123,8 @@ When working with elements that accept input, make sure to associate labels with
 
 This will allow the user to click the label and focus on the input field.
 
-## Placeholder Text
-
+## Placeholder Text (6:01)
+ 
 Developers will often use placeholders on input elements to show the user an example of what to type. 
 
 ```html
@@ -140,7 +140,7 @@ So make sure to use placeholders correctly, or not at all.
 
 If you do decide to use a placeholder, make sure that it suggests the type of data a field requires, and not as a substitute for the field label.
 
-## Descriptive Buttons
+## Descriptive Buttons (6:41)
 
 The web is filled with buttons that have unclear meanings. Remember the last time you used ‘OK’ or ‘submit’ on your login form? 
 
@@ -150,6 +150,21 @@ This describes what will happen when the user clicks the button.
 
 A great example of this is the comments form on the single post template, the use of Post Comment, instead of just Submit 
 
-## Further Reading
+## Further Reading (7:16)
 
 For more information on user interface best practices during theme development, you can refer to the [UI best practices doc](https://developer.wordpress.org/themes/advanced-topics/ui-best-practices/) under the Advanced Topics section of the WordPress Theme Developer Handbook.
+
+## YouTube chapters
+
+0:00 Introduction
+0:17 What is User Interface Design?
+1:08 Logo Homepage Link
+1:41 Descriptive Anchor Text
+2:26 Style Links with Underlines
+2:47 Different Link Colors
+4:35 Color Contrast
+5:27 Sufficient Font Size
+5:41 Associate Labels with Inputs
+6:01 Placeholder Text
+6:41 Descriptive Buttons
+7:16 Further Reading
