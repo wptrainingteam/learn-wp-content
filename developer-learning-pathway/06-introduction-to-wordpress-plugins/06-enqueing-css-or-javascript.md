@@ -120,17 +120,16 @@ In the examples in the lesson, the bookstore CSS and JavaScript is enqueued on e
 
 It is possible to perform selective enqueuing, where you determine the specific scenario when the file should be enqueued. 
 
-For example, in the case of the bookstore.css, you could use the get_post() function to get the current post object, and then check if the post type is book. 
+For example, in the case of the bookstore.css, you could use the WordPress is_singular() [function](https://developer.wordpress.org/reference/functions/is_singular/) to check if the content being rendered is a book custom post type. 
 
 If it isn't' then exit the function and don't enqueue the stylesheet or script file.
 
 ```php
 add_action( 'wp_enqueue_scripts', 'bookstore_enqueue_scripts' );
 function bookstore_enqueue_scripts() {
-	$post = get_post();
-	if ( 'book' !== $post->post_type ) {
-		return;
-	}
+    if ( ! is_singular( 'book' ) ) {
+        return;
+    }
 	wp_enqueue_style(
 		'bookstore-style',
 		plugins_url() . '/bookstore/bookstore.css',

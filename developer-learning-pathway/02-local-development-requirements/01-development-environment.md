@@ -34,9 +34,9 @@ Another free and open source option is [XAMPP](https://www.apachefriends.org/). 
 
 Like XAMPP, [MAMP](https://www.mamp.info/en) is another local development environment that is not specifically designed for WordPress, but it includes everything you need to get started. Unlike XAMPP, MAMP is not open source, and is available in both a free and a paid version.
 
-Other WordPress local development environments include [Local WP](https://localwp.com/), and [DevKinsta](https://kinsta.com/devkinsta/). 
+Other WordPress local development environments include [Studio by WordPress.com](https://developer.wordpress.com/studio/), [Local WP](https://localwp.com/), and [DevKinsta](https://kinsta.com/devkinsta/). 
 
-Each of these products is created and maintained by their parent company, and includes built in support for deploying your local site to a live site hosted with that company.
+Each of these products is created and maintained by their parent company, and each offer their own unique features.
 
 ## Choosing a local development environment
 

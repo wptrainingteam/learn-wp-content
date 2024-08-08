@@ -30,7 +30,9 @@ It's important to note that the theme name as it's registered on the WordPress.o
 
 So, for example, for the "Twenty Twenty-Four" theme, the folder name is `twentytwentyfour`. When you create the zip file, the theme folder with all the theme files are archived inside the zip file.
 
-When a new theme is submitted, the theme name is automatically generated from that folder name. This name is then used everywhere in the theme directory, from the theme URL, to the location of the theme's code repository on WordPress.org.
+When a new theme is submitted, the theme name is automatically generated from that folder name. 
+
+This name is then used everywhere in the theme directory, from the theme URL, to the location of the theme's code repository on WordPress.org.
 
 It's therefore a good idea to choose a theme name that is unique, and that reflects the title of your theme.
 
