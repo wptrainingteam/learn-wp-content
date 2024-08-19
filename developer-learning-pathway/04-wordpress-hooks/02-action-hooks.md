@@ -40,6 +40,12 @@ You will need to pass the hook name and the name of your callback function as ar
 
 Let’s take a look at what this looks like in a theme’s `functions.php` file. 
 
+## Adding theme support to a theme
+
+For this lesson, you're going to write some code inside your currently active theme. Please note that this is for demonstrative purposes only. 
+
+Unless you are developing the theme yourself, it is not recommended to edit an existing theme's files directly.  
+
 In your code editor, navigate to your currently active theme’s `functions.php` file, and open it.
 
 If your theme doesn’t have a `functions.php` file, you can create one in the root of your theme directory. Just make sure it's named functions.php, and has the opening PHP tag at the top of the file.
@@ -73,6 +79,8 @@ With this code in your active them, if you create a new Post now in your WordPre
 Here you can see the two post formats you enabled in your callback function.
 
 As you learned from this example you can use actions to perform something, either enabling some already existing feature, or adding something to the request execution.
+
+Before you wrap up, make sure to either remove the code you added to the `functions.php` file, or delete the file if you created it.
 
 ## YouTube chapters
 
