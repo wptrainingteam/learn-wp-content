@@ -23,12 +23,28 @@ Next, create plugin directory in your `wp-content/plugins` directory called `wp-
 ```php
 <?php
 /*
-Plugin Name: WP Conflict
+Plugin Name: WP Learn Extra Content
 Version: 1.0.0
 */
 
-function get_option(){
-	return 'Conflict';
+add_action('admin_init', 'add_option');
+function add_option() {
+	add_settings_field('extra_option', 'Extra Option', 'extra_option_field', 'general');
+	register_setting('general', 'extra_option');
+}
+function extra_option_field() {
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option('extra_option') . '" />';
+}
+
+add_filter( 'the_content', 'add_extra_option' );
+function add_extra_option( $content ) {
+	$extra_option = get_option('extra_option');
+	if ( empty( $extra_option ) ) {
+		new WP_Error( 'extra_option', 'Extra content is empty.' );
+		return $content;
+	}
+	$content .= '<p>' . $extra_option . '</p>';
+	return $content;
 }
 ```
 
