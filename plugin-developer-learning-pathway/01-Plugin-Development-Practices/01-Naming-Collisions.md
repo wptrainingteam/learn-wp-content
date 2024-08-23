@@ -4,11 +4,11 @@
 
 When developing plugins for WordPress, it's important to be aware of naming collisions. 
 
-A naming collision occurs when two or more functions, variables, classes, or constants have the same name.
+A naming collision occurs when two or more functions, variables, classes, or constants have the same name in the same namespace.
 
-To understand this, let's look at an example of defining a custom function in a plugin, that's going to be used in a WordPress site.
+To understand what this means, let's look at an example.
 
-## Example
+## Enable debugging
 
 Before you start, make sure to enable the WordPress debugging mode in your `wp-config.php` file, especially the `WP_DEBUG_LOG` constant.
 
@@ -18,35 +18,52 @@ define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false );
 ```
 
-Next, create plugin directory in your `wp-content/plugins` directory called `wp-conflict`. Inside that create the main plugin filed called `wp-conflict.php` and add the following code:
+You're intentionally going to write some code that will cause an error, and you want to be able to see the error message in the debug log.
+
+Next, create plugin directory in your `wp-content/plugins` directory called `extra-content`. Inside that create the main plugin filed called `extra-content.php` and add the following code:
 
 ```php
 <?php
 /*
-Plugin Name: WP Learn Extra Content
+Plugin Name: Extra Content
 Version: 1.0.0
+Description: Add extra content to the end of the post content.
+Author: WP Learn
 */
 
-add_action('admin_init', 'add_option');
+add_action( 'admin_init', 'add_option' );
 function add_option() {
-	add_settings_field('extra_option', 'Extra Option', 'extra_option_field', 'general');
-	register_setting('general', 'extra_option');
+	add_settings_field( 'extra_option', 'Extra Option', 'extra_option_field', 'general' );
+	register_setting( 'general', 'extra_option' );
 }
+
 function extra_option_field() {
-	echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option('extra_option') . '" />';
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option( 'extra_option' ) . '" />';
 }
 
 add_filter( 'the_content', 'add_extra_option' );
 function add_extra_option( $content ) {
-	$extra_option = get_option('extra_option');
-	if ( empty( $extra_option ) ) {
+	$extra_option = get_option( 'extra_option' );
+	if ( ! $extra_option ) {
 		new WP_Error( 'extra_option', 'Extra content is empty.' );
+
 		return $content;
 	}
 	$content .= '<p>' . $extra_option . '</p>';
+
 	return $content;
 }
 ```
+
+This code is makes use of the WordPress [Options](https://developer.wordpress.org/apis/options/) and [Settings](https://developer.wordpress.org/apis/settings/) APIs. 
+
+It adds a field to the General Settings page in the WordPress admin area called Extra Option, where an admin user can enter some content.
+
+When the settings are saved, the content will be saved as an option in the WordPress database, with the key `extra_option`.
+
+It then hooks into the `the_content` filter, and appends the content of the `extra_option` option to the end of the post content.
+
+If the `extra_option` option is empty, it will log an error, and return the original content.
 
 Save the file, log into your WordPress admin area, and try to activate the plugin.
 
@@ -59,69 +76,79 @@ Plugin could not be activated because it triggered a fatal error.
 If you check the debug log, you will see the following error message:
 
 ```
-PHP Fatal error:  Cannot redeclare get_option() (previously declared in /path/to/your/wordpress/install/wp-includes/option.php:78)
+PHP Fatal error:  Cannot redeclare add_option()
 ```
 
-This error occurs because the `get_option()` function is already defined in WordPress core, in the `wp-includes/option.php` file on line 78. 
+This error occurs because the `add_option()` function is already defined in WordPress core, in the `wp-includes/option.php` file. 
 
-By trying to define the same function in your plugin, you are causing a naming collision, as there can only be one function with the same name in the global namespace.
+By trying to define the same function in your main plugin file, you are causing a naming collision. 
+
+When using the function keyword to define these two functions, they are both defined in the global namespace, and so they conflict with each other.
 
 This can happen with any variables, classes, and constants you create inside the global namespace.
 
-There are a couple of ways to avoid naming collisions.
+Now let's look at some ways to avoid naming collisions, and the pros and cons of each approach.
 
 ### Prefixes
 
-The first option to consider is to prefix any code with a unique identifier. As the developer, you can determine what that identifier is, and the use it throughout your code.
+The first option is to prefix any plugin code with a unique identifier. As the developer, you can determine what that identifier is, and the use it throughout your code.
 
-In this example, the plugin is called `WP Conflict`, so you can use a prefix like `wp_conflict_`:
+In this example, the plugin is called `Extra Content`, so you can use a prefix like `extra_content_`:
 
 ```php
-function wp_conflict_function_name() {
-    return 'Conflict';
+add_action( 'admin_init', 'extra_content_add_option' );
+function extra_content_add_option() {
+	add_settings_field( 'extra_option', 'Extra Option', 'extra_option_field', 'general' );
+	register_setting( 'general', 'extra_option' );
 }
 ```
 
 If you try to activate the plugin now, it will activate successfully, as the prefix makes your function name unique.
 
+You will then be able to add some content to the Extra Option field in the General Settings, and see it displayed at the end of the post content.
+
 When defining a prefix, it's a good idea to make it as unique to your plugin as possible, to avoid conflicts with other plugins that may use the same prefix.
 
-One way to do this is to use a combination of the plugin developer's name, or an abbreviation of the name, and the plugin name as the prefix:
+One way to do this is to use a combination of the plugin author, or an abbreviation of the name, and the plugin name as the prefix:
 
 ```php
-function jb_wp_conflict_get_option(){
-    return 'Conflict';
-}
-```
-
-Alternatively, if you're developing a plugin for a company, use the company name as the prefix:
-
-```php
-function acme_wp_conflict_get_option(){
-    return 'Conflict';
+add_action( 'admin_init', 'wp_learn_extra_content_add_option' );
+function wp_learn_extra_content_add_option() {
+	add_settings_field( 'extra_option', 'Extra Option', 'extra_option_field', 'general' );
+	register_setting( 'general', 'extra_option' );
 }
 ```
 
 Whatever prefix you choose, make sure it's unique to your plugin, and use it consistently throughout your code.
 
 ```php
-define( 'ACME_WP_CONFLCT_VERSION', 1.0.0 );
-$acme_wp_conflict_option = 'value';
-function acme_wp_conflict_function_name() {
-    return 'Conflict';
+add_action( 'admin_init', 'wp_learn_extra_content_add_option' );
+function wp_learn_extra_content_add_option() {
+	add_settings_field( 'extra_option', 'Extra Option', 'wp_learn_extra_content_extra_option_field', 'general' );
+	register_setting( 'general', 'wp_learn_extra_content_extra_option' );
+}
+
+function wp_learn_extra_content_extra_option_field() {
+	echo '<input name="wp_learn_extra_content_extra_option" id="wp_learn_extra_content_extra_option" type="text" value="' . get_option( 'wp_learn_extra_content_extra_option' ) . '" />';
+}
+
+add_filter( 'the_content', 'wp_learn_extra_content_add_extra_option' );
+function wp_learn_extra_content_add_extra_option( $content ) {
+	$extra_option = get_option( 'wp_learn_extra_content_extra_option' );
+	if ( ! $extra_option ) {
+		new WP_Error( 'wp_learn_extra_content_extra_option', 'Extra content is empty.' );
+
+		return $content;
+	}
+	$content .= '<p>' . $extra_option . '</p>';
+
+	return $content;
 }
 ```
 
 One thing to note is that naming conflicts only occur in the global namespace. 
 
-For example, if you define a variable inside a function, the variable name is scoped to the function, and so you don't need to prefix it:
-
-```php
-function acme_wp_conflict_function_name() {
-    $option = 'Conflict';
-    return $option;
-}
-```
+For example, if you define a variable inside a function, the variable name is scoped to the function, and so you don't need to prefix it.
 
 ### Namespaces
 
@@ -130,167 +157,148 @@ A slightly better way to prefix your code is to define a custom [namespace](http
 This allows you to avoid naming collisions by defining your functions and variables in a separate namespace:
 
 ```php
-namespace ACME\WP_Conflict;
+namespace WP_Learn\Extra_Content;
 
-function get_option(){
-    return 'Conflict';
+add_action('admin_init', 'WP_Learn\Extra_Content\add_option');
+function add_option() {
+	add_settings_field('extra_option', 'Extra Option', 'WP_Learn\Extra_Content\extra_option_field', 'general');
+	register_setting('general', 'extra_option');
 }
-```
-
-When you need to call the function, you use the fully qualified name:
-
-```php
-echo WP_Conflict\get_option();
-```
-
-The advantage of namespaces is that they allow you to group related code together, even if it's structured in separate files.
-
-Take a look at the following slightly updated version of the bookstore plugin from the Beginner Developer Learning Pathway:
-
-```php
-namespace WP_Learn\Bookstore\Custom_Post_Types;
-
-function register_book_post_type() {
-	$args = array(
-		'labels'       => array(
-			'name'          => 'Books',
-			'singular_name' => 'Book',
-			'menu_name'     => 'Books',
-			'add_new'       => 'Add New Book',
-			'add_new_item'  => 'Add New Book',
-			'new_item'      => 'New Book',
-			'edit_item'     => 'Edit Book',
-			'view_item'     => 'View Book',
-			'all_items'     => 'All Books',
-		),
-		'public'       => true,
-		'has_archive'  => true,
-		'show_in_rest' => true,
-		'supports'     => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' ),
-	);
-
-	register_post_type( 'book', $args );
+function extra_option_field() {
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option('extra_option') . '" />';
 }
 
-function register_genre_taxonomy() {
-	$args = array(
-		'labels'       => array(
-			'name'          => 'Genres',
-			'singular_name' => 'Genre',
-			'edit_item'     => 'Edit Genre',
-			'update_item'   => 'Update Genre',
-			'add_new_item'  => 'Add New Genre',
-			'new_item_name' => 'New Genre Name',
-			'menu_name'     => 'Genre',
-		),
-		'hierarchical' => true,
-		'rewrite'      => array( 'slug' => 'genre' ),
-		'show_in_rest' => true,
-	);
-
-	register_taxonomy( 'genre', 'book', $args );
-}
-
-function add_isbn_to_quick_edit( $keys, $post ) {
-	if ( 'book' === $post->post_type ) {
-		$keys[] = 'isbn';
+add_filter( 'the_content', 'WP_Learn\Extra_Content\add_extra_option' );
+function add_extra_option( $content ) {
+	$extra_option = get_option('extra_option');
+	if ( ! $extra_option ) {
+		new WP_Error( 'extra_option', 'Extra content is empty.' );
+		return $content;
 	}
-	return $keys;
+	$content .= '<p>' . $extra_option . '</p>';
+	return $content;
 }
 ```
 
-The `custom-post-types.php` file defines the custom post type and taxonomy registration functions in the `WP_Learn\Bookstore\Custom_Post_Types` namespace.
+Notice that when you need to call the function, or in this case pass the function as a callback to a hook, you use the fully qualified name, which includes the namespace.
+
+But notice what happens when you delete the content of the Extra Option field in the General Settings, save the settings, and navigate to a post or page on your site.
+
+This has to do with how PHP resolves classes differently when used inside a namespace.
+
+## Global namespace resolution
+
+You still have the WordPress debugging options on, so take a look at what's being logged to the debug.log file.
+
+```
+PHP Fatal error:  Uncaught Error: Class "WP_Learn\Extra_Content\WP_Error" not found
+```
+
+This error is happening because the `WP_Error` class is not being found. It worked before you added the namespace, so what's going on?
+
+If you look at the PHP documentation on [Using namespaces](https://www.php.net/manual/en/language.namespaces.fallback.php) it states:
+
+> Inside a namespace, when PHP encounters an unqualified name in a class name, function or constant context, it resolves these with different priorities. Class names always resolve to the current namespace name.
+
+What this means is that all the WordPress core functions you're using in this code are being resolved to the global namespace by default, but the use of the `WP_Error` class is being resolved to the current namespace.
+
+WP_Error is a WordPress core class, so it exists in the global namespace.
+
+When using namespaces, you can use a backslash character in front of any class names or function calls to tell PHP the class or function exists in the global namespace.
 
 ```php
-<?php
-namespace WP_Learn\Bookstore\Asset_Enqueing;
-function enqueue_scripts() {
-	if ( ! is_singular( 'book' ) ) {
-		return;
+namespace WP_Learn\Extra_Content;
+
+add_action('admin_init', 'WP_Learn\Extra_Content\add_option');
+function add_option() {
+	add_settings_field('extra_option', 'Extra Option', 'WP_Learn\Extra_Content\extra_option_field', 'general');
+	register_setting('general', 'extra_option');
+}
+function extra_option_field() {
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option('extra_option') . '" />';
+}
+
+add_filter( 'the_content', 'WP_Learn\Extra_Content\add_extra_option' );
+function add_extra_option( $content ) {
+	$extra_option = get_option('extra_option');
+	if ( ! $extra_option ) {
+		new \WP_Error( 'extra_option', 'Extra content is empty.' );
+		return $content;
 	}
-	wp_enqueue_style(
-		'bookstore-style',
-		plugins_url() . '/bookstore/bookstore.css'
-	);
-	wp_enqueue_script(
-		'bookstyle-script',
-		plugins_url() . '/bookstore/bookstore.js'
-	);
+	$content .= '<p>' . $extra_option . '</p>';
+	return $content;
 }
 ```
 
-The `asset-enqueing.php` file defines the asset enqueuing functions in the `WP_Learn\Bookstore\Asset_Enqueing` namespace.
+Adding this will fix the namespace resolution issue, and you should now be able to navigate to a post or page on your site without any errors.
+
+While you must prefix any core WordPress classes with the backslash character to ensure they are resolved in the global namespace, you can also optionally use the backslash before function calls. It's not required, because the PHP parser will do this automatically, but it helps you remember which functions belong to which namespace. 
+
+```php
+namespace WP_Learn\Extra_Content;
+
+\add_action( 'admin_init', 'WP_Learn\Extra_Content\add_option' );
+function add_option() {
+	\add_settings_field( 'extra_option', 'Extra Option', 'WP_Learn\Extra_Content\extra_option_field', 'general' );
+	\register_setting( 'general', 'extra_option' );
+}
+
+function extra_option_field() {
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . \get_option( 'extra_option' ) . '" />';
+}
+
+\add_filter( 'the_content', 'WP_Learn\Extra_Content\add_extra_option' );
+function add_extra_option( $content ) {
+	$extra_option = \get_option( 'extra_option' );
+	if ( ! $extra_option ) {
+		new \WP_Error( 'extra_option', 'Extra content is empty.' );
+
+		return $content;
+	}
+	$content .= '<p>' . $extra_option . '</p>';
+
+	return $content;
+}
+```
+
+Namespaces also make it easier to move your code into separate files, and then include those files in your main plugin file.
+
+For example, you could move all the functions into a file called `functions.php` that's namespaced under `WP_Learn\Extra_Content\Functions`:
 
 ```php
 <?php
-/**
- * Plugin Name: Bookstore
- * Description: A plugin to manage books
- * Version: 1.0
- *
- */
+namespace WP_Learn\Extra_Content\Functions;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+function add_option() {
+	\add_settings_field( 'extra_option', 'Extra Option', 'WP_Learn\Extra_Content\Functions\extra_option_field', 'general' );
+	\register_setting( 'general', 'extra_option' );
 }
 
-include plugin_dir_path( __FILE__) . '/custom-post-types.php';
-include plugin_dir_path( __FILE__) . '/asset-enqueing.php';
+function extra_option_field() {
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . \get_option( 'extra_option' ) . '" />';
+}
 
-add_action( 'init', 'WP_Learn\Bookstore\Custom_Post_Types\register_book_post_type' );
-add_action( 'init', 'WP_Learn\Bookstore\Custom_Post_Types\register_genre_taxonomy' );
-add_filter( 'postmeta_form_keys', 'WP_Learn\Bookstore\Custom_Post_Types\add_isbn_to_quick_edit', 10, 2 );
+function add_extra_option( $content ) {
+	$extra_option = \get_option( 'extra_option' );
+	if ( ! $extra_option ) {
+		new \WP_Error( 'extra_option', 'Extra content is empty.' );
 
-add_action( 'wp_enqueue_scripts', 'WP_Learn\Bookstore\Asset_Enqueing\enqueue_scripts' );
+		return $content;
+	}
+	$content .= '<p>' . $extra_option . '</p>';
+
+	return $content;
+}
 ```
 
-The main plugin file includes the custom post type and asset enqueuing files and hooks the functions to the appropriate WordPress actions and filters. Notice how the fully qualified namespace is used as the callback function.
-
-## Global namespace
-
-One thing to note about using namespaces, is what happens when you don't specifically use the fully qualified namespace.
-
-For example in the updated bookstore plugin, the `register_book_post_type()` function calls the `register_post_type()` function. 
-
-This function is defined in the core of WordPress, inside the `wp-includes/post.php` file.
-
-If you scroll to the top of that file, you'll see that no specific namespace is defined. Therefore, this function exists in the global namespace.
-
-This means that when you call it from the `register_book_post_type()` function, you don't need to use the fully qualified namespace.
-
-According to the [PHP documentation](https://www.php.net/manual/en/language.namespaces.global.php), if a specific namespace is not defined, all class and function definitions are placed into the global space.
-
-However, you can use the \ (backslash) character to specify that you want to use the function from the global namespace:
+You could then include this file in your main plugin file, and pass the fully qualified function names to the hooks:
 
 ```php
-<?php
+require plugin_dir_path( __FILE__ ) . 'functions.php';
 
-namespace WP_Learn\Bookstore\Custom_Post_Types;
-
-function register_book_post_type() {
-	$args = array(
-		'labels'       => array(
-			'name'          => 'Books',
-			'singular_name' => 'Book',
-			'menu_name'     => 'Books',
-			'add_new'       => 'Add New Book',
-			'add_new_item'  => 'Add New Book',
-			'new_item'      => 'New Book',
-			'edit_item'     => 'Edit Book',
-			'view_item'     => 'View Book',
-			'all_items'     => 'All Books',
-		),
-		'public'       => true,
-		'has_archive'  => true,
-		'show_in_rest' => true,
-		'supports'     => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' ),
-	);
-
-	\register_post_type( 'book', $args );
-}
+\add_action( 'admin_init', 'WP_Learn\Extra_Content\Functions\add_option' );
+\add_filter( 'the_content', 'WP_Learn\Extra_Content\Functions\add_extra_option' );
 ```
-
-This is a useful habit to get into, especially when it comes to creating new instances of classes that are defined in the global namespace, which we will dive further into in the next section.
 
 ## Classes
 
@@ -298,26 +306,187 @@ You can also make use classes to encapsulate your functions and variables.
 
 This allows you to group related functions and variables together and help to avoid naming collisions.
 
-Going back to the earlier WP Conflict example, you could define a class called `WP_Conflict` and define your functions and variables as static methods and properties of the class:
+So for example, you could define a class called `WP_Learn_Extra_Content` and define your functions and variables as methods and properties of the class:
 
 ```php
-class WP_Conflict {
-    public static function get_option(){
-        return 'Conflict';
-    }
+class WP_Learn_Extra_Content {
+
+	public function init() {
+		add_action( 'admin_init', array( $this, 'add_option' ) );
+		add_filter( 'the_content', array( $this, 'add_extra_option' )  );
+	}
+	public function add_option() {
+		add_settings_field('extra_option', 'Extra Option', array( $this, 'extra_option_field' ), 'general');
+		register_setting('general', 'extra_option');
+	}
+
+	public function extra_option_field() {
+		echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option('extra_option') . '" />';
+	}
+	
+	public function add_extra_option( $content ) {
+		$extra_option = get_option('extra_option');
+		if ( ! $extra_option ) {
+			new WP_Error( 'extra_option', 'Extra content is empty.' );
+			return $content;
+		}
+		$content .= '<p>' . $extra_option . '</p>';
+		return $content;
+	}
+	
 }
 ```
 
-When you need to call class methods, you can use the `::` operator:
+You'll notice that the hook callbacks have changed to use an array with the class instance and the method name. This is because the callbacks are now methods of the class.
+
+Then all you need to do is create an instance of the class and call the `init()` method:
 
 ```php
-echo WP_Conflict::get_option();
+$wp_learn_extra_content = new WP_Learn_Extra_Content();
+$wp_learn_extra_content->init();
 ```
 
-This probably doesn't make sense for simple code like this, but let's refactor the bookstore plugin to use classes:
+This provides a cleaner way to structure your code, and helps to avoid naming collisions.
+
+As with namespaces, using classes allows you to move common functionality into different files. For example, you can create a separate file for the class:
 
 ```php
+<?php
 
-if you look at the PHP documentation on [Using namespaces](https://www.php.net/manual/en/language.namespaces.fallback.php) it states:
+class WP_Learn_Extra_Content {
 
-> Inside a namespace, when PHP encounters an unqualified name in a class name, function or constant context, it resolves these with different priorities. Class names always resolve to the current namespace name. 
+	public function init() {
+		add_action( 'admin_init', array( $this, 'add_option' ) );
+		add_filter( 'the_content', array( $this, 'add_extra_option' ) );
+	}
+
+	public function add_option() {
+		add_settings_field( 'extra_option', 'Extra Option', array( $this, 'extra_option_field' ), 'general' );
+		register_setting( 'general', 'extra_option' );
+	}
+
+	public function extra_option_field() {
+		echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option( 'extra_option' ) . '" />';
+	}
+
+	public function add_extra_option( $content ) {
+		$extra_option = get_option( 'extra_option' );
+		if ( ! $extra_option ) {
+			new WP_Error( 'extra_option', 'Extra content is empty.' );
+
+			return $content;
+		}
+		$content .= '<p>' . $extra_option . '</p>';
+
+		return $content;
+	}
+}
+```
+
+Then in your main plugin file, you can include the class file and create the instance of the class:
+
+```php
+require plugin_dir_path( __FILE__ ) . 'class-extra-content.php';
+
+$wp_learn_extra_content = new WP_Learn_Extra_Content();
+$wp_learn_extra_content->init();
+```
+
+Finally, you can even combine namespaces and classes to create a more organized and structured plugin, with less chance of naming collisions. For example you could move the class into folder called `classes` and namespace it under `WP_Learn\Classes`:
+
+```php
+<?php
+
+namespace WP_Learn\Classes;
+class Extra_Content {
+
+	public function init() {
+		add_action( 'admin_init', array( $this, 'add_option' ) );
+		add_filter( 'the_content', array( $this, 'add_extra_option' ) );
+	}
+
+	public function add_option() {
+		add_settings_field( 'extra_option', 'Extra Option', array( $this, 'extra_option_field' ), 'general' );
+		register_setting( 'general', 'extra_option' );
+	}
+
+	public function extra_option_field() {
+		echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option( 'extra_option' ) . '" />';
+	}
+
+	public function add_extra_option( $content ) {
+		$extra_option = get_option( 'extra_option' );
+		if ( ! $extra_option ) {
+			new WP_Error( 'extra_option', 'Extra content is empty.' );
+
+			return $content;
+		}
+		$content .= '<p>' . $extra_option . '</p>';
+
+		return $content;
+	}
+}
+```
+
+Then in your main plugin file, you can include the class file and create the instance of the class:
+
+```php
+require plugin_dir_path( __FILE__ ) . 'classes/class-extra-content.php';
+
+use WP_Learn\Classes\Extra_Content;
+
+$wp_learn_extra_content = new Extra_Content();
+$wp_learn_extra_content->init();
+```
+
+Notice the use of the `use` keyword to import the class from its namespace, so that you can register an instance of the Extra_Content class, without needing to use the fully qualified name.
+
+## Avoiding naming collisions in the database
+
+There's one more type of naming collision to be aware of, and that's when storing options to the database.
+
+When using any of the Options or Settings API functions that are related to storing data to the database with key value pairs like `register_setting`, `add_option`, and `get_option`, you need to be careful about the names you use.
+
+In the example above, the option name is `extra_option`, which is a very generic name, and could easily conflict with other plugins or themes that use the same name.
+
+In this case it's always a good idea to follow the prefixing convention, and prefix your setting and option names with a unique identifier:
+
+```php
+<?php
+
+namespace WP_Learn\Classes;
+class Extra_Content {
+
+	public function init() {
+		add_action( 'admin_init', array( $this, 'add_option' ) );
+		add_filter( 'the_content', array( $this, 'add_extra_option' ) );
+	}
+
+	public function add_option() {
+		add_settings_field( 'wp_learn_extra_option', 'Extra Option', array( $this, 'extra_option_field' ), 'general' );
+		register_setting( 'general', 'wp_learn_extra_option' );
+	}
+
+	public function extra_option_field() {
+		echo '<input name="wp_learn_extra_option" id="wp_learn_extra_option" type="text" value="' . get_option( 'wp_learn_extra_option' ) . '" />';
+	}
+
+	public function add_extra_option( $content ) {
+		$extra_option = get_option( 'wp_learn_extra_option' );
+		if ( ! $extra_option ) {
+			new WP_Error( 'wp_learn_extra_option', 'Extra content is empty.' );
+
+			return $content;
+		}
+		$content .= '<p>' . $extra_option . '</p>';
+
+		return $content;
+	}
+}
+```
+
+## Further reading
+
+To read more about the different ways to avoid naming collisions, take a look at the [Avoiding Naming Collisions section](https://developer.wordpress.org/plugins/plugin-basics/best-practices/#avoid-naming-collisions) in the page on Best Practices for plugin development in the Plugin Developer handbook. You can also read about the recommended way to [declare namespaces]((https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/#namespace-declarations)) in the WordPress Coding Standards documentation. 
+
+For more information about using the Options and Settings APIs, take a look at the [Options API](https://developer.wordpress.org/apis/options/) and [Settings API](https://developer.wordpress.org/apis/settings/) pages of the Common APIs Handbook.
