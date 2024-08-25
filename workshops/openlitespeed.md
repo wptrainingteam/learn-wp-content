@@ -14,31 +14,33 @@ sudo apt install php8.3-cli for wp cli
 
 https://upcloud.com/resources/tutorials/install-wordpress-openlitespeed
 
-sudo chown -R nobody:nogroup /usr/local/lsws/Example/html/wordpress
+sudo chown -R nobody:nogroup /usr/local/lsws/psykrotek/html
 
-sudo find /usr/local/lsws/Example/html/wordpress/ -type d -exec chmod 750 {} \;
-sudo find /usr/local/lsws/Example/html/wordpress/ -type f -exec chmod 640 {} \;
+sudo find /usr/local/lsws/psykrotek/html/ -type d -exec chmod 750 {} \;
+sudo find /usr/local/lsws/psykrotek/html/ -type f -exec chmod 640 {} \;
+
+https://developer.wordpress.org/advanced-administration/multisite/create-network/
 
 ## Initial server setup
 
 Update software
 
 ```bash
-sudo apt update
-sudo apt upgrade -y
+apt update
+apt upgrade -y
 ```
 
 Set a hostname
 
 ```bash
-sudo hostnamectl set-hostname psykrotek
+hostnamectl set-hostname psykrotek
 ```
 
 Create a new user
 
 ```bash
-sudo adduser psykrotek
-sudo usermod -aG sudo psykrotek
+adduser jbossenger
+usermod -aG sudo jbossenger
 ```
 
 Set up a basic firewall
@@ -46,7 +48,7 @@ Set up a basic firewall
 ```bash
 sudo ufw allow OpenSSH
 sudo ufw enable
-ufw status
+sudo ufw status
 ```
 
 Optional, configure ssh key pair
@@ -62,7 +64,7 @@ ssh-keygen -t ed25519 -C "jonathanbossenger@Jonathans-MBP"
 Copy the public key
 
 ```bash
-cat ~/.ssh/id_psykrotek.pub
+cat ~/.ssh/id_ed25519.pub
 ```
 
 Create the .ssh directory on the server, and the authorized_keys file
@@ -92,16 +94,16 @@ PermitRootLogin no
 PasswordAuthentication no
 ```
 
+Check additional ssh configuration
+
+```bash
+cd /etc/ssh/sshd_config.d
+```
+
 Restart the ssh service
 
 ```bash 
 sudo service ssh restart
-```
-
-Check additional ssh configuration
-
-```bash
-/etc/ssh/sshd_config.d
 ```
 
 ## Install OpenLiteSpeed
@@ -131,26 +133,159 @@ Access the web server
 http://your_server_ip:8088
 ```
 
-Update PHP version (if needed)
+Install MySQL
 
 ```bash
-sudo apt-get install lsphp83 lsphp83-common lsphp83-mysql
+sudo apt install mysql-server
 ```
 
-sudo update-alternatives --set php /usr/bin/php8.3
-sudo update-alternatives --set phar /usr/bin/phar8.3
-sudo update-alternatives --set phar.phar /usr/bin/phar.phar8.3
-sudo update-alternatives --set phpize /usr/bin/phpize8.3
-sudo update-alternatives --set php-config /usr/bin/php-config8.3
-
-
-Install PHP cli, match the version to the PHP version installed with OpenLiteSpeed
+Update MySQL root password
 
 ```bash
-sudo apt install php7.3-cli
+sudo mysql
 ```
 
+```sql
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+FLUSH PRIVILEGES;
+exit
+```
 
+Secure the MySQL installation
 
+```bash
+sudo mysql_secure_installation
+```
 
+```
+Would you like to setup VALIDATE PASSWORD component? Y
+Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG: 2
+Change the password for root ? Y
+New password: ************
+Remove anonymous users? Y
+Disallow root login remotely? Y
+Remove test database and access to it? Y
+Reload privilege tables now? Y
+```
+
+Update PHP version PHP 8.1 on Ubuntu 22.04 by default
+
+```bash
+sudo apt install lsphp81 lsphp81-{common,mysql}
+```
+
+Install PHP CLI
+
+```bash
+sudo apt install php8.1-cli
+```
+
+Configure OpenLiteSpeed admin
+
+```bash
+sudo /usr/local/lsws/admin/misc/admpass.sh
+````
+
+Browse to the admin interface
+
+```
+https://your_server_ip:7080
+```
+
+https://docs.openlitespeed.org/config/php/#configuration
+
+Server Configuration > External App > Edit
+
+Change Command to lsphp81/bin/lsphp
+
+Graceful restart
+
+## Set up a virtual host
+
+https://docs.openlitespeed.org/config/#set-up-virtual-hosts
+
+Create the directories
+
+```bash
+sudo mkdir /usr/local/lsws/psykrotek
+sudo mkdir /usr/local/lsws/psykrotek/{conf,html,logs}
+
+sudo chown -R nobody:nogroup /usr/local/lsws/psykrotek/html
+sudo find /usr/local/lsws/psykrotek/html/ -type d -exec chmod 750 {} \;
+sudo find /usr/local/lsws/psykrotek/html/ -type f -exec chmod 640 {} \;
+
+sudo chown lsadm:lsadm /usr/local/lsws/psykrotek/conf
+```
+
+Configure the vhost in the admin interface
+
+Virtual Hosts > Add
+
+Virtual Host Name = psykrotek
+Virtual Host Root = $SERVER_ROOT/psykrotek
+Config File = $SERVER_ROOT/conf/vhosts/psykrotek/vhost.conf
+Enable Scripts/ExtApps = Yes
+Restrained = No
+
+file /usr/local/lsws/conf/vhosts/psykrotek/vhost.conf does not exist. CLICK TO CREATE
+
+Virtual Hosts > psykrotek > General
+
+Document Root = /usr/local/lsws/psykrotek/html
+Domain Name = psykrotek.co.za
+Domain Aliases = www.psykrotek.co.za, *.psykrotek.co.za
+
+Virtual Hosts > psykrotek > Index Files
+
+index.html, index.php
+
+Enable Rewrite in the Rewrite tab
+
+Enable Rewrite = Yes
+Auto Load from .htaccess = yes
+
+Listeners -> Add
+
+Listener Name = HTTP
+IP Address = ANY IPv4
+Port = 80
+Secure = No
+
+Map Virtual Hosts
+
+Listeners > HTTP > Virtual Host Mappings > Add
+
+Virtual Host = psykrotek
+Domains = psykrotek.co.za, www.psykrotek.co.za, *.psykrotek.co.za
+
+Graceful restart
+
+## Install WordPress
+
+Instal WP-CLI
+
+```bash
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x wp-cli.phar
+sudo mv wp-cli.phar /usr/local/bin/wp
+```
+
+Create the database
+
+```bash
+mysql -uroot -p
+```
+
+```sql
+CREATE DATABASE psykrotek;
+exit
+```
+
+Download WordPress
+
+```bash
+sudo su 
+cd /usr/local/lsws/psykrotek/html
+wp core download --allow-root
+```
 
