@@ -2,24 +2,12 @@
 
 ## Notes and resources
 
-https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu
-
-https://www.digitalocean.com/community/tutorials/how-to-install-lamp-stack-on-ubuntu
-
-https://www.digitalocean.com/community/tutorials/how-to-install-linux-openlitespeed-mariadb-php-lomp-stack-on-ubuntu-22-04
-
-https://docs.openlitespeed.org/config/
-
-sudo apt install php8.3-cli for wp cli
-
-https://upcloud.com/resources/tutorials/install-wordpress-openlitespeed
-
-sudo chown -R nobody:nogroup /usr/local/lsws/psykrotek/html
-
-sudo find /usr/local/lsws/psykrotek/html/ -type d -exec chmod 750 {} \;
-sudo find /usr/local/lsws/psykrotek/html/ -type f -exec chmod 640 {} \;
-
-https://developer.wordpress.org/advanced-administration/multisite/create-network/
+- https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu
+- https://www.digitalocean.com/community/tutorials/how-to-install-lamp-stack-on-ubuntu
+- https://www.digitalocean.com/community/tutorials/how-to-install-linux-openlitespeed-mariadb-php-lomp-stack-on-ubuntu-22-04
+- https://docs.openlitespeed.org/config/
+- https://upcloud.com/resources/tutorials/install-wordpress-openlitespeed
+- https://developer.wordpress.org/advanced-administration/multisite/create-network/
 
 ## Initial server setup
 
