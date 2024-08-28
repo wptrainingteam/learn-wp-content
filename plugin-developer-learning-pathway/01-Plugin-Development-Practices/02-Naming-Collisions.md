@@ -55,7 +55,7 @@ function add_extra_option( $content ) {
 }
 ```
 
-This code is makes use of the WordPress [Options](https://developer.wordpress.org/apis/options/) and [Settings](https://developer.wordpress.org/apis/settings/) APIs. 
+This code makes use of the WordPress [Options](https://developer.wordpress.org/apis/options/) and [Settings](https://developer.wordpress.org/apis/settings/) APIs. 
 
 It adds a field to the General Settings page in the WordPress admin area called Extra Option, where an admin user can enter some content.
 
@@ -79,7 +79,7 @@ If you check the debug log, you will see the following error message:
 PHP Fatal error:  Cannot redeclare add_option()
 ```
 
-This error occurs because the `add_option()` function is already defined in WordPress core, in the `wp-includes/option.php` file. 
+This error occurs because the `add_option()` function is already defined in WordPress Core, in the `wp-includes/option.php` file. 
 
 By trying to define the same function in your main plugin file, you are causing a naming collision. 
 
@@ -182,6 +182,32 @@ function add_extra_option( $content ) {
 
 Notice that when you need to call the function, or in this case pass the function as a callback to a hook, you use the fully qualified name, which includes the namespace.
 
+If you're calling a namespaced function from within the same namespace, you can use the __NAMESPACE__ constant to reference the current namespace:
+
+```php
+namespace WP_Learn\Extra_Content;
+
+add_action('admin_init', __NAMESPACE__ . '\add_option');
+function add_option() {
+	add_settings_field('extra_option', 'Extra Option', __NAMESPACE__ . '\extra_option_field', 'general');
+	register_setting('general', 'extra_option');
+}
+function extra_option_field() {
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option('extra_option') . '" />';
+}
+
+add_filter( 'the_content', __NAMESPACE__ . '\add_extra_option' );
+function add_extra_option( $content ) {
+	$extra_option = get_option('extra_option');
+	if ( ! $extra_option ) {
+		new WP_Error( 'extra_option', 'Extra content is empty.' );
+		return $content;
+	}
+	$content .= '<p>' . $extra_option . '</p>';
+	return $content;
+}
+```
+
 But notice what happens when you delete the content of the Extra Option field in the General Settings, save the settings, and navigate to a post or page on your site.
 
 This has to do with how PHP resolves classes differently when used inside a namespace.
@@ -200,9 +226,9 @@ If you look at the PHP documentation on [Using namespaces](https://www.php.net/m
 
 > Inside a namespace, when PHP encounters an unqualified name in a class name, function or constant context, it resolves these with different priorities. Class names always resolve to the current namespace name.
 
-What this means is that all the WordPress core functions you're using in this code are being resolved to the global namespace by default, but the use of the `WP_Error` class is being resolved to the current namespace.
+What this means is that all the WordPress Core functions you're using in this code are being resolved to the global namespace by default, but the use of the `WP_Error` class is being resolved to the current namespace.
 
-WP_Error is a WordPress core class, so it exists in the global namespace.
+WP_Error is a WordPress Core class, so it exists in the global namespace.
 
 When using namespaces, you can use a backslash character in front of any class names or function calls to tell PHP the class or function exists in the global namespace.
 
