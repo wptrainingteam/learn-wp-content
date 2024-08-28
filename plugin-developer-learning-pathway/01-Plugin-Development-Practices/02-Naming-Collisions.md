@@ -182,7 +182,7 @@ function add_extra_option( $content ) {
 
 Notice that when you need to call the function, or in this case pass the function as a callback to a hook, you use the fully qualified name, which includes the namespace.
 
-If you're calling a namespaced function from within the same namespace, you can use the __NAMESPACE__ constant to reference the current namespace:
+If you're calling a namespaced function from within the same namespace, you can also use the PHP `__NAMESPACE__` [constant](https://www.php.net/manual/en/language.constants.magic.php#constant.namespace) to reference the current namespace, instead of using the fully qualified name:
 
 ```php
 namespace WP_Learn\Extra_Content;
