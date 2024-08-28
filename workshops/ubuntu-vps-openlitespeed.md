@@ -2,9 +2,10 @@
 
 ## Notes and resources
 
+- https://jonathanbossenger.com/how-to-install-linux-openlitespeed-mysql-php-stack-on-ubuntu/
+- https://www.digitalocean.com/community/tutorials/how-to-install-linux-openlitespeed-mariadb-php-lomp-stack-on-ubuntu-22-04
 - https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu
 - https://www.digitalocean.com/community/tutorials/how-to-install-lamp-stack-on-ubuntu
-- https://www.digitalocean.com/community/tutorials/how-to-install-linux-openlitespeed-mariadb-php-lomp-stack-on-ubuntu-22-04
 - https://docs.openlitespeed.org/config/
 - https://upcloud.com/resources/tutorials/install-wordpress-openlitespeed
 - https://developer.wordpress.org/advanced-administration/multisite/create-network/
@@ -45,10 +46,6 @@ Optional, configure ssh key pair
 ssh-keygen -t ed25519 -C "jonathanbossenger@Jonathans-MBP"
 ```
 
-```
-/Users/jonathanbossenger/.ssh/id_psykrotek
-```
-
 Copy the public key
 
 ```bash
@@ -77,7 +74,7 @@ sudo nano /etc/ssh/sshd_config
 
 Set the following values
 
-```
+```bash
 PermitRootLogin no
 PasswordAuthentication no
 ```
@@ -94,7 +91,7 @@ Restart the ssh service
 sudo service ssh restart
 ```
 
-## Install OpenLiteSpeed
+## Install OpenLiteSpeed, MySQL, and PHP
 
 ```bash
 sudo wget -O - https://repo.litespeed.sh | sudo bash
@@ -117,7 +114,7 @@ sudo ufw status
 
 Access the web server
 
-```
+```bash
 http://your_server_ip:8088
 ```
 
@@ -145,7 +142,7 @@ Secure the MySQL installation
 sudo mysql_secure_installation
 ```
 
-```
+```bash
 Would you like to setup VALIDATE PASSWORD component? Y
 Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG: 2
 Change the password for root ? Y
@@ -172,7 +169,7 @@ Configure OpenLiteSpeed admin
 
 ```bash
 sudo /usr/local/lsws/admin/misc/admpass.sh
-````
+```
 
 Browse to the admin interface
 
@@ -266,6 +263,9 @@ mysql -uroot -p
 
 ```sql
 CREATE DATABASE psykrotek;
+CREATE USER 'psykrotek'@'localhost' IDENTIFIED BY 'psykrotekdbpassword';
+GRANT ALL PRIVILEGES ON psykrotek.* TO 'psykrotek'@'localhost';
+FLUSH PRIVILEGES;
 exit
 ```
 

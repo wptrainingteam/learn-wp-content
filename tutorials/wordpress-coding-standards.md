@@ -37,62 +37,33 @@ While there are many coding standards available for writing code in PHP, JavaScr
 
 This handbook contains sections for the four different languages that WordPress uses, as well as a section on Accessibility standards. For the purposes of this tutorial we're going to focus on the language specific standards.
 
-## HTML and CSS Coding Standards
+## HTML Coding Standards
 
-The pages on [HTML Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/html/) and [CSS Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/css/) in WordPress are not that lengthy, as the WordPress Coding Standards follow the World Wide Web Consortium (or W3C) [standards for HTML and CSS](https://www.w3.org/standards/webdesign/htmlcss).
+The [HTML Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/html/) follow the World Wide Web Consortium (or W3C) [standards for HTML and CSS](https://www.w3.org/standards/webdesign/htmlcss).
 
-These pages also recommend using the [W3C HTML Validator](https://validator.w3.org/) and [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) to check your code for errors.
+Therefore, the page on HTML standards in the WordPress handbook is not that lengthy. It defers to the W3C standards, with some specific notes on self-closing elements, attributes and tags, quotes, and indentation.
 
-To use these tools, you can either copy and paste your code into the validator, or you can provide a URL to a page that contains the code you want to validate.
+These page also recommends using the [W3C HTML Validator](https://validator.w3.org/) to check your HTML code for errors.
 
-For example, here's some invalid HTML code:
+## CSS Coding Standards
 
-```html
-<html>
-<head>
-    <title>WP Learn Coding Standards</title>
-</head>
-<body>
-<h1>WP Learn Coding Standards</h1>
-<p>WP Learn Coding Standards is a plugin that helps you learn WordPress coding standards.<br>
-    It is a work in progress.</p>
-</body>
-</html>
-```
+Like the HTML standards, the [CSS Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/css/) follow the World Wide Web Consortium (or W3C) [standards for HTML and CSS](https://www.w3.org/standards/webdesign/htmlcss).
 
-If you test this in the HTML validator, you can see that you need to add the `<!DOCTYPE html>` tag, and add a lang attribute to the opening html tag.
+The WordPress CSS Standards page does however contain a bit more information around things like CSS structure, selectors, properties, and more.
 
-```html
-<!DOCTYPE html>
-<html lang='en'>
-<head>
-    <title>WP Learn Coding Standards</title>
-</head>
-<body>
-<h1>WP Learn Coding Standards</h1>
-<p>WP Learn Coding Standards is a plugin that helps you learn WordPress coding standards.<br>
-    It is a work in progress.</p>
-</body>
-</html>
-```
+## JavaScript Coding Standards
 
-Once you fix those errors, the validator will tell you that your code is valid. Similarly you can test your CSS code with the CSS validator.
+Unlike the HTML and CSS standards, the page on [JavaScript Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/javascript/) is a more detailed document, so it's hio. 
 
-Notice however that there are additional WordPress specific standards for HTML and CSS that you need to be aware of.
+The JavaScript coding standards where originally adapted from the [jQuery JavaScript Style Guide](https://contribute.jquery.org/style-guide/js/), and have evolved over time, and as WordPress has expanded it's use of JavaScript.
 
-For example, the usage of the compact <br> tag in the HTML does not adhere to the WordPress HTML standards, and the inline CSS does not adhere to the WordPress CSS standards.
+## PHP Coding Standards
 
-## PHP and JavaScript Coding Standards
+Of all the coding standards, the [PHP Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/) are the most detailed of the four language specific standards. 
 
-The PHP and JavaScript coding standards are a bit more involved, for a couple of reasons. Firstly, the W3C was founded in 1994, and so the standards for HTML and CSS have been around for a long time. 
+This is because roughly 80% of WordPress core is written in PHP. (source language breakdown on https://github.com/WordPress/wordpress-develop)
 
-The first version of PHP was only launched in 1994 and JavaScript in 1995, so coding standards for these languages took longer to be standardized. For example. the PHP Framework Interoperability Group (or PHP-FIG) which defines standards for PHP, was only founded in 2009.
 
-When WordPress was defining its coding standards, it adapted some of it's PHP coding standards from the [PEAR coding standards](https://pear.php.net/manual/en/standards.php), and the JavaScript coding standards from the [jQuery JavaScript Style Guide](https://contribute.jquery.org/style-guide/js/).
-
-As you can see, the coding standards pages for PHP and JavaScript are much longer than the HTML and CSS pages, and contain a lot more information. It's quite a lot to take in, and it's not expected that you'll remember all of it.
-
-Fortunately, there are some tools that you can install, that perform automated code [linting](https://en.wikipedia.org/wiki/Lint_(software)) for you and help you to check your code against these standards.
 
 ### PHP CodeSniffer and the WordPress Coding Standards sniffs
 
