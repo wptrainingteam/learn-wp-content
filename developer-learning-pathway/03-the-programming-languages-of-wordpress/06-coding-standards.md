@@ -4,7 +4,7 @@
 
 As you learn to write WordPress code, you might come across the concept of coding standards. 
 
-In this lesson, you'll learn what coding standards area and why they are important, where to find information on each coding standard, and learn about some useful coding standard tools.
+In this lesson, you'll learn what coding standards are and why they are important, where to find information on each coding standard, and learn about some useful coding standard tools.
 
 ## What are Coding Standards?
 
