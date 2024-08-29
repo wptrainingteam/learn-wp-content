@@ -20,54 +20,54 @@ Following the standards means anyone will be able to understand the code and mod
 
 ## Coding Standards for WordPress
 
-While there are many coding standards available for writing code in PHP, JavaScript, CSS or HTML, WordPress has its own set of standards that it uses for its core code, and that it recommends for plugins and themes. 
+While there are many coding standards available for writing code in PHP, JavaScript, CSS, or HTML, WordPress has its own set of standards that it uses for its core code and recommends for plugins and themes. 
 
-If you are planning to write WordPress code, it would be a good idea familiarize yourself with these standards.
+If you plan to write WordPress code, it's a good idea to familiarize yourself with these standards.
 
-While it is not a requirement that your code adheres to these standards by adopting these standards for your WordPress code, it will make your code easier to read and understand for other WordPress developers you might collaborate with.
+Although it's not required that your code adheres to these standards, adopting them will make your WordPress code easier for other developers to read and understand, enhancing collaboration.
 
-The WordPress project maintains a [handbook](https://developer.wordpress.org/coding-standards/) that contains all the information you need to know about these standards.
+The WordPress project maintains a [handbook](https://developer.wordpress.org/coding-standards/) with all the information you need to understand these standards.
 
-This handbook contains sections for the four different languages that WordPress uses, as well as a section on Accessibility standards. 
+This handbook includes sections for the four different languages that WordPress uses, as well as a section on accessibility standards. 
 
-For the purposes of this lesson we're going to focus on the language specific standards for HTML, CSS, JavaScript and PHP.
+For this lesson, we’ll focus on the language-specific standards for HTML, CSS, JavaScript, and PHP.
 
 ## HTML Coding Standards
 
 The [HTML Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/html/) follow the World Wide Web Consortium (or W3C) [standards for HTML and CSS](https://www.w3.org/standards/webdesign/htmlcss).
 
-Therefore, the page on HTML standards in the WordPress handbook is not that lengthy. It mostly defers to the W3C standards, with some specific notes on self-closing elements, attributes and tags, quotes, and indentation.
+The HTML standards page in the WordPress handbook is concise, mostly deferring to the W3C standards, with specific notes on self-closing elements, attributes and tags, quotes, and indentation.
 
 ## CSS Coding Standards
 
 Like the HTML standards, the [CSS Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/css/) also follow the World Wide Web Consortium (or W3C) [standards for HTML and CSS](https://www.w3.org/standards/webdesign/htmlcss).
 
-The WordPress CSS Standards page does however contain a bit more information around things like CSS structure, selectors, properties, and more.
+The WordPress CSS Standards page, however, provides more detailed information on topics like CSS structure, selectors, properties, and more.
 
 ## JavaScript Coding Standards
 
-Unlike the HTML and CSS standards, the page on [JavaScript Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/javascript/) is a more detailed document.
+Unlike the HTML and CSS standards, the page on WordPress [JavaScript Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/javascript/) is more detailed.
 
 The JavaScript coding standards where originally adapted from the [jQuery JavaScript Style Guide](https://contribute.jquery.org/style-guide/js/), and have evolved over time as WordPress has expanded its use of JavaScript.
 
 ## PHP Coding Standards
 
-Of all the coding standards, the [PHP Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/) are the most detailed of the four language specific standards.
+Of all the coding standards, the [PHP Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/) are the most detailed among the WordPress language-specific standards.
 
-This is because roughly 80% of WordPress core is written in PHP. (source language breakdown on https://github.com/WordPress/wordpress-develop)
+This is because approximately 80% of WordPress core is written in PHP. (source language breakdown on https://github.com/WordPress/wordpress-develop)
 
-The WordPress PHP coding standards were originally adapted from the [PEAR coding standards](https://pear.php.net/manual/en/standards.php), but have evolved into a very specific set of standards for writing PHP code in a WordPress context.
+The WordPress PHP coding standards were originally adapted from the [PEAR coding standards](https://pear.php.net/manual/en/standards.php), but have since evolved into a specific set of standards tailored for writing PHP code within the WordPress context..
 
 ### Tools for checking coding standards
 
 For HTML and CSS, you can use the [W3C HTML Validator](https://validator.w3.org/) and the [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) to check your code for errors.
 
-Additionally for CSS, JavaScript, and PHP, there are a number of linters available. A linter is a tool that automatically checks your code against a specific coding standard.
+Additionally, for CSS, JavaScript, and PHP, there are several linters available. A linter is a tool that automatically checks your code against a specific coding standard.
 
-For JavaScript and CSS you can install and configure the [@wordpress/scripts package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/), which includes a linter for [CSS](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-style) and [JavaScript](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-js).
+For JavaScript and CSS, you can install and configure the [@wordpress/scripts package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/), which includes linters for both [CSS](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-style) and [JavaScript](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/#lint-js).
 
 Finally for PHP, you can use the [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer) tool with the [WordPress Coding Standards](https://github.com/WordPress/WordPress-Coding-Standards) sniffs.
 
-Each of these linting tools requires some work to set up, but once you have them installed, you can run them on your codebase to check for errors and style issues.
+Each of these linting tools requires some setup, but once installed, you can run them on your codebase to check for errors and style issues.
 
 You'll learn how to install and use these tools in a future lesson.
