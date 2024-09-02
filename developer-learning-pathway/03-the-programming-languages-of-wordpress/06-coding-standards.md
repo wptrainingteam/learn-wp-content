@@ -34,7 +34,7 @@ For this lesson, we’ll focus on the language-specific standards for HTML, CSS,
 
 ## HTML Coding Standards
 
-The [HTML Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/html/) follow the World Wide Web Consortium (or W3C) [standards for HTML and CSS](https://www.w3.org/standards/webdesign/htmlcss).
+The [HTML Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/html/) follow the World Wide Web Consortium [standards for HTML and CSS](https://www.w3.org/standards/webdesign/htmlcss), also known as the W3C standards for HTML and CSS.
 
 The HTML standards page in the WordPress handbook is concise, mostly deferring to the W3C standards, with specific notes on self-closing elements, attributes and tags, quotes, and indentation.
 
