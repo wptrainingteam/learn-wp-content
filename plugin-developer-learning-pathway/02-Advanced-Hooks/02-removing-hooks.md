@@ -35,7 +35,9 @@ function add_copyright( $content ) {
 
 You receive a support request from a user who is using your plugin, complaining that there is some other text being added to the end of the page content that is not related to your plugin. 
 
-You investigate and find that another plugin is adding some text to the end of the page content based on an Extra Option setting. The plugin user wants only the copyright text to be displayed on pages, but to retain the other plugin’s functionality on all other post types.
+You investigate and find that another plugin is adding some text to the end of the page content based on an Extra Option setting. 
+
+You realize that the other plugin is adding the extra text to the end of the page content using the same filter hook as your plugin.
 
 ```php
 <?php
@@ -67,45 +69,61 @@ function add_extra_option( $content ) {
 }
 ```
 
-You realize that the other plugin is adding the extra text to the end of the page content using the same filter hook as your plugin.
+The plugin user wants only the copyright text to be displayed on pages, but to retain the other plugin’s functionality on all other post types.
 
-In that situation there is little we can do except to somehow remove the incompatible callback function hooked into the filter.
+In that situation there is little you can do except to somehow remove the incompatible callback function hooked into the same filter.
 
 ## Removing a callback from a hook
 
-To remove a callback, we have two functions based on the hook type.
+Fortunately, WordPress allows you to remove a hooked callback, depending on the hook type.
 
-Filter
+### Filter
 
-In the case of a filter, we can use the function remove_filter.
+In the case of a filter, we can use the `remove_filter()` [function](https://developer.wordpress.org/reference/functions/remove_filter/).
 
-To understand further how this works, let's take an example.
+In order to remove a callback hooked into a filter, we call the function, passing the filter name and the callback function name to remove. 
 
-Imagine I got the function my_callback as a callback from the filter my_filter with priority 12.
+```php
+remove_filter( 'the_content', 'WP_Learn\Extra_Content\add_extra_option' );
+```
 
-function my_callback() {
+If the callback function was added with a priority, you can also pass the priority as the third argument.
 
-}
+```php
+remove_filter( 'the_content', 'WP_Learn\Extra_Content\add_extra_option', 10 );
+```
 
-add_filter('my_filter', 'my_callback', 12);
-To remove that callback, I will have to call the function remove_filter with the following arguments:
-remove_filter('my_filter', 'my_callback', 12);
-Action
-In the case of an action, we can use the function remove_action.
-To understand further how this works, let's take an example.
-Imagine I got the function my_callback as a callback from the action my_action with priority 12.
-function my_callback() {
+### Action
 
-}
+In the case of an action, we can use the `remove_action()` [function](https://developer.wordpress.org/reference/functions/remove_action/).
 
-add_filter('my_action', 'my_callback', 12);
-To remove that callback, I will have to call the function remove_action with the following arguments:
-remove_action('my_action', 'my_callback', 12);
-Removing all callbacks for a hook
+As with removing a filter, we call the function, passing the action name and the callback function name to remove.
+
+```php
+remove_action( 'admin_init', 'hooked_callback_function' );
+```
+
+Again, if the callback function was added with a priority, you can also pass the priority as the third argument.
+
+```php
+remove_action( 'admin_init', 'hooked_callback_function', 10 );
+```
+
+## Removing hook callbacks at the right point in execution
+
+## Removing all callbacks for a hook
 First, I need to warn you doing this is not recommended because it can remove important hooks for certain plugins or themes, and it is more recommendable to remove only the callback which creates an incompatibility.
-If you want to remove all callbacks from an action, you can use the method remove_all_actions:
-remove_all_actions('my_action');
-For a filter you can use remove_all_filters:
-remove_all_filters('my_filter');
-It is also important to note that these methods should not be called from inside the hook you want to remove otherwise this would result in an infinite loop.
 
+If you want to remove all callbacks from an action, you can use the method remove_all_actions:
+
+```php
+remove_all_actions('my_action');
+```
+
+For a filter you can use remove_all_filters:
+
+```php
+remove_all_filters('my_filter');
+```
+
+It is also important to note that these methods should not be called from inside the hook you want to remove otherwise this would result in an infinite loop.
