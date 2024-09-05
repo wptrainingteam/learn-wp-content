@@ -38,7 +38,7 @@ function add_option() {
 }
 
 function extra_option_field() {
-	echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option( 'extra_option' ) . '" />';
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . esc_html( get_option( 'extra_option' ) ) . '" />';
 }
 
 add_filter( 'the_content', 'add_extra_option' );
@@ -49,7 +49,7 @@ function add_extra_option( $content ) {
 
 		return $content;
 	}
-	$content .= '<p>' . $extra_option . '</p>';
+	$content .= '<p>' . esc_html( $extra_option ). '</p>';
 
 	return $content;
 }
@@ -129,7 +129,7 @@ function wp_learn_extra_content_add_option() {
 }
 
 function wp_learn_extra_content_extra_option_field() {
-	echo '<input name="wp_learn_extra_content_extra_option" id="wp_learn_extra_content_extra_option" type="text" value="' . get_option( 'wp_learn_extra_content_extra_option' ) . '" />';
+	echo '<input name="wp_learn_extra_content_extra_option" id="wp_learn_extra_content_extra_option" type="text" value="' . esc_html( get_option( 'wp_learn_extra_content_extra_option' ) ) . '" />';
 }
 
 add_filter( 'the_content', 'wp_learn_extra_content_add_extra_option' );
@@ -140,7 +140,7 @@ function wp_learn_extra_content_add_extra_option( $content ) {
 
 		return $content;
 	}
-	$content .= '<p>' . $extra_option . '</p>';
+	$content .= '<p>' . esc_html( $extra_option ) . '</p>';
 
 	return $content;
 }
@@ -165,7 +165,7 @@ function add_option() {
 	register_setting('general', 'extra_option');
 }
 function extra_option_field() {
-	echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option('extra_option') . '" />';
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . esc_html( get_option('extra_option') ) . '" />';
 }
 
 add_filter( 'the_content', 'WP_Learn\Extra_Content\add_extra_option' );
@@ -175,7 +175,7 @@ function add_extra_option( $content ) {
 		new WP_Error( 'extra_option', 'Extra content is empty.' );
 		return $content;
 	}
-	$content .= '<p>' . $extra_option . '</p>';
+	$content .= '<p>' . esc_html( $extra_option ) . '</p>';
 	return $content;
 }
 ```
@@ -193,7 +193,7 @@ function add_option() {
 	register_setting('general', 'extra_option');
 }
 function extra_option_field() {
-	echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option('extra_option') . '" />';
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . esc_html( get_option('extra_option') ) . '" />';
 }
 
 add_filter( 'the_content', __NAMESPACE__ . '\add_extra_option' );
@@ -203,7 +203,7 @@ function add_extra_option( $content ) {
 		new WP_Error( 'extra_option', 'Extra content is empty.' );
 		return $content;
 	}
-	$content .= '<p>' . $extra_option . '</p>';
+	$content .= '<p>' . esc_html( $extra_option ) . '</p>';
 	return $content;
 }
 ```
@@ -241,7 +241,7 @@ function add_option() {
 	register_setting('general', 'extra_option');
 }
 function extra_option_field() {
-	echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option('extra_option') . '" />';
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . esc_html( get_option('extra_option') ) . '" />';
 }
 
 add_filter( 'the_content', 'WP_Learn\Extra_Content\add_extra_option' );
@@ -251,7 +251,7 @@ function add_extra_option( $content ) {
 		new \WP_Error( 'extra_option', 'Extra content is empty.' );
 		return $content;
 	}
-	$content .= '<p>' . $extra_option . '</p>';
+	$content .= '<p>' . esc_html( $extra_option ) . '</p>';
 	return $content;
 }
 ```
@@ -270,7 +270,7 @@ function add_option() {
 }
 
 function extra_option_field() {
-	echo '<input name="extra_option" id="extra_option" type="text" value="' . \get_option( 'extra_option' ) . '" />';
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . \esc_html( \get_option( 'extra_option' ) ) . '" />';
 }
 
 \add_filter( 'the_content', 'WP_Learn\Extra_Content\add_extra_option' );
@@ -281,7 +281,7 @@ function add_extra_option( $content ) {
 
 		return $content;
 	}
-	$content .= '<p>' . $extra_option . '</p>';
+	$content .= '<p>' . \esc_html( $extra_option ) . '</p>';
 
 	return $content;
 }
@@ -301,7 +301,7 @@ function add_option() {
 }
 
 function extra_option_field() {
-	echo '<input name="extra_option" id="extra_option" type="text" value="' . \get_option( 'extra_option' ) . '" />';
+	echo '<input name="extra_option" id="extra_option" type="text" value="' . \esc_html( \get_option( 'extra_option' ) ) . '" />';
 }
 
 function add_extra_option( $content ) {
@@ -311,7 +311,7 @@ function add_extra_option( $content ) {
 
 		return $content;
 	}
-	$content .= '<p>' . $extra_option . '</p>';
+	$content .= '<p>' . \esc_html( $extra_option ) . '</p>';
 
 	return $content;
 }
@@ -347,7 +347,7 @@ class WP_Learn_Extra_Content {
 	}
 
 	public function extra_option_field() {
-		echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option('extra_option') . '" />';
+		echo '<input name="extra_option" id="extra_option" type="text" value="' . esc_html( get_option('extra_option') ) . '" />';
 	}
 	
 	public function add_extra_option( $content ) {
@@ -356,7 +356,7 @@ class WP_Learn_Extra_Content {
 			new WP_Error( 'extra_option', 'Extra content is empty.' );
 			return $content;
 		}
-		$content .= '<p>' . $extra_option . '</p>';
+		$content .= '<p>' . esc_html( $extra_option ). '</p>';
 		return $content;
 	}
 	
@@ -392,7 +392,7 @@ class WP_Learn_Extra_Content {
 	}
 
 	public function extra_option_field() {
-		echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option( 'extra_option' ) . '" />';
+		echo '<input name="extra_option" id="extra_option" type="text" value="' . esc_html( get_option( 'extra_option' ) ) . '" />';
 	}
 
 	public function add_extra_option( $content ) {
@@ -402,7 +402,7 @@ class WP_Learn_Extra_Content {
 
 			return $content;
 		}
-		$content .= '<p>' . $extra_option . '</p>';
+		$content .= '<p>' . esc_html( $extra_option ) . '</p>';
 
 		return $content;
 	}
@@ -437,7 +437,7 @@ class Extra_Content {
 	}
 
 	public function extra_option_field() {
-		echo '<input name="extra_option" id="extra_option" type="text" value="' . get_option( 'extra_option' ) . '" />';
+		echo '<input name="extra_option" id="extra_option" type="text" value="' . esc_html( get_option( 'extra_option' ) ) . '" />';
 	}
 
 	public function add_extra_option( $content ) {
@@ -447,7 +447,7 @@ class Extra_Content {
 
 			return $content;
 		}
-		$content .= '<p>' . $extra_option . '</p>';
+		$content .= '<p>' . esc_html( $extra_option ) . '</p>';
 
 		return $content;
 	}
@@ -494,7 +494,7 @@ class Extra_Content {
 	}
 
 	public function extra_option_field() {
-		echo '<input name="wp_learn_extra_option" id="wp_learn_extra_option" type="text" value="' . get_option( 'wp_learn_extra_option' ) . '" />';
+		echo '<input name="wp_learn_extra_option" id="wp_learn_extra_option" type="text" value="' . esc_html( get_option( 'wp_learn_extra_option' ) ) . '" />';
 	}
 
 	public function add_extra_option( $content ) {
@@ -504,7 +504,7 @@ class Extra_Content {
 
 			return $content;
 		}
-		$content .= '<p>' . $extra_option . '</p>';
+		$content .= '<p>' . esc_html( $extra_option ) . '</p>';
 
 		return $content;
 	}
