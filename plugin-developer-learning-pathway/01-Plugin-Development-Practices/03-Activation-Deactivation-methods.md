@@ -27,7 +27,7 @@ function wp_learn_extra_content_add_option() {
 }
 
 function wp_learn_extra_content_extra_option_field() {
-	echo '<input name="wp_learn_extra_content_extra_option" id="wp_learn_extra_content_extra_option" type="text" value="' . get_option( 'wp_learn_extra_content_extra_option' ) . '" />';
+	echo '<input name="wp_learn_extra_content_extra_option" id="wp_learn_extra_content_extra_option" type="text" value="' . esc_html( get_option( 'wp_learn_extra_content_extra_option' ) ) . '" />';
 }
 
 add_filter( 'the_content', 'wp_learn_extra_content_add_extra_option' );
@@ -38,7 +38,7 @@ function wp_learn_extra_content_add_extra_option( $content ) {
 
 		return $content;
 	}
-	$content .= '<p>' . $extra_option . '</p>';
+	$content .= '<p>' . esc_html( $extra_option ) . '</p>';
 
 	return $content;
 }

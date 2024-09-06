@@ -1,3 +1,5 @@
+<!-- Original script by Cyrille C: https://github.com/CrochetFeve0251 -->
+
 # Introduction
 
 As a plugin developer, you’ll probably try to cover all possible use cases when building your plugin’s functionality.
@@ -119,6 +121,6 @@ do_action('my_hook');
 apply_filters('my_hook', $some_variable)
 ```
 
-Doing this will result in conflicts with callback functions registered to the action or filter, as it means the callback will run both when the action and filter are triggered. 
+Doing this will result in conflicts with callback functions registered to the action or filter, as it means the callback will run both when the action and filter are triggered.
 
 Depending on whether you hook a callback into the action or filter, it may also cause errors in the code execution.
