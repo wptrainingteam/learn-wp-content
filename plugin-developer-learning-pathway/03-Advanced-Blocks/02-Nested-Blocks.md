@@ -114,7 +114,7 @@ You can pass an array of block names to the allowedBlocks property of the compon
 <InnerBlocks allowedBlocks={ [ 'core/heading', 'core/paragraph' ] } />
 ```
 
-Alternatively, you can specify this in the block settings, by using the allowedBlocks property of block metadata, for example via the `block.json` file
+Alternatively, you can specify this in the block settings, by using the allowedBlocks property of block metadata, for example via the `block.json` file. 
 
 ```json
   	"allowedBlocks": [
@@ -124,6 +124,8 @@ Alternatively, you can specify this in the block settings, by using the allowedB
 ```
 
 Either way, by specifying the allowed blocks, you can control which blocks can be added to your block.
+
+Your requirements will determine which method you use, using the allowedBlocks property of the InnerBlocks component is generally used when you want the allowed blocks to be changed dynamically, based on the block's attributes, whereas using the allowedBlocks property of the block metadata is generally used when you want to restrict the allowed blocks to a fixed set of blocks that doesn't change.
 
 ## Block template
 

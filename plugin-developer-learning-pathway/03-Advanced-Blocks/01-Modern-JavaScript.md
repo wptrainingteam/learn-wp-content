@@ -48,7 +48,6 @@ In order to make all off this seamless for the WordPress developer, the WordPres
 
 If you followed the Introduction to Block development module in the Beginner Developer Learning Pathway you've already used all the tools mentioned in this lesson. You installed node.js, wrote some JSX for the Copyright Date block, and used `@wordpress/scripts` to build your block code, which relies on webpack to bundle everything for you. 
 
-
 ## Writing modern JavaScript
 
 If you've been writing JavaScript for a while, you might be familiar with the older syntax and features of the language. This can sometimes mean that switching to using newer features can be a bit of a learning curve.
