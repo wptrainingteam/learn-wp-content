@@ -24,76 +24,148 @@ The InnerBlocks component allows you to create a block that can contain other bl
 
 Let's look at an example of how to use this component.
 
-If you followed the "An introduction to developing WordPress blocks" module in the Beginner Developer Learning Pathway, you'll remember that you created a simple block called the Copyright Date block.
+If you followed the "An introduction to developing WordPress blocks" module in the Beginner Developer Learning Pathway, you will have installed node.js and npm, and used create-block to scaffold a new block plugin.
 
-If you didn't follow that module, you can download the plugin archive for the Copyright Date block from the [Plugin Developer code examples repository](https://github.com/wptrainingteam/plugin-developer/blob/trunk/copyright-date-block.0.1.0.zip), and install it on your local WordPress site.
+If you didn't follow that module, or you don't have the required software installed, please follow the [Setting up your block development environment](https://learn.wordpress.org/lesson/setting-up-your-block-development-environment/) lesson for all the details.
 
-Once you've installed the plugin, navigate to the plugin's directory in your terminal and run `npm install` to install the necessary dependencies.
+Either way, start by opening your terminal, switching to the `plugins` directory of a local WordPress install, and scaffolding a new block plugin using `create-block`.
 
-Now, open the `src/edit.js` file in your code editor, and take a look at the Edit component, specifically the markup rendered by the block.
+```bash
+cd /path/to/wordpress/wp-content/plugins
+npx @wordpress/create-block@latest wp-learn-inner-blocks
+```
+
+This will scaffold your new block code.
+
+Before you continue, the scaffolded block code includes some default background and color styles that you may want to remove. You can do this by updating the `src/style.scss` file, and either commenting out or removing the `background-color` and `color` styles.
+
+```scss
+.wp-block-create-block-wp-learn-inner-blocks {
+  //background-color: #21759b;
+  //color: #fff;
+  padding: 2px;
+}
+```
+
+Now, open the `src/edit.js` file.
+
+To make use of the `InnerBlocks` component, you need to import it from the `@wordpress/block-editor` package. So start by updating the list of components you're importing at the top of the file.
 
 ```js
-<p { ...useBlockProps() }>
+import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+```
+
+Next, update the JSX that the `Edit` component is returning, changing the top level block wrapper element to a `div`, and adding the `InnerBlocks` component after the text.
+
+```js
+<div { ...useBlockProps() }>
 	{ __(
-		'Copyright',
-		'copyright-date-block'
+		'Wp Learn Inner Blocks – hello from the editor!',
+		'wp-learn-inner-blocks'
 	) }
-	© { startingYear } - { currentYear }
-</p>
-```
-
-For this example, let\s update the block to use the InnerBlocks component to allow other blocks to be nested within it.
-
-First you need to import the InnerBlocks component from the @wordpress/block-editor package. 
-
-You can do this by simply adding it to the list of components being imported.
-
-```js
-import { InspectorControls, InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-```
-
-Now, update the Edit component, replacing the translatable string with the InnerBlocks component.
-
-```js
-<p { ...useBlockProps() }>
-	<InnerBlocks />
-	© { startingYear } - { currentYear }
-</p>
+    <InnerBlocks />
+</div>
 ```
 
 If you haven't already, start the development server by running `npm start` in the plugin directory.
 
-Now add the Copyright Date block to a post or page. 
+Then, activate the plugin in the WordPress admin, and add the block to a post or page.
 
-Notice how the block includes the text "Type / to choose a block" and a placeholder for the block that can be added, just above the date.
+Notice how the block includes the text "Type / to choose a block" and a placeholder for the block that can be added, just below the text.
 
-You can now add any number of blocks to the Copyright Date block, and they will be displayed within the block in the editor.
+You can now add any number of blocks to your Inner Blocks block, and they will be displayed in the block in the editor.
 
 Note that you can only use the InnerBlocks component once in a single block.
 
+## Block save
+
+With the InnerBlocks component, you can also define the block's output in the save function.
+
+To do this, you can return InnerBlocks.Content in your save function. This will automatically be replaced with the content of the nested blocks when the blocks save function is called.
+
+Open the `src/save.js` file, and update the `save` function to return the `InnerBlocks.Content` component.
+
+First, again, you need to import the `InnerBlocks` component.
+
+```js
+import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+```
+
+Then, update the `save` function to also use a div and return `InnerBlocks.Content`.
+
+```js
+<div { ...useBlockProps.save() }>
+	{ 'Wp Learn Inner Blocks – hello from the saved content!' }
+	<InnerBlocks.Content />
+</div>
+```
+
+Now, when edit and save the post or page, the content of the nested blocks will be saved and displayed on the front end.
+
 ## Allowing only specific blocks to be nested
 
-By default, the InnerBlocks component allows any block to be nested within it. You can restrict the blocks that can be nested by using the allowedBlocks property of InnerBlocks.
+By default, the InnerBlocks component allows any registered block to be added to it. You can restrict the blocks that can be added by using the allowedBlocks property of InnerBlocks.
 
 This can be done in one of two ways.
 
 You can pass an array of block names to the allowedBlocks property of the component, which will allow only the specified blocks to be nested within InnerBlocks.
 
 ```js
-<InnerBlocks allowedBlocks={ [ 'core/paragraph', 'core/image' ] } />
+<InnerBlocks allowedBlocks={ [ 'core/heading', 'core/paragraph' ] } />
 ```
 
-Alternatively, you can specify this in the block settings, by using the allowedBlocks property of block metadata, for example via the block.json file
+Alternatively, you can specify this in the block settings, by using the allowedBlocks property of block metadata, for example via the `block.json` file
 
 ```json
   	"allowedBlocks": [
-	  "core/paragraph",
-	  "core/heading"
+      "core/heading",
+	  "core/paragraph"
 	],
 ```
 
-## Orientation
+Either way, by specifying the allowed blocks, you can control which blocks can be added to your block.
+
+## Block template
+
+One of the main features of the InnerBlocks component is the ability to define a template for the block.
+
+This allows you to define a set of blocks that are automatically added to the block when it is first inserted into the editor.
+
+To do this, you can use the template property of InnerBlocks, which accepts an array of block items.
+
+Each block items requires the name of the block and an object that specifies the attributes each block.
+
+```js
+<InnerBlocks
+	template={ [
+		[ 'core/image', {} ],
+		[ 'core/heading', { placeholder: 'Book Title' } ],
+		[ 'core/paragraph', { placeholder: 'Summary' } ],
+	] }
+/>
+```
+
+Update your InnerBlocks component to include a template like this, and when you add the block to a post or page, the specified blocks will be automatically added to the block.
 
 ## Setting a default block
 
-## Block template
+It is also possible to set the default block that is added to the InnerBlocks component when a user clicks on the block inserter, by using the defaultBlock and directInsert properties of InnerBlocks.
+
+defaultBlock accepts an object that has a name property (the name of the block) and an attributes property (the attributes of the block). directInsert must be set to true to enable this feature.
+
+```js
+<InnerBlocks
+    defaultBlock={
+        { name: 'core/paragraph', attributes: { content: 'Lorem ipsum...' } }
+    }
+    directInsert={true}
+/>
+```
+
+For example, this will automatically add a paragraph block with the text "Lorem ipsum..." when a user clicks the block inserter.
+
+## More examples and further reading
+
+For more examples of how to use the `InnerBlocks` component, and further reading, see the [Guide on Nested Blocks](https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/nested-blocks-inner-blocks/) in the Block Editor handbook.
+
+You can also find the full documentation for the `InnerBlocks` component in the [package reference for the @wordpress/block-editor](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#innerblocks) which links to the [documenation for the InnerBlocks component](https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/inner-blocks/README.md) in the Gutenberg code repository on GitHub.
