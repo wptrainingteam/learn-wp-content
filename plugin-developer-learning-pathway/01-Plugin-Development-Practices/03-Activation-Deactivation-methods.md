@@ -89,6 +89,14 @@ Let's see this in action. First, take a look in the options table to see that th
 
 Then deactivate the plugin and check the options table again. You will see that the option has been removed.
 
+## Plugin deactivation and data cleanup
+
+It is typically not recommended to remove data when a plugin is deactivated. This is because the user may want to reactivate the plugin at a later date and expect the data to still be there. 
+
+However, this does depend on the individual use case and requirements of the plugin's functionality. 
+
+Generally though, data clean up is be done when the plugin is uninstalled, which you will learn about in the lesson on plugin Uninstall Methods.
+
 ## Different callback implementations
 
 Your plugin's code structure will determine how you use the `register_activation_hook` and `register_deactivation_hook` functions. If your activation and deactivation functions are namespaced, remember to use the fully qualified function name.
