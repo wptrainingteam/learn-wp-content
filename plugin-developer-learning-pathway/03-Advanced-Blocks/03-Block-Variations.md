@@ -1,6 +1,6 @@
 # Block Variations
 
-When planning to create a block, one of the first steps to consider is, does this block need to be built from scratch, or could id simply extend an existing block.
+When planning to create a block, one of the first steps to consider is, does this block need to be built from scratch, or could it simply extend an existing block.
 
 This lesson introduces the concept of block variations, which are a way to create different versions of an existing block.
 
@@ -144,7 +144,7 @@ When you insert the Custom Query block into the Editor, you should see that it d
 
 Block variations are a powerful way to extend existing blocks without having to build entirely new blocks from scratch. Therefore, if you have a need for a block that is similar to an existing block, but with some additional functionality or different default attributes, block variations are a good way to achieve this. 
 
-However, if you're block requirements are significantly different from an existing block, you may need to build a custom block from scratch.
+However, if your block requirements are significantly different from an existing block, you may need to build a custom block from scratch.
 
 ## Further Reading
 

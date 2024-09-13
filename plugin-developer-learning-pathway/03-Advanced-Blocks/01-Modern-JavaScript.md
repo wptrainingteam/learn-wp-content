@@ -28,7 +28,7 @@ For example at the time of creating this lesson, the 15th edition of the standar
 
 ### ECMAScript and browser support
 
-When a new version of ECMAScript is released, it takes time for browsers to implement the new features. This means that you can't always use the latest features in your code and expect it to work in all browsers.
+When a new version of ECMAScript is released, it takes time for browsers to [implement the new features](https://caniuse.com/?search=view%20transitions). This means that you can't always use the latest features in your code and expect it to work in all browsers.
 
 To help with this, tools like [Babel](https://babeljs.io) were created. Babel is a JavaScript compiler that allows you to write code using the latest ECMAScript features, and then compiles it down to an older version of JavaScript that is supported by all browsers.
 
@@ -36,15 +36,15 @@ To help with this, tools like [Babel](https://babeljs.io) were created. Babel is
 
 In addition to the browser, JavaScript can also be run on a server or your computer using [node.js](https://nodejs.org). Node.js is a JavaScript runtime that allows you to run JavaScript code on the server. The development of node.js has allowed JavaScript to be used in a wide variety of applications, one of which is webpack.
 
-Webpack is a module bundler that takes multiple related files and bundles them together into a single file that can be loaded by the browser. Webpack not only supports JavaScript, but also other files like stylesheets and images. Using webpack, you can write JavaScript using the latest ECMAScript features, more modern CSS syntax like Syntactically Awesome Stylesheets (SASS) for your styles, and then bundle them all together into a single .js or .css file that can be loaded by the browser.
+[Webpack](https://webpack.js.org/) is a module bundler that takes multiple related files and bundles them together into a single file that can be loaded by the browser. Webpack not only supports JavaScript, but also other files like stylesheets and images. Using webpack, you can write JavaScript using the latest ECMAScript features, more modern CSS syntax like Syntactically Awesome Stylesheets (SASS) for your styles, and then bundle them all together into a single .js or .css file that can be loaded by the browser.
 
 ### React and JSX
 
-All of these technologies helped create JavaScript frameworks like React, Vue, and Angular. React is a JavaScript library for building user interfaces, and is the library that the Block Editor is built on. React makes use of a syntax extension called JSX, which allows you to write HTML-like code directly in your JavaScript files.
+All of these technologies helped create JavaScript frameworks like [React](https://react.dev/), [Vue](https://vuejs.org/), and [Angular](https://angular.dev/). React is a JavaScript library for building user interfaces, and is the library that the Block Editor is built on. React makes use of a syntax extension called [JSX](https://react.dev/learn/writing-markup-with-jsx), which allows you to write HTML-like code directly in your JavaScript files.
 
 ### @wordpress/scripts
 
-In order to make all off this seamless for the WordPress developer, the WordPress team created the `@wordpress/scripts` package. This package is a collection of reusable scripts tailored for WordPress development. It includes scripts for building blocks, plugins, and themes, as well as scripts for running tests and linting your code.
+In order to make all off this seamless for the WordPress developer, the WordPress team created the `@wordpress/scripts` [package](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-scripts/). This package is a collection of reusable scripts tailored for WordPress development. It includes scripts for building blocks, plugins, and themes, as well as scripts for running tests and linting your code.
 
 If you followed the Introduction to Block development module in the Beginner Developer Learning Pathway you've already used all the tools mentioned in this lesson. You installed node.js, wrote some JSX for the Copyright Date block, and used `@wordpress/scripts` to build your block code, which relies on webpack to bundle everything for you. 
 
@@ -54,19 +54,21 @@ If you've been writing JavaScript for a while, you might be familiar with the ol
 
 Let's look at some of the more common features of modern JavaScript that you might come across when developing blocks for the Block Editor.
 
+You can try these examples out yourself, by pasting the code in the console of your browser's developer tools.
+
 ### Defining variables with `let` and `const`
 
-In the past, JavaScript only had one way to define variables, using the `var` keyword. However, `var` has some quirks that can lead to bugs in your code. For example, `var` variables are function-scoped, which can lead to unexpected behavior if you're not careful.
+In the past, JavaScript only had one way to define variables, using the `var` [keyword](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var). However, `var` has some quirks that can lead to bugs in your code. For example, `var` variables are function-scoped, which can lead to unexpected behavior if you're not careful.
 
-To address these issues, the `let` and `const` keywords were introduced in ECMAScript 6. `let` is similar to `var`, but it is block-scoped, which means that it is only available within the block of code that it is defined in.
+To address these issues, the `let` and `const` keywords were introduced in ES6. `let` is similar to `var`, but it is block-scoped, which means that it is only available within the block of code that it is defined in.
 
 ```js
 let x = 10;
-if (x === 10) {
-    let y = 20;
-    console.log(y); // 20
+if( x === 10 ){
+	let y = 20;
+	console.log( y ); // 20
 }
-console.log(y); // ReferenceError: y is not defined
+console.log( y ); // ReferenceError: y is not defined
 ```
 
 `const` is similar to `let`, but the value of a `const` variable cannot be changed once it has been assigned.
@@ -80,19 +82,19 @@ Both `let` and `const` are preferred over `var` when writing modern JavaScript, 
     
 ### Destructuring assignment
 
-Destructuring assignment is a feature of ECMAScript 6 that allows you to extract values from arrays or objects and assign them to variables in a more concise way.
+[Destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) is a feature of ES6 that allows you to extract values from arrays or objects and assign them to variables in a more concise way.
 
 ```js
-function greet(person) {
-    const { firstName, lastName } = person;
-    console.log(`Hello, ${firstName} ${lastName}`);
-}
+function greet( person ){
+	const { firstName, lastName } = person
+	console.log( `Hello, ${ firstName } ${ lastName }` );
+};
 
 const person = {
-    firstName: 'John',
-    lastName: 'Doe'
+	firstName: 'John',
+	lastName: 'Doe'
 };
-greet(person);
+greet( person );
 ```
 
 In this example, the `greet` function takes a `person` object as an argument, and uses destructuring assignment to extract the `firstName` and `lastName` properties from the object into individual variables.
@@ -100,14 +102,15 @@ In this example, the `greet` function takes a `person` object as an argument, an
 You can take this a step further and destructure the parameters directly in the function signature.
 
 ```js
-function greet({ firstName, lastName }) {
-    console.log(`Hello, ${firstName} ${lastName}`);
-}
-const person = {
-    firstName: 'John',
-    lastName: 'Doe'
+function greet( { firstName, lastName } ){
+	console.log( `Hello, ${ firstName } ${ lastName }` );
 };
-greet(person);
+
+const person = {
+	firstName: 'John',
+	lastName: 'Doe'
+};
+greet( person );
 ```
 
 ### Arrow functions
@@ -115,32 +118,32 @@ greet(person);
 Arrow functions are a more concise way to write functions in JavaScript. They were introduced in ECMAScript 6 and provide a more compact syntax for defining functions.
 
 ```js
-const greet = ({ firstName, lastName }) => {
-    console.log(`Hello, ${firstName} ${lastName}`);
+const greet = ( { firstName, lastName } ) => {
+	console.log( `Hello, ${ firstName } ${ lastName }` );
 };
 
 const person = {
-    firstName: 'John',
-    lastName: 'Doe'
+	firstName: 'John',
+	lastName: 'Doe'
 };
-greet(person);
+greet( person );
 ```
 
 It's also possible to write arrow functions without the parentheses around the parameter if there is only one parameter.
 
 ```js
-const greet = name => {
-    console.log(`Hello, ${name}`);
+	const greet = name => {
+	console.log( `Hello, ${ name }` );
 };
 
-greet('name');
+greet( 'name' );
 ```
 
 If the function body is a single expression, you can even omit the curly braces.
 
 ```js
-const greet = name => console.log(`Hello, ${name}`);
-greet('name');
+	const greet = name => console.log( `Hello, ${ name }` );
+greet( 'name' );
 ```
 
 Arrow functions are commonly used in modern JavaScript, and are especially useful when working with higher-order functions like `map`, `filter`, and `reduce`.
@@ -148,3 +151,5 @@ Arrow functions are commonly used in modern JavaScript, and are especially usefu
 ## Conclusion
 
 For more information on modern JavaScript in WordPress, make sure to read through the [Working with Javascript for the Block Editor ](https://developer.wordpress.org/block-editor/getting-started/fundamentals/javascript-in-the-block-editor/) section of the [Block Editor Handbook](https://developer.wordpress.org/block-editor/). It also includes a links of Additional resources to learn more at the bottom of the page.
+
+Finally, the MDN Web Docs has a detailed [JavaScript Section](https://developer.mozilla.org/en-US/docs/Web/JavaScript) that covers all aspects of the language, from the basics to the more advanced features.

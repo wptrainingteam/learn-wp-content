@@ -1,12 +1,12 @@
-# Developing WordPress Blocks without React or a Build Step
+# Developing WordPress Blocks without React or a build process
 
 One of the benefits of working with WordPress, is that there are often many ways to do the same thing. 
 
-While the block development examples you've seen so far make use of JSX for rendering, and `@wordpress/scripts` for building, you can also develop blocks without using these features.
+While the block development examples you've seen so far make use of JSX for rendering, and `@wordpress/scripts` for building, you can also develop blocks without using these technologies.
 
 However, there are some things to be aware of when developing blocks this way.
 
-In this lesson, you will learn what block without JSX or a build step could look like, and what the pros and cons are of both approaches.
+In this lesson, you will learn what block without JSX or a build process could look like, and what the pros and cons are of both approaches.
 
 ## The Copyright Date Block
 
@@ -16,7 +16,7 @@ If you didn't follow those lessons, you can download the block from the [WordPre
 
 This block was built using the `create-block` tool, uses JSX for the block content in the editor and when the content is saved, as well as `@wordpress/scripts` for building the block.
 
-In the same WordPress Training Team GitHub repository, you can also find a [version of the Copyright Date block](https://github.com/wptrainingteam/plugin-developer/blob/trunk/rps-copyright-date-block.1.0.0.zip) that doesn't use JSX or a build step. 
+In the same WordPress Training Team GitHub repository, you can also find a [version of the Copyright Date block](https://github.com/wptrainingteam/plugin-developer/blob/trunk/rps-copyright-date-block.1.0.0.zip) that doesn't use JSX or a build process. 
 
 Download that file now, install it in your local WordPress site, and activate it.
 
@@ -175,7 +175,7 @@ return createElement(
 
 The main benefit of following the non JSX approach is that you don't need to set up a build configuration. This means not needing to install `node.js` and `npm`, nor worrying about `@wordpress/scripts` and running development servers and build scripts. You can write your code, bundle it in a plugin or upload it to your site, and it just works.
 
-One of the first benefits of using JSX and the build step is that JSX is easier to write. For example, consider creating the `inspectorControls` element above, compared to the JSX version:
+On the other hand, one of the first benefits of using JSX and the build process is that JSX is easier to read and write. For example, consider creating the `inspectorControls` element above, compared to the JSX version:
 
 ```jsx
 <InspectorControls>
@@ -191,8 +191,10 @@ One of the first benefits of using JSX and the build step is that JSX is easier 
 </InspectorControls>
 ```
 
-Another benefit is not having to worry about manging dependencies. When using JSX, you can import the WordPress dependencies you need, and the build step will take care of updating your index.asset.php file. When not using JSX, you need to manually update the index.asset.php file with the specific dependencies you need.
+Another benefit is not having to worry about manging dependencies. When using the build process, you can import the WordPress dependencies you need, and the build process will take care of updating your `index.asset.php` file. When not using the build process, you need to manually update the `index.asset.php` file with the specific dependencies you need.
 
 ## Conclusion
 
-Developing blocks without JSX or a build step is a valid way to create blocks for WordPress. It's a great way to get started with block development without needing any other software, and can be a good way to learn how blocks work. However, if you're planning on developing more complex blocks, you may find it easier to get to grips with JSX and the build step.
+Developing blocks without JSX or a build process is a valid way to create blocks for WordPress. It's a great way to get started with block development without needing any other software, and can be a good way to learn how blocks work. 
+
+However, if you're planning on developing more complex blocks, you may find it easier to get to grips with JSX and the software required for the build process.

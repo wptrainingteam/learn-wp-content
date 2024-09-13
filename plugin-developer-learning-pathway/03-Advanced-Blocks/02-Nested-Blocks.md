@@ -18,13 +18,13 @@ These blocks are all nested within the Comments block, and are displayed in the 
 
 ## Creating nested blocks
 
-Nested blocks are created by using the InnerBlocks component of the @wordpress/block-editor package.
+Nested blocks are created by using the `InnerBlocks` [component](https://github.com/WordPress/gutenberg/blob/33e2fadeebe32a64a946106488120b6f559d3deb/packages/block-editor/src/components/inner-blocks/README.md) of the `@wordpress/block-editor` package.
 
-The InnerBlocks component allows you to create a block that can contain other blocks.
+The `InnerBlocks` component allows you to create a block that can contain other blocks.
 
 Let's look at an example of how to use this component.
 
-If you followed the "An introduction to developing WordPress blocks" module in the Beginner Developer Learning Pathway, you will have installed node.js and npm, and used create-block to scaffold a new block plugin.
+If you followed the "An introduction to developing WordPress blocks" module in the Beginner Developer Learning Pathway, you will have installed `node.js` and `npm`, and used `create-block` to scaffold a new block plugin.
 
 If you didn't follow that module, or you don't have the required software installed, please follow the [Setting up your block development environment](https://learn.wordpress.org/lesson/setting-up-your-block-development-environment/) lesson for all the details.
 
@@ -73,15 +73,13 @@ Then, activate the plugin in the WordPress admin, and add the block to a post or
 
 Notice how the block includes the text "Type / to choose a block" and a placeholder for the block that can be added, just below the text.
 
-You can now add any number of blocks to your Inner Blocks block, and they will be displayed in the block in the editor.
-
-Note that you can only use the InnerBlocks component once in a single block.
+You can now add any number of blocks to your `InnerBlocks` block, and they will be displayed in the block in the editor.
 
 ## Block save
 
-With the InnerBlocks component, you can also define the block's output in the save function.
+With the `InnerBlocks` component, you can also define the block's output in the save function.
 
-To do this, you can return InnerBlocks.Content in your save function. This will automatically be replaced with the content of the nested blocks when the blocks save function is called.
+To do this, you can return `InnerBlocks.Content` in your save function. This will automatically be replaced with the content of the nested blocks when the blocks save function is called.
 
 Open the `src/save.js` file, and update the `save` function to return the `InnerBlocks.Content` component.
 
@@ -104,17 +102,17 @@ Now, when edit and save the post or page, the content of the nested blocks will 
 
 ## Allowing only specific blocks to be nested
 
-By default, the InnerBlocks component allows any registered block to be added to it. You can restrict the blocks that can be added by using the allowedBlocks property of InnerBlocks.
+By default, the `InnerBlocks` component allows any registered block to be added to it. You can restrict the blocks that can be added by using the `allowedBlock`s property of `InnerBlocks`.
 
 This can be done in one of two ways.
 
-You can pass an array of block names to the allowedBlocks property of the component, which will allow only the specified blocks to be nested within InnerBlocks.
+You can pass an array of block names to the `allowedBlocks` property of the component, which will allow only the specified blocks to be nested within `InnerBlocks`.
 
 ```js
 <InnerBlocks allowedBlocks={ [ 'core/heading', 'core/paragraph' ] } />
 ```
 
-Alternatively, you can specify this in the block settings, by using the allowedBlocks property of block metadata, for example via the `block.json` file. 
+Alternatively, you can specify this in the block settings, by using the `allowedBlocks` property of block metadata, for example via the `block.json` file. 
 
 ```json
   	"allowedBlocks": [
@@ -125,17 +123,23 @@ Alternatively, you can specify this in the block settings, by using the allowedB
 
 Either way, by specifying the allowed blocks, you can control which blocks can be added to your block.
 
-Your requirements will determine which method you use, using the allowedBlocks property of the InnerBlocks component is generally used when you want the allowed blocks to be changed dynamically, based on the block's attributes, whereas using the allowedBlocks property of the block metadata is generally used when you want to restrict the allowed blocks to a fixed set of blocks that doesn't change.
+Your requirements will determine which method you use.
+
+Using the `allowedBlocks` property of the `InnerBlocks` component is generally used when you want the allowed blocks to be changed dynamically, based on the block's attributes.
+
+Using the `allowedBlocks` property of the block metadata is generally used when you want to restrict the allowed blocks to a fixed set of blocks that doesn't change.
 
 ## Block template
 
-One of the main features of the InnerBlocks component is the ability to define a template for the block.
+One of the main features of the `InnerBlocks` component is the ability to define a template for the block.
 
 This allows you to define a set of blocks that are automatically added to the block when it is first inserted into the editor.
 
-To do this, you can use the template property of InnerBlocks, which accepts an array of block items.
+To do this, you can use the template property of `InnerBlocks`, which accepts an array of block items.
 
 Each block items requires the name of the block and an object that specifies the attributes each block.
+
+For example, to define a template that includes an image, heading, and paragraph block, you can use the following code:
 
 ```js
 <InnerBlocks
@@ -147,13 +151,13 @@ Each block items requires the name of the block and an object that specifies the
 />
 ```
 
-Update your InnerBlocks component to include a template like this, and when you add the block to a post or page, the specified blocks will be automatically added to the block.
+Update your `InnerBlocks` component to include this template, and when you add the block to a post or page, the specified blocks will be automatically added to the block.
 
 ## Setting a default block
 
-It is also possible to set the default block that is added to the InnerBlocks component when a user clicks on the block inserter, by using the defaultBlock and directInsert properties of InnerBlocks.
+It is also possible to set the default block that is added to the `InnerBlocks` component when a user clicks on the block inserter, by using the `defaultBlock` and `directInsert` properties of `InnerBlocks`.
 
-defaultBlock accepts an object that has a name property (the name of the block) and an attributes property (the attributes of the block). directInsert must be set to true to enable this feature.
+`defaultBlock` accepts an object that has a `name` property (the name of the block) and an `attributes` property (the attributes of the block). `directInsert` must be set to true to enable this feature.
 
 ```js
 <InnerBlocks
