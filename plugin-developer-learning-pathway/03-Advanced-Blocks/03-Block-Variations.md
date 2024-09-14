@@ -1,6 +1,6 @@
 # Block Variations
 
-When planning to create a block, one of the first steps to consider is, does this block need to be built from scratch, or could it simply extend an existing block.
+When planning to create a block, one of the things to consider is whether the block needs to be built from scratch, or could it simply be an extension of an existing block.
 
 This lesson introduces the concept of block variations, which are a way to create different versions of an existing block.
 
@@ -24,13 +24,19 @@ This hook works in the same way as the `wp_enqueue_scripts` you might have learn
 
 The difference is that `enqueue_block_editor_assets` is specifically for enqueuing assets when the block editor loads.
 
-To start, create a directory in your `wp-content/plugins` directory to store the block variation code.
+Then you're going to use the `registerBlockVariation` [function](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-blocks/#registerblockvariation) of the @wordpress/blocks package to register the block variation.
+
+## Building the Custom Heading Block Variation
+
+Start by creating a directory in your `wp-content/plugins` directory to store the block variation code.
 
 ```bash
-mkdir -p wp-content/plugins/wp-learn-block-variation
+mkdir -p wp-content/plugins/wp-learn-block-variations
 ```
 
-Then, create a new plugin by creating the main plugin PHP file in the plugin directory and adding the following code:
+Create the main plugin PHP file, `wp-learn-block-variations.php` in the newly created directory.
+
+Then add the following code to set up the plugin header, and make sure the plugin code only runs in the WordPress environment:
 
 ```php
 <?php
@@ -58,14 +64,17 @@ add_action( 'enqueue_block_editor_assets', 'wp_learn_block_variations_editor_ass
 function wp_learn_block_variations_editor_assets() {
 	wp_enqueue_script(
 		'wp-learn-block-variations-editor-script',
-		plugin_dir_url( __FILE__ ) . 'block-variation.js',
+		plugin_dir_url( __FILE__ ) . 'block-variations.js',
+		array(
+		    'wp-blocks',
+        ),
 	);
 }
 ```
 
-You will notice you don't need to specify the `wp_enqueue_script` dependencies to include any block editor elements, because you're using the correct action hook, in this case `enqueue_block_editor_assets`.
+Notice that you need to specify the `wp-blocks` dependency to make sure your block variation code only loads once the @wordpress/blocks package is available. This is because you're going to use the `wp.blocks.registerBlockVariation` function to register the block variation.
 
-Now, create a `block-variation.js` file in the plugin directory and add the following code:
+Now, create a `block-variations.js` file in the plugin directory and add the following code:
 
 ```js
 (function(){
@@ -79,11 +88,13 @@ Now, create a `block-variation.js` file in the plugin directory and add the foll
 })()
 ```
 
-This code registers a block variation of the core Heading block. It sets the `name` to `wp-learn-block-variations/custom-heading`, the `title` to `Custom Heading`, and the `attributes` to set the content of the heading to `Custom Heading`.
+This code registers a block variation of the core Heading block. It sets the `name` to `wp-learn-block-variations/custom-heading`, the `title` to `Custom Heading`, and in the `attributes` object, sets the content of the heading to `Custom Heading`.
 
-Now, activate the plugin, edit a post or page, and insert the Custom Heading block, either by clicking the block inserter icon and searching for custom or typing `/custom` in the Editor.
+Now you can activate the plugin. 
 
-When you insert the Custom Heading block into the Editor, you should see that it defaults to having a value of `Custom Heading`.
+Edit a post or page, and insert the Custom Heading block, either by clicking the block inserter icon and searching for custom or typing `/custom` in the Editor.
+
+When you insert the Custom Heading block into the Editor, you should see that it defaults to having a value of `Custom Heading` but it retains all the other core heading block attributes and functionality.
 
 ## Creating a Block Variation with InnerBlocks
 
@@ -97,10 +108,10 @@ To create a block variation with InnerBlocks, you can use the same `wp.blocks.re
 
 Let's add a block variation of the core Query Loop block that includes a paragraph block after the post-template, with some default content.
 
-Just under the Custom Header block variation code in the `block-variation.js` file, add the following code:
+Just under the Custom Header block variation code in the `block-variations.js` file, add the following code:
 
 ```js
-	registerBlockVariation( 'core/query', {
+	wp.blocks.registerBlockVariation( 'core/query', {
 		name: 'wp-learn-block-variations/custom-query',
 		title: 'Custom Query',
 		innerBlocks: [

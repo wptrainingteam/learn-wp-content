@@ -18,13 +18,13 @@ Before we continue, let's clarify some terms that are often used interchangeably
 
 Over time, the term JavaScript has become a bit of an umbrella term that encompasses the language itself, and the browser APIs that are available to it.
 
-The core language of JavaScript is standardized as a language named ECMAScript. These standards are developed by the [ECMA TC39 committee](https://tc39.es/), which collaborates with the JavaScript community to maintain and evolve the definition of JavaScript. 
+The core language of JavaScript is standardized as a something named ECMAScript. These standards are developed by the [ECMA TC39 committee](https://tc39.es/), which collaborates with the JavaScript community to maintain and evolve the definition of JavaScript. 
 
 ECMAScript is the term for the language standard, but ECMAScript and JavaScript can be used interchangeably.
 
 The [ECMAScript standard](https://ecma-international.org/publications-and-standards/standards/ecma-262/) is updated with a new edition every year, with new features and syntax being added. These new features are proposed by the TC39 committee. 
 
-For example at the time of creating this lesson, the 15th edition of the standard was released in June 2024, and is more commonly referred to as ECMAScript15 or ES15. The next version will be ECMAScript16 or ES16, but it is sometimes also referred to as ESNext. Essentially ESNext refers to whatever the next version of ECMAScript is.
+For example at the time of creating this lesson, the 15th edition of the standard was released in June 2024, and is more commonly referred to as ECMAScript15 or ES15, but can also be referred to as ES2024, after the year it was released. The next version will be ECMAScript16 or ES16, but newer versions are also sometimes also referred to as ESNext. Essentially ESNext refers to whatever the next version of ECMAScript is. You might also see the term's like ES2015+ which refers to all versions of ECMAScript from the 2015 edition onwards.
 
 ### ECMAScript and browser support
 
@@ -58,7 +58,7 @@ You can try these examples out yourself, by pasting the code in the console of y
 
 ### Defining variables with `let` and `const`
 
-In the past, JavaScript only had one way to define variables, using the `var` [keyword](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var). However, `var` has some quirks that can lead to bugs in your code. For example, `var` variables are function-scoped, which can lead to unexpected behavior if you're not careful.
+In the past, JavaScript only had one way to define variables, using the `var` [keyword](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var). However, `var` has some quirks that can lead to bugs in your code. For example, `var` variables can be function-scoped or globally scoped, which can lead to unexpected behavior if you're not careful.
 
 To address these issues, the `let` and `const` keywords were introduced in ES6. `let` is similar to `var`, but it is block-scoped, which means that it is only available within the block of code that it is defined in.
 
@@ -115,7 +115,9 @@ greet( person );
 
 ### Arrow functions
 
-Arrow functions are a more concise way to write functions in JavaScript. They were introduced in ECMAScript 6 and provide a more compact syntax for defining functions.
+[Arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) are a more concise way to write functions in JavaScript. 
+
+They were introduced in ES6 6 and provide a more compact syntax for defining functions.
 
 ```js
 const greet = ( { firstName, lastName } ) => {
@@ -132,7 +134,7 @@ greet( person );
 It's also possible to write arrow functions without the parentheses around the parameter if there is only one parameter.
 
 ```js
-	const greet = name => {
+const greet = name => {
 	console.log( `Hello, ${ name }` );
 };
 
@@ -142,7 +144,7 @@ greet( 'name' );
 If the function body is a single expression, you can even omit the curly braces.
 
 ```js
-	const greet = name => console.log( `Hello, ${ name }` );
+const greet = name => console.log( `Hello, ${ name }` );
 greet( 'name' );
 ```
 

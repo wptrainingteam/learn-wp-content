@@ -1,4 +1,4 @@
-# Developing WordPress Blocks without React or a build process
+# Developing WordPress Blocks without JSX or a build process
 
 One of the benefits of working with WordPress, is that there are often many ways to do the same thing. 
 
@@ -24,7 +24,7 @@ Then add the block to a post or page, and you'll see it has all the same functio
 
 ## Comparing the JSX and non-JSX versions
 
-Let's open the non JSX version of the block in your code editor, and compare it to the JSX version.
+Open the non JSX version of the block in your code editor, and compare it to the JSX version.
 
 The first thing you'll notice is that the non JSX version has a different file structure. This is because you don't need both a `src` and `build` folder, all the block code can be located in a single location.
 
@@ -159,7 +159,7 @@ const inspectorControls = createElement(
 );
 ```
 
-Last but not least, the final block output is created and returned using `createElement`, passing in the wrapper element, the `useBlockProps()` hook, which will return the properties as an object, and all the other elements that make up the structure and functionality of the block.
+Last but not least, the final block output is created and returned using `createElement`, passing in the wrapper tag, the `useBlockProps()` hook, which will return the properties as an object, and all the other elements that make up the structure and functionality of the block.
 
 ```js
 return createElement(
@@ -175,7 +175,7 @@ return createElement(
 
 The main benefit of following the non JSX approach is that you don't need to set up a build configuration. This means not needing to install `node.js` and `npm`, nor worrying about `@wordpress/scripts` and running development servers and build scripts. You can write your code, bundle it in a plugin or upload it to your site, and it just works.
 
-On the other hand, one of the first benefits of using JSX and the build process is that JSX is easier to read and write. For example, consider creating the `inspectorControls` element above, compared to the JSX version:
+On the other hand, one of the first benefits of using JSX and the build process is that JSX is easier to read and write. For example, consider all the code needed to create the `inspectorControls` element, compared to the JSX version:
 
 ```jsx
 <InspectorControls>

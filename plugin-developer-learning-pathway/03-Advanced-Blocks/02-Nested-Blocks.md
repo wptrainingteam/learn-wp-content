@@ -67,11 +67,16 @@ Next, update the JSX that the `Edit` component is returning, changing the top le
 </div>
 ```
 
-If you haven't already, start the development server by running `npm start` in the plugin directory.
+If you haven't already, start the development server by running `npm start` from the terminal in the `wp-learn-inner-blocks` plugin directory.
+
+```js
+cd wp-learn-inner-blocks
+npm start
+```
 
 Then, activate the plugin in the WordPress admin, and add the block to a post or page.
 
-Notice how the block includes the text "Type / to choose a block" and a placeholder for the block that can be added, just below the text.
+Notice how this block includes the text "Type / to choose a block" and a placeholder for a block that can be added, just below the text.
 
 You can now add any number of blocks to your `InnerBlocks` block, and they will be displayed in the block in the editor.
 
@@ -151,7 +156,7 @@ For example, to define a template that includes an image, heading, and paragraph
 />
 ```
 
-Update your `InnerBlocks` component to include this template, and when you add the block to a post or page, the specified blocks will be automatically added to the block.
+Update your `InnerBlocks` component to include this template, and when you add the block to a post or page, the specified blocks will be automatically added to your block.
 
 ## Setting a default block
 
