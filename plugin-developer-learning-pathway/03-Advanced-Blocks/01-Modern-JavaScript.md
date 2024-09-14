@@ -34,7 +34,7 @@ To help with this, tools like [Babel](https://babeljs.io) were created. Babel is
 
 ### Enter node.js and webpack
 
-In addition to the browser, JavaScript can also be run on a server or your computer using [node.js](https://nodejs.org). Node.js is a JavaScript runtime that allows you to run JavaScript code on the server. The development of node.js has allowed JavaScript to be used in a wide variety of applications, one of which is webpack.
+In addition to the browser, JavaScript can also be run on a server or your computer using [node.js](https://nodejs.org). Node.js is a JavaScript runtime that allows you to run JavaScript code on a computer. The development of node.js has allowed JavaScript to be used in a wide variety of applications, one of which is webpack.
 
 [Webpack](https://webpack.js.org/) is a module bundler that takes multiple related files and bundles them together into a single file that can be loaded by the browser. Webpack not only supports JavaScript, but also other files like stylesheets and images. Using webpack, you can write JavaScript using the latest ECMAScript features, more modern CSS syntax like Syntactically Awesome Stylesheets (SASS) for your styles, and then bundle them all together into a single .js or .css file that can be loaded by the browser.
 
