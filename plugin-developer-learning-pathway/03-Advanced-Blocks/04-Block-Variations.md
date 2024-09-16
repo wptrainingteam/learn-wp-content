@@ -153,7 +153,7 @@ When you insert the Custom Query block into the Editor, you should see that it d
 
 ## Block variation vs Custom Block
 
-Block variations are a powerful way to extend existing blocks without having to build entirely new blocks from scratch. Therefore, if you have a need for a block that is similar to an existing block, but with some additional functionality or different default attributes, block variations are a good way to achieve this. 
+Block variations are a powerful way to extend existing blocks without having to build entirely new blocks from scratch. Therefore, if you have a need for a block that is similar to an existing block, but with additional functionality or different default attributes, block variations are a good way to achieve this. 
 
 However, if your block requirements are significantly different from an existing block, you may need to build a custom block from scratch.
 
