@@ -42,7 +42,7 @@ function my_plugin_update_db_check() {
 
 register_uninstall_hook( __FILE__, 'my_plugin_delete_table' );
 function my_plugin_delete_table() {
-    global $wpdb;
-    $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}my_plugin_table" );
-    delete_option( 'my_plugin_db_version' );
+	global $wpdb;
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}my_plugin_table" );
+	delete_option( 'my_plugin_db_version' );
 }
