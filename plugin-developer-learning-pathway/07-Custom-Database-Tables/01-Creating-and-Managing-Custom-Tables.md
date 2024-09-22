@@ -1,4 +1,4 @@
-# Managing Custom Tables
+# Creating and Managing Custom Tables
 
 Welcome to Module 7 of the Intermediate Plugin Developer learning pathway. In this lesson, we will explore how to create, manage, and delete custom database tables in WordPress. As an intermediate developer, this skill is crucial for extending WordPress functionality beyond standard post types and taxonomies.
 
