@@ -1,0 +1,6 @@
+{
+    "core": "WordPress/WordPress#6.6.2",
+    "phpVersion": "8.2",
+    "port": 80,
+    "plugins": [ "." ]
+}
