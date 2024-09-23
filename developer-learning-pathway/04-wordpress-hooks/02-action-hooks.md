@@ -74,7 +74,7 @@ function wp_learn_theme_setup() {
 }
 ````
 
-With this code in your active them, if you create a new Post now in your WordPress dashboard, you’ll see the Post Formats select box appear in the post editor, and you can select the required Post Format. 
+With this code in your active theme, if you create a new Post now in your WordPress dashboard, you’ll see the Post Formats select box appear in the post editor, and you can select the required Post Format. 
 
 Here you can see the two post formats you enabled in your callback function.
 
