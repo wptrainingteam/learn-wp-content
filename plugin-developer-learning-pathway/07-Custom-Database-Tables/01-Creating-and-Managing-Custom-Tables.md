@@ -16,11 +16,25 @@ Even still, there are times when creating a custom table can be more effective. 
 
 Now that you can identify when custom database tables are useful, let's learn how to add one!
 
+## The `wpdb` Class in PHP
+
+To start, we need to first establish a connection to the WordPress database. Thankfully, WordPress already does this automatically by using the `wpdb` class.
+
+The `wpdb` class is used to manage a database connection while also providing helpful methods to perform queries and retrieve data from the connected database in a structured way. In PHP, WordPress automatically sets the `$wpdb` global variable to an instance of this class by using the `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` constants defined in your `wp-config.php` file.
+
+You can access it in PHP like this:
+
+```php
+global $wpdb;
+```
+
+The `$wpdb` instance also contains crucial information about the WordPress database which we'll need to properly create and manage our own custom tables. Let's see how as we create our first one.
+
 ## Creating a Custom Table
 
 To start, register an activation hook for your plugin to create the custom table. Using this hook ensures the table immediately exists once your plugin is activated so that any following code can safely query against it.
 
-When choosing a name for the custom table, be sure to use the configured table prefix by prepending the table name with the `$wpdb->prefix` variable.
+When choosing a name for the custom table, be sure to use the configured table prefix by prepending the table name with the `$wpdb->prefix` variable. Also, use `$wpdb->get_charset_collate()` to ensure the custom table's collation matches the rest of the tables in WordPress for optimum data integrity, compatibility, and query performance.
 
 To create a custom table, use the `dbDelta()` function included in WordPress. This function is powerful because it can handle both table creation and future updates to the table's structure.
 
@@ -131,4 +145,4 @@ function my_plugin_delete_table() {
 
 ## Conclusion
 
-Now that we know how to create, update, and delete a custom table in the WordPress database, let's see how to read and write data within the table. We'll cover these concepts in the next lesson, "Interacting with custom tables".
+Now that we know how to create, update, and delete a custom table in the WordPress database, let's see how to read and write data within the table. We'll cover these concepts in the next lesson, "Interacting with Custom Tables".
