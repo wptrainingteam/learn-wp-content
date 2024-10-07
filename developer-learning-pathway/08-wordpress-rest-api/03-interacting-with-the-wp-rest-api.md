@@ -52,7 +52,7 @@ If you intend building something more complex, like a mobile app that connects t
 
 There are a number of tools available to test REST API requests. 
 
-For example, if you use PhpStorm, it has a built-in [HTTP client](https://www.jetbrains.com/help/phpstorm/http-client-in-product-code-editor.html), and if you use VS Code, there are extensions like https://marketplace.visualstudio.com/items?itemName=rohinivsenthil.postcode. There are also standalone tools like [Hoppscotch](https://hoppscotch.io/), and [Postman](https://www.postman.com/). You can even test your REST API endpoints using the [curl command](https://curl.se/) in your terminal.
+For example, if you use PhpStorm, it has a built-in [HTTP client](https://www.jetbrains.com/help/phpstorm/http-client-in-product-code-editor.html), and if you use VS Code, there are extensions like [Postcode](https://marketplace.visualstudio.com/items?itemName=rohinivsenthil.postcode). There are also standalone tools like [Hoppscotch](https://hoppscotch.io/), and [Postman](https://www.postman.com/). You can even test your REST API endpoints using the [curl command](https://curl.se/) in your terminal.
 
 For the purposes of this lesson, you'll learn how to use Postman to test some REST API requests.
 
