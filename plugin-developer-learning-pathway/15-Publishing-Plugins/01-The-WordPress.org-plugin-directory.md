@@ -6,7 +6,7 @@ When the first version of your plugin is ready, there's a good chance you're goi
 
 One of official ways to do this is to submit your plugin to the WordPress.org plugins directory.
 
-Let's dive into what the WordPress.org theme directory is, why you might consider publishing your theme there, and learn about the process of submitting your theme to the theme directory.
+Let's dive into what the WordPress.org plugin directory is, why you might consider publishing your theme there, and learn about the process of submitting your theme to the theme directory.
 
 ## What is the WordPress.org plugin directory?
 
