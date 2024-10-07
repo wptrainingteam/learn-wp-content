@@ -30,7 +30,7 @@ The plugin directory has built in support forums, where you can provide support 
 
 **Plugin preview**:
 
-The plugin directory supports a live preview of your plugin, so users can see what it looks like before installing it.
+The plugin directory supports a live preview of your plugin's functionality, so users can see what how it works on a WordPress site before installing it.
 
 **Plugin statistics**:
 

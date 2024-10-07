@@ -42,6 +42,8 @@ npm start
 
 Last but not least, activate the plugin in the WordPress admin area.
 
+The two packages we will be using to fetch data are `@wordpress/api-fetch` and `@wordpress/data`.
+
 ## Fetching data with `@wordpress/api-fetch`
 
 Let's first look at using the `@wordpress/api-fetch` package. Open the `src/edit.js` file in your code editor.
@@ -79,7 +81,7 @@ apiFetch( { path: '/wp/v2/posts' } )
     } );
 ```
 
-This will log the list of posts to the browser console when the block is added to the editor.
+With the plugin activated this will log the list of posts to the browser console when the block is added to the editor.
 
 Because the code needs to wait for the Promise to be resolved, in order to add the list of users to the JSX returned by your block, you would need to implement some React hooks.
 
@@ -134,11 +136,15 @@ export default function Edit() {
 }
 ```
 
-Here, the `useState` [hook](https://react.dev/reference/react/useState) is used to create a state variable called `posts` and a function called `setPosts` to update the `posts` state variable.
+Here, the `useState` [hook](https://react.dev/reference/react/useState) hook is used to create a state variable called `posts` and a function called `setPosts` to update the `posts` state variable.
 
-Then, the `useEffect` [hook](https://react.dev/reference/react/useEffect) is used to fetch a list of posts from the REST API when the block is added to the editor. Once the users are fetched, the `setPosts` function is called to update the `posts` state variable.
+Then, the `useEffect` [hook](https://react.dev/reference/react/useEffect) hook is used to fetch a list of posts from the REST API when the block is added to the editor. 
 
-Finally, the `posts` state variable is mapped to an unordered list of users, which is returned by the block.    
+Once the posts are fetched, the `setPosts` function is called to update the `posts` state variable.
+
+If the `posts` state variable is empty, a loading message is displayed in the block. 
+
+The `posts` state variable is mapped to an unordered list of posts, which is returned by the block.    
 
 By using these two hooks, when the apiFetch Promise is resolved, the `users` state variable inside the unordered list is updated with the list of users and displayed in the block.
 
@@ -155,8 +161,7 @@ import { useSelect } from '@wordpress/data';
 import { store as coreDataStore } from '@wordpress/core-data';
 ```
 
-Then you can use the `useSelect` the `coreDataStore`, and the `getEntityRecords` selector.
-
+Then you can use the `useSelect` hook, the `coreDataStore`, and the `getEntityRecords` selector to fetch the data you need, and return it to your block.
 
 ```js
 export default function Edit() {

@@ -60,7 +60,7 @@ This filter hook allows you to modify the block settings object before the block
 
 To register a callback function to the `blocks.registerBlockType` filter, you use the `addFilter` function from the `@wordpress/hooks` package.
 
-Let's create a plugin to enqueue a JavaScript file, to register the filter. If you've already completed the Block Variations lesson, the code is very similar.
+Let's create a plugin to enqueue a JavaScript file, to register the filter. 
 
 Start by creating a directory in your `wp-content/plugins` directory to store the block hooks code.
 
@@ -106,7 +106,7 @@ function wp_learn_block_hooks_editor_assets() {
 }
 ```
 
-Notice that you need to specify the `wp-hooks` dependency to make sure your block variation code only loads once the `@wordpress/hooks` package is available. This is because you're going to use the `addFilter` function from the `@wordpress/hooks` package in the JavaScript file.
+Notice that you need to specify the `wp-hooks` dependency to make sure your block hooks code only loads once the `@wordpress/hooks` package is available. This is because you're going to use the `addFilter` function from the `@wordpress/hooks` package in the JavaScript file.
 
 Now, create a `block-hooks.js` file in the plugin directory and start with an IIFE (Immediately Invoked Function Expression) to prevent any variables from this code leaking into the global scope:
 
@@ -128,7 +128,7 @@ Next, use the `addFilter` function to register a callback on the `blocks.registe
 } )()
 ```
 
-Notice how you specify a unique namespac, before the callback function `addListBlockDescription`. The namespace is defined by the developer, and should be unique to your plugin.
+Notice how you specify a unique namespace, before the callback function `addListBlockDescription`. The namespace is defined by the developer, and should be unique to your plugin.
 
 Now, let's create the `addListBlockDescription` callback function, to do something:
 
@@ -151,7 +151,7 @@ To test this, don't activate the plugin yet, but instead, edit a post or page, a
 
 If you hover over the list block, you should see the description "Create a bulleted or numbered list" displayed.
 
-Now, activate the plugin
+Now, activate the plugin.
 
 With the plugin activated, you should see the list block description change to "This is a list block".
 
@@ -173,6 +173,6 @@ If you've ever used the @username functionally in the block editor, this is powe
 
 The [Autocomplete](https://developer.wordpress.org/block-editor/reference-guides/filters/autocomplete-filters/) filters page documents how you can add your own autocompleters to the editor.
 
-Finally, the Global Styles Filters page documents the filters added to WordPress in version 6.1 that allow developers to modify the global settings and styles of a block theme as defined by the `theme.json` file.
+Finally, the [Global Styles Filters page](https://developer.wordpress.org/block-editor/reference-guides/filters/global-styles-filters/) documents the filters added to WordPress in version 6.1 that allow developers to modify the global settings and styles of a block theme as defined by the `theme.json` file.
 
 All of these pages include detailed examples of how to use these hooks, and how they can be used to extend the Block Editor's functionality.

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-One of the benefits of developing blocks is the ability to nest blocks within other blocks. 
+One of the benefits of developing blocks is the ability to nest blocks within other blocks.
 
 This allows you to support more complex user requirements by combining multiple blocks together.
 
@@ -10,7 +10,7 @@ Let's take a look at how nested blocks work, and how you can create them in your
 
 ## Nested blocks in the Comments block
 
-The Comments block is a good example of a block that uses nested blocks. 
+The Comments block is a good example of a block that uses nested blocks.
 
 When you add a Comments block to a theme template in the Site Editor, you'll see that it automatically includes other blocks, the Comments Title block, Comments Template, Comments Pagination and Comments Form.
 
@@ -30,7 +30,7 @@ If you didn't follow that module, or you don't have the required software instal
 
 Either way, start by opening your terminal, switching to the `plugins` directory of a local WordPress install, and scaffolding a new block plugin using `create-block`.
 
-```bash
+```
 cd /path/to/wordpress/wp-content/plugins
 npx @wordpress/create-block@latest wp-learn-inner-blocks
 ```
@@ -39,7 +39,7 @@ This will scaffold your new block code.
 
 Before you continue, the scaffolded block code includes some default background and color styles that you may want to remove. You can do this by updating the `src/style.scss` file, and either commenting out or removing the `background-color` and `color` styles.
 
-```scss
+```
 .wp-block-create-block-wp-learn-inner-blocks {
   //background-color: #21759b;
   //color: #fff;
@@ -51,25 +51,22 @@ Now, open the `src/edit.js` file.
 
 To make use of the `InnerBlocks` component, you need to import it from the `@wordpress/block-editor` package. So start by updating the list of components you're importing at the top of the file.
 
-```js
+```
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 ```
 
 Next, update the JSX that the `Edit` component is returning, changing the top level block wrapper element to a `div`, and adding the `InnerBlocks` component after the text.
 
-```js
-<div { ...useBlockProps() }>
-	{ __(
+```
+{ __(
 		'Wp Learn Inner Blocks – hello from the editor!',
 		'wp-learn-inner-blocks'
 	) }
-    <InnerBlocks />
-</div>
 ```
 
 If you haven't already, start the development server by running `npm start` from the terminal in the `wp-learn-inner-blocks` plugin directory.
 
-```js
+```
 cd wp-learn-inner-blocks
 npm start
 ```
@@ -90,17 +87,14 @@ Open the `src/save.js` file, and update the `save` function to return the `Inner
 
 First, again, you need to import the `InnerBlocks` component.
 
-```js
+```
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 ```
 
 Then, update the `save` function to also use a div and return `InnerBlocks.Content`.
 
-```js
-<div { ...useBlockProps.save() }>
-	{ 'Wp Learn Inner Blocks – hello from the saved content!' }
-	<InnerBlocks.Content />
-</div>
+```
+{ 'Wp Learn Inner Blocks – hello from the saved content!' }
 ```
 
 Now, when edit and save the post or page, the content of the nested blocks will be saved and displayed on the front end.
@@ -113,14 +107,14 @@ This can be done in one of two ways.
 
 You can pass an array of block names to the `allowedBlocks` property of the component, which will allow only the specified blocks to be nested within `InnerBlocks`.
 
-```js
-<InnerBlocks allowedBlocks={ [ 'core/heading', 'core/paragraph' ] } />
 ```
 
-Alternatively, you can specify this in the block settings, by using the `allowedBlocks` property of block metadata, for example via the `block.json` file. 
+```
 
-```json
-  	"allowedBlocks": [
+Alternatively, you can specify this in the block settings, by using the `allowedBlocks` property of block metadata, for example via the `block.json` file.
+
+```
+"allowedBlocks": [
       "core/heading",
 	  "core/paragraph"
 	],
@@ -146,9 +140,8 @@ Each block items requires the name of the block and an object that specifies the
 
 For example, to define a template that includes an image, heading, and paragraph block, you can use the following code:
 
-```js
-<InnerBlocks
-	template={ [
+```
+template={ [
 		[ 'core/image', {} ],
 		[ 'core/heading', { placeholder: 'Book Title' } ],
 		[ 'core/paragraph', { placeholder: 'Summary' } ],
@@ -164,9 +157,8 @@ It is also possible to set the default block that is added to the `InnerBlocks` 
 
 `defaultBlock` accepts an object that has a `name` property (the name of the block) and an `attributes` property (the attributes of the block). `directInsert` must be set to true to enable this feature.
 
-```js
-<InnerBlocks
-    defaultBlock={
+```
+defaultBlock={
         { name: 'core/paragraph', attributes: { content: 'Lorem ipsum...' } }
     }
     directInsert={true}
@@ -180,3 +172,4 @@ For example, this will automatically add a paragraph block with the text "Lorem 
 For more examples of how to use the `InnerBlocks` component, and further reading, see the [Guide on Nested Blocks](https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/nested-blocks-inner-blocks/) in the Block Editor handbook.
 
 You can also find the full documentation for the `InnerBlocks` component in the [package reference for the @wordpress/block-editor](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#innerblocks) which links to the [documenation for the InnerBlocks component](https://github.com/WordPress/gutenberg/blob/HEAD/packages/block-editor/src/components/inner-blocks/README.md) in the Gutenberg code repository on GitHub.
+
