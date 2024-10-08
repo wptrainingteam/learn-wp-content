@@ -1,0 +1,13 @@
+{
+    "core": "WordPress/WordPress#6.6.2",
+    "phpVersion": "8.2",
+    "plugins": [ "./my-plugin.php" ],
+    "port": 80,
+    "mysqlPort": 3306,
+    "env": {
+        "tests": {
+            "port": 8000,
+            "mysqlPort": 3307
+        }
+    }
+}
