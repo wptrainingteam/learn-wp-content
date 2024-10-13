@@ -30,7 +30,7 @@ global $wpdb;
 $name = $_GET['name'];
 
 $prepared_query = $wpdb->prepare( 
-    "SELECT * FROM {$wpdb->prefix}my_plugin_table WHERE name = %s", 
+    "SELECT * FROM {$wpdb->prefix}submissions WHERE name = %s", 
     $name 
 );
 
@@ -179,7 +179,7 @@ Here's how to securely query results dynamically based on the user's request:
 $star_rating = intval( $_GET['star_rating'] );
 
 $prepared_query = $wpdb->prepare(
-  "SELECT customer_name, review_text, review_time 
+  "SELECT customer_name, review_text, star_rating, review_time 
    FROM {$wpdb->prefix}reviews 
    WHERE star_rating = %d 
    ORDER BY review_time DESC",
@@ -189,4 +189,4 @@ $prepared_query = $wpdb->prepare(
 $reviews = $wpdb->get_results( $prepared_query );
 ```
 
-Since user-submitted data is incorporated into this SQL query, we must use the `prepare()` method to prevent SQL injection vulnerabilities.
+Since user-submitted data is incorporated into this SQL query, we must use the `prepare()` method to prevent SQL injection vulnerabilities. The placeholder `%d` is used because the `star_rating` field is an integer type.
