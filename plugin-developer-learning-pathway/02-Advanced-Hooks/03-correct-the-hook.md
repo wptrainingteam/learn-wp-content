@@ -1,27 +1,26 @@
-
 # Determining the correct hook
 
 ## Introduction
 
-At the day of today, WordPress has more than 3000 hooks inside its core.
+At the time of creating this lesson, WordPress Code has more than 3000 available hooks.
 
-As you might guess, there is a hook for everything, but the main issue will be to be fine what is the name of that hook.
+As you might guess, there is a hook for everything, so one problem you may often encounter is which hook you should use.
 
 In that lesson, we will learn some of the important hooks, but most importantly, we will learn how to find a new hook using the WordPress documentation.
 
-
-## Finding the correct type
+## Finding the correct hook type
 
 The first thing to understand is the type of hook you will be searching for.
 
-For that, you need to understand the difference between an action and a filter.
+If you watched the [WordPress Hooks](link to hooks lessons) lesson you know there are two types of hooks, actions and a filters.
 
-WordPress plugin programming is an event-based development, and due to that it is respecting its rules and principles.
+The WordPress hooks system follows an [event-based](find a link about event-based development) development, and follows that systems rules and principles.
 
-Once of them is called command query responsibility segregation or in short CQRS.
+Once of them is called command query responsibility segregation or (CQRS).
 
-It states that any operation can be divided into two types of operations:
-- The command that will be changing the state without returning any result.
+CQRS states that any operation can be divided into two types of operations:
+
+- The command that will change the state of something without returning any result.
 - The query that will fetch data without changing the application state.
 
 As you might get it, WordPress is also respecting that rule:
