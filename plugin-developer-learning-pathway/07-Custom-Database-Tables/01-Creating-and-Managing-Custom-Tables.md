@@ -54,7 +54,7 @@ To start, create a new plugin to store the custom table code.
 
 Then, register an activation hook for your plugin to create the custom table. Using this hook ensures the table immediately exists once your plugin is activated so that any following code can safely query against it.
 
-When choosing a name for the custom table, be sure to use the configured table prefix by prepending the table name with the `$wpdb->prefix` object property. Also, use `$wpdb->get_charset_collate()` method to ensure the custom table's collation matches the rest of the tables in WordPress for optimum data integrity, compatibility, and query performance.
+When choosing a name for the custom table, be sure to use the configured table prefix by prepending the table name with the `$wpdb->prefix` object property. Also, use the `$wpdb->get_charset_collate()` method to ensure the custom table's collation matches the rest of the tables in WordPress for optimum data integrity, compatibility, and query performance.
 
 To create a custom table, use the `dbDelta()` function included in WordPress. This function handles both table creation and future updates to the table's structure.
 
