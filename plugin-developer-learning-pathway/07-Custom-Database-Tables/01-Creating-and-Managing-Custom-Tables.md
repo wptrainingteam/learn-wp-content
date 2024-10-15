@@ -40,7 +40,7 @@ The `$wpdb` instance also contains crucial information about the WordPress datab
 
 To start, create a new plugin to store the custom table code. 
 
-```
+```php
 <?php
 /**
  * Plugin Name: Form submissions
@@ -89,35 +89,51 @@ As your plugin evolves, you may need to modify the structure of your custom tabl
 
 The `dbDelta()` function can also help you modify existing tables without losing data. By following the previously mentioned formatting requirements, it can automatically figure out how to alter the installed table into the new schema.
 
-Before we update the custom table's schema, though, let's ensure `dbDelta()` is only checking the schema when it makes sense.
+This means you can reuse your `wp_learn_custom_table_create_submissions_table()` function to both create and update the table schema.
 
 ### Table Versioning
 
-When a plugin is updated, its activation function registered with `register_activation_hook()` is not called. This is why we'll need to use another hook to check if the database needs to be upgraded.
+When a plugin is updated, its activation function registered with `register_activation_hook()` is not called. So you'll need to use a different hook for any table upgrades.
 
 The `plugins_loaded` action hook is a great choice for this because it is triggered right after all active plugins have been loaded. This ensures the database tables are updated before any other code tries to query against them.
 
+```php
+add_action( 'plugins_loaded', 'wp_learn_custom_table_create_submissions_table' );
+```
+
+However, this means that the `wp_learn_custom_table_create_submissions_table()` function will be called every time the plugin is loaded, which is not ideal. 
+
+To avoid this, you can create a separate function to check the current database version and only update the table if the version has changed. 
+
 To track which database version is already installed, you can store a simple database version number for the plugin in the options table.
 
+Start by defining the default version number for the custom table in your plugin file.
+
 ```php
-$wp_learn_custom_table_db_version = '1.0';
+$wp_learn_custom_table_db_version = '1.0.0';
 ```
 
-```
+Then, update the `plugins_loaded` hook callback to point to a function that checks the current database version and updates the table if necessary.
+
+```php
 add_action( 'plugins_loaded', 'wp_learn_custom_table_update_db_check' );
 function wp_learn_custom_table_update_db_check() {
 	global $wp_learn_custom_table_db_version;
 	$current_custom_table_db_version = get_option( 'wp_learn_custom_table_db_version', '1.0' );
-	if ( version_compare( $current_custom_table_db_version, $wp_learn_custom_table_db_version ) ) {
+	if ( version_compare( $wp_learn_current_custom_table_db_version, $wp_learn_custom_table_db_version ) ) {
 		wp_learn_custom_table_create_submissions_table();
 	}
 }
 ```
 
+Inside this callback function, the version number stored in the options table is compared to the default version number defined in the plugin file, using the PHP `version_compare()` [function](https://www.php.net/manual/en/function.version-compare.php).
+
+If the current version is lower than the default version, the table is updated.
+
 Whenever the plugin's table schema is changed in the code, the version number should be increased so that the tables are checked and updated by the `dbDelta()` function.
 
 ```php
-$wp_learn_custom_table_db_version = '1.0';
+$wp_learn_custom_table_db_version = '1.0.1';
 
 register_activation_hook( __FILE__, 'wp_learn_custom_table_create_submissions_table' );
 function wp_learn_custom_table_create_submissions_table() {
@@ -144,7 +160,7 @@ function wp_learn_custom_table_create_submissions_table() {
 add_action( 'plugins_loaded', 'wp_learn_custom_table_update_db_check' );
 function wp_learn_custom_table_update_db_check() {
 	global $wp_learn_custom_table_db_version;
-	$current_custom_table_db_version = get_option( 'wp_learn_custom_table_db_version', '1.0' );
+	$current_custom_table_db_version = get_option( 'wp_learn_custom_table_db_version', '1.0.0' );
 	if ( version_compare( $current_custom_table_db_version, $wp_learn_custom_table_db_version ) ) {
 		wp_learn_custom_table_create_submissions_table();
 	}
