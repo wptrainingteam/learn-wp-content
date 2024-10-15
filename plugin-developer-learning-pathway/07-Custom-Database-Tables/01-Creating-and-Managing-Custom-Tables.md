@@ -145,7 +145,7 @@ function wp_learn_custom_table_create_submissions_table() {
 	time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 	name tinytext NOT NULL,
 	message text NOT NULL,
-    url varchar(55) DEFAULT '' NOT NULL,
+	url varchar(55) DEFAULT '' NOT NULL,
 	PRIMARY KEY  (id)
 	) {$charset_collate};";
 
