@@ -20,11 +20,11 @@ Now that you can identify when custom database tables are useful, let's learn ho
 
 In this example, you're going to create a custom table to store form submissions, which will have a field for the name and a message. 
 
-## The `WPDB` class
+## The `wpdb` class
 
-To start, you need to first establish a connection to the WordPress database. Thankfully, WordPress already does this automatically by using the `WPDB` class.
+To start, you need to first establish a connection to the WordPress database. Thankfully, WordPress already does this automatically by using the `wpdb` class.
 
-The `WPDB` class is used to manage a database connection while also providing helpful methods to perform queries and retrieve data from the connected database in a structured way. 
+The `wpdb` class is used to manage a database connection while also providing helpful methods to perform queries and retrieve data from the connected database in a structured way. 
 
 During PHP execution, WordPress creates a `$wpdb` global object variable as an instance of this class by using the `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` constants defined in your `wp-config.php` file.
 
