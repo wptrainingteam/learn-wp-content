@@ -190,3 +190,56 @@ $reviews = $wpdb->get_results( $prepared_query );
 ```
 
 Since user-submitted data is incorporated into this SQL query, we must use the `prepare()` method to prevent SQL injection vulnerabilities. The placeholder `%d` is used because the `star_rating` field is an integer type.
+
+## Updating Data
+
+Sometimes you may need to update records in your custom table, such as letting users correct their customer name or modify their review’s star rating. For this, you can use the [`$wpdb->update()`](https://developer.wordpress.org/reference/classes/wpdb/update/) method. This method allows you to modify specific rows while ensuring that the data is securely handled.
+
+For example, let’s say a user decides to change the review that they initially submitted. You can securely update the review's star rating and text in the custom table by using the following code:
+
+```php
+global $wpdb;
+
+// Sanitize and validate the inputs.
+$review_id   = intval( $_POST['review_id'] );
+$new_rating  = intval( $_POST['new_rating'] );
+$new_text    = sanitize_textarea_field( $_POST['new_text'] );
+
+// Ensure the new star rating is between 1 and 5.
+if ( $new_rating < 1 || $new_rating > 5 ) {
+  wp_die( 'Invalid star rating. Please provide a value between 1 and 5.' );
+}
+
+// Update the star rating and review text in the custom table.
+$updated = $wpdb->update(
+  "{$wpdb->prefix}reviews",       // Table to update.
+  array(
+    'star_rating' => $new_rating,
+    'review_text' => $new_text,
+  ),                              // Column values to set.
+  array( 'id' => $review_id ),    // WHERE clause column values.
+  array( '%d', '%s' ),            // Format for the updated column values.
+  array( '%d' )                   // Format for the WHERE clause column values.
+);
+
+// Check if the update was successful.
+if ( false === $updated ) {
+  wp_die( 'Error updating the review. Please try again.' );
+} else {
+  echo 'Review updated successfully!';
+}
+```
+
+As always, remember to sanitize and validate the user's request. If it passes validation, then the `$wpdb->update()` method updates the `wp_reviews` custom table by using the following 5 parameters:
+
+1. The name of the table to be updated.
+2. An array of column names and their associated values to be set.
+3. An array of column names and their associated values to determine which matching records in the table should be updated.
+   - When passing multiple column-value pairs, the clauses are joined using logical `AND`.
+4. An array of formatting placeholders for the column values to be set.
+   - `'%d'` for the `star_rating` integer, then `'%s'` for the `review_text` string
+5. An array of formatting placeholders for the `WHERE` clause column values.
+   - `'%d'` for the review's `id` integer
+
+The `$wpdb->update()` method returns either the number of rows updated or false if an error occurred. If the update query fails, then we display an appropriate error message to inform the user. Otherwise, we notify the user that the update was successful.
+
