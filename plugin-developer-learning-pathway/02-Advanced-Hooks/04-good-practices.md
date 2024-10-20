@@ -126,3 +126,100 @@ function my_callback($value) {
     return $value . "my_string";
 }
 ```
+
+## Getting information on a hook
+
+Another good thing to know about hooks is how to get information about them.
+
+### Determining the current hook
+
+WordPress allows a callback function or method to be used on different events.
+
+Due to that, it can be sometimes unclear on which hook the callback is actually running.
+
+This is why WordPress introduced two functions.
+
+#### current_filter
+
+If you are in a callback linked with filters,
+it is possible to use the function [`current_filter`](https://developer.wordpress.org/reference/functions/current_filter/):
+
+```php
+function my_callback($value) {
+    
+    if('the_content_feed' === current_filter()) {
+        return '';
+    }
+    
+    return $value;
+}
+
+add_filter('the_content_rss', 'my_callback');
+add_filter('the_content_feed', 'my_callback');
+
+```
+
+#### current_action
+
+If you are in a callback linked with filters,
+it is possible to use the function [`current_action`](https://developer.wordpress.org/reference/functions/current_action/):
+
+```php
+function my_callback() {
+    
+    if('init' === current_action()) {
+        return;
+    }
+    
+    // my logic
+}
+
+add_filter('amin_init', 'my_callback');
+add_filter('init', 'my_callback');
+
+```
+### Check how many times a hook as run
+
+Sometimes it is important to know if a callback has already run to prevent it from running again.
+
+For that, it is possible to use two functions depending on if you want to check an action or a filter.
+
+#### did_filter
+
+If you want to know how many times a filter has been fired,
+you can use the [`did_filter`](https://developer.wordpress.org/reference/functions/did_filter/) function:
+
+```php
+function my_callback($value) {
+    
+    if(0 < did_filter('pre_delete_attachment')) {
+        return $value;
+    }
+    
+    // My logic
+    
+    return $value;
+}
+
+add_filter('after_delete_post', 'my_callback');
+```
+
+#### did_action
+
+If you want to know how many times ana action has been fired,
+you can use the [`did_action`](https://developer.wordpress.org/reference/functions/did_action/) function:
+
+```php
+function my_callback() {
+    
+    if(0 == did_action('amin_init')) {
+        return;
+    }
+    
+    return ;
+    
+    // my logic
+}
+
+add_action('added_option', 'my_callback');
+```
