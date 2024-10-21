@@ -8,7 +8,7 @@ By the end of this lesson, you’ll understand why you might need a custom table
 
 ## Why Create a Custom Table?
 
-In most cases, WordPress's default tables are already enough to store your plugin's data. You can use [custom post types](https://learn.wordpress.org/lesson/custom-post-types/) to manage different types of content, store user meta to further personalize users' experiences, manage custom settings in the options table, and so much more!
+In most cases, WordPress's default tables are already enough to store your plugin's data. You can use [custom post types](https://learn.wordpress.org/lesson/custom-post-types/) to manage different types of content, store [user meta](https://developer.wordpress.org/plugins/users/working-with-user-metadata/) to further personalize users' experiences, manage [custom settings in the options table](https://developer.wordpress.org/apis/options/), and so much more!
 
 Even still, there are times when creating a custom table can be more effective. When thinking about data your plugin will be managing, consider the following:
 
