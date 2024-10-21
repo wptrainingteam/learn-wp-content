@@ -209,6 +209,4 @@ This will create a table with the name `wp_wpl_submissions`.
 
 ## Conclusion
 
-Now you know how to create, update, and delete a custom table in the WordPress database.
-
 For more information on working with custom tables, make sure to read the [Creating Tables with Plugins section of WordPress Plugin Handbook](https://developer.wordpress.org/plugins/creating-tables-with-plugins/). It's also useful to read the class reference for the `WPDB` class, as well as the function reference for `dbDelta`.
