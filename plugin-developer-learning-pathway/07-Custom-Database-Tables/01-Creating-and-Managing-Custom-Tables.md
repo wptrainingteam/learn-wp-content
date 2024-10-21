@@ -34,7 +34,7 @@ Because the `$wpdb` object exists in the global namespace, you can access it in 
 global $wpdb;
 ```
 
-The `$wpdb` instance also contains crucial information about the WordPress database which you'll need to properly create and manage our own custom tables. Let's see how as we create our first one.
+The `$wpdb` instance also contains crucial information about the WordPress database which you'll need to properly create and manage your own custom tables. Let's see this in action as we create our first one.
 
 ## Creating a Custom Table
 
