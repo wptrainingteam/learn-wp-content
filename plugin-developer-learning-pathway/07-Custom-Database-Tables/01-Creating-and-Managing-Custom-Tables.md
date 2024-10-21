@@ -126,7 +126,7 @@ function wp_learn_custom_table_update_db_check() {
 }
 ```
 
-Inside this callback function, the version number stored in the options table is compared to the default version number defined in the plugin file, using the PHP `version_compare()` [function](https://www.php.net/manual/en/function.version-compare.php).
+Inside this callback function, the version_compare() [function](https://www.php.net/manual/en/function.version-compare.php) compares the version number stored in the `options` table against the default version number defined in the plugin file.
 
 If the current version is lower than the default version, the table is updated.
 
@@ -183,6 +183,29 @@ function wp_learn_custom_table_delete_submissions_table() {
 	delete_option( 'wp_learn_custom_table_db_version' );
 }
 ```
+
+## A note on custom table names
+
+In the examples in this lesson, you've created a table called `submissions`, prefixed using the `$wpdb->prefix`, so the table name ends up being `wp_submissions`.
+
+Generally, you will want to also include a prefix in the table name following a similar structure as the [prefixing method used to avoid naming collisions](https://developer.wordpress.org/plugins/plugin-basics/best-practices/#procedural-coding-method) in PHP. 
+
+This makes the table unique to your plugin, and avoids any table conflicts.
+
+So to improve the above examples, you might include a vendor prefix like `wpl` (instead of `wp_learn`).
+
+```php
+	$sql = "CREATE TABLE {$wpdb->prefix}wpl_submissions (
+	id mediumint(9) NOT NULL AUTO_INCREMENT,
+	time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+	name tinytext NOT NULL,
+	message text NOT NULL,
+	url varchar(55) DEFAULT '' NOT NULL,
+	PRIMARY KEY  (id)
+	) {$charset_collate};";
+```
+
+This will create a table with the name `wp_wpl_submissions`.
 
 ## Conclusion
 
