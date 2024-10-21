@@ -45,7 +45,7 @@ This helps if you need to check for third party compatibilities or if your plugi
 
 [This hook](https://developer.wordpress.org/reference/hooks/init/) is executed when the core of WordPress is loaded.
 
-This is usually the hook used to configure the core functionality of your plugin such as registering custom post-types, dashboard menus or cron tasks.
+This is usually the hook used to configure the core functionality of your plugin such as registering custom post-types, dashboard menus, or cron tasks.
 
 A [similar hook](https://developer.wordpress.org/reference/hooks/admin_init/) called `admin_init` exists to register core functionality, but only to WordPress admin pages.
 
@@ -70,3 +70,5 @@ add_action('wp_enqueue_scripts', 'enqueue_assets');
 If you need to extend the functionality of another plugin or theme, you have to rely on what hooks the plugin or theme developer has put in place. In many cases, there will be a limited set of hooks to make use of, and they may not even be documented correctly.
 
 A good place to start is to search for any instances of  `do_action` and `apply_filters` inside their codebase to find any hooks available.
+
+Additionally, some plugin developers will have documentation on their site which includes all the relevant hooks you can use.
