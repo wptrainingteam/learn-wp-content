@@ -169,6 +169,12 @@ if ( ! empty( $reviews ) ) {
 
 As you can see, the `get_results()` method returns an array of objects where each object is a single row retrieved from the table. Alternatively, you can provide a second parameter to the function to specify the desired output type. For example, to retrieve rows as associative arrays instead of objects, you can use the `ARRAY_A` constant.
 
+To select values from the database by running generic queries, you can also use any of the following methods within the `wpdb` class depending on the return type you're wanting:
+
+- [`get_var()`](https://developer.wordpress.org/reference/classes/wpdb/get_var/) – Returns a single value.
+- [`get_row()`](https://developer.wordpress.org/reference/classes/wpdb/get_row/) – Returns an entire, single row in the desired output type.
+- [`get_col()`](https://developer.wordpress.org/reference/classes/wpdb/get_col/) – Returns an entire, single column as a one-dimensional array.
+
 ### Dynamic Queries
 
 Let's assume you now want to add a new feature that allows user to filter reviews by their star rating. The SQL query will ultimately be the same except for which star rating the user selects.
@@ -243,3 +249,124 @@ As always, remember to sanitize and validate the user's request. If it passes va
 
 The `$wpdb->update()` method returns either the number of rows updated or false if an error occurred. If the update query fails, then we display an appropriate error message to inform the user. Otherwise, we notify the user that the update was successful.
 
+## Deleting Data
+
+In some scenarios, users may need to delete outdated or incorrect records from the custom table. To handle such cases, WordPress provides the [`$wpdb->delete()`](https://developer.wordpress.org/reference/classes/wpdb/delete/) method to safely remove specific rows. Just like other database operations, it’s important to validate and sanitize any data before using it to delete a record.
+
+Let’s say you want to allow users to delete their product reviews. Here’s how you can implement it:
+
+```php
+global $wpdb;
+
+// Sanitize and validate the review ID.
+$review_id = intval( $_POST['review_id'] );
+
+if ( $review_id <= 0 ) {
+  wp_die( 'Invalid review ID.' );
+}
+
+// Delete the review from the custom table.
+$deleted = $wpdb->delete(
+  "{$wpdb->prefix}reviews",    // Table from which to delete.
+  array( 'id' => $review_id ), // WHERE clause to specify the row(s) to delete.
+  array( '%d' )                // Format for the WHERE clause values.
+);
+
+// Check if the deletion was successful.
+if ( false === $deleted ) {
+  wp_die( 'Error deleting the review. Please try again.' );
+} elseif ( 0 === $deleted ) {
+  echo 'No matching review found to delete.';
+} else {
+  echo 'Review deleted successfully!';
+}
+```
+
+The `$wpdb->delete()` method simply accepts 3 parameters which should look familiar from the previous section:
+
+	1. The table from which to delete matching rows.
+ 	2. An array of column names and their associated values to determine which matching rows in the table should be deleted.
+     - If we were to pass multiple column-value pairs, the clauses would be joined using logical `AND`.
+ 	3. An array of formatting placeholders for the `WHERE` clause column values.
+     - `'%d'` for the review's `id` integer
+
+Finally, the value returned from `$wpdb->delete()` is either the number of rows deleted from the specified table or `false`. Because of this, remember to use the strict comparison operator `===` in PHP to differentiate database errors from `0` rows being deleted.
+
+### Use Caution with Deletions
+
+Deleting data is irreversible, so it’s important to consider:
+
+- Asking for user confirmation before deleting records to ensure users know the action cannot be undone.
+- Logging deletion actions, such as who deleted what and when, for historical reference.
+- Offering a *soft delete* feature as an alternative, such as marking a record as inactive, to keep the data archived.
+
+## Performing Generic Queries for Advanced Use Cases
+
+While the `wpdb` class's methods like `insert()`, `update()`, and `delete()` cover many common database operations, advanced use cases may require more flexibility. For tasks such as bulk inserts, transactional operations, or table operations, you can use the [`query()`](https://developer.wordpress.org/reference/classes/wpdb/query/) method to run any valid SQL statement. However, you must always carefully consider the risks involved when writing your own custom queries and `prepare()` the dynamic data in your custom queries accordingly.
+
+Let's suppose we want to add a feature that allows a customer to submit a collection of reviews for all the items they recently purchased. Using a single bulk insert statement for this use case will grant better performance and data consistency. Here's how to use the `$wpdb->query()` method to implement this feature:
+
+```php
+global $wpdb;
+
+// Collect the user's input.
+$customer_name = sanitize_text_field( $_POST['customer_name'] ); // The customer's name for all the reviews.
+$reviews       = $_POST['reviews']; // An array of reviews with 'review_text' and 'star_rating'.
+
+// Begin the SQL query for a bulk insert.
+$sql = "INSERT INTO {$wpdb->prefix}reviews (customer_name, review_text, star_rating) VALUES ";
+
+$data           = array();
+$values_clauses = array();
+
+// Loop through each review and build the query dynamically.
+foreach ( $reviews as $i => $review ) {
+  
+    // Sanitize the review's data to be inserted.
+    $review_text = sanitize_textarea_field( $review['review_text'] );
+    $star_rating = intval( $review['star_rating'] );
+
+    // Validate the star rating.
+    if ( $star_rating < 1 || $star_rating > 5 ) {
+        $review_number = $i + 1;
+        wp_die( 'Error: Invalid star rating for review ' . intval( $review_number ) . '. Please correct the review and try again.' );
+    }
+
+    // Collect the review's data for INSERT with the accompanying placeholders.
+    $data[] = $customer_name;
+    $data[] = $review_text;
+    $data[] = $star_rating;
+  
+    $values_clauses[] = "(%s, %s, %d)";
+}
+
+// Join all placeholders and complete the SQL statement.
+$sql .= implode( ', ', $values_clauses );
+
+// Execute the query with the prepared statement using the associated data.
+$result = $wpdb->query( $wpdb->prepare( $sql, $data ) );
+
+if ( false === $result ) {
+    wp_die( 'Error: Failed to insert reviews.' );
+} elseif ( count( $reviews ) !== $result ) {
+    echo esc_html( 'Submitted ' . count( $reviews ) . ' of ' . intval( $result ) . ' reviews successfully.' );
+} else {
+    echo 'All reviews submitted successfully!'; 
+}
+```
+
+Let's walk through this code step-by-step:
+
+1. First, we collect the user's input from the form submission and initialize a string to begin composing the bulk insertion SQL query.
+2. Next, we loop through the reviews to sanitize and validate the `review_text` and `star_rating` values for each one.
+3. Once sanitized and validated in the loop, the data for each review record to be inserted is collected along with the associated VALUES clause containing the related placeholders.
+4. After collecting each VALUES clause, they are joined together using a comma to complete the SQL statement.
+5. The completed SQL statement is then safely formatted using the `$wpdb->prepare()` method with the sanitized and validated data for each review, and the prepared query is then executed using the `$wpdb->query()` method.
+6. Since the query is for an `INSERT` statement, the `$wpdb->query()` method returns the number of rows affected or `false` if a database error occurred which we then use to inform the user.
+   - For SQL statements that affect entire tables instead of specific rows, such as `TRUNCATE`, the `$wpdb->query()` method will simply return `true` on success.
+
+By using our own custom query and the `$wpdb->query()` method, we're able to optimize the efficiency of our queries and even offer more advanced experiences to our users.
+
+## Summary
+
+To learn more about the properties and methods made available in the `wpdb` class, you can read [the `wpdb` class reference for developers](https://developer.wordpress.org/reference/classes/wpdb/).
