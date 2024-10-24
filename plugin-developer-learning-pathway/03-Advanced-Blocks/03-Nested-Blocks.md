@@ -1,5 +1,7 @@
 # Nested Blocks
 
+https://youtu.be/FpKB2432w_E
+
 ## Introduction
 
 One of the benefits of developing blocks is the ability to nest blocks within other blocks.
@@ -59,9 +61,9 @@ Next, update the JSX that the `Edit` component is returning, changing the top le
 
 ```
 { __(
-		'Wp Learn Inner Blocks – hello from the editor!',
-		'wp-learn-inner-blocks'
-	) }
+    'Wp Learn Inner Blocks – hello from the editor!',
+    'wp-learn-inner-blocks'
+) }
 ```
 
 If you haven't already, start the development server by running `npm start` from the terminal in the `wp-learn-inner-blocks` plugin directory.
@@ -108,7 +110,7 @@ This can be done in one of two ways.
 You can pass an array of block names to the `allowedBlocks` property of the component, which will allow only the specified blocks to be nested within `InnerBlocks`.
 
 ```
-
+<InnerBlocks allowedBlocks={ [ 'core/heading', 'core/paragraph' ] } />
 ```
 
 Alternatively, you can specify this in the block settings, by using the `allowedBlocks` property of block metadata, for example via the `block.json` file.
@@ -158,7 +160,8 @@ It is also possible to set the default block that is added to the `InnerBlocks` 
 `defaultBlock` accepts an object that has a `name` property (the name of the block) and an `attributes` property (the attributes of the block). `directInsert` must be set to true to enable this feature.
 
 ```
-defaultBlock={
+<InnerBlocks 
+    defaultBlock={
         { name: 'core/paragraph', attributes: { content: 'Lorem ipsum...' } }
     }
     directInsert={true}

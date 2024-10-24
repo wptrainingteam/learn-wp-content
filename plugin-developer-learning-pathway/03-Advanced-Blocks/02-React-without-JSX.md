@@ -1,5 +1,7 @@
 # Developing WordPress Blocks without JSX or a build process
 
+https://youtu.be/mdpZwjv-KuA
+
 One of the benefits of working with WordPress, is that there are often many ways to do the same thing. 
 
 While the block development examples you've seen so far make use of JSX for rendering, and `@wordpress/scripts` for building, you can also develop blocks without using these technologies.

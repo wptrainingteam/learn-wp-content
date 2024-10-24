@@ -1,5 +1,7 @@
 # Block Variations
 
+https://youtu.be/dzD7iTr-amw
+
 When planning to create a block, one of the things to consider is whether the block needs to be built from scratch, or could it simply be an extension of an existing block.
 
 This lesson introduces the concept of block variations, which are a way to create different versions of an existing block.

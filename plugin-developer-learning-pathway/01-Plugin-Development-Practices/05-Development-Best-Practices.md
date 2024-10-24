@@ -79,7 +79,7 @@ While most of these functions don't require any specific parameters, the plugin 
 
 To make life easier for the developer, PHP offers a `__FILE__` magic constant that returns the full path and filename of the file it is used in. This can be used to determine the path to the plugin's main file when using these functions.
 
-Here's an example of how you can use the `plugin_dir_path()` function to determine the path to the plugin's main file, in order to enqueue a CSS file:
+Here's an example of how you can use the `plugin_dir_path()` function to determine the directory path of the plugin, in order to enqueue a CSS file:
 
 ```php
 add_action( 'wp_enqueue_scripts', 'wp_learn_plugin_paths_enqueue_scripts' );

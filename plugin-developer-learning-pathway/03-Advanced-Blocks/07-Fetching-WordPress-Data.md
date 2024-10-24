@@ -1,5 +1,7 @@
 # Fetching WordPress Data
 
+https://youtu.be/S35EVpDvPoU
+
 Depending on the requirements of the block you are building, you may need to fetch data from the WordPress database. 
 
 This could be data from the posts, comments, users, or terms tables, or custom data from any of the meta tables.

@@ -1,5 +1,7 @@
 # Block Hooks API
 
+https://youtu.be/S6xvcn6c8J0
+
 Not to be confused with Block Editor action and filter hooks, the Block editor also has something called the Block Hooks API
 
 This API provides a way to automatically insert your block next to all instances of a specific block in block-based templates, template parts, and patterns of a WordPress block theme.

@@ -14,8 +14,8 @@ Before you start, make sure to enable the WordPress debugging mode in your `wp-c
 
 ```php
 define( 'WP_DEBUG', true );
-define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false );
+define( 'WP_DEBUG_LOG', true );
 ```
 
 You're intentionally going to write some code that will cause an error, and you want to be able to see the error message in the debug log.
@@ -418,7 +418,7 @@ $wp_learn_extra_content = new WP_Learn_Extra_Content();
 $wp_learn_extra_content->init();
 ```
 
-Finally, you can even combine namespaces and classes to create a more organized and structured plugin, with less chance of naming collisions. For example you could move the class into folder called `classes` and namespace it under `WP_Learn\Classes`:
+Finally, you can even combine namespaces and classes to create a more organized and structured plugin, with less chance of naming collisions. For example, you could move the class into folder called `classes` and namespace it under `WP_Learn\Classes`:
 
 ```php
 <?php
@@ -443,7 +443,7 @@ class Extra_Content {
 	public function add_extra_option( $content ) {
 		$extra_option = get_option( 'extra_option' );
 		if ( ! $extra_option ) {
-			new WP_Error( 'extra_option', 'Extra content is empty.' );
+			new \WP_Error( 'extra_option', 'Extra content is empty.' );
 
 			return $content;
 		}
@@ -500,7 +500,7 @@ class Extra_Content {
 	public function add_extra_option( $content ) {
 		$extra_option = get_option( 'wp_learn_extra_option' );
 		if ( ! $extra_option ) {
-			new WP_Error( 'wp_learn_extra_option', 'Extra content is empty.' );
+			new \WP_Error( 'wp_learn_extra_option', 'Extra content is empty.' );
 
 			return $content;
 		}
