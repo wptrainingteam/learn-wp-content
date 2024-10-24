@@ -256,7 +256,7 @@ To fix this, first we need to manually create a nonce using wp_create_nonce and 
    */
   $ajax_nonce = wp_create_nonce( 'wp_learn_ajax_nonce' );
   wp_localize_script(
-      'wp_learn-admin',
+      'wp-learn-admin',
       'wp_learn_ajax',
       array(
           'ajax_url' => admin_url( 'admin-ajax.php' ),
