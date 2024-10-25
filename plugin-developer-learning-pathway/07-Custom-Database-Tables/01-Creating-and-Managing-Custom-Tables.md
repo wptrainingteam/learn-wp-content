@@ -186,7 +186,7 @@ function wp_learn_custom_table_delete_submissions_table() {
 }
 ```
 
-## A note on custom table names
+## Avoiding Naming Collisions for Custom Tables
 
 In the examples in this lesson, you've created a table called `submissions`, prefixed using the `$wpdb->prefix`, so the table name ends up being `wp_submissions`.
 
