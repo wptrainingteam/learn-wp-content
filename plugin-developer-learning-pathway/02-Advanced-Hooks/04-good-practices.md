@@ -45,19 +45,8 @@ There is a simple reason for that: It is the last callback that decides what is 
 
 That might not seem an issue at first, but you need to remember when you are creating your custom hooks that you are not the one who will be writing the callbacks but your users.
 
-```mermaid
-sequenceDiagram;
-    box Green your code
-        participant filter
-    end
-    box Red Client code
-        participant callback1
-        participant callback2
-    end
-filter->>callback1: apply filter with initial value
-callback1->>callback2: callback2 with result from callback1
-callback2->>filter: return value from callback2
-```
+![Illustration from the problem](./imgs/handling-filter-return.png)
+
 This means that you have no control on what your users will return and if a wrong type is returned, it might make your plugin crash.
 
 ### The solution
@@ -93,25 +82,7 @@ if ( ! is_string( $value ) ) {
 
 However, that incertitude on the type of the value inside filters does not only apply to their output, but it is also present on each callback.
 
-```mermaid
-sequenceDiagram;
-    box Red external plugin code
-        participant filter
-    end
-    box Red client code
-        participant callback1
-    end
-    box Green your code
-        participant my callback
-    end
-    box Red client code
-        participant callback2
-    end
-    filter->>callback1: apply filter with initial value
-    callback1->>my callback: my callback with result from callback1
-    my callback->>callback2: callback2 with result from my callback
-    callback2->>filter: return value from callback2
-```
+![Illustration from problem](./imgs/assert-callback-values.png)
 
 This is why it is important to never strongly type the value from a filter (the first parameter).
 
