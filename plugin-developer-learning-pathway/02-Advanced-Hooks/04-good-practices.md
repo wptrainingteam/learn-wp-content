@@ -22,7 +22,7 @@ Then if the action is happening before the actual event the convention is to pre
 do_action('pre_delete_post');
 ```
 
-Finally, if the action is after the actual event, it is advised to use a past temps inside the name.
+Finally, if the action is after the actual event, it is advised to use a past tense inside the name.
 
 ```php
 do_action('deleted_post');
