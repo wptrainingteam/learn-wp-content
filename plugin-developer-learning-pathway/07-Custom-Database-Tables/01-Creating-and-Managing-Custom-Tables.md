@@ -211,4 +211,4 @@ This will create a table with the name `wp_wpl_submissions`.
 
 ## Conclusion
 
-For more information on working with custom tables, make sure to read the [Creating Tables with Plugins section of WordPress Plugin Handbook](https://developer.wordpress.org/plugins/creating-tables-with-plugins/). It's also useful to read the class reference for the `WPDB` class, as well as the function reference for `dbDelta`.
+For more information on working with custom tables, make sure to read the [Creating Tables with Plugins section of WordPress Plugin Handbook](https://developer.wordpress.org/plugins/creating-tables-with-plugins/). It's also useful to read the class reference for the `wpdb` [class](https://developer.wordpress.org/reference/classes/wpdb/), as well as the [function reference](https://developer.wordpress.org/reference/functions/dbdelta/) for `dbDelta()`.
