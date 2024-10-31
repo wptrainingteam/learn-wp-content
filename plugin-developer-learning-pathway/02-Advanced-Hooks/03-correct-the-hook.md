@@ -1,3 +1,5 @@
+<!-- Original script by Cyrille C: https://github.com/CrochetFeve0251 -->
+
 # Determining the correct hook
 
 ## Introduction

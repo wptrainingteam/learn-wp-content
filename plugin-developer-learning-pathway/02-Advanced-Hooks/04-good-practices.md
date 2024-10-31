@@ -1,8 +1,8 @@
+<!-- Original script by Cyrille C: https://github.com/CrochetFeve0251 -->
 
 # Good practices
 
 While WordPress hooks are quite easy to begin with, it is however harder to master them.
-
 
 ## Naming hooks
 
