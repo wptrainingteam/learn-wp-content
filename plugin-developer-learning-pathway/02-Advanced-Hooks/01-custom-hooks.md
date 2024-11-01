@@ -146,13 +146,13 @@ With this in place, someone could hook into either of these filter, and add or r
 
 ## Action and filter arguments
 
-In the lesson on [Working with hooks](https://learn.wordpress.org/lesson/working-with-hooks/)
+In the lesson on [Working with hooks](https://learn.wordpress.org/lesson/working-with-hooks/) lesson, you learned that it's possible to set the number of arguments the callback function can accept from the action or filter hook.
 
 Both the `do_action` and `apply_filters` function signatures accept an unlimited number of optional, additional arguments.
 
-These arguments are passed to the callback function when the action or filter is triggered.
+These arguments are passed to the callback function when the action or filter is triggered. When a user hooks a callback function into the action or filter, they can specify how many of those arguments they want to receive in the callback function.
 
-You can use these arguments to pass data to the callback function, such as the context in which the action or filter is triggered.
+You can use these arguments to pass optioanl data to the callback function, such as the context in which the action or filter is triggered.
 
 For example, you could pass the current value of is_admin() as a "context" argument to the `bookstore_before_render_booklist` action:
 
@@ -190,7 +190,7 @@ function bookstore_render_booklist() {
 }
 ```
 
-Any callback function hooked into the `bookstore_before_render_booklist` or `bookstore_after_render_booklist` action will now receive the value of is_admin() as an argument.
+Any callback function hooked into the `bookstore_before_render_booklist` or `bookstore_after_render_booklist` action that is set to receive one argument will now receive the value of `is_admin()`.
 
 ```
 add_action( 'bookstore_before_render_booklist', 'my_callback', 10, 1 );
