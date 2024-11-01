@@ -220,16 +220,74 @@ Under the hood, actions and filters are functionally the same, the main differen
 
 For that reason, you should always use unique names for each hook. Don’t create an action and a filter with the same name.
 
+For example, let's say you wanted to add an action and a filter to the `bookstore_register_post_type` function:
+
 ```php
-// This is wrong
-do_action('my_hook');
-apply_filters('my_hook', $some_variable)
+function bookstore_register_book_post_type() {
+
+    do_action( 'bookstore_register_post_type' );
+
+	$args = array(
+		'labels'       => array(
+			'name'          => 'Books',
+			'singular_name' => 'Book',
+			'menu_name'     => 'Books',
+			'add_new'       => 'Add New Book',
+			'add_new_item'  => 'Add New Book',
+			'new_item'      => 'New Book',
+			'edit_item'     => 'Edit Book',
+			'view_item'     => 'View Book',
+			'all_items'     => 'All Books',
+		),
+		'public'       => true,
+		'has_archive'  => true,
+		'show_in_rest' => true,
+		'rest_base'    => 'books',
+		'supports'     => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' ),
+	);
+	
+	apply_filters( 'bookstore_register_post_type', $args );
+	
+	register_post_type( 'book', $args );
+}
 ```
 
 Doing this will result in conflicts with callback functions registered to the action or filter, as it means the callback will run both when the action and filter are triggered.
 
 Depending on whether you hook a callback into the action or filter, it may also cause errors in the code execution.
 
+One way to fix this is to use a more descriptive name for the action and filter:
+
+```php
+function bookstore_register_book_post_type() {
+
+    do_action( 'bookstore_before_register_post_type' );
+
+	$args = array(
+		'labels'       => array(
+			'name'          => 'Books',
+			'singular_name' => 'Book',
+			'menu_name'     => 'Books',
+			'add_new'       => 'Add New Book',
+			'add_new_item'  => 'Add New Book',
+			'new_item'      => 'New Book',
+			'edit_item'     => 'Edit Book',
+			'view_item'     => 'View Book',
+			'all_items'     => 'All Books',
+		),
+		'public'       => true,
+		'has_archive'  => true,
+		'show_in_rest' => true,
+		'rest_base'    => 'books',
+		'supports'     => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt' ),
+	);
+	
+	apply_filters( 'bookstore_register_post_type_args', $args );
+	
+	register_post_type( 'book', $args );
+}
+``` 
+
 ## Further reading
 
-You can read more about custom hooks along with some examples in the WordPress Plugin Developer Handbook section on  [custom hooks](https://developer.wordpress.org/plugins/hooks/custom-hooks/).
+You can read more about custom hooks along with some examples in the WordPress Plugin Developer Handbook section on [custom hooks](https://developer.wordpress.org/plugins/hooks/custom-hooks/).
