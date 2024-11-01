@@ -4,9 +4,9 @@
 
 ## Introduction
 
-While the WordPress hooks system makes WordPress very extendable, it can sometimes create incompatibilities with your plugin’s execution.
+While the WordPress hooks system makes WordPress very extendable, it can sometimes create conflicts with your plugin’s functionality.
 
-In this lesson you will learn about removing hook callback functions.
+In this lesson you will learn how to remove hooked callback functions to prevent them from executing.
 
 ## Example
 
@@ -98,7 +98,7 @@ In this specific case, the copyright text should only be displayed on pages, so 
 
 ```php
 if ( ! is_page() ) {
-    return;
+	return;
 }
 remove_filter( 'the_content', 'WP_Learn\Extra_Content\add_extra_option' );
 ````
@@ -106,8 +106,8 @@ remove_filter( 'the_content', 'WP_Learn\Extra_Content\add_extra_option' );
 Ideally, you should also remove any callbacks at the right point in request execution. In this specific case, a good place to remove the callback would be at the `wp` action hook, which is executed after the `query_posts()` function, which sets up the query loop.
 
 ```php
-add_action( 'wp', 'custom_remove_extra_option_hook' );
-function custom_remove_extra_option_hook() {
+add_action( 'wp', __NAMESPACE__ . '\remove_the_content_filter' );
+function remove_the_content_filter() {
 	if ( ! is_page() ) {
 		return;
 	}
@@ -115,7 +115,7 @@ function custom_remove_extra_option_hook() {
 }
 ```
 
-This code could be added to a custom plugin, or a child theme’s `functions.php` file.
+This code could be added to a custom plugin, or a child theme’s `functions.php` file, specific to the site.
 
 ### Action
 
@@ -160,7 +160,7 @@ By removing the specific action callback, performing the functionality, and then
 
 It is also possible to remove all callbacks for a specific hook.
 
-Doing this is not generally recommended as it can remove important hooks for certain plugins or themes, and it is better to remove only specific hook callbacks which create incompatibilities.
+Doing this is not generally recommended as it can remove important hooks for certain plugins or themes, and it is better to remove only specific hook callbacks which create conflicts.
 
 If you do want to remove all callbacks from an action, you can use the `remove_all_actions()` [function](https://developer.wordpress.org/reference/functions/remove_all_actions/).
 

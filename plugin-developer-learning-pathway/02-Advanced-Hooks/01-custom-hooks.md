@@ -28,9 +28,11 @@ They make it possible for your plugin user to customize your plugin behavior to 
 
 They also allow you to avoid having to worry about making your plugin compatible every single possible external integration.
 
-As custom hooks give users a way to implement their own custom scenarios themselves they will often report their solution back to you when they find one, which you can share with the rest of your users.
+As custom hooks give users a way to implement their own custom scenarios, they will often report their solution back to you when they find one, which you can share with the rest of your users.
 
-For the rest of the examples in this lesson, download, install, and activate version 1.0.1 of the [bookstore plugin](https://github.com/wptrainingteam/beginner-developer) from the Training Team's GitHub repository on your local WordPress installation. This plugin is part of the Beginner Developer Learning Pathway.
+## Example code
+
+For the rest of the examples in this lesson, download, install, and activate version 1.0.2 of the [bookstore plugin](https://github.com/wptrainingteam/beginner-developer/raw/main/bookstore.1.0.2.zip) from the Training Team's GitHub repository on your local WordPress installation. This plugin is part of the [Beginner Developer Learning Pathway](https://learn.wordpress.org/course/beginner-wordpress-developer/).
 
 ## Creating a custom action
 
@@ -38,7 +40,7 @@ You would often create custom actions to trigger before something specific is go
 
 To do this, you call the `do_action` [function](https://developer.wordpress.org/reference/functions/do_action/), passing it the name of the action as a parameter.
 
-Open the bookstore.php file in the bookstore plugin and find the `bookstore_render_booklist` function. 
+Open the bookstore plugin in your code editor, edit the `bookstore.php` file, and find the `bookstore_render_booklist` function. 
 
 This function that renders the bookstore plugins custom Sub Menu page in the WordPress dashboard.
 
@@ -46,7 +48,7 @@ Let's say you want to make it possible for someone to add their own HTML content
 
 ```php
 function bookstore_render_booklist() {
-	do_action( 'bookstore_before_render_booklist' );
+	do_action( 'before_bookstore_render_booklist' );
 	?>
 	<div class="wrap" id="bookstore-booklist-admin">
 		<h1>Actions</h1>
@@ -55,25 +57,25 @@ function bookstore_render_booklist() {
 		<h2>Books</h2>
 		<textarea id="bookstore-booklist" cols="125" rows="15"></textarea>
 	</div>
-    <div style="width:50%;">
-        <h2>Add Book</h2>
-        <form>
-            <div>
-                <label for="bookstore-book-title">Book Title</label>
-                <input type="text" id="bookstore-book-title" placeholder="Title">
-            </div>
-            <div>
-                <label for="bookstore-book-content">Book Content</label>
-                <textarea id="bookstore-book-content" cols="100" rows="10"></textarea>
-            </div>
-            <div>
-                <input type="button" id="bookstore-submit-book" value="Add">
-            </div>
-        </form>
-    </div>
+	<div style="width:50%;">
+		<h2>Add Book</h2>
+		<form>
+			<div>
+				<label for="bookstore-book-title">Book Title</label>
+				<input type="text" id="bookstore-book-title" placeholder="Title">
+			</div>
+			<div>
+				<label for="bookstore-book-content">Book Content</label>
+				<textarea id="bookstore-book-content" cols="100" rows="10"></textarea>
+			</div>
+			<div>
+				<input type="button" id="bookstore-submit-book" value="Add">
+			</div>
+		</form>
+	</div>
 
 	<?php
-	do_action( 'bookstore_after_render_booklist' );
+	do_action( 'after_bookstore_render_booklist' );
 }
 ```
 
@@ -82,8 +84,6 @@ This way, other developer can hook into the `before_bookstore_render_booklist` a
 ## Creating a custom filter
 
 Custom filters are a way to allow someone to change the value of something you define in your code.
-
-It allows you to make a specific decision for how your code functions for plugin users, but also allow more experienced users the ability to extend that decision to suit their requirements.
 
 To create a custom filter, you call the `apply_filters` [function](https://developer.wordpress.org/reference/functions/apply_filters/) with the name of the filter as the first parameter and the default value the filter is applied to as the second parameter.
 
@@ -150,11 +150,13 @@ In the lesson on [Working with hooks](https://learn.wordpress.org/lesson/working
 
 Both the `do_action` and `apply_filters` function signatures accept an unlimited number of optional, additional arguments.
 
-These arguments are passed to the callback function when the action or filter is triggered. When a user hooks a callback function into the action or filter, they can specify how many of those arguments they want to receive in the callback function.
+These arguments are passed to the callback function when the action or filter is triggered. 
+
+When someone hooks a callback function into the action or filter, they can specify how many of those arguments they want to receive in the callback function.
 
 You can use these arguments to pass optioanl data to the callback function, such as the context in which the action or filter is triggered.
 
-For example, you could pass the current value of is_admin() as a "context" argument to the `bookstore_before_render_booklist` action:
+For example, you could pass the current value of is_admin() as a "context" argument to the actions in the render function:
 
 ```php
 function bookstore_render_booklist() {
