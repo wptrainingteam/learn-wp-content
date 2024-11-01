@@ -2,30 +2,34 @@
 
 # Good practices
 
-While WordPress hooks are quite easy to begin with, it is however harder to master them.
+As you dive deeper into using WordPress hooks there are some details that become valuable to understand in order to master them.
+
+In this lesson, you'll learn some good practices to follow when working with hooks.
 
 ## Naming hooks
 
-The first point comes with naming hooks.
+The first good practice involves naming your hooks. Let's look at some conventions that WordPress core follows.
 
 ### Actions
 
-As an action involves a change of state, I would advise you to use a verb within its name.
+Actions are usually added when something changes, so it's advisable for you to use a verb related to that change in the action hook name.
+
+For example, the WordPress core action hook that's triggered when a post is deleted is named `delete_post`.
 
 ```php
-do_action('delete_post');
+do_action( 'delete_post' );
 ```
 
-Then if the action is happening before the actual event the convention is to prefix it with `pre_`.
+If you want to add an action before the actual change, the convention is to prefix it with `pre_`.
 
 ```php
-do_action('pre_delete_post');
+do_action( 'pre_delete_post' );
 ```
 
-Finally, if the action is after the actual event, it is advised to use a past tense inside the name.
+Finally, if you want to add an action after the actual event, The convention is to use a past tense in the name.
 
 ```php
-do_action('deleted_post');
+do_action( 'deleted_post' );
 ```
 
 ### Filters
@@ -33,7 +37,7 @@ do_action('deleted_post');
 On the other side, a filter is a value and due to that it is advised to use nouns within its name.
 
 ```php
-apply_filters('sitemap_url', 'https://example.org/sitemap.xml');
+apply_filters( 'sitemap_url', 'https://example.org/sitemap.xml' );
 ```
 
 ## Handling the filter type mess

@@ -4,7 +4,7 @@
 
 ## Introduction
 
-At the time of creating this lesson, WordPress Code has more than 3000 available hooks.
+At the time of creating this lesson, WordPress Core has more than 3000 available hooks.
 
 As you might guess, there is a hook for everything, so one problem you may often encounter is which hook you should use.
 
