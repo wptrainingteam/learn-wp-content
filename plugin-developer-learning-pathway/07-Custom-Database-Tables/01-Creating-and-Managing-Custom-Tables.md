@@ -22,11 +22,11 @@ In this example, you're going to create a custom table to store form submissions
 
 ## The `wpdb` class
 
-To start, you need to first establish a connection to the WordPress database. Thankfully, WordPress already does this automatically by using the `wpdb` class.
+To start, you need to first establish a connection to the WordPress database. Thankfully, WordPress already does this automatically by using [the `wpdb` class](https://developer.wordpress.org/reference/classes/wpdb/).
 
 The `wpdb` class is used to manage a database connection while also providing helpful methods to perform queries and retrieve data from the connected database in a structured way. 
 
-During PHP execution, WordPress creates a `$wpdb` global object variable as an instance of this class by using the `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` constants defined in your `wp-config.php` file.
+During PHP execution, WordPress creates a `$wpdb` global object variable as an instance of this class by using the `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` constants [defined in your `wp-config.php` file](https://developer.wordpress.org/advanced-administration/before-install/howto-install/#detailed-step-3).
 
 Because the `$wpdb` object exists in the global namespace, you can access it in PHP like this:
 
@@ -54,11 +54,11 @@ To start, create a new plugin to store the custom table code.
 
 Then, register an activation hook for your plugin to create the custom table. Using this hook ensures the table immediately exists once your plugin is activated so that any following code can safely query against it.
 
-When choosing a name for the custom table, be sure to use the configured table prefix by prepending the table name with the `$wpdb->prefix` object property. The default table prefix is `wp_` for single sites and `wp_{$blogid}_` (eg. `wp_2_`) for subsites within WordPress a multisite network.
+When choosing a name for the custom table, be sure to use the configured table prefix by prepending the table name with the `$wpdb->prefix` object property. The default table prefix is `wp_` for single sites and `wp_{$blogid}_` (eg. `wp_2_`) for subsites within a WordPress multisite network.
 
-Also, use the `$wpdb->get_charset_collate()` method to ensure the custom table's collation matches the rest of the tables in WordPress for optimum data integrity, compatibility, and query performance.
+Also, use [the `$wpdb->get_charset_collate()` method](https://developer.wordpress.org/reference/classes/wpdb/get_charset_collate/) to ensure the custom table's collation matches the rest of the tables in WordPress for optimum data integrity, compatibility, and query performance.
 
-To create a custom table, use the `dbDelta()` function included in WordPress. This function handles both table creation and future updates to the table's structure.
+To create a custom table, use [the `dbDelta()` function](https://developer.wordpress.org/reference/functions/dbdelta/) included in WordPress. This function handles both table creation and future updates to the table's structure.
 
 ```php
 register_activation_hook( __FILE__, 'wp_learn_custom_table_create_submissions_table' );
@@ -138,7 +138,7 @@ function wp_learn_custom_table_update_db_check() {
 }
 ```
 
-Inside this callback function, the version_compare() [function](https://www.php.net/manual/en/function.version-compare.php) compares the version number stored in the `options` table against the default version number defined in the plugin file.
+Inside this callback function, [the `version_compare()` function](https://www.php.net/manual/en/function.version-compare.php) compares the version number stored in the `options` table against the default version number defined in the plugin file.
 
 If the current version is lower than the default version, the table is updated.
 
@@ -183,9 +183,9 @@ function wp_learn_custom_table_update_db_check() {
 
 When a user deactivates or uninstalls your plugin, it’s good practice to clean up any custom tables you created to avoid cluttering the database. However, remember to only delete tables when you’re certain the user wants to remove all plugin data.
 
-In most cases, plugin data is removed during uninstallation because it indicates the user no longer needs the plugin. As you learned in Module 1, you can use the `register_uninstall_hook()` function to do this.
+In most cases, plugin data is removed during uninstallation because it indicates the user no longer needs the plugin. You can use [the `register_uninstall_hook()` function](https://developer.wordpress.org/reference/functions/register_uninstall_hook/) to do this.
 
-You can execute the SQL query to delete the table by using the `$wpdb` global variable, which you'll learn more about in a future lesson.
+By using the `$wpdb` global variable, you can execute the SQL query to delete the table by using [the `query()` method](https://developer.wordpress.org/reference/classes/wpdb/query/), which you'll learn more about in a future lesson.
 
 ```php
 register_uninstall_hook( __FILE__, 'wp_learn_custom_table_delete_submissions_table' );
@@ -198,4 +198,4 @@ function wp_learn_custom_table_delete_submissions_table() {
 
 ## Conclusion
 
-For more information on working with custom tables, make sure to read the [Creating Tables with Plugins section of WordPress Plugin Handbook](https://developer.wordpress.org/plugins/creating-tables-with-plugins/). It's also useful to read the class reference for the `wpdb` [class](https://developer.wordpress.org/reference/classes/wpdb/), as well as the [function reference](https://developer.wordpress.org/reference/functions/dbdelta/) for `dbDelta()`.
+For more information on working with custom tables, make sure to read the [*Creating Tables with Plugins* section of the WordPress Plugin Handbook](https://developer.wordpress.org/plugins/creating-tables-with-plugins/). It's also useful to read the class reference for [the `wpdb` class](https://developer.wordpress.org/reference/classes/wpdb/), as well as [the function reference for `dbDelta()`](https://developer.wordpress.org/reference/functions/dbdelta/).
