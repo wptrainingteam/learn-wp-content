@@ -91,7 +91,7 @@ If you use this code in a custom plugin, activate it, and inspect the database, 
 
 You may be wondering why we created a table named `wpl_submissions` instead of simply `submissions` since we are already prefixing it with the `$wpdb->prefix` object property.
 
-Generally, you will want to include a prefix unique to your plugin (aka a "vendor prefix") in the table name by following a structure similar to the [prefixing method used to avoid naming collisions](https://developer.wordpress.org/plugins/plugin-basics/best-practices/#procedural-coding-method) in PHP. This makes the table unique to your plugin and avoids any accidental data modifications by other plugins , themes, or even a future release of WordPress core querying against the same table name.
+Generally, you will want to include a prefix unique to your plugin (aka a "vendor prefix") in the table name by following a structure similar to the [prefixing method used to avoid naming collisions](https://developer.wordpress.org/plugins/plugin-basics/best-practices/#procedural-coding-method) in PHP. This makes the table unique to your plugin and avoids any accidental data modifications by other plugins, themes, or even a future release of WordPress core querying against the same table name.
 
 Including a vendor prefix in the name of each custom table created and managed by your plugin also improves database organization and management. Having a unique, identifiable prefix groups tables from the same plugin together in the database, making it easier for developers, administrators, and database managers to see which tables belong to a particular plugin.
 
