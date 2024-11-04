@@ -87,7 +87,7 @@ The SQL query must follow the `dbDelta()` function's specific requirements, such
 
 If you use this code in a custom plugin, activate it, and inspect the database, you'll see the new table listed in your local WordPress database, with the table columns you defined.
 
-### Naming Custom Tables to Avoid Collissions
+### Naming Custom Tables to Avoid Collisions
 
 You may be wondering why we created a table named `wpl_submissions` instead of simply `submissions` since we are already prefixing it with the `$wpdb->prefix` object property.
 
