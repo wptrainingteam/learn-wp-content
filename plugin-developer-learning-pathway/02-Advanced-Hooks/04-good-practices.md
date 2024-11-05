@@ -1,10 +1,10 @@
 <!-- Original script by Cyrille C: https://github.com/CrochetFeve0251 -->
 
-# Good practices
+# Developing with hooks
 
-As you dive deeper into using WordPress hooks there are some details that become valuable to understand in order to master them.
+As you dive deeper into developing with WordPress hooks there are some details about how hooks work that are valuable to understand.
 
-In this lesson, you'll learn some good practices to follow when working with hooks.
+In this lesson, you'll learn some good practices to follow when developing with hooks.
 
 ## Naming hooks
 
@@ -20,13 +20,13 @@ For example, the WordPress core action hook that's triggered when a post is dele
 do_action( 'delete_post' );
 ```
 
-If you want to add an action before the actual change, the convention is to prefix it with `pre_`.
+If you want to add an action before the actual change, you can prefix it with `pre_`.
 
 ```php
 do_action( 'pre_delete_post' );
 ```
 
-Finally, if you want to add an action after the actual event, The convention is to use a past tense in the name.
+Finally, if you want to add an action after the actual event, the convention is to use a past tense in the name.
 
 ```php
 do_action( 'deleted_post' );
@@ -34,24 +34,39 @@ do_action( 'deleted_post' );
 
 ### Filters
 
-On the other side, a filter is a value and due to that it is advised to use nouns within its name.
+Because filters are generally linked to a variable that can be modified, filter hooks are often named after the variable that can be modified.
+
+For example, the filter hook that allows you to modify the content of a post is named `the_content`.
 
 ```php
-apply_filters( 'sitemap_url', 'https://example.org/sitemap.xml' );
+$content = apply_filters( 'the_content', get_the_content() );
 ```
 
-## Handling the filter type mess
+### Avoid naming collisions
 
-When using a filter, the type from the value is never guaranteed even it is set in the docblock.
+When naming your hooks, it's important to avoid naming collisions with other plugins or themes. To do this, you can prefix your hook names with your plugin's name or a unique identifier.
+
+```php
+do_action( 'wp_learn_delete_book' );
+
+apply_filters( 'wp_learn_lesson_url', 'https://example.org/lesson' );
+```
+
+## Handling filter types
+
+When using a filter, the type of the variable that's returned from the filter is not guaranteed, even if it's documented.
 
 ### The problem
-There is a simple reason for that: It is the last callback that decides what is returned by the filter, and that also means the last callback decides the type from the value.
 
-That might not seem an issue at first, but you need to remember when you are creating your custom hooks that you are not the one who will be writing the callbacks but your users.
+The reason for this is that the last callback that runs on the filter determines what is returned by the filter.
+
+That might not seem an issue at first, because as a developer you will make sure to return a value with the same type.
+
+However, if you recall from the lesson on Custom Hooks, just as you can hook into actions and filters, so can other developers.
 
 ![Illustration from the problem](./imgs/handling-filter-return.png)
 
-This means that you have no control on what your users will return and if a wrong type is returned, it might make your plugin crash.
+This means that if you add custom hooks to your plugin, you need to ensure that the data returned is the correct type otherwise it might break your plugin's functionality.
 
 ### The solution
 
@@ -59,48 +74,55 @@ The solution for this comes in two parts:
 
 #### Validating your filter output
 
-The best way to make sure the output value is the type we expect is to validate it.
+The best way to make sure the value returned from any filter callbacks stays the type you expect is to validate the data type in your code.
 
-For primitive types as integer, float or boolean, we can cast the output value as following:
-- `boolean`: `$value = (bool) apply_filters('my_filter', true);`
-- `integer`: `$value = (int) apply_filters('my_filter', 10);`
-- `float`: `$value = (float) apply_filters('my_filter', 10.0);`
+For primitive types like integer, float or boolean, you can use [PHP's type casting](https://www.php.net/manual/en/language.types.type-juggling.php#language.types.typecasting) system, to ensure the return value is the correct type:
 
-However, for more complex validation or other types, it is better to have a manual validation.
-For example, for a string or an array,
-it would be better to check if the returned value is the right type
-rather than casting which could lead to a fatal error.
+- `boolean`: `$is_admin = (bool) apply_filters( 'wp_learn_is_admin', true );`
+- `integer`: `$book_count = (int) apply_filters( 'wp_learn_book_count', 10 );`
+- `float`: `$base_price = (float) apply_filters( 'wp_learn_base_price', 10.0 );`
 
-For a string that would give the following:
+However, for more complex validation or other types, it is better to implement a more manual validation check.
+
+For example, for a string or an array, it would be better to check if the returned value is the right type rather than using casting, as this could lead to a PHP fatal error.
+
+For example, you can use the PHP `is_string()` [function](https://www.php.net/manual/en/function.is-string.php) to check if the value returned from any hooked callbacks is a string:
+
 ```php
-$initial = 'my_value';
+$book_slug = apply_filters( 'wp_learn_book_slug', 'books' );
 
-$value = apply_filters('my_filter', $initial);
-
-if ( ! is_string( $value ) ) {
-    $value = $initial;
+if ( ! is_string( $book_slug ) ) {
+    // either reset the value or throw an error
 }
 ```
+
+If not, you can either reset the value or throw an error.
 
 #### Assert your callbacks value
 
-However, that incertitude on the type of the value inside filters does not only apply to their output, but it is also present on each callback.
+The fact that the type of the variable returned from a filter can be modified also means that an incorrectly typed variable can be passed to any hooked callback.
 
 ![Illustration from problem](./imgs/assert-callback-values.png)
 
-This is why it is important to never strongly type the value from a filter (the first parameter).
-
-The same way it is also important to always make a check on the type from the value before performing any operation on it.
+Therefore, if you hook a callback function into a filter, it is important to always check the type of the value you receive before performing any operation on it.
 
 ```php
-function my_callback($value) {
-    if(! is_string($value)) {
-        return $value;
+add_filter( 'wp_learn_book_slug', 'jon_doe_edit_book_slug' );
+function jon_doe_edit_book_slug( $book_slug ) {
+    if ( ! is_string( $book_slug ) ) {
+        // throw some error because the type is incorrect 
     }
     
-    return $value . "my_string";
+    // continue with your functionality because the type is correct
+    return 'book';
 }
 ```
+
+You can use the same methods as before to validate the type of the variable you receive.
+
+For more information on PHP's type jugging, you can refer to the [PHP documentation](https://www.php.net/manual/en/language.types.type-juggling.php). 
+
+There's also a section dedicated to the various [Variable handling functions](https://www.php.net/manual/en/ref.var.php).
 
 ## Getting information on a hook
 
@@ -108,93 +130,15 @@ Another good thing to know about hooks is how to get information about them.
 
 ### Determining the current hook
 
-WordPress allows a callback function or method to be used on different events.
+WordPress allows a callback function or method to be used on more than one hook. 
 
-Due to that, it can be sometimes unclear on which hook the callback is actually running.
+Due to this, it can be sometimes unclear on which hook the callback is actually running.
 
-This is why WordPress introduced two functions.
+In any callback function it is possible to use the [`current_filter`](https://developer.wordpress.org/reference/functions/current_filter/) or [`current_action`](https://developer.wordpress.org/reference/functions/current_action/) functions to determine the current filter or action the callback is running on.
 
-#### current_filter
+### Check how many times a hook has run
 
-If you are in a callback linked with filters,
-it is possible to use the function [`current_filter`](https://developer.wordpress.org/reference/functions/current_filter/):
+Sometimes it is important to know if a hooked callback has already run to prevent it from running again.
 
-```php
-function my_callback($value) {
-    
-    if('the_content_feed' === current_filter()) {
-        return '';
-    }
-    
-    return $value;
-}
+Inside any callback function, you can use the [`did_filter`](https://developer.wordpress.org/reference/functions/did_filter/) function to check how many times a filter has been applied during the current request and the [`did_action`](https://developer.wordpress.org/reference/functions/did_action/) function to check how many times an action has been applied.
 
-add_filter('the_content_rss', 'my_callback');
-add_filter('the_content_feed', 'my_callback');
-
-```
-
-#### current_action
-
-If you are in a callback linked with filters,
-it is possible to use the function [`current_action`](https://developer.wordpress.org/reference/functions/current_action/):
-
-```php
-function my_callback() {
-    
-    if('init' === current_action()) {
-        return;
-    }
-    
-    // my logic
-}
-
-add_filter('amin_init', 'my_callback');
-add_filter('init', 'my_callback');
-
-```
-### Check how many times a hook as run
-
-Sometimes it is important to know if a callback has already run to prevent it from running again.
-
-For that, it is possible to use two functions depending on if you want to check an action or a filter.
-
-#### did_filter
-
-If you want to know how many times a filter has been fired,
-you can use the [`did_filter`](https://developer.wordpress.org/reference/functions/did_filter/) function:
-
-```php
-function my_callback($value) {
-    
-    if(0 < did_filter('pre_delete_attachment')) {
-        return $value;
-    }
-    
-    // My logic
-    
-    return $value;
-}
-
-add_filter('after_delete_post', 'my_callback');
-```
-
-#### did_action
-
-If you want to know how many times ana action has been fired,
-you can use the [`did_action`](https://developer.wordpress.org/reference/functions/did_action/) function:
-
-```php
-function my_callback() {
-    
-    if(0 == did_action('amin_init')) {
-        return;
-    }
-    
-    return ;
-    
-    // my logic
-}
-
-add_action('added_option', 'my_callback');
-```

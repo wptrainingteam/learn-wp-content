@@ -20,7 +20,9 @@ What makes a web server a little different is that it has software installed and
 
 WordPress runs on a tech stack called LAMP. LAMP stands for Linux, Apache, MySQL, and PHP.
 
-Linux is the operating system that manages the hardware and software resources of the server. Popular Linux distributions include Debian, Ubuntu, RedHat, and CentOS. These operating systems made up of the Linux kernel and a collection of software packages that are installed on top of the kernel.
+Linux is the operating system that manages the hardware and software resources of the server. Popular Linux distributions include Debian, Ubuntu, RedHat, and AlmaLinux. 
+
+These operating systems are made up of the Linux kernel and a collection of software packages that are installed on top of the kernel.
 
 Apache, MySQL, and PHP are all installed via the package manager of the specific Linux distribution on the server.
 
