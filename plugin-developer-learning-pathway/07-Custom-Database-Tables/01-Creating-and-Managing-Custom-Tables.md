@@ -131,8 +131,8 @@ Then, update the `plugins_loaded` hook callback to point to a function that chec
 add_action( 'plugins_loaded', 'wp_learn_custom_table_update_db_check' );
 function wp_learn_custom_table_update_db_check() {
 	global $wp_learn_custom_table_db_version;
-	$current_custom_table_db_version = get_option( 'wp_learn_custom_table_db_version', '1.0' );
-	if ( version_compare( $wp_learn_current_custom_table_db_version, $wp_learn_custom_table_db_version ) ) {
+	$current_custom_table_db_version = get_option( 'wp_learn_custom_table_db_version', '1.0.0' );
+	if ( version_compare( $current_custom_table_db_version, $wp_learn_custom_table_db_version ) ) {
 		wp_learn_custom_table_create_submissions_table();
 	}
 }
@@ -145,7 +145,7 @@ If the current version is lower than the default version, the table is updated.
 Whenever the plugin's table schema is changed in the code, the version number should be increased so that the tables are checked and updated by the `dbDelta()` function.
 
 ```php
-$wp_learn_custom_table_db_version = '1.0.1';
+$wp_learn_custom_table_db_version = '1.1.0';
 
 register_activation_hook( __FILE__, 'wp_learn_custom_table_create_submissions_table' );
 function wp_learn_custom_table_create_submissions_table() {
