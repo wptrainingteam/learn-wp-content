@@ -42,3 +42,10 @@ function wp_learn_custom_table_update_db_check() {
 		wp_learn_custom_table_create_submissions_table();
 	}
 }
+
+register_uninstall_hook( __FILE__, 'wp_learn_custom_table_delete_submissions_table' );
+function wp_learn_custom_table_delete_submissions_table() {
+	global $wpdb;
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wpl_submissions" );
+	delete_option( 'wp_learn_custom_table_db_version' );
+}
