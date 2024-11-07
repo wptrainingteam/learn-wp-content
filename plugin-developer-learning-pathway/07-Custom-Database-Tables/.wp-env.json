@@ -1,7 +1,7 @@
 {
     "core": "WordPress/WordPress#6.6.2",
     "phpVersion": "8.2",
-    "plugins": [ "./my-plugin.php" ],
+    "plugins": [ "./wpl-form-submissions.php" ],
     "port": 80,
     "mysqlPort": 3306,
     "env": {
