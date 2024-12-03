@@ -1,34 +1,56 @@
 # Introduction to WP Cron
 
-On some occasions, we need to have some actions that need to be executed periodically instead of executing when a user has an interaction.
+In some instances, you might need a way to trigger an action that needs to be executed at a specific time interval instead of being based on a user interaction.
 
-A good example of this would be a subscription.
+More commonly known as scheduled tasks, these actions are often used to automate repetitive tasks that need to be executed.
 
-First, we would need some logic to proceed with the registration from the customer to the subscription with some usual logic.
+Let's look at some examples of scheduled tasks that you might need to automate, and what this looks like in the context of a WordPress site.
 
-Then we would have to bill the user monthly, and for this part of the logic we would need a Cron. This is due to the fact we don't want the customer to pay manually each month, but instead we want the payment to proceed automatically.
+## Common examples of scheduled tasks
+
+Some common examples of scheduled tasks your plugin might need to offer include sending subscription reminder emails to users, automatically publishing scheduled content, or regularly checking an external data API for updates.
+
+The subscription reminder email might need to be sent one week before the end of the month, the scheduled content might need to be published at 8:00 am every day, and the data API updates might need to be checked and imported every 12 hours.
+
+A web server also has its own scheduled tasks, such as checking for updates, backing up the database, and clearing the cache.
+
+These tasks are automated using a command line utility known as cron, which gets its name from the word Chronos, the Greek word for time.
 
 ## Understanding how Cron works
 
-A Cron is always based on two parts:
-- A recurrence that will define the time when the Cron are executed.
-- A task that will be executed when the Cron is fired.
+On a web server, a scheduled task is known as a cron job, and it's always made up of two parts:
 
-## WP Cron 
+- A recurring time when the task will be executed.
+- A task that will be executed when the cron job is run.
 
-Real crons needs to be settled up by the WordPress user to be able to run, which is not something straightforward nor an easy process.
+Cron jobs are defined in a file called a crontab, which is a configuration file that contains a list of cron jobs.
 
-That is why WordPress introduced WP Crons, they are emulated crons that run by default on a WordPress website when real crons are not configured.
+But being able to create a cron job requires access to the server's crontab, as well as understanding the crontab syntax.
 
-That way, users are not left with a broken website if they forgot to set up the crons.
+This is not something that all WordPress site owners have, and even if they did, it's not a straightforward or easy process.
 
-However, WP Cron also have their own drawbacks compared to crons.
+## Introducing WP-Cron
 
-They rely on a user to load the page to run, and so they can be unreliable if you have little traffic on your website.
+That is why WordPress introduced WP-Cron. 
+
+WP-Cron emulates server crons and allows WordPress developers to create scheduled tasks without needing to access the server's crontab.
+
+WP-Cron is implemented by making an internal HTTP request to the wp-cron.php file in the root of the WordPress install whenever the site receives a visit.
+
+This will then will trigger any events that have been scheduled and stored in the WordPress database, by using the relevant WordPress scheduling functions.
+
+While this makes it easier for plugin developers to implement scheduled tasks, it does have some limitations.
+
+The primary limitation is that it relies on a user to load the page to run. This means it can be unreliable if the site has a drop in traffic, as the scheduled tasks may not run when expected.
+
+Fortunately, WordPress does provide a mechanism to overcome this limitation, which you can learn about in lesson on Hooking WP-Cron Into the System Task Scheduler 
 
 ## Switching from WP Cron to Cron
 
-At the level of the plugin, it is not possible to know of we are using WP Crons or Crons as it will be handled inside WordPress configuration.
+As the developer of a plugin, it is not possible to know of a site that has your plugin installed is using the default WP-Cron implementation or server crons, as this will be different on every WordPress configuration.
 
-This, even if it can seem like a problem, is in fact good news for us plugin developers.
-This due to the fact there will be one syntax to register Crons and WordPress will handle us which one from WP Crons or Crons will be used.
+While this might seem like a problem, is in fact good news.
+
+This is because the mechanism for hooking WP-Cron into the system cron makes use of the same core functionality. 
+
+This means as long as your plugin uses the WordPress scheduling functions, it will work regardless of whether the site is using WP-Cron or server crons.
