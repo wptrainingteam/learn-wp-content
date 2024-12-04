@@ -1,6 +1,6 @@
 # Scheduling WP Cron events
 
-In order to make use of the built in WP-Cron functionality, you need to know how to schedule WP-Cron events.
+In order to make use of the built-in WP-Cron functionality, you need to know how to schedule and unschedule WP-Cron events.
 
 Let's take a look how this is done.
 
@@ -22,13 +22,15 @@ To start, create a new plugin in your local WordPress install, with the followin
 
 To schedule a WP Cron event you will need a few things:
 
-- You need to create an action hooked into a callback function.
-- Inside the callback function you define the logic to be executed for the event
+- You need to create a function that defines the logic for your event to be executed
+- The function should be hooked into an action hook that will be triggered by the WP-Cron event
 - Finally, you schedule the task by passing your action and the interval at which the event should run.
 
-## Creating the action to execute
+## Creating the action and callback to execute
 
-In WordPress, any action can be scheduled as a WP-Cron event. To set up an action to be schduled you use the same `add_action` function you would use to hook into any existing action.
+In WordPress, any action hook can be scheduled as a WP-Cron event. 
+
+To set up an action hook to be scheduled you use the same `add_action` function you would use to hook into any existing action.
 
 ```php
 add_action('wp_learn_trigger_event', 'wp_learn_trigger_event_callback');
@@ -37,6 +39,8 @@ function wp_learn_trigger_event_callback() {
     // event logic here
 }
 ```
+
+This action is not an existing WordPress action, but one that you will create for the purposes of scheduling a WP-Cron event.
 
 For the purposes of this event, just add a simple log message to the callback function:
 
@@ -54,32 +58,36 @@ define( 'WP_DEBUG_DISPLAY', false );
 define( 'WP_DEBUG_LOG', true );
 ```
 
-However, there is a big thing to not about actions being executed within a Cron job, they run as a front-end request and not an administrator one.
-
 ## Scheduling an event
 
-Once we get your action with the logic the next step is to schedule it.
+Once you have your action and callback function with the logic to be executed for the event, the next step is to schedule it at a specific interval.
 
-For that, we got a couple of intervals already implemented into WordPress we can use:
-- `hourly`: To run the event each hour.
-- `twicedaily`: To run the event each 12 hours.
-- `daily`:  To run the event each 24 hours.
-- `weekly`: To run the event each 7 days.
+WordPress ships with a few predefined intervals you can use:
+- `hourly`: runs the event each hour.
+- `twicedaily`: runs the event every 12 hours.
+- `daily`:  runs the event every 24 hours.
+- `weekly`: runs the event every 7 days.
 
-Then, to actually schedule the event, we need to use the function [`wp_schedule_event`](https://developer.wordpress.org/reference/functions/wp_schedule_event/) within at the WordPress initialization:
+To schedule the event, you use the [`wp_schedule_event`](https://developer.wordpress.org/reference/functions/wp_schedule_event/) function. It's recommended to use this function during WordPress initialization, by hooking into the `init` action.
 
 ```php
-function my_plugin_schedule_my_event() {
-    wp_schedule_event(time(), 'my_plugin_my_event', 'hourly');
-}
-
 add_action('init', 'my_plugin_schedule_my_event');
+
+function my_plugin_schedule_my_event() {
+    wp_schedule_event( time(), 'wp_learn_trigger_event', 'hourly' );
+}
 ```
 
-That method takes three parameters:
-- The timestamp from the next run from that event, we often set it up to the current date.
-- The hook that should be executed.
-- The recurrence from that event.
+That function takes three parameters:
+- The Unix timestamp from when next to run the event, ie the start time. You can use the PHP `time()` [function](https://www.php.net/manual/en/function.time.php) to get the current time.
+- The action hook you created that should be executed.
+- The internal at which the event should run after the initial start time, as set by the first parameter.
+
+## Testing the event
+
+There are a number of ways to check and test your WP Cron events, which you will learn about in a different lesson. However, because you've created this event to run hourly, you can check that it's working by simply loading the front end of your site.
+
+However, there is a big thing to not about actions being executed within a Cron job, they run as a front-end request and not an administrator one.
 
 ## Preventing an event from scheduling twice
 
