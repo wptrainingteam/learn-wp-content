@@ -1,20 +1,57 @@
 # Scheduling WP Cron events
 
-To schedule a Cron event we will need two things:
+In order to make use of the built in WP-Cron functionality, you need to know how to schedule WP-Cron events.
 
-- An job to execute.
-- An periodicity for our job.
+Let's take a look how this is done.
 
-## Creating a job to execute
+## Example plugin
 
-In WordPress, any action can be a Cron event to schedule that makes it quite easy to write the logic to be run into a WP Cron as it will be a familiar syntax:
+To start, create a new plugin in your local WordPress install, with the following plugin header:
 
 ```php
-function my_plugin_my_action() {
-    // my logic
-}
+<?php
+/**
+ * Plugin Name: WP Learn Scheduled Event
+ * Description: A plugin to schedule a WP Cron event.
+ * Version: 1.0
+ * 
+ */
+```
 
-add_action('my_plugin_my_event', 'my_plugin_my_action');
+## Scheduling a WP Cron event
+
+To schedule a WP Cron event you will need a few things:
+
+- You need to create an action hooked into a callback function.
+- Inside the callback function you define the logic to be executed for the event
+- Finally, you schedule the task by passing your action and the interval at which the event should run.
+
+## Creating the action to execute
+
+In WordPress, any action can be scheduled as a WP-Cron event. To set up an action to be schduled you use the same `add_action` function you would use to hook into any existing action.
+
+```php
+add_action('wp_learn_trigger_event', 'wp_learn_trigger_event_callback');
+
+function wp_learn_trigger_event_callback() {
+    // event logic here
+}
+```
+
+For the purposes of this event, just add a simple log message to the callback function:
+
+```php
+function wp_learn_trigger_event_callback() {
+    error_log('WP Learn Scheduled Event Triggered');
+}
+```
+
+Remember to make sure that you've enabled your error logs in your `wp-config.php` file, so that the error log is written to the WordPress `debug.log`.
+
+```php
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_DISPLAY', false );
+define( 'WP_DEBUG_LOG', true );
 ```
 
 However, there is a big thing to not about actions being executed within a Cron job, they run as a front-end request and not an administrator one.
