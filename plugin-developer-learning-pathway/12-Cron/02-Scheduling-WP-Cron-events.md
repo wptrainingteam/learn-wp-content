@@ -28,9 +28,9 @@ To schedule a WP Cron event you will need a few things:
 
 ## Creating the action and callback to execute
 
-In WordPress, any action hook can be scheduled as a WP-Cron event. 
+In order to trigger a scheduled event, WP-Cron performs a similar function to the WordPress `do_action` function, but it's specifically for WP-Cron events. 
 
-To set up an action hook to be scheduled you use the same `add_action` function you would use to hook into any existing action.
+So to start, you set up an action hook callback to be scheduled by using the same `add_action` function you would use to hook into any existing action.
 
 ```php
 add_action('wp_learn_trigger_event', 'wp_learn_trigger_event_callback');
@@ -40,9 +40,9 @@ function wp_learn_trigger_event_callback() {
 }
 ```
 
-This action is not an existing WordPress action, but one that you will create for the purposes of scheduling a WP-Cron event.
+This action is not an existing WordPress action, but one that you will create in the next step for the purposes of scheduling a WP-Cron event.
 
-For the purposes of this event, just add a simple log message to the callback function:
+Inside the callback function hooked into this action, you add your event logic. For now, just add a simple log message to the callback function:
 
 ```php
 function wp_learn_trigger_event_callback() {
@@ -60,7 +60,7 @@ define( 'WP_DEBUG_LOG', true );
 
 ## Scheduling an event
 
-Once you have your action and callback function with the logic to be executed for the event, the next step is to schedule it at a specific interval.
+Once you have hooked the callback function with the logic to be executed for the event into the action hook, the next step is to schedule it at a specific interval.
 
 WordPress ships with a few predefined intervals you can use:
 - `hourly`: runs the event each hour.
@@ -68,26 +68,30 @@ WordPress ships with a few predefined intervals you can use:
 - `daily`:  runs the event every 24 hours.
 - `weekly`: runs the event every 7 days.
 
-To schedule the event, you use the [`wp_schedule_event`](https://developer.wordpress.org/reference/functions/wp_schedule_event/) function. It's recommended to use this function during WordPress initialization, by hooking into the `init` action.
+To schedule the event, you use the [`wp_schedule_event`](https://developer.wordpress.org/reference/functions/wp_schedule_event/) function. 
+
+It's recommended to use this function during plugin activation, by using the register_activation_hook() function.
 
 ```php
-add_action('init', 'my_plugin_schedule_my_event');
+register_activation_hook( __FILE__, 'wp_learn_schedule_event' );
 
-function my_plugin_schedule_my_event() {
-    wp_schedule_event( time(), 'wp_learn_trigger_event', 'hourly' );
+function wp_learn_schedule_event() {
+    wp_schedule_event( time(), 'hourly', 'wp_learn_trigger_event' );
 }
 ```
 
 That function takes three parameters:
 - The Unix timestamp from when next to run the event, ie the start time. You can use the PHP `time()` [function](https://www.php.net/manual/en/function.time.php) to get the current time.
-- The action hook you created that should be executed.
 - The internal at which the event should run after the initial start time, as set by the first parameter.
+- The action hook you created that should be executed.
 
 ## Testing the event
 
-There are a number of ways to check and test your WP Cron events, which you will learn about in a different lesson. However, because you've created this event to run hourly, you can check that it's working by simply loading the front end of your site.
+There are a number of ways to check and test your WP Cron events, which you will learn about in a different lesson. 
 
-However, there is a big thing to not about actions being executed within a Cron job, they run as a front-end request and not an administrator one.
+However, because you've created this event to run hourly, you can check that it's working by activating the plugin, and then loading the front end of your site after about an hour.
+
+This is an important thing to note about WP-Cron events, they are only triggered by requests to the front-end of your site, and not the administration dashboard.
 
 ## Preventing an event from scheduling twice
 
