@@ -298,3 +298,143 @@ Play around with this a little to test it, create a few more form submissions, u
 ## Further reading
 
 For more information and examples of custom REST API routes and endpoints, check out the [Extending the REST API](https://developer.wordpress.org/rest-api/extending-the-rest-api/) chapter of the WP REST API handbook, specifically the [Adding Custom Endpoints](https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/) and [Routes and Endpoints](https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/) sections.
+
+## Full example code
+
+```php
+<?php
+/**
+ * Plugin Name: WP Learn - Form Submissions
+ * Description: A plugin to demonstrate creating custom routes and endpoints in the WP REST API.
+ * Version: 1.0.0
+ *
+ * @package wp-learn-form-submissions
+ */
+
+register_activation_hook( __FILE__, 'wp_learn_setup_table' );
+/**
+ * Create custom form_submissions table
+ */
+function wp_learn_setup_table() {
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'form_submissions';
+
+	$sql = "CREATE TABLE $table_name (
+	  id mediumint(9) NOT NULL AUTO_INCREMENT,
+	  name varchar (100) NOT NULL,
+	  email varchar (100) NOT NULL,
+	  PRIMARY KEY  (id)
+	)";
+
+	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+	dbDelta( $sql );
+}
+
+add_action( 'rest_api_init', 'wp_learn_register_routes' );
+/**
+ * Register the REST API wp-learn-form-submissions-api/v1/form-submission routes
+ */
+function wp_learn_register_routes() {
+
+	// GET route.
+	register_rest_route(
+		'wp-learn-form-submissions-api/v1',
+		'/form-submissions/',
+		array(
+			'methods'             => 'GET',
+			'callback'            => 'wp_learn_get_form_submissions',
+			'permission_callback' => '__return_true',
+		)
+	);
+
+	// POST route.
+	register_rest_route(
+		'wp-learn-form-submissions-api/v1',
+		'/form-submission/',
+		array(
+			'methods'             => 'POST',
+			'callback'            => 'wp_learn_create_form_submission',
+			'permission_callback' => 'wp_learn_require_permissions',
+		)
+	);
+
+	// GET by id route.
+	register_rest_route(
+		'wp-learn-form-submissions-api/v1',
+		'/form-submission/(?P<id>\d+)',
+		array(
+			'methods'             => 'GET',
+			'callback'            => 'wp_learn_rest_get_form_submission',
+			'permission_callback' => '__return_true',
+		)
+	);
+}
+
+/**
+ * GET callback for the wp-learn-form-submissions-api/v1/form-submission route
+ *
+ * @return array|object|stdClass[]|null
+ */
+function wp_learn_get_form_submissions() {
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'form_submissions';
+
+	$results = $wpdb->get_results(
+		$wpdb->prepare( 'SELECT * FROM %i', $table_name )
+	);
+
+	return $results;
+}
+
+/**
+ * GET callback for the wp-learn-form-submissions-api/v1/form-submission/<id> route
+ *
+ * @param integer $id The form submission id.
+ * @return array
+ */
+function wp_learn_rest_get_form_submission( $id ) {
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'form_submissions';
+
+	error_log(
+		$wpdb->prepare( 'SELECT * FROM %i WHERE id = %d', $table_name, $id )
+    );
+
+	$results = $wpdb->get_results(
+		$wpdb->prepare( 'SELECT * FROM %i WHERE id = %d', $table_name, $id )
+	);
+
+	return $results[0];
+}
+
+/**
+ * Permissions callback for POST route
+ *
+ * @return boolean
+ */
+function wp_learn_require_permissions() {
+	return current_user_can( 'edit_posts' );
+}
+
+/**
+ * POST callback for the wp-learn-form-submissions-api/v1/form-submission route
+ *
+ * @param array $request Request paramters.
+ *
+ * @return array
+ */
+function wp_learn_create_form_submission( $request ) {
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'form_submissions';
+
+	$rows = $wpdb->insert(
+		$table_name,
+		array(
+			'name'  => $request['name'],
+			'email' => $request['email'],
+		)
+	);
+
+	return $rows;
+}
+```
