@@ -22,11 +22,11 @@ In this example, you're going to create a custom table to store form submissions
 
 ## The `wpdb` class
 
-To start, you need to first establish a connection to the WordPress database. Thankfully, WordPress already does this automatically by using the `wpdb` class.
+To start, you need to first establish a connection to the WordPress database. Thankfully, WordPress already does this automatically by using [the `wpdb` class](https://developer.wordpress.org/reference/classes/wpdb/).
 
 The `wpdb` class is used to manage a database connection while also providing helpful methods to perform queries and retrieve data from the connected database in a structured way. 
 
-During PHP execution, WordPress creates a `$wpdb` global object variable as an instance of this class by using the `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` constants defined in your `wp-config.php` file.
+During PHP execution, WordPress creates a `$wpdb` global object variable as an instance of this class by using the `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` constants [defined in your `wp-config.php` file](https://developer.wordpress.org/advanced-administration/before-install/howto-install/#detailed-step-3).
 
 Because the `$wpdb` object exists in the global namespace, you can access it in PHP like this:
 
@@ -50,15 +50,15 @@ To start, create a new plugin to store the custom table code.
  *
  * @package wp-learn-form-submissions
  */
- ```
+```
 
 Then, register an activation hook for your plugin to create the custom table. Using this hook ensures the table immediately exists once your plugin is activated so that any following code can safely query against it.
 
-When choosing a name for the custom table, be sure to use the configured table prefix by prepending the table name with the `$wpdb->prefix` object property. The default table prefix is `wp_` for single sites and `wp_{$blogid}_` (eg. `wp_2_`) for subsites within WordPress a multisite network.
+When choosing a name for the custom table, be sure to use the configured table prefix by prepending the table name with the `$wpdb->prefix` object property. The default table prefix is `wp_` for single sites and `wp_{$blogid}_` (eg. `wp_2_`) for subsites within a WordPress multisite network.
 
-Also, use the `$wpdb->get_charset_collate()` method to ensure the custom table's collation matches the rest of the tables in WordPress for optimum data integrity, compatibility, and query performance.
+Also, use [the `$wpdb->get_charset_collate()` method](https://developer.wordpress.org/reference/classes/wpdb/get_charset_collate/) to ensure the custom table's collation matches the rest of the tables in WordPress for optimum data integrity, compatibility, and query performance.
 
-To create a custom table, use the `dbDelta()` function included in WordPress. This function handles both table creation and future updates to the table's structure.
+To create a custom table, use [the `dbDelta()` function](https://developer.wordpress.org/reference/functions/dbdelta/) included in WordPress. This function handles both table creation and future updates to the table's structure.
 
 ```php
 register_activation_hook( __FILE__, 'wp_learn_custom_table_create_submissions_table' );
@@ -66,7 +66,7 @@ function wp_learn_custom_table_create_submissions_table() {
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
 
-	$sql = "CREATE TABLE {$wpdb->prefix}submissions (
+	$sql = "CREATE TABLE {$wpdb->prefix}wpl_submissions (
 	id mediumint(9) NOT NULL AUTO_INCREMENT,
 	time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 	name tinytext NOT NULL,
@@ -79,15 +79,25 @@ function wp_learn_custom_table_create_submissions_table() {
 }
 ```
 
-Notice that you must load the `wp-admin/includes/upgrade.php` file included in WordPress in order to use the `dbDelta()` function. WordPress only uses this function for update processes, so it is not always included like other PHP functions are in common execution.
+On a typical WordPress installation, this will create a database table named `wp_wpl_submissions`.
+
+To use the `dbDelta()` function, notice that you must first load the `wp-admin/includes/upgrade.php` file included in WordPress. WordPress only uses this function for update processes, so it is not always included in common execution like other PHP functions.
 
 The SQL query must follow the `dbDelta()` function's specific requirements, such as putting each field on its own line and putting two spaces after the words `PRIMARY KEY`. Please refer to the [*Creating Tables with Plugins* section of the WordPress Plugin Developer Handbook](https://developer.wordpress.org/plugins/creating-tables-with-plugins/#creating-or-updating-the-table) for all formatting requirements.
 
-If you use this code in a custom plugin, activate it, and use a database tool, you'll see the new table listed in your local WordPress database, with the table columns you defined. 
+If you use this code in a custom plugin, activate it, and inspect the database, you'll see the new table listed in your local WordPress database, with the table columns you defined.
+
+### Naming Custom Tables to Avoid Collisions
+
+You may be wondering why we created a table named `wpl_submissions` instead of simply `submissions` since we are already prefixing it with the `$wpdb->prefix` object property.
+
+Generally, you will want to include a prefix unique to your plugin (aka a "vendor prefix") in the table name by following a structure similar to the [prefixing method used to avoid naming collisions](https://developer.wordpress.org/plugins/plugin-basics/best-practices/#procedural-coding-method) in PHP. This makes the table unique to your plugin and avoids any accidental data modifications by other plugins, themes, or even a future release of WordPress core querying against the same table name.
+
+Including a vendor prefix in the name of each custom table created and managed by your plugin also improves database organization and management. Having a unique, identifiable prefix groups tables from the same plugin together in the database, making it easier for developers, administrators, and database managers to see which tables belong to a particular plugin.
 
 ## Updating the Table Schema
 
-As your plugin evolves, you may need to modify the structure of your custom table. For example, let's say you realise you also want to offer the user an option to enter their site URL in the form submission.
+As your plugin evolves, you may need to modify the structure of your custom table. For example, let's say you realize you also want to offer the user an option to enter their site URL in the form submission.
 
 The `dbDelta()` function can also help you modify existing tables without losing data. By following the previously mentioned formatting requirements, it can automatically figure out how to alter the installed table into the new schema.
 
@@ -121,28 +131,28 @@ Then, update the `plugins_loaded` hook callback to point to a function that chec
 add_action( 'plugins_loaded', 'wp_learn_custom_table_update_db_check' );
 function wp_learn_custom_table_update_db_check() {
 	global $wp_learn_custom_table_db_version;
-	$current_custom_table_db_version = get_option( 'wp_learn_custom_table_db_version', '1.0' );
-	if ( version_compare( $wp_learn_current_custom_table_db_version, $wp_learn_custom_table_db_version ) ) {
+	$current_custom_table_db_version = get_option( 'wp_learn_custom_table_db_version', '1.0.0' );
+	if ( version_compare( $current_custom_table_db_version, $wp_learn_custom_table_db_version ) ) {
 		wp_learn_custom_table_create_submissions_table();
 	}
 }
 ```
 
-Inside this callback function, the version_compare() [function](https://www.php.net/manual/en/function.version-compare.php) compares the version number stored in the `options` table against the default version number defined in the plugin file.
+Inside this callback function, [the `version_compare()` function](https://www.php.net/manual/en/function.version-compare.php) compares the version number stored in the `options` table against the default version number defined in the plugin file.
 
 If the current version is lower than the default version, the table is updated.
 
 Whenever the plugin's table schema is changed in the code, the version number should be increased so that the tables are checked and updated by the `dbDelta()` function.
 
 ```php
-$wp_learn_custom_table_db_version = '1.0.1';
+$wp_learn_custom_table_db_version = '1.1.0';
 
 register_activation_hook( __FILE__, 'wp_learn_custom_table_create_submissions_table' );
 function wp_learn_custom_table_create_submissions_table() {
 	global $wpdb;
 	$charset_collate = $wpdb->get_charset_collate();
 
-	$sql = "CREATE TABLE {$wpdb->prefix}submissions (
+	$sql = "CREATE TABLE {$wpdb->prefix}wpl_submissions (
 	id mediumint(9) NOT NULL AUTO_INCREMENT,
 	time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 	name tinytext NOT NULL,
@@ -173,42 +183,19 @@ function wp_learn_custom_table_update_db_check() {
 
 When a user deactivates or uninstalls your plugin, it’s good practice to clean up any custom tables you created to avoid cluttering the database. However, remember to only delete tables when you’re certain the user wants to remove all plugin data.
 
-In most cases, plugin data is removed during uninstallation because it indicates the user no longer needs the plugin. As you learned in Module 1, you can use the `register_uninstall_hook()` function to do this.
+In most cases, plugin data is removed during uninstallation because it indicates the user no longer needs the plugin. You can use [the `register_uninstall_hook()` function](https://developer.wordpress.org/reference/functions/register_uninstall_hook/) to do this.
 
-You can execute the SQL query to delete the table by using the `$wpdb` global variable, which you'll learn more about in a future lesson.
+By using the `$wpdb` global variable, you can execute the SQL query to delete the table by using [the `query()` method](https://developer.wordpress.org/reference/classes/wpdb/query/), which you'll learn more about in a future lesson.
 
 ```php
 register_uninstall_hook( __FILE__, 'wp_learn_custom_table_delete_submissions_table' );
 function wp_learn_custom_table_delete_submissions_table() {
 	global $wpdb;
-	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}submissions" );
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wpl_submissions" );
 	delete_option( 'wp_learn_custom_table_db_version' );
 }
 ```
 
-## Avoiding Naming Collisions for Custom Tables
-
-In the examples in this lesson, you've created a table called `submissions`, prefixed using the `$wpdb->prefix`, so the table name ends up being `wp_submissions`.
-
-Generally, you will want to also include a prefix in the table name following a similar structure as the [prefixing method used to avoid naming collisions](https://developer.wordpress.org/plugins/plugin-basics/best-practices/#procedural-coding-method) in PHP. 
-
-This makes the table unique to your plugin, and avoids any table conflicts.
-
-So to improve the above examples, you might include a vendor prefix like `wpl` (instead of `wp_learn`).
-
-```php
-	$sql = "CREATE TABLE {$wpdb->prefix}wpl_submissions (
-	id mediumint(9) NOT NULL AUTO_INCREMENT,
-	time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-	name tinytext NOT NULL,
-	message text NOT NULL,
-	url varchar(55) DEFAULT '' NOT NULL,
-	PRIMARY KEY  (id)
-	) {$charset_collate};";
-```
-
-This will create a table with the name `wp_wpl_submissions`.
-
 ## Conclusion
 
-For more information on working with custom tables, make sure to read the [Creating Tables with Plugins section of WordPress Plugin Handbook](https://developer.wordpress.org/plugins/creating-tables-with-plugins/). It's also useful to read the class reference for the `wpdb` [class](https://developer.wordpress.org/reference/classes/wpdb/), as well as the [function reference](https://developer.wordpress.org/reference/functions/dbdelta/) for `dbDelta()`.
+For more information on working with custom tables, make sure to read the [*Creating Tables with Plugins* section of the WordPress Plugin Handbook](https://developer.wordpress.org/plugins/creating-tables-with-plugins/). It's also useful to read the class reference for [the `wpdb` class](https://developer.wordpress.org/reference/classes/wpdb/), as well as [the function reference for `dbDelta()`](https://developer.wordpress.org/reference/functions/dbdelta/).
