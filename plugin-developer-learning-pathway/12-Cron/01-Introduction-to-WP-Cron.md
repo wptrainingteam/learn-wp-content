@@ -4,7 +4,7 @@ In some instances, you might need a way to trigger an action that needs to be ex
 
 More commonly known as scheduled tasks, these actions are often used to automate repetitive tasks that need to be executed.
 
-Let's look at some examples of scheduled tasks that you might need to automate, and what this looks like in the context of a WordPress site.
+Let's look at some examples of scheduled tasks that you might need to automate, and what how to implement scheduled tasks in the context of a WordPress site.
 
 ## Common examples of scheduled tasks
 
@@ -14,7 +14,7 @@ The subscription reminder email might need to be sent one week before the end of
 
 A web server also has its own scheduled tasks, such as checking for updates, backing up the database, and clearing the cache.
 
-These tasks are automated using a command line utility known as cron, which gets its name from the word Chronos, the Greek word for time.
+These tasks are automated using a command line utility known as [cron](https://en.wikipedia.org/wiki/Cron), which gets its name from the word Chronos, the Greek word for time.
 
 ## Understanding how Cron works
 
@@ -41,7 +41,9 @@ This will then will trigger any events that have been scheduled and stored in th
 
 While this makes it easier for plugin developers to implement scheduled tasks, it does have some limitations.
 
-The primary limitation is that it relies on a user to load the page to run. This means it can be unreliable if the site has a drop in traffic, as the scheduled tasks may not run when expected.
+The primary limitation is that it relies on traffic to your site, as it's triggered on every page load. This means it can be unreliable if the site has a drop in traffic, as the scheduled tasks may not run when expected.
+
+However, while you can't be 100% sure when your scheduled tasks will run, you can be sure that they will run eventually.
 
 Fortunately, WordPress does provide a mechanism to overcome this limitation, which you can learn about in lesson on Hooking WP-Cron Into the System Task Scheduler 
 
