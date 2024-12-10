@@ -4,7 +4,7 @@ In some instances, you might need a way to trigger an action that needs to be ex
 
 More commonly known as scheduled tasks, these actions are often used to automate repetitive tasks that need to be executed.
 
-Let's look at some examples of scheduled tasks that you might need to automate, and what how to implement scheduled tasks in the context of a WordPress site.
+Let's look at some examples of scheduled tasks that you might need to automate, and what WordPress provides to scehdule these tasks.
 
 ## Common examples of scheduled tasks
 
@@ -37,22 +37,20 @@ WP-Cron emulates server crons and allows WordPress developers to create schedule
 
 WP-Cron is implemented by making an internal HTTP request to the wp-cron.php file in the root of the WordPress install whenever the site receives a visit.
 
-This will then will trigger any events that have been scheduled and stored in the WordPress database, by using the relevant WordPress scheduling functions.
+This will then will trigger any events that have been scheduled and stored in the relevant option in the WordPress database by using the WordPress scheduling functions.
 
-While this makes it easier for plugin developers to implement scheduled tasks, it does have some limitations.
+While this makes it easier for plugin developers to implement scheduled tasks, it does have a limitation.
 
-The primary limitation is that it relies on traffic to your site, as it's triggered on every page load. This means it can be unreliable if the site has a drop in traffic, as the scheduled tasks may not run when expected.
+Because WP-Cron is triggered when your site receives a visit, it can be unreliable if the site has a drop in traffic, as the scheduled tasks may not run when expected.
 
 However, while you can't be 100% sure when your scheduled tasks will run, you can be sure that they will run eventually.
 
-Fortunately, WordPress does provide a mechanism to overcome this limitation, which you can learn about in lesson on Hooking WP-Cron Into the System Task Scheduler 
+Fortunately, WordPress does provide a mechanism to overcome this limitation, which you can learn about in lesson on Hooking WP-Cron Into the System Task Schedule.
 
 ## Switching from WP Cron to Cron
 
-As the developer of a plugin, it is not possible to know of a site that has your plugin installed is using the default WP-Cron implementation or server crons, as this will be different on every WordPress configuration.
+As the developer of a plugin, it is impossible to know if a site that has your plugin installed is using the default WP-Cron implementation or whether WP-Cron is hooked into the server crons, as this will be different on every WordPress configuration.
 
-While this might seem like a problem, is in fact good news.
+Fortunately the mechanism for hooking WP-Cron into the system cron makes use of the same core functionality in the `wp-cron.php` file. 
 
-This is because the mechanism for hooking WP-Cron into the system cron makes use of the same core functionality. 
-
-This means as long as your plugin uses the WordPress scheduling functions, it will work regardless of whether the site is using WP-Cron or server crons.
+This means as long as your plugin uses the WordPress scheduling functions, it will work regardless of how it's configured.

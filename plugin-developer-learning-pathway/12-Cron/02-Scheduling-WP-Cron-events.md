@@ -1,8 +1,8 @@
-# Scheduling WP Cron events
+# Scheduling WP-Cron events
 
 In order to make use of the built-in WP-Cron functionality, you need to know how to schedule and unschedule WP-Cron events.
 
-Let's take a look how this is done.
+Let's take a look how this is done, by learning about the functions used to schedule and unschedule events, and how to hook events into WP-Cron.
 
 ## Example plugin
 
@@ -62,15 +62,24 @@ define( 'WP_DEBUG_LOG', true );
 
 Once you have hooked the callback function with the logic to be executed for the event into the action hook, the next step is to schedule it at a specific interval.
 
-WordPress ships with a few predefined intervals you can use:
+To schedule the event, you use the [`wp_schedule_event`](https://developer.wordpress.org/reference/functions/wp_schedule_event/) function.
+
+The `wp_schedule_event()` function takes three parameters:
+
+- The Unix timestamp from when next to run the event, ie the start time. You can use the PHP `time()` [function](https://www.php.net/manual/en/function.time.php) to get the current time.
+- The interval at which the event should run after the initial start time, as set by the first parameter.
+- The action hook to run at the start time and subsequent intervals.
+
+WordPress ships with a few predefined intervals you can use for the reccurance of the event:
+
 - `hourly`: runs the event each hour.
 - `twicedaily`: runs the event every 12 hours.
 - `daily`:  runs the event every 24 hours.
 - `weekly`: runs the event every 7 days.
 
-To schedule the event, you use the [`wp_schedule_event`](https://developer.wordpress.org/reference/functions/wp_schedule_event/) function. 
+It is also possible to add your own intervals, for more fine grained con
 
-For the purposes of this example, trigger this function during plugin activation, by using the `register_activation_hook()` function with a callback function.
+ For the purposes of this example, trigger this function during plugin activation, by using the `register_activation_hook()` function with a callback function.
 
 ```php
 register_activation_hook( __FILE__, 'wp_learn_schedule_event' );
@@ -80,41 +89,13 @@ function wp_learn_schedule_event() {
 }
 ```
 
-That wp_schedule_event() function takes three parameters:
-- The Unix timestamp from when next to run the event, ie the start time. You can use the PHP `time()` [function](https://www.php.net/manual/en/function.time.php) to get the current time.
-- The interval at which the event should run after the initial start time, as set by the first parameter.
-- The action hook to run at the start time and subsequent intervals.
-
-## Testing the event
-
-There are a number of ways to check and test your WP Cron events, which you will learn about in a different lesson. 
-
-However, because you've created this event to start at the current time, you can check that it's working by activating the plugin, and then loading the front end of your site after about an hour.
-
-Once you've done that, you should see the log message in your error log file, indicating that first run of the event has been triggered.
-
-```log
-[01-Jan-2021 00:00:00 UTC] WP Learn Scheduled Event Triggered at 2021-01-01 00:00:00
-```
-
-This is an important thing to note about WP-Cron events, they are only triggered by requests to the front-end of your site, and not the administration dashboard.
-
-Another way you could quickly test this is to use a quick snippet of code, to trigger the action hook manually:
-
-```php
-add_action( 'init', 'wp_learn_event_test' );
-function wp_learn_event_test() {
-	do_action( 'wp_learn_trigger_event' );
-}
-```
-
 ## Preventing an event from scheduling twice
 
-The code you created earlier used the `register_activation_hook` to schedule the event. 
+Using the `register_activation_hook` to schedule the event is fine if you are adding a scheduled event from the first version of the plugin. 
 
-This is fine if you are adding a scheduled event from the first version of the plugin. However, if you need to add a new scheduled event to an existing plugin, you can't hook into the activation hook, because that only runs code on plugin activation, and not if the plugin is updated. 
+However, if you need to add a new scheduled event to an existing plugin, you can't hook into the activation hook, because that only runs code on plugin activation, and not if the plugin is updated. 
 
-In this case you'd generally hook into something like the `init` action hook to add new scheduled events.
+It's therefore generally better to hook into something like the `init` action hook to add new scheduled events.
 
 ```php
 add_action( 'init', 'wp_learn_schedule_event' );
@@ -124,9 +105,9 @@ function wp_learn_schedule_event() {
 }
 ```
 
-When scheduling a new event using wp_schedule_event(), WordPress doesn't perform any checks to see if the event is already scheduled.
+When scheduling a new event using `wp_schedule_event()`, WordPress doesn't perform any checks to see if the event is already scheduled.
 
-This means that every time the `init` hook is triggered, §wp_learn_trigger_event` will be scheduled as a new event.
+This means that every time the `init` hook is triggered, `wp_learn_trigger_event` will be scheduled as a new event.
 
 To prevent this, you can use the [`wp_next_scheduled`](https://developer.wordpress.org/reference/functions/wp_next_scheduled/) function to check if an already existing event with the same action as been scheduled.
 
@@ -144,6 +125,16 @@ function wp_learn_schedule_event() {
 ```
 
 By checking and returning early if the event is already scheduled, you can be sure the event will only be scheduled once.
+
+## Testing the event
+
+There are a number of ways to check and test your WP Cron events, which you will learn about in lesson on Testing WP-Cron events.
+
+For now, the easiest way to test this on your local development environment is to activate the plugin
+
+Then check the options table in the database for the 'cron' option. 
+
+If you unserialize option_value stored in the 'cron' option, you can see the scheduled events, and your event should appear somewhere in that list. 
 
 ## Unscheduling an event
 

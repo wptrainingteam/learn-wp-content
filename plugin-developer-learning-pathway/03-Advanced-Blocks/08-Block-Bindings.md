@@ -1,14 +1,14 @@
 # Block Bindings
 
-Block bindings are a new feature in WordPress that provide a way to connect a post type's custom fields to WordPress Core blocks.
+Block Bindings are a new feature in WordPress that provide a way to connect a post type's custom fields to WordPress Core blocks.
 
-With block bindings, as long as you register your custom fields correctly, theme developers can connect them to core blocks in theme templates. 
+With Block Bindings, as long as you register your custom fields correctly, theme developers can connect them to core blocks in theme templates. 
 
-Let's take a look at what this looks like in practice.
+Let's look at what's required to use Block Bindings, and how to connect core blocks to custom fields in the editor.
 
 ## Registering custom fields
 
-To start, create a plugin to register a book post type with a custom field for the ISBN number.
+To start, create a plugin which will register a book custom post type.
 
 ```php
 <?php
@@ -44,7 +44,12 @@ function wp_learn_register_book_post_type() {
 	);
 
 	register_post_type( 'book', $args );
+}
+```
 
+Now, add a custom field to the book post type for the ISBN field.
+
+```php
 	register_meta(
         'post',
         'isbn',
@@ -56,7 +61,6 @@ function wp_learn_register_book_post_type() {
             'object_subtype' => 'book',
         )
     );
-}
 ```
 
 This code uses the `register_meta()` function to register a custom field for the book post type. 
@@ -92,11 +96,11 @@ function bookstore_add_isbn_to_quick_edit( $keys, $post ) {
 }
 ```
 
-With this plugin installed and active, you can add a few books, and add the isbn field to each book.
+With this plugin installed and active, you can add a book, and add the ISBN value to your book in the Custom Fields panel.
 
-## Block bindings API
+## Block Bindings API
 
-The block bindings API was first introduced in WordPress 6.5, and provided a way to connect custom fields on a post or post type to specific core blocks.
+The [Block Bindings API was first introduced in WordPress 6.5](https://make.wordpress.org/core/2024/03/06/new-feature-the-block-bindings-api/), and provided a way to connect custom fields on a post or post type to specific core blocks.
 
 Initially the API supports the following core blocks, with a specific set of supported attributes per block:
 
@@ -124,9 +128,9 @@ Binding these core blocks to custom fields required theme developers to hardcode
 <!-- /wp:paragraph -->
 ```
 
-## Block bindings UI 
+## Block Bindings UI 
 
-In WordPress 6.7, the block bindings UI was introduced to provide a way to connect custom fields to core blocks in the block editor. This meant that theme developers no longer needed to hardcode the bindings in their theme templates.
+In WordPress 6.7, [the Block Bindings UI was introduced](https://make.wordpress.org/core/2024/10/21/block-bindings-improvements-to-the-editor-experience-in-6-7/) to provide a way to connect custom fields to core blocks in the block editor. This meant that theme developers no longer needed to hardcode the bindings in their theme templates.
 
 ## Adding custom fields 
 
