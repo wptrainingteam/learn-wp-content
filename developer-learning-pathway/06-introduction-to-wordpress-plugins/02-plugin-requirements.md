@@ -12,7 +12,7 @@ Inside the main plugin file, the first piece of code should be the Plugin Header
 
 To create your first plugin, navigate to the `wp-content/plugins` directory, and create a single PHP file called `example-plugin.php`.
 
-```
+```shell
 cd wp-content/plugins
 touch example-plugin.php
 ```

@@ -71,7 +71,7 @@ You can also delete the `save` property passed to `registerBlockType`, as well a
 
 Once you've made these changes, you can run the build process, and then create a post, and add the block to the post.
 
-You'll see that the block still renders as expected in the editor. However, if you view the block in the code editor, you'll see it the saved version does not include any output. 
+You'll see that the block still renders as expected in the editor. However, if you view the block in the code editor, you'll see the saved version does not include any output. 
 
 When you preview it, the content is rendered. 
 

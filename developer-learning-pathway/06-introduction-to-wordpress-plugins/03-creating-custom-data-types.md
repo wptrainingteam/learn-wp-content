@@ -109,7 +109,7 @@ You can read more about this, and other methods to prevent function conflicts in
 
 The last step is to call the `bookstore_register_book_post_type` function. You need to hook into the `init` action to do this. 
 
-If you skipped the module on WordPress hooks, hooks that they are a way to run code at specific points in the WordPress request lifecycle.
+If you skipped the module on WordPress hooks, hooks are a way to run code at specific points in the WordPress request lifecycle.
 
 ```php
 add_action( 'init', 'bookstore_register_book_post_type' );

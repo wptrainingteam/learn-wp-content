@@ -1,5 +1,7 @@
 # Block Variations
 
+https://youtu.be/dzD7iTr-amw
+
 When planning to create a block, one of the things to consider is whether the block needs to be built from scratch, or could it simply be an extension of an existing block.
 
 This lesson introduces the concept of block variations, which are a way to create different versions of an existing block.
@@ -8,7 +10,7 @@ This lesson introduces the concept of block variations, which are a way to creat
 
 Block Variations are a way to create iterations of existing blocks without building entirely new blocks from scratch.
 
-A block variation differs from the original block by a set of initial attributes or inner blocks. 
+A block variation differs from the original block by a set of initial attributes or inner blocks.
 
 When you insert the block variation into the Editor, these attributes and/or inner blocks are applied.
 
@@ -30,7 +32,7 @@ Then you're going to use the `registerBlockVariation` [function](https://develop
 
 Start by creating a directory in your `wp-content/plugins` directory to store the block variation code.
 
-```bash
+```
 mkdir -p wp-content/plugins/wp-learn-block-variations
 ```
 
@@ -38,8 +40,7 @@ Create the main plugin PHP file, `wp-learn-block-variations.php` in the newly cr
 
 Then add the following code to set up the plugin header, and make sure the plugin code only runs in the WordPress environment:
 
-```php
-<?php
+```
 /**
  * Plugin Name:       WP Learn Block Variations
  * Description:       WP Learn Block Variations
@@ -59,7 +60,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 Next, you can hook a callback function to the `enqueue_block_editor_assets` action to enqueue the JavaScript file.
 
-```php
+```
 add_action( 'enqueue_block_editor_assets', 'wp_learn_block_variations_editor_assets' );
 function wp_learn_block_variations_editor_assets() {
 	wp_enqueue_script(
@@ -76,7 +77,7 @@ Notice that you need to specify the `wp-blocks` dependency to make sure your blo
 
 Now, create a `block-variations.js` file in the plugin directory and add the following code:
 
-```js
+```
 (function(){
 	wp.blocks.registerBlockVariation( 'core/heading', {
 		name: 'wp-learn-block-variations/custom-heading',
@@ -90,7 +91,7 @@ Now, create a `block-variations.js` file in the plugin directory and add the fol
 
 This code registers a block variation of the core Heading block. It sets the `name` to `wp-learn-block-variations/custom-heading`, the `title` to `Custom Heading`, and in the `attributes` object, sets the content of the heading to `Custom Heading`.
 
-Now you can activate the plugin. 
+Now you can activate the plugin.
 
 Edit a post or page, and insert the Custom Heading block, either by clicking the block inserter icon and searching for custom or typing `/custom` in the Editor.
 
@@ -110,8 +111,8 @@ Let's add a block variation of the core Query Loop block that includes a paragra
 
 Just under the Custom Header block variation code in the `block-variations.js` file, add the following code:
 
-```js
-	wp.blocks.registerBlockVariation( 'core/query', {
+```
+wp.blocks.registerBlockVariation( 'core/query', {
 		name: 'wp-learn-block-variations/custom-query',
 		title: 'Custom Query',
 		innerBlocks: [
@@ -153,14 +154,15 @@ When you insert the Custom Query block into the Editor, you should see that it d
 
 ## Block variation vs Custom Block
 
-Block variations are a powerful way to extend existing blocks without having to build entirely new blocks from scratch. Therefore, if you have a need for a block that is similar to an existing block, but with additional functionality or different default attributes, block variations are a good way to achieve this. 
+Block variations are a powerful way to extend existing blocks without having to build entirely new blocks from scratch. Therefore, if you have a need for a block that is similar to an existing block, but with additional functionality or different default attributes, block variations are a good way to achieve this.
 
 However, if your block requirements are significantly different from an existing block, you may need to build a custom block from scratch.
 
 ## Further Reading
 
-This lesson only scratches the surface of what's possible with block variations. 
+This lesson only scratches the surface of what's possible with block variations.
 
-For more information on block variations, see the [Block Variations](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-variations/) page of the Block API reference guide in the Block Editor handbook. 
+For more information on block variations, see the [Block Variations](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-variations/) page of the Block API reference guide in the Block Editor handbook.
 
 It would also be a good idea to work through the [Extending the Query Loop Block](https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/extending-the-query-loop-block/) tutorial in the Block Editor handbook to see how block variations can be used to extend the Query Loop block even further.
+
