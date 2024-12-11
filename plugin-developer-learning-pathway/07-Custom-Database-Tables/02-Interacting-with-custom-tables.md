@@ -1,6 +1,6 @@
 # Interacting with Custom Tables
 
-Once you have your own custom table in the WordPress database, you need to know how to interact with it. In this lesson, we’ll cover how to safely query custom tables by using the `global $wpdb` object. You'll also learn how to insert, update, and delete data while following best practices to avoid common security vulnerabilities.
+Once you have your own custom table in the WordPress database, you need to know how to interact with it. In this lesson, we’ll cover how to safely query custom tables by using the `global $wpdb` object. You'll also learn how to insert, update, and delete data while following best practices to [avoid common security vulnerabilities](https://learn.wordpress.org/lesson/securely-developing-plugins-and-themes/).
 
 A key aspect of interacting with any database is to ensure the data you send and retrieve is secure and validated. One of the most dangerous threats to your plugin’s security is SQL injection. Let's take a look at how that happens and what you can do to safeguard your tables against it.
 
@@ -14,10 +14,12 @@ Consider this example where user input is inserted directly into a query without
 global $wpdb;
 $name = $_GET['name'];
 
-$results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}submissions WHERE name = '$name'" );
+$results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}reviews WHERE customer_name = '$name'" );
 ```
 
 In this example, an attacker could supply a value like `John'; DROP TABLE wp_submissions;--`, which would delete the entire custom table! Let's see how we can prevent this from happening.
+
+![xkcd comic 327](xkcd_exploits_of_a_mom.png)
 
 ### Using Prepared Statements
 
@@ -30,7 +32,7 @@ global $wpdb;
 $name = $_GET['name'];
 
 $prepared_query = $wpdb->prepare( 
-    "SELECT * FROM {$wpdb->prefix}submissions WHERE name = %s", 
+    "SELECT * FROM {$wpdb->prefix}reviews WHERE customer_name = %s", 
     $name 
 );
 
@@ -46,7 +48,7 @@ Notice that we do not keep the quotes around the `%s` placeholder value. By usin
 - `%d` (integer)
 - `%f` (float)
 - `%s` (string)
-- `%i` (identifier, e.g. table/field names, introduced in WordPress 6.2.0)
+- `%i` (identifier, e.g. table/field names, [introduced in WordPress 6.2.0](https://make.wordpress.org/core/2022/10/08/escaping-table-and-field-names-with-wpdbprepare-in-wordpress-6-1/))
 
 ### Validating Data
 
@@ -58,7 +60,7 @@ Some common [data validation techniques](https://developer.wordpress.org/apis/se
 - **Blocklist** – Reject data if it matches a known, untrusted value. (eg. rejecting profanity)
 - **Format Detection** – Test that the data matches an accepted format. (eg. formatting phone numbers)
 
-When comparing untrusted data against the safelist, it’s important to **use strict type checking**. Otherwise, an attacker could craft input in a way that will pass validation against a safelist, but still have a malicious effect.
+When comparing untrusted data against the safelist, it’s important to [**use strict type checking**](https://www.php.net/manual/en/language.operators.comparison.php). Otherwise, an attacker could craft input [in a way that will pass validation](https://www.php.net/manual/en/language.types.type-juggling.php) against a safelist, but still have a malicious effect.
 
 ```php
 $untrusted_input = '1 malicious string';  // Will evaluate to integer 1 during loose comparisons.
@@ -285,10 +287,10 @@ if ( false === $deleted ) {
 The `$wpdb->delete()` method simply accepts 3 parameters which should look familiar from the previous section:
 
 	1. The table from which to delete matching rows.
- 	2. An array of column names and their associated values to determine which matching rows in the table should be deleted.
-     - If we were to pass multiple column-value pairs, the clauses would be joined using logical `AND`.
- 	3. An array of formatting placeholders for the `WHERE` clause column values.
-     - `'%d'` for the review's `id` integer
+	2. An array of column names and their associated values to determine which matching rows in the table should be deleted.
+	 - If we were to pass multiple column-value pairs, the clauses would be joined using logical `AND`.
+	3. An array of formatting placeholders for the `WHERE` clause column values.
+	 - `'%d'` for the review's `id` integer
 
 Finally, the value returned from `$wpdb->delete()` is either the number of rows deleted from the specified table or `false`. Because of this, remember to use the strict comparison operator `===` in PHP to differentiate database errors from `0` rows being deleted.
 
