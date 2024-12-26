@@ -65,7 +65,7 @@ Now, add a custom field to the book post type for the ISBN field.
 
 This code uses the `register_meta()` function to register a custom field for the book post type. 
 
-The `show_in_rest` parameter is set to `true` to make the custom field available in the REST API.
+The `show_in_rest` parameter is set to `true` to make the custom field available in the REST API. This makes the custom field available in the Block Editor, and can therefore be bound to a block.
 
 You could also use the `register_post_meta()` function, which is a wrapper for `register_meta()` but with a slightly simpler set of parameters.
 
