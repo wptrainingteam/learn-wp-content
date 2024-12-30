@@ -8,6 +8,8 @@ A key aspect of interacting with any database is to ensure the data you send and
 
 SQL injection is a security vulnerability where attackers manipulate SQL queries by injecting malicious code into user input fields. If unsanitized input values are used in queries directly, then an attacker could execute arbitrary SQL commands which compromises your data.
 
+![xkcd comic 327](xkcd_exploits_of_a_mom.png)
+
 Consider this example where user input is inserted directly into a query without validation:
 
 ```php
@@ -18,8 +20,6 @@ $results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}reviews WHERE custo
 ```
 
 In this example, an attacker could supply a value like `John'; DROP TABLE wp_reviews;--`, which would delete the entire custom table! Let's see how we can prevent this from happening.
-
-![xkcd comic 327](xkcd_exploits_of_a_mom.png)
 
 ### Using Prepared Statements
 
@@ -56,9 +56,9 @@ In addition to properly escaping dynamic values used in SQL queries, it's also i
 
 Some common [data validation techniques](https://developer.wordpress.org/apis/security/data-validation/) are:
 
-- **Safelist** – Accept data only if it matches a known, trusted value. (eg. selecting a color option)
-- **Blocklist** – Reject data if it matches a known, untrusted value. (eg. rejecting profanity)
-- **Format Detection** – Test that the data matches an accepted format. (eg. formatting phone numbers)
+- **Safelist** – Accept data only if it matches a known, trusted value. (e.g. selecting a color option)
+- **Blocklist** – Reject data if it matches a known, untrusted value. (e.g. rejecting profanity)
+- **Format Detection** – Test that the data matches an accepted format. (e.g. formatting phone numbers)
 
 When comparing untrusted data against the safelist, it’s important to [**use strict type checking**](https://www.php.net/manual/en/language.operators.comparison.php). Otherwise, an attacker could craft input [in a way that will pass validation](https://www.php.net/manual/en/language.types.type-juggling.php) against a safelist, but still have a malicious effect.
 
