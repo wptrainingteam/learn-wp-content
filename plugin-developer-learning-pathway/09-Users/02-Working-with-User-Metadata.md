@@ -1,4 +1,3 @@
-## Working with User Metadata in WordPress
 
 ## What is User Metadata?
 
@@ -10,10 +9,10 @@ While WordPress stores basic user information (like username, email, and passwor
 
 For example, if you’re building a membership site, you might use user metadata to store:
 
-Subscription status
-Payment history
-Profile preferences
-Social media links
+- Subscription status
+- Payment history
+- Profile preferences
+- Social media links
 
 ## Understanding User Metadata
 
@@ -21,9 +20,69 @@ User metadata consists of key-value pairs stored in the WordPress database. This
 
 ## How to Work with User Metadata in WordPress
 
+There are two primary methods to manage user metadata in WordPress:
+
+1. **Through the User Profile Screen**: Adding custom fields to the user's profile page within the WordPress admin dashboard.
+
+To allow users or administrators to input and view custom metadata directly from the WordPress admin area, you can add custom fields to the user profile screen. This involves hooking into specific action hooks and defining functions to display and save the custom fields.
+
+Example: Adding a Birthday Field
+
+The following example demonstrates how to add a "Birthday" field to user profiles:
+
+```php
+/**
+ * Display the birthday field on the user profile screen.
+ *
+ * @param WP_User $user The current WP_User object.
+ */
+function add_birthday_field_to_profile( $user ) {
+    ?>
+    <h3><?php esc_html_e( "Additional Information", "your-textdomain" ); ?></h3>
+    <table class="form-table">
+        <tr>
+            <th><label for="birthday"><?php esc_html_e( "Birthday", "your-textdomain" ); ?></label></th>
+            <td>
+                <input type="date" name="birthday" id="birthday" value="<?php echo esc_attr( get_user_meta( $user->ID, 'birthday', true ) ); ?>" class="regular-text" /><br />
+                <span class="description"><?php esc_html_e( "Please enter your birthday.", "your-textdomain" ); ?></span>
+            </td>
+        </tr>
+    </table>
+    <?php
+}
+
+/**
+ * Save the birthday field value.
+ *
+ * @param int $user_id The ID of the user being saved.
+ */
+function save_birthday_field( $user_id ) {
+    // Check if the current user has permission to edit the user.
+    if ( ! current_user_can( 'edit_user', $user_id ) ) {
+        return false;
+    }
+    // Update the user meta with the new birthday value.
+    update_user_meta( $user_id, 'birthday', sanitize_text_field( $_POST['birthday'] ) );
+}
+
+// Add the birthday field to the user profile and edit screens.
+add_action( 'show_user_profile', 'add_birthday_field_to_profile' );
+add_action( 'edit_user_profile', 'add_birthday_field_to_profile' );
+
+// Save the birthday field value when the user profile is updated.
+add_action( 'personal_options_update', 'save_birthday_field' );
+add_action( 'edit_user_profile_update', 'save_birthday_field' );
+```
+
+In this example, the add_birthday_field_to_profile function adds a date input field to the user profile page. The save_birthday_field function saves the inputted birthday to the user's metadata when the profile is updated. These functions are hooked into show_user_profile, edit_user_profile, personal_options_update, and edit_user_profile_update to ensure the field appears and saves correctly on both personal and admin profile pages.
+
+
+2. **Programmatically**: Using WordPress functions to add, retrieve, update, or delete user metadata.
+
 WordPress provides several functions to work with user metadata. Let’s explore how to use them effectively.
 
-## Adding User Metadata
+
+### Adding User Metadata
 
 To add metadata for a user, use the add_user_meta() function. This function allows you to store additional data for a user by specifying a unique meta key.
 
@@ -49,7 +108,7 @@ function add_user_phone_number($user_id) {
 add_action('user_register', 'add_user_phone_number');
 ```
 
-## Retrieving User Metadata
+### Retrieving User Metadata
 
 To retrieve metadata for a user, use the get_user_meta() function. This function takes the user ID and the meta key as parameters and returns the associated value.
 
@@ -75,7 +134,7 @@ function display_user_phone_number($user_id) {
 }
 ```
 
-## Updating User Metadata
+### Updating User Metadata
 
 If you need to modify existing user metadata, use update_user_meta().
 
@@ -97,7 +156,7 @@ function update_user_phone_number($user_id) {
 This function is useful for modifying existing metadata or adding new metadata if it doesn’t already exist.
 
 
-## Deleting User Metadata
+### Deleting User Metadata
 
 To delete metadata associated with a user, use delete_user_meta().
 
