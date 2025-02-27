@@ -98,6 +98,63 @@ The map_meta_cap argument, when set to true, automatically maps all primitive ca
 'map_meta_cap' => true,
 ````
 
+## Meta Capabilities vs Primitive Capabilities
+
+WordPress uses a capability-based system to control user permissions for different actions. These capabilities fall into two main types:
+
+1. ### Primitive Capabilities
+
+Primitive capabilities are the most basic permissions in WordPress. They define specific actions that a user can perform, such as editing a post, deleting a page, or publishing content. Primitive capabilities are tied directly to user roles and are the building blocks of WordPress’s permission system.
+
+### Examples of Primitive Capabilities:
+
+- edit_posts: Allows a user to edit posts.
+- delete_pages: Allows a user to delete pages.
+- publish_posts: Allows a user to publish posts.
+- manage_options: Allows a user to manage site options (typically reserved for administrators).
+
+Primitive capabilities are straightforward and are assigned directly to user roles. For example, an Editor role has the edit_posts capability by default, allowing them to edit any post on the site.
+
+2. ### Meta Capabilities
+
+Meta capabilities are higher-level permissions that depend on the context of the action being performed. They are not directly assigned to user roles but are instead mapped to one or more primitive capabilities based on specific conditions. Meta capabilities are dynamic and are often used to check permissions for specific objects, such as a particular post or page.
+
+### Examples of Meta Capabilities:
+
+- edit_post: Checks if a user can edit a specific post.
+- delete_post: Checks if a user can delete a specific post.
+- read_post: Checks if a user can read a specific post.
+- edit_page: Checks if a user can edit a specific page.
+
+Meta capabilities are more flexible than primitive capabilities because they take into account the context of the action. For example, the edit_post meta capability might map to the edit_posts primitive capability for most users, but it could also map to edit_others_posts if the user is trying to edit someone else’s post.
+
+### How Meta Capabilities Work
+
+Meta capabilities are not directly assigned to roles. Instead, they are mapped to primitive capabilities using the map_meta_cap function. This function evaluates the context of the action and determines which primitive capabilities are required to perform it.
+
+For example, when WordPress checks if a user can edit a specific post, it uses the edit_post meta capability. The map_meta_cap function then evaluates:
+
+- Is the user the author of the post? If so, they only need the edit_posts primitive capability.
+- Is the user trying to edit someone else’s post? If so, they need the edit_others_posts primitive capability.
+
+This dynamic mapping ensures that permissions are checked accurately based on the context.
+
+### Example of map_meta_cap in Action:
+
+````php
+$required_caps = map_meta_cap('edit_post', $user_id, $post_id);
+````
+- Meta Capability: The meta capability being checked (e.g., edit_post).
+- User ID: The ID of the user whose permissions are being checked.
+- Object ID: The ID of the object (e.g., post, page) being acted upon.
+
+In this example:
+
+- If the user is the author of the post, $required_caps might return ['edit_posts'].
+- If the user is not the author, $required_caps might return ['edit_others_posts'].
+
+WordPress then checks if the user has all the required primitive capabilities before allowing the action.
+
 ## Assigning Custom Post Type Capabilities to User Roles
 
 Once you’ve defined custom capabilities for your content type, you’ll need to assign them to user roles. Here’s an example of how to add capabilities to the Editor role:
@@ -138,63 +195,6 @@ function create_project_manager_role() {
 add_action('init', 'create_project_manager_role');
 ````
 This code creates a new role called Project Manager with the necessary capabilities to manage projects.
-
-## Meta Capabilities vs Primitive Capabilities
-
-WordPress uses a capability-based system to control user permissions for different actions. These capabilities fall into two main types:
-
-1. Primitive Capabilities
-
-Primitive capabilities are the most basic permissions in WordPress. They define specific actions that a user can perform, such as editing a post, deleting a page, or publishing content. Primitive capabilities are tied directly to user roles and are the building blocks of WordPress’s permission system.
-
-Examples of Primitive Capabilities:
-
-- edit_posts: Allows a user to edit posts.
-- delete_pages: Allows a user to delete pages.
-- publish_posts: Allows a user to publish posts.
-- manage_options: Allows a user to manage site options (typically reserved for administrators).
-
-Primitive capabilities are straightforward and are assigned directly to user roles. For example, an Editor role has the edit_posts capability by default, allowing them to edit any post on the site.
-
-2. Meta Capabilities
-
-Meta capabilities are higher-level permissions that depend on the context of the action being performed. They are not directly assigned to user roles but are instead mapped to one or more primitive capabilities based on specific conditions. Meta capabilities are dynamic and are often used to check permissions for specific objects, such as a particular post or page.
-
-Examples of Meta Capabilities:
-
-- edit_post: Checks if a user can edit a specific post.
-- delete_post: Checks if a user can delete a specific post.
-- read_post: Checks if a user can read a specific post.
-- edit_page: Checks if a user can edit a specific page.
-
-Meta capabilities are more flexible than primitive capabilities because they take into account the context of the action. For example, the edit_post meta capability might map to the edit_posts primitive capability for most users, but it could also map to edit_others_posts if the user is trying to edit someone else’s post.
-
-## How Meta Capabilities Work
-
-Meta capabilities are not directly assigned to roles. Instead, they are mapped to primitive capabilities using the map_meta_cap function. This function evaluates the context of the action and determines which primitive capabilities are required to perform it.
-
-For example, when WordPress checks if a user can edit a specific post, it uses the edit_post meta capability. The map_meta_cap function then evaluates:
-
-- Is the user the author of the post? If so, they only need the edit_posts primitive capability.
-- Is the user trying to edit someone else’s post? If so, they need the edit_others_posts primitive capability.
-
-This dynamic mapping ensures that permissions are checked accurately based on the context.
-
-### Example of map_meta_cap in Action:
-
-````php
-$required_caps = map_meta_cap('edit_post', $user_id, $post_id);
-````
-- Meta Capability: The meta capability being checked (e.g., edit_post).
-- User ID: The ID of the user whose permissions are being checked.
-- Object ID: The ID of the object (e.g., post, page) being acted upon.
-
-In this example:
-
-- If the user is the author of the post, $required_caps might return ['edit_posts'].
-- If the user is not the author, $required_caps might return ['edit_others_posts'].
-
-WordPress then checks if the user has all the required primitive capabilities before allowing the action.
 
 ## Managing Custom Capabilities with Plugins
 
