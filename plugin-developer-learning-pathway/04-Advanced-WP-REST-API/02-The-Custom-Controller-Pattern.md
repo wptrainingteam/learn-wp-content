@@ -1,39 +1,49 @@
-# Details
+## Outline for "Creating a Custom WP REST API Controller Class" Lesson
 
-- Content type (Online Workshop, Lesson, Course, Tutorial, or Lesson Plan): Lesson
-- Content title: The Custom Controller Pattern
-- Topic description: Introduce the custom Controller Pattern to implement custom REST routes and endpoints for more complex API endpoints.
-- Audience (User, Developer, Designer, Contributor, etc.): Developer
-- Experience Level (Beginner, Intermediate, Advanced, Any): Intermediate
+### Introduction
+- Brief overview of the WordPress REST API
+- Importance of using custom controller classes for better organization and scalability
 
-# Prerequisites
- <!--
- What lessons on learn.wordpress.org should the learner have already completed?
- -->
+### What is a Custom Controller Class?
+- Definition and purpose
+- Differences between procedural route registration and using a custom controller class
 
-It is assumed that the learner has already completed the following lessons:
-- [Beginner WordPress developer](https://learn.wordpress.org/course/beginner-wordpress-developer/)
-- Modules 1 - 8
+### Setting Up the Custom Controller Class
+- Creating a new PHP class for the custom controller
+- Extending the `WP_REST_Controller` class
 
-# Learning Objectives
- <!--
- What will the learner be able to do as a result of this content?
- -->
-- Explain why a developer might consider a custom controller class over using register_rest_route
-- Understand the custom controller class examples in the documentation
-- Discuss the benefits of using a custom controller class
+### Registering Routes in the Custom Controller Class
+- Defining the `register_routes` method
+- Example of registering custom routes within the class
 
-# Related Resources and Other Notes
-- https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/#the-controller-pattern
-- https://developer.wordpress.org/rest-api/extending-the-rest-api/controller-classes/
-### Automation Code
- <!-- 
- Under this comment, type two slashes (//) followed by the code that represents the content type. (Like //example) 
- - Online Workshop = online-workshop
- - Lesson = lesson
- - Course = course
- - Tutorial = tutorial
- - Lesson Plan = teach
- Once submitted, that code will add a new comment to the issue with the relevant development checklist.
- -->
-//lesson
+### Handling Requests in the Custom Controller Class
+- Creating callback methods for the registered routes
+- Example of handling GET and POST requests within the class
+
+### Permission Callbacks
+- Implementing permission checks in the custom controller class
+- Example of a permission callback method
+
+### Example: Custom Book Reviews Controller Class
+- Step-by-step guide to creating a custom controller class for book reviews
+    - Setting up the class
+    - Registering routes
+    - Handling requests
+    - Implementing permission checks
+
+### Testing the Custom Controller Class
+- Using Postman or a similar tool to test the custom routes
+- Verifying the responses
+
+### Best Practices
+- Security considerations
+- Performance optimization
+- Code organization and readability
+
+### Conclusion
+- Recap of key points
+- Further reading and resources
+
+### Further Reading
+- Links to the WordPress REST API handbook
+- Additional tutorials and examples

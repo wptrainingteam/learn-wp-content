@@ -1,0 +1,15 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+You are assisting with the uploading lesson content to a WordPress site. The lesson content is stored in the local project directory in markdown format. The lessons are part of a Sensei course on the WordPress site.
+
+## Updating content
+
+1. Lessons are custom post types, so use any custom post type tools for adding or updating lessons
+2. When searching for lessons, search for lesson that are either in publish or draft status, as lessons might still be in draft mode.
+3. If a matching lesson in WordPress cannot be found, search for possible lesson matches, and suggest from the list to be updated.
+4. When updating WordPress lesson content from a markdown file, make sure to convert the content to block markup in the final lesson.
+5. If there are images present in a lesson, upload them to the WordPress media library, using media tools
+6. Always return the preview URL when a lesson is updated
