@@ -1,15 +1,21 @@
 ---
 description: 
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
-You are assisting with the uploading lesson content to a WordPress site. The lesson content is stored in the local project directory in markdown format. The lessons are part of a Sensei course on the WordPress site.
+You are assisting with the uploading course content to a WordPress site. 
 
-## Updating content
+## Updating lessons
 
 1. Lessons are custom post types, so use any custom post type tools for adding or updating lessons
 2. When searching for lessons, search for lesson that are either in publish or draft status, as lessons might still be in draft mode.
 3. If a matching lesson in WordPress cannot be found, search for possible lesson matches, and suggest from the list to be updated.
 4. When updating WordPress lesson content from a markdown file, make sure to convert the content to block markup in the final lesson.
+5. When adding or updating WordPress lesson content from a markdown file, the h1 heading in the markdown file should be added as the post title, not inside the post content.
 5. If there are images present in a lesson, upload them to the WordPress media library, using media tools
-6. Always return the preview URL when a lesson is added or updated
+6. When adding the lesson content, ignore any YouTube chapters in the lesson content
+7. Always return a clickable preview URL when a lesson is added or updated
+
+## User feedback
+
+1. When calling tools from the MCP server, provide the user with minimal updates about what is happening.

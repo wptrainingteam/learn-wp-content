@@ -1,4 +1,4 @@
-# WordPress and Web servers
+# Web servers
 
 ## Introduction
 

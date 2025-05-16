@@ -1,4 +1,4 @@
-# WordPress Admin page request
+# Admin request
 
 ## Introduction
 

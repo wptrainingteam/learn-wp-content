@@ -1,4 +1,4 @@
-# The WordPress Database
+# WordPress Database
 
 ## Introduction
 

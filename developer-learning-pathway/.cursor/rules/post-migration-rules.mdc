@@ -1,0 +1,19 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Post Migration Rules
+
+## MCP Server Usage
+
+- When searching, reading, or updating content on the **local WordPress site**, always use the `jonathanbossenger-local-mcp` MCP server tools.
+- When searching, reading, or updating content on the **production (public) WordPress site**, always use the `jonathanbossenger-production-mcp` MCP server tools.
+- Never use a local MCP tool for production content, or a production MCP tool for local content.
+- When migrating content, always fetch from the local server and create/update on the production server, unless otherwise specified.
+- When searching for posts, always include all post statuses.
+- When migrating post content, retain all post data and attributes.
+
+## Minimal Updates
+
+- When calling tools from either MCP server, provide the user with minimal updates about what is happening.

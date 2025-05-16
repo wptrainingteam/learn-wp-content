@@ -1,4 +1,4 @@
-# The WordPress file structure
+# File Structure
 
 ## Introduction
 

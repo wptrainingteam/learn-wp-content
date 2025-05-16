@@ -1,4 +1,4 @@
-# Permalinks - rewriting dynamic URLS
+# Permalinks
 
 In this lesson, you'll learn about a concept called Permalinks, and how they are used to rewrite dynamic URLs in a WordPress site.
 

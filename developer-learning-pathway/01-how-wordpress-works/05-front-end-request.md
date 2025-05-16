@@ -1,4 +1,4 @@
-# WordPress Front End Request
+# Front End Request
 
 ## Introduction
 
