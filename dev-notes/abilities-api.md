@@ -48,7 +48,7 @@ The Abilities API automatically exposes registered abilities through REST API en
 - `GET /wp-abilities/v1/categories/{slug}` – Get a single ability category
 - `GET /wp-abilities/v1/abilities` – List all abilities
 - `GET /wp-abilities/v1/abilities/{name}` – Get a single ability
-- `GET|POST /wp-abilities/v1/abilities/{name}/run` – Execute an ability
+- `GET|POST|DELETE /wp-abilities/v1/abilities/{name}/run` – Execute an ability
 
 #### 3\. Hooks
 
@@ -102,23 +102,13 @@ function my_plugin_register_abilities() {
             'description'        => __( 'Retrieves the total number of published posts.', 'my-plugin' ),
             'category'           => 'content-management',
             'input_schema'       => array(
-                'type'       => 'object',
-                'properties' => array(
-                    'post_type' => array(
-                        'type'        => 'string',
-                        'description' => __( 'The post type to count.', 'my-plugin' ),
-                        'default'     => 'post',
-                    ),
-                ),
+                'type'       => 'string',
+                'description' => __( 'The post type to count.', 'my-plugin' ),
+                'default'     => 'post',
             ),
             'output_schema'      => array(
-                'type'       => 'object',
-                'properties' => array(
-                    'count' => array(
-                        'type'        => 'integer',
-                        'description' => __( 'The number of published posts.', 'my-plugin' ),
-                    ),
-                ),
+                'type'       => 'integer',
+                'description' => __( 'The number of published posts.', 'my-plugin' ),
             ),
             'execute_callback'   => 'my_plugin_get_post_count',
             'permission_callback' => function() {
@@ -132,19 +122,17 @@ function my_plugin_register_abilities() {
  * Execute callback for get-post-count ability.
  */
 function my_plugin_get_post_count( $input ) {
-    $post_type = $input['post_type'] ?? 'post';
+    $post_type = $input ?? 'post';
     
     $count = wp_count_posts( $post_type );
     
-    return array(
-        'count' => (int) $count->publish,
-    );
+    return (int) $count->publish;
 }
 ```
 
 #### More Complex Example
 
-Here's an example with more advanced input validation and error handling:
+Here's an example with more advanced input and output schemas, input validation, and error handling:
 
 ```php
 <?php
@@ -254,7 +242,7 @@ Abilities must be assigned to a category. Categories provide better discoverabil
 
 ### JSON Schema Validation
 
-The Abilities API uses JSON Schema for input and output validation. WordPress implements a validator based on a subset of JSON Schema Version 4\. The schemas serve two purposes:
+The Abilities API uses [JSON Schema](https://developer.wordpress.org/rest-api/extending-the-rest-api/schema/) for input and output validation. WordPress implements a validator based on a subset of JSON Schema Version 4\. The schemas serve two purposes:
 
 1. Automatic validation of data passed to and returned from abilities
 2. Self-documenting API contracts for developers
@@ -263,7 +251,7 @@ Defining schemas is mandatory when there is a value to pass or return.
 
 ### Using REST API Endpoints
 
-Developers can also enable Abilities to support the default REST API endpoints. This is possible by setting the `meta.show_in_rest` argument to `true` when registering an ability.
+Developers can also enable Abilities to support the default [REST API](https://developer.wordpress.org/rest-api/) endpoints. This is possible by setting the `meta.show_in_rest` argument to `true` when registering an ability.
 
 ```php
     wp_register_ability(
@@ -273,23 +261,13 @@ Developers can also enable Abilities to support the default REST API endpoints. 
             'description'        => __( 'Retrieves the total number of published posts.', 'my-plugin' ),
             'category'           => 'content-management',
             'input_schema'       => array(
-                'type'       => 'object',
-                'properties' => array(
-                    'post_type' => array(
-                        'type'        => 'string',
-                        'description' => __( 'The post type to count.', 'my-plugin' ),
-                        'default'     => 'post',
-                    ),
-                ),
+                'type'       => 'string',
+                'description' => __( 'The post type to count.', 'my-plugin' ),
+                'default'     => 'post',
             ),
             'output_schema'      => array(
-                'type'       => 'object',
-                'properties' => array(
-                    'count' => array(
-                        'type'        => 'integer',
-                        'description' => __( 'The number of published posts.', 'my-plugin' ),
-                    ),
-                ),
+                'type'       => 'integer',
+                'description' => __( 'The number of published posts.', 'my-plugin' ),
             ),
             'execute_callback'   => 'my_plugin_get_post_count',
             'permission_callback' => function() {
@@ -408,8 +386,7 @@ if ( function_exists( 'wp_register_ability' ) ) {
 
 ```php
 if ( class_exists( 'WP_Ability' ) ) {
-    add_action( 'wp_abilities_api_init', 'my_plugin_register_abilities' );
-}
+ add_action( 'wp_abilities_api_init', 'my_plugin_register_abilities' );}
 ```
 
 ### Further Resources
@@ -421,3 +398,5 @@ if ( class_exists( 'WP_Ability' ) ) {
 - [Core Trac Ticket \#64098](https://core.trac.wordpress.org/ticket/64098)
 - [Abilities API Handbook](https://make.wordpress.org/ai/handbook/projects/abilities-api/)
 - [AI Building Blocks Initiative](https://make.wordpress.org/ai/2025/07/17/abilities-api/)
+
+*Props to **@**gziolo for pre-publish review.*
