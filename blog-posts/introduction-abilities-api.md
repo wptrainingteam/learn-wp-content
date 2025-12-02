@@ -1,15 +1,15 @@
-# Introducing the WordPress Abilities API: A developer's guide
+# Introducing the WordPress Abilities API: A Unified Way to Define and Access WordPress Functionality
 
-Since the official announcement of the [WordPress AI team](https://wordpress.org/news/2025/05/announcing-the-formation-of-the-wordpress-ai-team/), I’ve been keeping a close eye on the work the team has been doing. One of those projects, slated for inclusion in WordPress 6.9, is the brand new [Abilities API](https://github.com/WordPress/abilities-api).
+Since the official announcement of the [WordPress Core AI team](https://wordpress.org/news/2025/05/announcing-the-formation-of-the-wordpress-ai-team/), one of the most exciting projects this team has been working on is the brand new [Abilities API](https://github.com/WordPress/abilities-api). The Abilities API is a **first-class, cross-context functional API that other tools and applications can use to interface with WordPress.**
 
-This API is designed to bring a unified, discoverable, and secure approach to how WordPress core, plugins, and themes define and expose their capabilities — or "abilities." The Abilities API is part of [WordPress's AI Building Blocks](https://make.wordpress.org/ai/2025/07/17/ai-building-blocks/) initiative, aiming to unlock new possibilities for automation, AI integration, and smoother developer workflows.
+This API is designed to bring a unified, discoverable, and secure approach to how WordPress core, plugins, and themes define and expose their capabilities — or "abilities." The first implementations of the Abilities API will be [included in WordPress 6.9](https://core.trac.wordpress.org/ticket/64098), laying the foundation for smoother developer workflows, new possibilities in automation, and AI integrations.
 
 The Abilities API provides a central registry where WordPress capabilities (or abilities) are registered in a format that’s both machine-readable and human-friendly. This means that abilities are not only discoverable by developers but also accessible programmatically by automation tools across different platforms, including [AI agents](https://github.com/resources/articles/what-are-ai-agents).
 
 The key goals of this project are:
 
 - **Discoverability:** List and inspect all available abilities through a standard interface.
-- **Interoperability:** A Uniform schema enables unrelated components to compose [workflows](https://github.com/WordPress/gutenberg/issues/70710).
+- **Interoperability:** A uniform schema enables unrelated components to compose [workflows](https://github.com/WordPress/gutenberg/issues/70710).
 - **Security-first:** Explicit permission control on who or what can invoke abilities.
 - **Gradual Adoption:** Starting as a [Composer](https://getcomposer.org/) package plugin with plans to smoothly migrate to WordPress core.
 
@@ -21,7 +21,7 @@ Now, I don’t know about you, but I find it easier to understand how something 
 
 ## List All URLs
 
-The plugin itself is minimalist. It registers a Tools sub-menu item that opens an admin page where you can select to list the URLs of all Posts, Pages, or Custom Post Types on your WordPress site.
+The plugin itself is minimalist. It registers a **Tools** sub-menu item that opens an admin page where you can select to list the URLs of all Posts, Pages, or Custom Post Types on your WordPress site.
 
 ![][image1]
 
@@ -60,22 +60,23 @@ function list_all_urls_generate_url_list( array $arguments = array(), bool $make
 
    return $links;
 }
+
 ```
 
 Internally, this function calls the WordPress `get_posts()` function to retrieve the actual data and then formats it based on whether it should be displayed as a list of clickable links or not.
 
 There are a couple of smaller quality-of-life improvements I’d like to add, such as the option to limit results for sites with a large number of URLs, the ability to filter URLs by category or date range, and the option to export the returned URLs.
 
-However, two of the larger features I want to add are:
+However, two of the larger features that might be useful to add are:
 
 1. A way to access the URL list outside of WordPress (ie, a REST API endpoint) to be able to hook the data into external services.
 2. A block that would allow anyone to add the list of URLs to any implementation of the Block Editor (ie, on any post or page, or even in a template).
 
-To implement this, I’d need to set up a few things.
+To implement this, you need to set up a few things.
 
 \[\!NOTE\] If you prefer browsing the code for this solution, you can see the full implementation in action by checking out the `rest-blocks` [branch](https://github.com/wptrainingteam/list-all-urls/tree/rest-blocks) of the GitHub repository.
 
-I’ll need to register a custom REST API route and associated GET endpoint using `register_rest_route()`, which should get the posts for the route.
+You’ll  need to register a custom REST API route and associated GET endpoint using `register_rest_route()`, which should get the posts for the route.
 
 That would need a callback function to fetch the data, which in turn could call `list_all_urls_generate_url_list` without the `$makelinks` parameter to return the data.
 
@@ -112,7 +113,7 @@ function list_all_urls_rest_fetch_all_urls( $arguments ){
 }
 ```
 
-For the custom block, I would scaffold the block structure using [create-block](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/), and then utilize the custom REST API endpoint and the [api-fetch](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/) package to fetch the data for the block’s `Edit` component and render it in the Editor.
+For the custom block, you could scaffold the block structure using [create-block](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-create-block/), and then utilize the custom REST API endpoint and the [api-fetch](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/) package to fetch the data for the block’s `Edit` component and render it in the Editor.
 
 ```
 export default function Edit() {
@@ -147,7 +148,7 @@ export default function Edit() {
 }
 ```
 
-I’d probably make it a dynamic block that calls the `list_all_urls_generate_url_list` function in a `render.php` file, which is configured to render on the front end.
+It would make sense to make it a dynamic block that calls the `list_all_urls_generate_url_list` function in a `render.php` file, which is configured to render on the front end.
 
 ```
 <?php
@@ -168,13 +169,11 @@ foreach ( $urls as $url ) {
 </div>
 ```
 
-I'd probably want to update the block to support [attributes](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-attributes/) so that users can select which post types should be used to generate the list of URLs. I would also want to add an attribute to allow a user to select whether to return a list of clickable links or not.
+To give users the ability to select the post types to generate the list of URLs, and to add clickable links to the list you would need to update the block to support additional attributes.
 
 However, this is already a significant amount of code just to make it possible to access the list URLs functionality via the REST API and the Block Editor, while maintaining the existing admin page.
 
-It’d be really nice if I could wrangle most of that just by registering it all in one place, and then access and execute it everywhere I need to.
-
-This is the perfect problem that registering a custom Ability would solve.
+This is the perfect example of custom Ability. You can wrangle most of that by registering it all in one place, and then accessing and executing it everywhere you need to.
 
 ## Installing the Abilities API
 
@@ -186,7 +185,7 @@ Currently, there are three ways you can install and test the Abilities API:
 - You can download the latest version from the [releases](https://github.com/WordPress/abilities-api/releases) page of the GitHub repository, and then upload and install the plugin zip file.
 - You can require the [Composer package](https://packagist.org/packages/wordpress/abilities-api) as a dependency of your plugin or theme.
 
-My preferred method for testing the Abilities API is to clone the GitHub repository, as this ensures I have the latest version of the code on the `trunk` branch.
+One method for testing the Abilities API is to clone the GitHub repository, as this ensures you have the latest version of the code on the `trunk` branch.
 
 ```
 git clone git@github.com:WordPress/abilities-api.git
@@ -196,7 +195,7 @@ npm install
 npm run build 
 ```
 
-However, when I’m building Abilities into plugins, I prefer to install the composer package, which is what I’ll do to integrate it into List All URLs
+Another option is to install the composer package. This allows your plugin to access the latest stable version of the Abilities API and any new features it might offer, while being compatible with what is available in Core.
 
 ```
 cd /wp-content/plugins/list-all-urls
@@ -209,7 +208,7 @@ In this case, a custom Ability can handle most, if not all, of the required core
 
 \[\!NOTE\] As before, if you prefer to browse the full code for this implementation, you can check out the `abilities` [branch](https://github.com/wptrainingteam/list-all-urls/tree/abilities) of the GitHub repository.
 
-Registering an Ability in PHP is possibly using the `wp_register_ability()` function. To ensure the Ability is registered correctly, this function should always be called inside a callback hooked into the  `wp_abilities_api_init` action hook
+Registering an Ability in PHP is possibly using the `wp_register_ability()` function. To ensure the Ability is registered correctly, this function should always be called inside a callback hooked into the  `wp_abilities_api_init` action hook.
 
 ```
 add_action( 'wp_abilities_api_init', 'list_all_urls_register_abilities' );
@@ -297,16 +296,22 @@ $urlsAbility = wp_get_ability( 'list-all-urls/urls' );
 $urls = $urlsAbility->execute( $input );
 ```
 
-Now, what I really like about this implementation is how extendable this is. If I wanted to allow other plugin or theme developers to make use of this functionality, all I have to do is document the ability id, the input schema, and the output schema.
+Now, what I really like about this implementation is how extendable this is. If I want to allow other plugin or theme developers to utilize this functionality, all I have to do is document the ability identifier, the input schema, and the output schema.
 
 There are also functions available to both check which abilities are available — [`wp_get_abilities()`](https://github.com/WordPress/abilities-api/blob/trunk/docs/php-api.md#getting-all-registered-abilities-wp_get_abilities) —  and whether a specific Ability is available or not  — [`wp_has_ability()`](https://github.com/WordPress/abilities-api/blob/trunk/docs/php-api.md#checking-if-an-ability-is-registered).
 
-During development, you could use these functions to fetch and inspect individual abilities.
+During development, you could use these functions using the [WP-CLI](https://wp-cli.org/) [`shell`](https://developer.wordpress.org/cli/commands/shell/) command to fetch and inspect individual abilities.
 
 For example, checking which abilities are currently available:
 
-```shell
+```
+$ wp shell
 wp> $abilities = wp_get_abilities();
+```
+
+*The info returned of all the registered abilities is fairly verbose, so open the details below to see the full output.*
+
+```shell
 => array(4) {
   ["core/get-site-info"]=>
   object(WP_Ability)#2691 (9) {
@@ -770,15 +775,17 @@ wp> $abilities = wp_get_abilities();
 Checking if a specific Ability is available:
 
 ```shell
-wp> $found = wp_has_ability('list-all-urls/urls');
+$ wp shellwp> $found = wp_has_ability('list-all-urls/urls');
 => bool(true)
 
 ```
 
 Fetching a single Ability:
 
+When fetching all Abilities and individual Abilities, the whole Ability object is returned, so you’re able to see what function the Ability performs, and what the expected inputs and outputs are.
+
 ```shell
-wp> $ability = wp_get_ability('list-all-urls/urls');
+$ wp shellwp> $ability = wp_get_ability('list-all-urls/urls');
 => object(WP_Ability)#2698 (9) {
   ["name":protected]=>
   string(18) "list-all-urls/urls"
@@ -860,13 +867,11 @@ wp> $ability = wp_get_ability('list-all-urls/urls');
 }
 ```
 
-When fetching all Abilities and individual Abilities, the whole Ability object is returned, so you’re able to see what the Ability does, and what the expected inputs and outputs are.
-
 ### REST API support out of the box
 
-Another really cool thing about Abilities is that you can enable their REST API endpoints in a similar way to when creating a Custom Post Type. If you enable the `meta.show_in_rest` argument on the Ability it will support the [Abilities REST API endpoints](https://github.com/WordPress/abilities-api/blob/trunk/docs/rest-api.md) by default.
+Another really cool thing about Abilities is that you can enable their REST API endpoints in a similar way as when creating a Custom Post Type. If you enable the `meta.show_in_rest` argument on the Ability it will support the [Abilities REST API endpoints](https://github.com/WordPress/abilities-api/blob/trunk/docs/rest-api.md) by default.
 
-```php
+```
 'meta' => array(
        'show_in_rest' => true,
 ),
@@ -877,7 +882,7 @@ The [Abilities REST API endpoints](https://github.com/WordPress/abilities-api/bl
 As with the PHP functions, you can perform a series of default Ability actions using this namespace, including:
 
 - listing all Abilities by sending a *GET* request to `/wp-json/wp-abilities/v1/abilities`
-- retrieving a single Ability by sending a *GET* request to `wp-json//wp-abilities/v1/{namespace/ability}`, where `{namespace/ability}` is the unique ID of your registered Ability (eg `list-all-urls/urls`)
+- retrieving a single Ability by sending a *GET* request to `wp-json/wp-abilities/v1/{namespace/ability}`, where `{namespace/ability}` is the unique ID of your registered Ability (eg `list-all-urls/urls`)
 - executing an Ability by sending either a *GET* or *POST*  request (depending on the Ability's `readonly` setting) to `/wp-json/wp-abilities/v1/{namespace/ability}/run`.
 
 What's more, the `permission_callback` set during Ability registration is also respected when executing Abilities via the REST API. This ensures that only authenticated users with the correct permissions can execute any given Ability via the REST API.
@@ -886,7 +891,7 @@ All that, just by enabling a single argument on registration\!
 
 ## Abilities are coming to Core\!
 
-The server-side Abilities registration, retrieval, and execution, including REST API support, was recently [approved to be merged in WordPress 6.9](https://core.trac.wordpress.org/ticket/64098). This means that once [6.9 is released in early December](https://make.wordpress.org/core/6-9/), you’ll have access to all this functionality out of the box in WordPress. You can even help test it right now by following the instructions in the [Help Test WordPress 6.9](https://make.wordpress.org/test/2025/10/21/help-test-wordpress-6-9/) post.
+The server-side (PHP) Abilities registration, retrieval, and execution, including REST API support, was recently [approved to be merged in WordPress 6.9](https://core.trac.wordpress.org/ticket/64098). I[n early December](https://make.wordpress.org/core/6-9/), you’ll have access to all this functionality out of the box in WordPress. You can even help test it right now by following the instructions in the [Help Test WordPress 6.9](https://make.wordpress.org/test/2025/10/21/help-test-wordpress-6-9/#introducing-the-abilities-api) post.
 
 ## Using an ability in JavaScript
 
@@ -896,15 +901,15 @@ The Abilities API also includes a [JavaScript client](https://github.com/WordPre
 
 Currently, the JavaScript client is only available in the GitHub repository; however, the goal is to eventually ship it as a Gutenberg package. As a result, there’s a good chance it will be included in WordPress core by version 7.0 (or possibly earlier via the Gutenberg plugin).
 
-If you require the Abilities API as a composer package, you can start using it in your plugins or themes, without causing any conflicts with the Core Abilities API.
+If you require the Abilities API as a composer package, you can start using it in your plugins or themes without causing any conflicts with the Core Abilities API.
 
-The JavaScript client also ships with functions to list, fetch and execute custom Abilities, as well as a function to create custom Abilities in JavaScript. In the case of List all URLs, I only need the function to execute my Ability.
+The JavaScript client also ships with functions to list, fetch and execute custom Abilities, as well as a function to create custom Abilities in JavaScript. In the case of List all URLs, you only need the function to execute its Ability.
 
 ```javascript
 import { executeAbility } from '@wordpress/abilities';
 ```
 
-And then I can execute the Ability, passing it a JSON object for the required input, and use the data it returns in my block.
+And then you can execute the Ability, passing it a JSON object for the required input, and use the data it returns in my block.
 
 ```javascript
 useEffect(() => {
@@ -920,11 +925,7 @@ useEffect(() => {
 - Follow the development of the Abilities API in the official [GitHub repository](https://github.com/WordPress/abilities-api) and be sure to [read the docs](https://github.com/WordPress/abilities-api/tree/trunk/docs).
 - Join discussions on the WordPress Slack [\#core-ai channel](https://wordpress.slack.com/archives/C08TJ8BPULS/p1747960962509329) or follow the [Core AI team blog](https://make.wordpress.org/ai/) for updates and news.
 
-## We’re just scratching the surface of the possibilities.
-
-My colleague [Em Shreve](http://profiles.wordpress.org/emdashcodes/) (who was instrumental in building out the Abilities API JavaScript client) describes the Abilities API like this:
-
-A first-class, cross-context functional API that other tools and applications can use to interface with WordPress.
+## This is just the beginning..
 
 Think of all the different ways in which WordPress core, plugins, and themes make their capabilities available to developers. WordPress doesn’t currently force a standard method to build and communicate a public API, so the available options could be anything from a series of action and filter hooks, to publicly accessible global functions, to a series of REST API endpoints, to objects that are meant to be extended, or any combination of all these.
 
