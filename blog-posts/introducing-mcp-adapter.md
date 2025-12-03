@@ -1,15 +1,12 @@
 # From Abilities to AI Agents: Introducing the WordPress MCP Adapter
 
-The Abilities API makes WordPress functionality **discoverable, typed, and executable** across PHP, JavaScript, and REST. The **MCP Adapter** takes the next step: it lets modern AI tools (like Claude Desktop, Claude Code, VS Code AI extensions, and other MCP clients) **discover and call those abilities directly**, as if your WordPress site were a built‑in AI toolset.[1]
+One of the major new developer updates to come to WordPress 6.9 release was the **Abilities API**. You can read the full introduction to [The Abilities API](https://developer.wordpress.org/news/2025/11/introducing-the-wordpress-abilities-api/) to learn more about its design, and use cases, but it's a new way for plugins and themes to expose functionality in a standardized, cross-context manner.
 
-This post is a follow-up to the Abilities API introduction and shows how to:
+One of the other major benefits of the Abilities API is that it **lays the groundwork for AI integration**. By defining abilities with clear input/output schemas and permission checks, plugins can make their functionality discoverable and callable by AI agents.
 
-- Install and initialize the WordPress MCP Adapter
-- Expose your existing abilities as **MCP tools, resources, and prompts**
-- Connect AI clients like **Claude** and **VS Code/Claude Code/Cursor/Copilot-style tools**
-- Use practical workflows (content inventory, diagnostics, refactoring) powered by your WordPress site
+The **MCP Adapter** is the first official AI solution that builds on top of the Abilities API. It allows you to connect AI applications like Claude Desktop, Claude Code, GitHub Copilot, and other MCP enabled clients to any WordPress site, so that they can **discover and call those abilities directly**, as if your WordPress site were a built‑in AI toolset.
 
-***
+In this post, you'll learn what MCP is, how the WordPress MCP Adapter works, and how to get started exposing your abilities to AI agents.
 
 ## Quick recap: Abilities as the foundation
 
@@ -25,12 +22,18 @@ You define an ability once with:
 Once registered, that ability is:
 
 - Executable in PHP via `wp_get_ability()->execute()`
-- Discoverable and callable via the Abilities REST API
+- Discoverable and callable via the Abilities REST API endpoint
 - Usable in JavaScript via `@wordpress/abilities`
 
-The **MCP Adapter** builds on this: it takes those abilities and **exposes them to AI agents** using the [Model Context Protocol] as tools, resources, and prompts.[1]
+The **MCP Adapter** builds on this: it takes those abilities and **exposes them to AI agents** using the Model Context Protocol as tools, resources, and prompts.
 
-***
+## What is the Model Context Protocol (MCP)?
+
+## What is the Model Context Protocol
+
+The Model Context Protocol (MCP) is an open standard that defines a consistent way for AI applications to connect to external tools, systems, and data sources. It acts like a “universal adapter” between large language models and the services they need. Instead of writing custom integrations for each model and each API, developers expose capabilities through MCP servers and let any compatible AI client discover and call them. 
+
+In practice, an MCP client (such as an AI-powered IDE or chat assistant) connects to one or more MCP servers, asks what operations and resources they provide, and then invokes those operations using a shared, well-defined protocol. This makes it much easier to build AI workflows that mix model reasoning with live data—files, databases, web services, or, in WordPress’s case, abilities registered via the Abilities API, without tying your integration to a single vendor.
 
 ## What is the WordPress MCP Adapter?
 
